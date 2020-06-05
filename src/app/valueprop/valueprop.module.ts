@@ -14,20 +14,21 @@ import { ValuePropEffects } from './+state/valueprop.effects';
 import { ValuePropHomeComponent } from "./components/home.component";
 import { FormsModule } from '@angular/forms';
 import { LayoutRendererComponent } from './components/layout-renderer.component';
+import { ValuePropViewerComponent } from './components/viewer.component';
 
 const routes: Route[] = [
   {
-    path: '', component: ValuePropHomeComponent//, children: [
-    //   { path: 'list', component: SearchListViewComponent },
-    //   { path: 'storyboard', component: SearchStoryboardViewComponent },
-    //   { path: 'timeline', component: SearchTimelineViewComponent }
-    // ]
+    path: '', component: ValuePropHomeComponent, children: [
+      { path: ':template', component: ValuePropViewerComponent }
+      //   { path: 'storyboard', component: SearchStoryboardViewComponent },
+      //   { path: 'timeline', component: SearchTimelineViewComponent }
+    ]
   },
 ];
 
 
 @NgModule({
-  declarations: [ValuePropHomeComponent, LayoutRendererComponent],
+  declarations: [ValuePropHomeComponent, LayoutRendererComponent, ValuePropViewerComponent],
   imports: [
     CommonModule,
     FormsModule,

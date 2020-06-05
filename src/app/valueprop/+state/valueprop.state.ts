@@ -1,5 +1,6 @@
 export interface ValueProp {
-  template: any;
+  templates: any;
+  currentTemplate: any;
 }
 
 export interface ValuePropState {

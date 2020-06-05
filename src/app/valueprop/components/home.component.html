@@ -1,5 +1,19 @@
-<div class="main-container">
-    <div class="body-container">
-        <app-layout-renderer class="w-100" [layout]="layout"></app-layout-renderer>
+<div class="btn-group btn-group-lg" *ngIf="templates && templates.length > 0">
+    <div ngbDropdown display="dynamic">
+        <a class="btn btn-link btn-lg" id="dropdownBasic1" ngbDropdownToggle [title]="currentTemplate ? currentTemplate.summary : 'Registered templates'">
+            <span *ngIf="currentTemplate">{{currentTemplate.title}}</span>
+            <span *ngIf="!currentTemplate">Select template</span>
+        </a>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="ml-3">
+            <a title="productvisionboard" ngbDropdownItem [routerLink]="[template.code]"
+                *ngFor="let template of templates" [title]="template.summary">
+                {{template.title}}
+            </a>
+        </div>
     </div>
 </div>
+<div class="alert alert-warning" *ngIf="templates && templates.length === 0">
+    <fa-icon icon="triangle-exclamation"></fa-icon>
+    No value proposition model templates registered yet.
+</div>
+<router-outlet></router-outlet>

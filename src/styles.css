@@ -16,9 +16,7 @@ h2,
 h3,
 h4,
 h5 {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  font-weight: lighter;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -81,8 +79,8 @@ body .ui-sidebar {
 .main-container {
   position: absolute;
   width: 100%;
-  top: 48pt;
-  height: calc(100% - 50pt);
+  top: 78pt;
+  height: calc(100% - 78pt);
   overflow: hidden;
 }
 .body-container {
@@ -203,20 +201,34 @@ ngx-md p {
 .hide-caret::after {
   content: none !important;
 }
-
+.layout-panel-editable,
+.layout-panel-editable:hover {
+  background-color: #fff !important;
+}
 .layout-panel {
-  font-size: 100px;
-  font-weight: bold;
-  color: #cccccc;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   height: 100%;
-  overflow: hidden;
+  padding: 0.5rem;
+  background-color: #f8f8f8;
+  border: solid 2pt #f8f8f8;
+}
+.layout-panel:hover {
+  background-color: #eee;
+  border: solid 2pt #eee;
 }
 
+.layout-panel .btn-hover {
+  display: none;
+}
+.layout-panel:hover .btn-hover {
+  display: block;
+}
 .as-split-gutter {
-  background-color: transparent !important;
-  border-top: solid 1px #f0f0f0;
-  border-left: solid 1px #f0f0f0;
+  background-color: #fff !important;
+}
+
+.as-split-gutter .as-split-gutter-icon {
+  display: none;
+}
+.as-split-gutter:hover .as-split-gutter-icon {
+  display: block;
 }

@@ -1,14 +1,39 @@
-<as-split *ngIf="layout" [direction]="layout.orientation" (dragEnd)="onDragEnd(-1, $event)">
+<as-split *ngIf="layout" [direction]="layout.orientation">
     <ng-template ngFor let-child [ngForOf]="layout.children" let-icol="index">
-        <as-split-area [order]="icol" [size]="child.size">
+        <as-split-area [order]="icol" [size]="child.size"
+            [ngClass]="{'layout-panel': child.type === 'panel', 'layout-panel-editable': child.edit}">
             <ng-container [ngSwitch]="child.type">
-                <div *ngSwitchCase="'Panel'" class="p-3">
-                    {{child.code}} | {{child.title}}
-                    <div>
-                        {{child.summary}}
+                <div *ngSwitchCase="'panel'">
+                    <div class="btn-group float-right btn-hover">
+                        <button class="btn btn-light text-primary" (click)="editPanel(child)" *ngIf="!child.edit">
+                            <fa-icon icon="pencil-alt"></fa-icon>
+                        </button>
+                        <button class="btn btn-light" (click)="expandPanel(child)">
+                            <fa-icon icon="expand-alt"></fa-icon>
+                        </button>
+                    </div>
+                    <h4>
+                        <fa-icon *ngIf="child.icon && child.icon.length > 0" size="sm" [icon]="child.icon"
+                            class="text-muted mr-1"></fa-icon>
+                        {{child.title}}
+                    </h4>
+
+                    <div [ngClass]="{'text-muted font-italic': !child.data }" *ngIf="!child.edit">
+                        <ngx-md [data]="child.data ? child.data : child.summary"></ngx-md>
+                    </div>
+                    <div *ngIf="child.edit">
+                        <textarea class="form-control form-control-sm" rows="3" [(ngModel)]="child.data"></textarea>
+                        <div class="mt-2 text-right">
+                            <button class="btn btn-sm btn-primary mr-2" *ngIf="child.edit" (click)="saveChanges(child)">
+                                <fa-icon icon="save"></fa-icon> Save
+                            </button>
+                            <button class="btn btn-sm btn-light border" *ngIf="child.edit" (click)="cancelChanges(child)">
+                                <fa-icon icon="times"></fa-icon> Cancel
+                            </button>
+                        </div>
                     </div>
                 </div>
-                <app-layout-renderer *ngSwitchCase="'Container'" [layout]="child"></app-layout-renderer>
+                <app-layout-renderer *ngSwitchCase="'container'" [layout]="child"></app-layout-renderer>
             </ng-container>
         </as-split-area>
     </ng-template>

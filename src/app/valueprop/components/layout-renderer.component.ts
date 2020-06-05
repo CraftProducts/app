@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import * as _ from 'lodash';
 
 @Component({
     selector: 'app-layout-renderer',
@@ -6,14 +7,24 @@ import { Component, Input } from '@angular/core';
 })
 export class LayoutRendererComponent {
     @Input() layout: any;
+    memento: any;
+    editPanel(child) {
+        this.memento = _.clone(child);
+        child.edit = true;
+        console.log('editPanel', child);
+    }
 
-    onDragEnd(columnindex: number, e: { gutterNum: number, sizes: Array<number> }) {
- console.log(columnindex, e);
-        // if (columnindex === -1) {
-        //     this.config.columns.filter(c => c.visible === true).forEach((column, index) => column.size = e.sizes[index]);
-        // }
-        // else {
-        //     this.config.columns[columnindex].rows.filter(r => r.visible === true).forEach((row, index) => row.size = e.sizes[index]);
-        // }
+    saveChanges(child) {
+        child.edit = false;
+        console.log('savePanel', child);
+    }
+    cancelChanges(child) {
+        //child = _.clone(this.memento);
+        child.edit = false;
+        console.log('cancelPanel', child);
+    }
+
+    expandPanel(child) {
+        console.log('expandPanel', child);
     }
 }
