@@ -4,6 +4,7 @@ import { Route, RouterModule } from '@angular/router';
 import { NgxMdModule } from 'ngx-md';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SidebarModule } from 'primeng/sidebar';
+import { FileUploadModule } from 'primeng/fileupload';
 import { AngularSplitModule } from 'angular-split';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { StoreModule } from '@ngrx/store';
@@ -17,6 +18,7 @@ import { LayoutRendererComponent } from './components/layout-renderer.component'
 import { ValuePropViewerComponent } from './components/viewer.component';
 import { TextEditorComponent } from './components/text-editor.component';
 import { ValuePropEditorComponent } from './components/editor.component';
+import { ListEditorComponent } from './components/list-editor.component';
 
 const routes: Route[] = [
   {
@@ -31,8 +33,8 @@ const routes: Route[] = [
 
 @NgModule({
   declarations: [
-    ValuePropHomeComponent, ValuePropViewerComponent, ValuePropEditorComponent, 
-    TextEditorComponent, LayoutRendererComponent
+    ValuePropHomeComponent, ValuePropViewerComponent, ValuePropEditorComponent,
+    TextEditorComponent, ListEditorComponent, LayoutRendererComponent
   ],
   imports: [
     CommonModule,
@@ -42,6 +44,7 @@ const routes: Route[] = [
     FontAwesomeModule,
 
     SidebarModule,
+    FileUploadModule,
     AngularSplitModule,
 
     NgbModule,

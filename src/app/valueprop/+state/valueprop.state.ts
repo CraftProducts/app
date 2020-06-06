@@ -1,7 +1,10 @@
-export interface ValueProp {  
+export interface ValueProp {
   templates: any;
   currentTemplate: any;
 
+  model: any;
+  isModelDirty: boolean;
+  
   selectedSection: any;
 }
 

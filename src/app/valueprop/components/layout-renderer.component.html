@@ -13,20 +13,22 @@
                     </div>
                     <div class="h5 font-weight-light">
                         <fa-icon *ngIf="section.icon && section.icon.length > 0" size="sm" [icon]="section.icon"
-                            class="text-muted"></fa-icon>
+                            [ngClass]="{'text-warning': section.isDirty, 'text-muted': !section.isDirty}"></fa-icon>
                         {{section.title}}
                     </div>
-                    <div class="ml-4">
-                        <div *ngIf="section.datatype === 'text'">
-                            <ngx-md *ngIf="section.data && section.data.text" [data]="section.data.text"></ngx-md>
-                            <ngx-md *ngIf="!(section.data && section.data.text)" class="text-muted font-italic"
-                                [data]="section.summary"></ngx-md>
-                        </div>
-                        <div *ngIf="section.datatype === 'list'">
-                            <ngx-md *ngIf="!(section.data && section.data.list)" class="text-muted font-italic"
-                                [data]="section.summary"></ngx-md>
-                        </div>
+                    <div class="ml-4"
+                        *ngIf="!(section.data && (section.data.text || (section.data.list && section.data.list.length > 0)))">
+                        <ngx-md class="text-muted font-italic" [data]="section.summary"></ngx-md>
                     </div>
+                    <div *ngIf="section.data && section.data.text && section.datatype === 'text'" class=" ml-4">
+                        <ngx-md [data]="section.data.text"></ngx-md>
+                    </div>
+
+                    <ul class="pl-3" *ngIf="section.data && section.data.list && section.data.list.length > 0">
+                        <li *ngFor="let item of section.data.list" class="text-truncate" [title]="item">
+                            {{item}}
+                        </li>
+                    </ul>
                 </div>
                 <app-layout-renderer *ngSwitchCase="'container'" [layout]="section"></app-layout-renderer>
             </ng-container>

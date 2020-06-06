@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { ValuePropState } from '../+state/valueprop.state';
 import { ActivatedRoute } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
-import { LoadTemplateAction, SelectSectionAction } from '../+state/valueprop.actions';
+import { LoadTemplateAction, SelectSectionAction, SetModelDirtyAction } from '../+state/valueprop.actions';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -55,7 +55,7 @@ export class ValuePropViewerComponent implements OnInit, OnDestroy {
         this.store$.dispatch(new SelectSectionAction(null));
     }
     onSectionSelected(sectionCode) {
-        const selected = this.searchSectionInLayout(this.layout, sectionCode);                
+        const selected = this.searchSectionInLayout(this.layout, sectionCode);
         this.store$.dispatch(new SelectSectionAction({ mode: this.mode, section: selected }));
     }
     searchSectionInLayout(layout, sectionCode) {
@@ -72,5 +72,8 @@ export class ValuePropViewerComponent implements OnInit, OnDestroy {
         }
         return null;
     }
-
+    onSectionUpdated(section) {
+        console.log('onSectionUpdated', section);
+        this.store$.dispatch(new SetModelDirtyAction(true));
+    }
 }

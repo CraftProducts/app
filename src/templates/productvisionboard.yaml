@@ -20,8 +20,8 @@ children:
       - type: panel
         size: 25
         icon: users
-        code: TARGETGROUP
-        title: Target Group
+        code: TARGETGROUPS
+        title: Target Groups
         summary: Summary of TargetGroup
         datatype: list
 

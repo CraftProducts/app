@@ -10,6 +10,9 @@ export const ActionTypes = {
     LoadTemplateFailed: type('[LoadTemplate] Failed'),
     LoadTemplateSuccess: type('[LoadTemplate] Success'),
 
+    SetModel: type("[SetModel]"),
+    SetModelDirty: type("[SetModelDirty]"),
+
     SelectSection: type('[SelectSection]')
 }
 
@@ -22,6 +25,15 @@ export class LoadAllTemplateAction implements Action {
     constructor(public payload: any) { }
 }
 
+export class SetModelAction implements Action {
+    type = ActionTypes.SetModel;
+    constructor(public payload: any) { }
+}
+export class SetModelDirtyAction implements Action {
+    type = ActionTypes.SetModelDirty;
+    constructor(public payload: any) { }
+}
+
 export class SelectSectionAction implements Action {
     type = ActionTypes.SelectSection;
     constructor(public payload: any) { }
@@ -30,6 +42,9 @@ export class SelectSectionAction implements Action {
 export type Actions =
     LoadTemplateAction
     | LoadAllTemplateAction
+
+    | SetModelAction
+    | SetModelDirtyAction
 
     | SelectSectionAction
     ;

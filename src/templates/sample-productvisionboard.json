@@ -1,0 +1,94 @@
+{
+    "templateCode": "productvisionboard",
+    "sections": [
+        {
+            "code": "VISION",
+            "data": {
+                "text": "sample vision",
+                "notes": []
+            }
+        },
+        {
+            "code": "TARGETGROUPS",
+            "data": {
+                "list": [
+                    "Target group 1",
+                    "Target group 2",
+                    "Target group 3"
+                ]
+            }
+        },
+        {
+            "code": "NEEDS",
+            "data": {
+                "list": [
+                    "Need 1",
+                    "Need 2",
+                    "Need 3"
+                ]
+            }
+        },
+        {
+            "code": "PRODUCTS",
+            "data": {
+                "list": [
+                    "Product 1",
+                    "Product 2"
+                ]
+            }
+        },
+        {
+            "code": "BUSINESSGOALS",
+            "data": {
+                "list": [
+                    "Business goal 1",
+                    "Business goal 2",
+                    "Business goal 3",
+                    "Business goal 4",
+                    "Business goal 5"
+                ]
+            }
+        },
+        {
+            "code": "COMPETITORS",
+            "data": {
+                "list": [
+                    "Competitor 1",
+                    "Competitor 2",
+                    "Competitor 3",
+                    "Competitor 4"
+                ]
+            }
+        },
+        {
+            "code": "REVENUESTREAMS",
+            "data": {
+                "list": [
+                    "REVENUESTREAMS 1",
+                    "REVENUESTREAMS 2"
+                ]
+            }
+        },
+        {
+            "code": "COSTFACTORS",
+            "data": {
+                "list": [
+                    "COSTFACTORS 1",
+                    "COSTFACTORS 2",
+                    "COSTFACTORS 3",
+                    "COSTFACTORS 4"
+                ]
+            }
+        },
+        {
+            "code": "CHANNELS",
+            "data": {
+                "list": [
+                    "Channel 1",
+                    "Channel 2",
+                    "Channel 3"
+                ]
+            }
+        }
+    ]
+}

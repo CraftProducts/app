@@ -1,19 +1,45 @@
-<div class="btn-group btn-group-lg" *ngIf="templates && templates.length > 0">
-    <div ngbDropdown display="dynamic">
-        <a class="btn btn-link btn-lg" id="dropdownBasic1" ngbDropdownToggle [title]="currentTemplate ? currentTemplate.summary : 'Registered templates'">
-            <span *ngIf="currentTemplate">{{currentTemplate.title}}</span>
-            <span *ngIf="!currentTemplate">Select template</span>
-        </a>
-        <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="ml-3">
-            <a title="productvisionboard" ngbDropdownItem [routerLink]="[template.code]"
-                *ngFor="let template of templates" [title]="template.summary">
-                {{template.title}}
-            </a>
+<div class="row">
+    <div class="col-md-6">
+        <div class="btn-group btn-group-lg" *ngIf="templates && templates.length > 0">
+            <div ngbDropdown display="dynamic">
+                <a class="btn btn-link btn-lg" id="dropdownBasic1" ngbDropdownToggle
+                    [title]="currentTemplate ? currentTemplate.summary : 'Registered templates'">
+                    <span *ngIf="currentTemplate">{{currentTemplate.title}}</span>
+                    <span *ngIf="!currentTemplate">Select template</span>
+                </a>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="ml-3">
+                    <a title="productvisionboard" ngbDropdownItem [routerLink]="[template.code]"
+                        *ngFor="let template of templates" [title]="template.summary">
+                        {{template.title}}
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="alert alert-warning" *ngIf="templates && templates.length === 0">
+            <fa-icon icon="triangle-exclamation"></fa-icon>
+            No value proposition model templates registered yet.
+        </div>
+    </div>
+    <div class="col-md-6 text-right">
+        <div class="p-2">
+            <div *ngIf="isModelDirty">
+                <span class="pt-2 text-warning">
+                    <fa-icon icon="info-circle" class=" mr-1"></fa-icon>
+                    Unsaved changes found.
+                </span>
+                <button class="btn btn-primary btn-sm mr-1" (click)="save()">
+                    <fa-icon icon="save"></fa-icon> Save
+                </button>
+                <button class="btn btn-light btn-sm border" (click)="reset()">
+                    <fa-icon icon="redo"></fa-icon> Reset
+                </button>
+            </div>
+            <p-fileUpload #configUploader name="myfile[]" *ngIf="!fileLoaded" customUpload="true"
+                (uploadHandler)="onFileUpload($event, configUploader)" maxFileSize="1000000" mode="basic"
+                accept="application/json" styleClass="ui-button-primary" [auto]="true" chooseLabel="Open local file">
+            </p-fileUpload>
         </div>
     </div>
 </div>
-<div class="alert alert-warning" *ngIf="templates && templates.length === 0">
-    <fa-icon icon="triangle-exclamation"></fa-icon>
-    No value proposition model templates registered yet.
-</div>
+
 <router-outlet></router-outlet>
