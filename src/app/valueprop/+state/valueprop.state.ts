@@ -1,6 +1,8 @@
-export interface ValueProp {
+export interface ValueProp {  
   templates: any;
   currentTemplate: any;
+
+  selectedSection: any;
 }
 
 export interface ValuePropState {

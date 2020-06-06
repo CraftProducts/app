@@ -1,0 +1,21 @@
+<div *ngIf="mode !== 'EDIT'">
+    <div style="min-height: 200pt;" class="h4 bg-light p-3">
+        <ngx-md [data]="data.text"></ngx-md>
+    </div>
+    <div class="mt-3 text-right">
+        <button class="btn btn-primary" (click)="onToggleMode('EDIT')">
+            <fa-icon icon="pencil-alt"></fa-icon> Edit
+        </button>
+    </div>
+</div>
+<div *ngIf="mode === 'EDIT'">
+    <textarea class="form-control form-control-lg bg-light" rows="10" [(ngModel)]="dataToEdit.text"></textarea>
+    <div class="mt-3 text-right">
+        <button class="btn btn-primary mr-2" (click)="onSave()">
+            <fa-icon icon="save"></fa-icon> Save
+        </button>
+        <button class="btn btn-light" (click)="onToggleMode('VIEW')">
+            <fa-icon icon="times"></fa-icon> Cancel
+        </button>
+    </div>
+</div>

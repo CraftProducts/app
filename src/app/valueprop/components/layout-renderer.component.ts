@@ -1,5 +1,8 @@
 import { Component, Input } from '@angular/core';
 import * as _ from 'lodash';
+import { ValuePropState } from '../+state/valueprop.state';
+import { State, Store } from '@ngrx/store';
+import { SelectSectionAction } from '../+state/valueprop.actions';
 
 @Component({
     selector: 'app-layout-renderer',
@@ -7,24 +10,10 @@ import * as _ from 'lodash';
 })
 export class LayoutRendererComponent {
     @Input() layout: any;
-    memento: any;
-    editPanel(child) {
-        this.memento = _.clone(child);
-        child.edit = true;
-        console.log('editPanel', child);
-    }
 
-    saveChanges(child) {
-        child.edit = false;
-        console.log('savePanel', child);
-    }
-    cancelChanges(child) {
-        //child = _.clone(this.memento);
-        child.edit = false;
-        console.log('cancelPanel', child);
-    }
+    constructor(private store$: Store<ValuePropState>) { }
 
-    expandPanel(child) {
-        console.log('expandPanel', child);
+    showEditor(mode, section) {
+        this.store$.dispatch(new SelectSectionAction({ mode, section }));
     }
 }

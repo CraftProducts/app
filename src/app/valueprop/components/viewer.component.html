@@ -3,3 +3,8 @@
         <app-layout-renderer class="w-100" [layout]="layout"></app-layout-renderer>
     </div>
 </div>
+<p-sidebar [(visible)]="editorVisible" [fullScreen]="true">
+    <app-valueprop-editor [mode]="mode" [section]="section" [(data)]="layout" (onHide)="onHide()"
+        (sectionSelected)="onSectionSelected($event)">
+    </app-valueprop-editor>
+</p-sidebar>

@@ -15,6 +15,8 @@ import { ValuePropHomeComponent } from "./components/home.component";
 import { FormsModule } from '@angular/forms';
 import { LayoutRendererComponent } from './components/layout-renderer.component';
 import { ValuePropViewerComponent } from './components/viewer.component';
+import { TextEditorComponent } from './components/text-editor.component';
+import { ValuePropEditorComponent } from './components/editor.component';
 
 const routes: Route[] = [
   {
@@ -28,7 +30,10 @@ const routes: Route[] = [
 
 
 @NgModule({
-  declarations: [ValuePropHomeComponent, LayoutRendererComponent, ValuePropViewerComponent],
+  declarations: [
+    ValuePropHomeComponent, ValuePropViewerComponent, ValuePropEditorComponent, 
+    TextEditorComponent, LayoutRendererComponent
+  ],
   imports: [
     CommonModule,
     FormsModule,

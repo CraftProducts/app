@@ -10,6 +10,10 @@ export function valuePropReducer(state: ValueProp, action: any): ValueProp {
             return { ...state, currentTemplate: action.payload };
         }
 
+        case ActionTypes.SelectSection: {
+            return { ...state, selectedSection: action.payload };
+        }
+
         default: return state;
     }
 }

@@ -1,39 +1,34 @@
 <as-split *ngIf="layout" [direction]="layout.orientation">
-    <ng-template ngFor let-child [ngForOf]="layout.children" let-icol="index">
-        <as-split-area [order]="icol" [size]="child.size"
-            [ngClass]="{'layout-panel': child.type === 'panel', 'layout-panel-editable': child.edit}">
-            <ng-container [ngSwitch]="child.type">
+    <ng-template ngFor let-section [ngForOf]="layout.children" let-icol="index">
+        <as-split-area [order]="icol" [size]="section.size" [ngClass]="{'layout-panel': section.type === 'panel'}">
+            <ng-container [ngSwitch]="section.type">
                 <div *ngSwitchCase="'panel'">
-                    <div class="btn-group float-right btn-hover">
-                        <button class="btn btn-light text-primary" (click)="editPanel(child)" *ngIf="!child.edit">
+                    <div class="btn-group btn-group-sm float-right btn-hover">
+                        <button class="btn btn-link text-muted" (click)="showEditor('EDIT', section)">
                             <fa-icon icon="pencil-alt"></fa-icon>
                         </button>
-                        <button class="btn btn-light" (click)="expandPanel(child)">
+                        <button class="btn btn-link text-muted" (click)="showEditor('VIEW', section)">
                             <fa-icon icon="expand-alt"></fa-icon>
                         </button>
                     </div>
-                    <h4>
-                        <fa-icon *ngIf="child.icon && child.icon.length > 0" size="sm" [icon]="child.icon"
-                            class="text-muted mr-1"></fa-icon>
-                        {{child.title}}
-                    </h4>
-
-                    <div [ngClass]="{'text-muted font-italic': !child.data }" *ngIf="!child.edit">
-                        <ngx-md [data]="child.data ? child.data : child.summary"></ngx-md>
+                    <div class="h5 font-weight-light">
+                        <fa-icon *ngIf="section.icon && section.icon.length > 0" size="sm" [icon]="section.icon"
+                            class="text-muted"></fa-icon>
+                        {{section.title}}
                     </div>
-                    <div *ngIf="child.edit">
-                        <textarea class="form-control form-control-sm" rows="3" [(ngModel)]="child.data"></textarea>
-                        <div class="mt-2 text-right">
-                            <button class="btn btn-sm btn-primary mr-2" *ngIf="child.edit" (click)="saveChanges(child)">
-                                <fa-icon icon="save"></fa-icon> Save
-                            </button>
-                            <button class="btn btn-sm btn-light border" *ngIf="child.edit" (click)="cancelChanges(child)">
-                                <fa-icon icon="times"></fa-icon> Cancel
-                            </button>
+                    <div class="ml-4">
+                        <div *ngIf="section.datatype === 'text'">
+                            <ngx-md *ngIf="section.data && section.data.text" [data]="section.data.text"></ngx-md>
+                            <ngx-md *ngIf="!(section.data && section.data.text)" class="text-muted font-italic"
+                                [data]="section.summary"></ngx-md>
+                        </div>
+                        <div *ngIf="section.datatype === 'list'">
+                            <ngx-md *ngIf="!(section.data && section.data.list)" class="text-muted font-italic"
+                                [data]="section.summary"></ngx-md>
                         </div>
                     </div>
                 </div>
-                <app-layout-renderer *ngSwitchCase="'container'" [layout]="child"></app-layout-renderer>
+                <app-layout-renderer *ngSwitchCase="'container'" [layout]="section"></app-layout-renderer>
             </ng-container>
         </as-split-area>
     </ng-template>

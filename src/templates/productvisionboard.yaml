@@ -8,7 +8,9 @@ children:
     icon: eye
     code: VISION
     title: Vision
-    summary: What is your purpose of creating this product
+    summary: |
+      What is your purpose of creating this product.  
+      What is your purpose of creating this product. What is your purpose of creating this product.      
     datatype: text
 
   - type: container

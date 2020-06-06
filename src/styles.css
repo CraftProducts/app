@@ -185,6 +185,7 @@ ngx-md p {
 .btn:focus,
 .btn-outline-info:focus {
   box-shadow: none !important;
+  cursor: pointer;
 }
 
 .btn-default {
@@ -201,15 +202,12 @@ ngx-md p {
 .hide-caret::after {
   content: none !important;
 }
-.layout-panel-editable,
-.layout-panel-editable:hover {
-  background-color: #fff !important;
-}
 .layout-panel {
   height: 100%;
   padding: 0.5rem;
   background-color: #f8f8f8;
   border: solid 2pt #f8f8f8;
+  overflow: hidden !important;
 }
 .layout-panel:hover {
   background-color: #eee;
@@ -231,4 +229,18 @@ ngx-md p {
 }
 .as-split-gutter:hover .as-split-gutter-icon {
   display: block;
+}
+body .ui-sidebar .ui-sidebar-close {
+  padding: 8pt;
+}
+
+.btn-white {
+  border-left: solid 5px #fff;
+}
+.btn-white:hover {
+  background-color: #fafafa;
+}
+.btn-white.active {
+  background-color: #fafafa;
+  border-left: solid 5px #0285e6 !important;
 }
