@@ -5,7 +5,8 @@
 import { version } from '../../package.json';
 
 export const environment = {
-  appTitle: 'DesignPurpose',
+  appTitle: 'ProductPurpose',
+  templateFileLocation: 'https://raw.githubusercontent.com/adhamankar/productpurpose/master/templates',
   VERSION: version,
   production: false
 };

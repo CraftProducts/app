@@ -7,9 +7,12 @@ import { of } from 'rxjs';
 import { map, catchError, switchMap, tap } from 'rxjs/operators';
 import { load } from 'js-yaml';
 
+import { environment } from '../../../environments/environment';
+
 @Injectable()
 export class ValuePropEffects {
-    templateFileLocation = './templates'
+    templateFileLocation = environment.templateFileLocation;
+    
     constructor(private httpClient: HttpClient, private actions$: Actions) { }
 
     @Effect() loadAllTemplates = this.actions$.pipe(ofType(valuepropActions.ActionTypes.LoadAllTemplates),
