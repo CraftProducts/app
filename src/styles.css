@@ -79,8 +79,8 @@ body .ui-sidebar {
 .main-container {
   position: absolute;
   width: 100%;
-  top: 78pt;
-  height: calc(100% - 78pt);
+  top: 76pt;
+  height: calc(100% - 76pt);
   overflow: hidden;
 }
 .body-container {
@@ -204,7 +204,6 @@ ngx-md p {
 }
 .layout-panel {
   height: 100%;
-  padding: 0.5rem;
   background-color: #f8f8f8;
   border: solid 2pt #f8f8f8;
   overflow: hidden !important;
@@ -243,4 +242,8 @@ body .ui-sidebar .ui-sidebar-close {
 .btn-white.active {
   background-color: #fafafa;
   border-left: solid 5px #0285e6 !important;
+}
+.bg-default {
+  background-color: #ddd;
+  color: #000;
 }

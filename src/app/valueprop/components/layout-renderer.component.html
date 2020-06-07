@@ -1,6 +1,6 @@
 <as-split *ngIf="layout" [direction]="layout.orientation">
     <ng-template ngFor let-section [ngForOf]="layout.children" let-icol="index">
-        <as-split-area [order]="icol" [size]="section.size" [ngClass]="{'layout-panel': section.type === 'panel'}">
+        <as-split-area [order]="icol" [size]="section.size" [ngClass]="{'layout-panel pl-3 pr-2 pl-2 pt-2': section.type === 'panel'}">
             <ng-container [ngSwitch]="section.type">
                 <div *ngSwitchCase="'panel'">
                     <div class="btn-group btn-group-sm float-right btn-hover">
@@ -26,7 +26,7 @@
 
                     <ul class="pl-3" *ngIf="section.data && section.data.list && section.data.list.length > 0">
                         <li *ngFor="let item of section.data.list" class="text-truncate" [title]="item">
-                            {{item}}
+                            {{item.title}}
                         </li>
                     </ul>
                 </div>

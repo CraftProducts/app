@@ -12,9 +12,19 @@
             "code": "TARGETGROUPS",
             "data": {
                 "list": [
-                    "Target group 1",
-                    "Target group 2",
-                    "Target group 3"
+                    {
+                        "sequence": 1,
+                        "title": "Target group 1",
+                        "notes": []
+                    },
+                    {
+                        "sequence": 2,
+                        "title": "Target group 2"
+                    },
+                    {
+                        "sequence": 3,
+                        "title": "Target group 3"
+                    }
                 ]
             }
         },
@@ -22,9 +32,18 @@
             "code": "NEEDS",
             "data": {
                 "list": [
-                    "Need 1",
-                    "Need 2",
-                    "Need 3"
+                    {
+                        "sequence": 1,
+                        "title": "Need 1"
+                    },
+                    {
+                        "sequence": 2,
+                        "title": "Need 2"
+                    },
+                    {
+                        "sequence": 3,
+                        "title": "Need 3"
+                    }
                 ]
             }
         },
@@ -32,8 +51,16 @@
             "code": "PRODUCTS",
             "data": {
                 "list": [
-                    "Product 1",
-                    "Product 2"
+                    {
+                        "sequence": 1,
+                        "notes": [],
+                        "title": "Product 1"
+                    },
+                    {
+                        "sequence": 2,
+                        "notes": [],
+                        "title": "Product 2"
+                    }
                 ]
             }
         },
@@ -41,11 +68,31 @@
             "code": "BUSINESSGOALS",
             "data": {
                 "list": [
-                    "Business goal 1",
-                    "Business goal 2",
-                    "Business goal 3",
-                    "Business goal 4",
-                    "Business goal 5"
+                    {
+                        "sequence": 1,
+                        "notes": [],
+                        "title": "Business goal 1"
+                    },
+                    {
+                        "sequence": 2,
+                        "notes": [],
+                        "title": "Business goal 2"
+                    },
+                    {
+                        "sequence": 3,
+                        "notes": [],
+                        "title": "Business goal 3"
+                    },
+                    {
+                        "sequence": 4,
+                        "notes": [],
+                        "title": "Business goal 4"
+                    },
+                    {
+                        "sequence": 5,
+                        "notes": [],
+                        "title": "Business goal 5"
+                    }
                 ]
             }
         },
@@ -53,10 +100,26 @@
             "code": "COMPETITORS",
             "data": {
                 "list": [
-                    "Competitor 1",
-                    "Competitor 2",
-                    "Competitor 3",
-                    "Competitor 4"
+                    {
+                        "sequence": 1,
+                        "notes": [],
+                        "title": "Competitor 1"
+                    },
+                    {
+                        "sequence": 2,
+                        "notes": [],
+                        "title": "Competitor 2"
+                    },
+                    {
+                        "sequence": 3,
+                        "notes": [],
+                        "title": "Competitor 3"
+                    },
+                    {
+                        "sequence": 4,
+                        "notes": [],
+                        "title": "Competitor 4"
+                    }
                 ]
             }
         },
@@ -64,8 +127,16 @@
             "code": "REVENUESTREAMS",
             "data": {
                 "list": [
-                    "REVENUESTREAMS 1",
-                    "REVENUESTREAMS 2"
+                    {
+                        "sequence": 1,
+                        "notes": [],
+                        "title": "REVENUESTREAMS 1"
+                    },
+                    {
+                        "sequence": 2,
+                        "notes": [],
+                        "title": "REVENUESTREAMS 2"
+                    }
                 ]
             }
         },
@@ -73,10 +144,26 @@
             "code": "COSTFACTORS",
             "data": {
                 "list": [
-                    "COSTFACTORS 1",
-                    "COSTFACTORS 2",
-                    "COSTFACTORS 3",
-                    "COSTFACTORS 4"
+                    {
+                        "sequence": 1,
+                        "notes": [],
+                        "title": "COSTFACTORS 1"
+                    },
+                    {
+                        "sequence": 2,
+                        "notes": [],
+                        "title": "COSTFACTORS 2"
+                    },
+                    {
+                        "sequence": 3,
+                        "notes": [],
+                        "title": "COSTFACTORS 3"
+                    },
+                    {
+                        "sequence": 4,
+                        "notes": [],
+                        "title": "COSTFACTORS 4"
+                    }
                 ]
             }
         },
@@ -84,9 +171,21 @@
             "code": "CHANNELS",
             "data": {
                 "list": [
-                    "Channel 1",
-                    "Channel 2",
-                    "Channel 3"
+                    {
+                        "sequence": 1,
+                        "notes": [],
+                        "title": "Channel 1"
+                    },
+                    {
+                        "sequence": 2,
+                        "notes": [],
+                        "title": "Channel 2"
+                    },
+                    {
+                        "sequence": 3,
+                        "notes": [],
+                        "title": "Channel 3"
+                    }
                 ]
             }
         }

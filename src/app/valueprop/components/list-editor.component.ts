@@ -14,7 +14,7 @@ export class ListEditorComponent {
     private _data: any;
     @Input() set data(value: any) {
         this._data = value;
-        this.dataToEdit = _.clone(value);
+        this.dataToEdit = _.cloneDeep(value);
     }
     get data() {
         return this._data;
@@ -27,17 +27,14 @@ export class ListEditorComponent {
         this.resetNewRecord();
     }
     onSave = () => this.save.emit(this.dataToEdit);
-    onCancel(event) {
-        console.log(event);
-        event.preventDefault();
-        event.stopPropagation();
-        this.onToggleMode('VIEW');
+    onToggleMode = (mode) => {
+        console.log('this.data', this.data);
+        this.toggleMode.emit({ mode, data: this.data });
     }
-    onToggleMode = (mode) => this.toggleMode.emit(mode);
 
     remove = (index) => this.dataToEdit.list.splice(index, 1);
 
-    canAdd = () => this.newRecord && this.newRecord.trim().length > 0;
+    canAdd = () => this.newRecord && this.newRecord.title && this.newRecord.title.trim().length > 0;
     add() {
         if (this.canAdd()) {
             if (!this.dataToEdit.list) {
@@ -48,7 +45,13 @@ export class ListEditorComponent {
         }
     }
 
+    onCancel(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        this.resetNewRecord();
+    }
+
     resetNewRecord() {
-        this.newRecord = '';
+        this.newRecord = { sequence: 0, title: '', notes: [] };
     }
 }

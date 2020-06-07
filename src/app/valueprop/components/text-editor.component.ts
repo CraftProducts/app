@@ -24,7 +24,6 @@ export class TextEditorComponent {
 
     onSave = () => this.save.emit(this.dataToEdit);
     onCancel(event) {
-        console.log(event);
         event.preventDefault();
         event.stopPropagation();
         this.onToggleMode('VIEW');

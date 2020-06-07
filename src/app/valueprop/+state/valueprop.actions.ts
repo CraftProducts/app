@@ -13,6 +13,8 @@ export const ActionTypes = {
     SetModel: type("[SetModel]"),
     SetModelDirty: type("[SetModelDirty]"),
 
+    CloseWorkspace: type("[CloseWorkspace]"),
+
     SelectSection: type('[SelectSection]')
 }
 
@@ -33,6 +35,10 @@ export class SetModelDirtyAction implements Action {
     type = ActionTypes.SetModelDirty;
     constructor(public payload: any) { }
 }
+export class CloseWorkspaceAction implements Action {
+    type = ActionTypes.CloseWorkspace;
+    constructor(public payload: any) { }
+}
 
 export class SelectSectionAction implements Action {
     type = ActionTypes.SelectSection;
@@ -45,6 +51,7 @@ export type Actions =
 
     | SetModelAction
     | SetModelDirtyAction
+    | CloseWorkspaceAction
 
     | SelectSectionAction
     ;

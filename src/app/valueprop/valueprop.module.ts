@@ -19,11 +19,12 @@ import { ValuePropViewerComponent } from './components/viewer.component';
 import { TextEditorComponent } from './components/text-editor.component';
 import { ValuePropEditorComponent } from './components/editor.component';
 import { ListEditorComponent } from './components/list-editor.component';
+import { PendingChangesGuard } from '../lib/pending-changes.guard';
 
 const routes: Route[] = [
   {
     path: '', component: ValuePropHomeComponent, children: [
-      { path: ':template', component: ValuePropViewerComponent }
+      { path: ':template', component: ValuePropViewerComponent, canDeactivate: [PendingChangesGuard] }
       //   { path: 'storyboard', component: SearchStoryboardViewComponent },
       //   { path: 'timeline', component: SearchTimelineViewComponent }
     ]
@@ -52,6 +53,9 @@ const routes: Route[] = [
     EffectsModule.forFeature([ValuePropEffects]),
 
     RouterModule.forChild(routes)
+  ],
+  providers: [
+    PendingChangesGuard
   ]
 })
 export class ValuepropModule { }

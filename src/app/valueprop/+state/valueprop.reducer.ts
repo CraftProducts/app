@@ -29,6 +29,10 @@ export function valuePropReducer(state: ValueProp, action: any): ValueProp {
             return { ...state, isModelDirty: action.payload };
         }
 
+        case ActionTypes.CloseWorkspace: {
+            return { ...state, currentTemplate: null, model: null, isModelDirty: false, selectedSection: null };
+        }
+
         case ActionTypes.SelectSection: {
             return { ...state, selectedSection: action.payload };
         }
@@ -49,7 +53,8 @@ export function valuePropReducer(state: ValueProp, action: any): ValueProp {
 
         if (section.type === 'panel') {
             const found = _.find(lookupSections, { code: section.code });
-            section.data = found;
+            section.data = found.data;
+            section.isDirty = false;
         }
         if (section.children && section.children.length > 0) {
             section.children.forEach(s => populateModelData(s, lookupSections));

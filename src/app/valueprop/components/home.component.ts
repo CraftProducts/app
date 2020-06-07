@@ -3,18 +3,19 @@ import * as _ from 'lodash';
 import { Store } from '@ngrx/store';
 import { ValuePropState } from '../+state/valueprop.state';
 import { filter } from 'rxjs/operators';
-import { LoadAllTemplateAction, SetModelAction } from '../+state/valueprop.actions';
+import { LoadAllTemplateAction, SetModelAction, CloseWorkspaceAction } from '../+state/valueprop.actions';
 import { Subscription } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { Router, ActivatedRoute } from '@angular/router';
 import { extractSections } from 'src/app/lib/utils';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
     selector: 'app-valueprop-home',
     templateUrl: './home.component.html'
 })
 export class ValuePropHomeComponent implements OnInit, OnDestroy {
-    fileLoaded = false;
+    isWorkspaceEmpty = true;
     valueProModel: any;
 
     templates$: Subscription;
@@ -30,10 +31,10 @@ export class ValuePropHomeComponent implements OnInit, OnDestroy {
     constructor(public store$: Store<ValuePropState>,
         public messageService: MessageService,
         public activatedRoute: ActivatedRoute,
+        public sanitizer: DomSanitizer,
         public router: Router) { }
 
     ngOnInit() {
-
         this.store$.dispatch(new LoadAllTemplateAction(null));
 
         this.model$ = this.store$.select(p => p.valueProp.model)
@@ -48,7 +49,6 @@ export class ValuePropHomeComponent implements OnInit, OnDestroy {
             .subscribe(templates => this.templates = templates);
 
         this.currentTemplate$ = this.store$.select(p => p.valueProp.currentTemplate)
-            .pipe(filter(ct => ct))
             .subscribe(ct => this.currentTemplate = ct);
     }
     ngOnDestroy(): void {
@@ -63,18 +63,17 @@ export class ValuePropHomeComponent implements OnInit, OnDestroy {
             this.getConfigurations(file)
                 .then((data) => {
                     this.valueProModel = data;
+                    this.isWorkspaceEmpty = false;
                     if (this.valueProModel) {
                         this.store$.dispatch(new SetModelAction(this.valueProModel));
                     }
-                    this.fileLoaded = true;
                 }, (err) => {
                     this.messageService.add({
                         severity: 'error', detail: 'Error:' + err,
                         life: 5000, closable: true
                     });
                     configUploader.clear();
-                }
-                )
+                })
         }
     }
     async getConfigurations(file: File) {
@@ -96,11 +95,34 @@ export class ValuePropHomeComponent implements OnInit, OnDestroy {
     save() {
         this.valueProModel = this.valueProModel || { templateCode: this.currentTemplate.code };
         this.valueProModel.sections = [];
-        extractSections(this.currentTemplate, ['data'], this.valueProModel.sections);
+        extractSections(this.currentTemplate, ['code', 'data'], this.valueProModel.sections);
+
+        this.downloadDataFile();
         this.store$.dispatch(new SetModelAction(this.valueProModel));
     }
+    private downloadDataFile() {
+        var theJSON = JSON.stringify(this.valueProModel);
+
+        var element = document.createElement('a');
+        element.setAttribute('href', "data:text/json;charset=UTF-8," + encodeURIComponent(theJSON));
+        element.setAttribute('download', `${this.valueProModel.templateCode}.json`);
+        element.style.display = 'none';
+        document.body.appendChild(element);
+        element.click();
+        document.body.removeChild(element);
+    }
+
     reset() {
-        this.store$.dispatch(new SetModelAction(null));
         this.store$.dispatch(new SetModelAction(this.valueProModel));
+    }
+
+    createNew() {
+        this.isWorkspaceEmpty = false;
+    }
+
+    closeWorspace() {
+        this.isWorkspaceEmpty = true;
+        this.store$.dispatch(new CloseWorkspaceAction(null))
+        this.router.navigate(['.']);
     }
 }

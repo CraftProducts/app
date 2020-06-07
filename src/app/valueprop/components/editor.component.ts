@@ -43,8 +43,11 @@ export class ValuePropEditorComponent {
         this.mode = 'VIEW';
     }
 
-    onToggleMode(updatedMode) {
-        this.mode = updatedMode;
+    onToggleMode(updated, section) {
+        this.mode = updated.mode;
+        section.data = updated.data;
+        console.log('updated.data', updated.data);
+        this.update.emit(section);
     }
 
     closeEditor() {
