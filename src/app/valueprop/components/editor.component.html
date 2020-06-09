@@ -1,22 +1,21 @@
 <div class="bg-light">
-    <div class="pt-1 pl-4 pr-4 pb-3" *ngIf="section">
+    <div class="pl-4 pr-4 pb-3" *ngIf="section">
         <div class="row">
-            <div class="col-md-2 ">
-                <button class="btn btn-link text-muted mt-3 font-weight-light" (click)="closeEditor()">
+            <div class="col-md-2 pl-0">
+                <button class="btn btn-link text-muted font-weight-light" (click)="closeEditor()">
                     <fa-icon [icon]="['far', 'arrow-alt-circle-left']" size="3x"></fa-icon>
                 </button>
             </div>
             <div class="col-md-10">
                 <sub class="text-uppercase text-muted">{{section.code}}</sub>
                 <h3>{{section.title}} </h3>
-                <div class="text-muted text-truncate" [title]="section.summary">{{section.summary}}</div>
             </div>
         </div>
     </div>
     <div class="main-container border-top">
         <div class="body-container bg-white">
             <div class="w-100 p-4">
-                <div class="row pt-3">
+                <div class="row">
                     <div class="col-md-2">
                         <div *ngFor="let s of sections">
                             <button class="btn btn-white btn-sm rounded-0 border-0 text-left w-100"
@@ -28,6 +27,9 @@
                         </div>
                     </div>
                     <div class="col-md-10" *ngIf="section">
+                        <!-- <div class="text-muted text-truncate mb-4" *ngIf="section.summary" [title]="section.summary">
+                            <i>{{section.summary}}</i>
+                        </div> -->
                         <div class="row">
                             <div class="col-md-6">
                                 <app-text-editor *ngIf="section.datatype === 'text'" [mode]="mode"

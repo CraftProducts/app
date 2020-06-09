@@ -1,0 +1,38 @@
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-5">
+            <div class="center-text text-left p-4 mb-5">
+                <p>Product propositions are your company’s elevator pitch.</p>
+                <p>
+                    They’re your product’s central thesis statement that
+                    succinctly communicates:
+                </p>
+                <ul>
+                    <li>The benefits for your users</li>
+                    <li>How you're better than your competitors</li>
+                </ul>
+
+                Product-market fit happens when your product’s value proposition meets your target user’s
+                underserved
+                needs.
+            </div>
+        </div>
+        <div class="offset-md-1 col-md-6">
+            <h3 class="ml-3">Select model</h3>
+            <div style="max-height: 300pt;overflow: auto;">
+                <div class="list-group list-group-flush">
+                    <div class="list-group-item border-0" *ngFor="let template of templates">
+                        <a [routerLink]="[template.code]" [title]="template.summary" class=" h4 font-weight-light">
+                            {{template.title}}
+                            <fa-icon icon="chevron-right" size="sm" class="ml-2"></fa-icon>
+                        </a>
+                        <div class="text-muted mt-2">
+                            <ngx-md [data]="template.summary"></ngx-md>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

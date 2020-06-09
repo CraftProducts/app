@@ -9,12 +9,16 @@ import { MessageService } from 'primeng/api';
 import { Router, ActivatedRoute } from '@angular/router';
 import { extractSections } from 'src/app/lib/utils';
 import { DomSanitizer } from '@angular/platform-browser';
+import { environment } from 'src/environments/environment';
 
 @Component({
     selector: 'app-valueprop-home',
     templateUrl: './home.component.html'
 })
 export class ValuePropHomeComponent implements OnInit, OnDestroy {
+    isCollapsed = true;
+    public version = environment.VERSION;
+
     isWorkspaceEmpty = true;
     valueProModel: any;
 
@@ -27,6 +31,7 @@ export class ValuePropHomeComponent implements OnInit, OnDestroy {
     model$: Subscription;
     isModelDirty$: Subscription;
     isModelDirty: boolean;
+    showBanner = false;
 
     constructor(public store$: Store<ValuePropState>,
         public messageService: MessageService,
@@ -35,6 +40,8 @@ export class ValuePropHomeComponent implements OnInit, OnDestroy {
         public router: Router) { }
 
     ngOnInit() {
+        this.showBanner = this.activatedRoute.children.length === 0;
+        
         this.store$.dispatch(new LoadAllTemplateAction(null));
 
         this.model$ = this.store$.select(p => p.valueProp.model)

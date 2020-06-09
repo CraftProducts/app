@@ -9,8 +9,8 @@ children:
     code: VISION
     title: Vision
     summary: |
-      What is your purpose of creating this product.  
-      What is your purpose of creating this product. What is your purpose of creating this product.      
+      What is your purpose of creating this product?  
+      Which positive change should it bring about?
     datatype: text
 
   - type: container
@@ -22,7 +22,9 @@ children:
         icon: users
         code: TARGETGROUPS
         title: Target Groups
-        summary: Summary of TargetGroup
+        summary: |
+          What market or market segment does the product address?  
+          Who are the target customers and users?
         datatype: list
 
       - type: panel
@@ -30,23 +32,30 @@ children:
         icon: heart
         code: NEEDS
         title: Needs
-        summary: Summary of Needs
+        summary: |
+          What problems does the product solve?  
+          What benefit does it provide? 
         datatype: list
 
       - type: panel
         size: 25
         icon: cube
-        code: PRODUCTS
-        title: Products
-        summary: Summary of Products
-        datatype: list
+        code: PRODUCT
+        title: Product
+        summary: |
+          What product is it?  
+          What makes it stand out?  
+          Is it feasible to develop the product?
+        datatype: text
 
       - type: panel
         size: 25
         icon: bullseye
         code: BUSINESSGOALS
         title: Business Goals
-        summary: Summary of BusinessGoals
+        summary: | 
+          How is the product going to benefit the company?  
+          What are the business goals?
         datatype: list
 
   - type: container
@@ -58,7 +67,9 @@ children:
         icon: users-cog
         code: COMPETITORS
         title: Competitors
-        summary: Summary of Competitors
+        summary: |
+          Who are your main competitors?  
+          What are their strengths and weaknesses?
         datatype: list
 
       - type: panel
@@ -66,7 +77,9 @@ children:
         icon: money-check-alt
         code: REVENUESTREAMS
         title: Revenue Streams
-        summary: Summary of RevenueStreams
+        summary: |
+          How can you monitize your product?  
+          How are you going to generate revenue?          
         datatype: list
 
       - type: panel
@@ -74,7 +87,7 @@ children:
         icon: coins
         code: COSTFACTORS
         title: Cost Factors
-        summary: Summary of Cost Factors
+        summary: What are the main cost factors to develop, market, sell and service the product?
         datatype: list
 
       - type: panel
@@ -82,5 +95,7 @@ children:
         icon: truck-moving
         code: CHANNELS
         title: Channels
-        summary: Summary of Channels
+        summary: |
+          How will you market and sell your product?  
+          Do the channels exist today?
         datatype: list

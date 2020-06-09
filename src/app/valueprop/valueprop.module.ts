@@ -20,6 +20,7 @@ import { TextEditorComponent } from './components/text-editor.component';
 import { ValuePropEditorComponent } from './components/editor.component';
 import { ListEditorComponent } from './components/list-editor.component';
 import { PendingChangesGuard } from '../lib/pending-changes.guard';
+import { ValuePropBannerComponent } from './components/banner.component';
 
 const routes: Route[] = [
   {
@@ -34,7 +35,7 @@ const routes: Route[] = [
 
 @NgModule({
   declarations: [
-    ValuePropHomeComponent, ValuePropViewerComponent, ValuePropEditorComponent,
+    ValuePropHomeComponent, ValuePropBannerComponent, ValuePropViewerComponent, ValuePropEditorComponent,
     TextEditorComponent, ListEditorComponent, LayoutRendererComponent
   ],
   imports: [
