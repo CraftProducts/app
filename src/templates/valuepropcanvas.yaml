@@ -1,0 +1,64 @@
+code: valuepropcanvas
+title: Value proposition canvas
+summary: Alexander Osterwalder's user-centric value proposition model canvas is great for PMs who might have multiple use cases or a diverse group of users in their product.
+orientation: vertical
+children:
+  - type: container
+    size: 50
+    orientation: horizontal
+    children:
+      - type: panel
+        size: 40
+        icon: tasks
+        code: CUSTOMERJOBS
+        title: Customer Job(s)
+        summary: List out all of your user’s everyday tasks or problems.
+        datatype: list
+
+      - type: panel
+        size: 30
+        icon: frown-open
+        code: PAINS
+        title: Pains
+        summary: List pains that your user runs into while trying to accomplish their everyday tasks.
+        datatype: list
+
+      - type: panel
+        size: 30
+        icon: grin-alt
+        code: GAINS
+        title: Gains
+        summary: |
+          Describe what your customer expects or desires in a product. 
+          This includes performance, social gains, delight while using the product, and cost savings.          
+        datatype: list
+
+  - type: container
+    size: 50
+    orientation: horizontal
+    children:
+      - type: panel
+        size: 30
+        icon: barcode
+        code: PRODUCTSNSERVICES
+        title: Products and services
+        summary: |
+          List all the products and services you hope to offer that your value proposition is built around. 
+          You can also rank your products and services according to its importance to your users
+        datatype: list
+
+      - type: panel
+        size: 30
+        icon: capsules
+        code: PAINRELIEVER
+        title: Pain relievers
+        summary: List how your product or services eliminate or reduce customer pain areas.
+        datatype: list
+
+      - type: panel
+        size: 40
+        icon: chart-line
+        code: GAINCREATOR
+        title: Gain creators
+        summary: List how your product or services produce, increase or maximise output and benefits that your customer expect.
+        datatype: list

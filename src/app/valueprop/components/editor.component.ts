@@ -14,6 +14,7 @@ export class ValuePropEditorComponent {
     private _data: any;
     @Input() set data(value: any) {
         this._data = value;
+        this.sections = [];
         extractSections(value, ['icon', 'code', 'title'], this.sections);
     }
     get data() {
