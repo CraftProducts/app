@@ -1,4 +1,4 @@
-import { Component, Input, EventEmitter, Output } from '@angular/core';
+import { Component, Input, EventEmitter, Output, HostListener } from '@angular/core';
 import * as _ from 'lodash';
 import { extractSections } from 'src/app/lib/utils';
 
@@ -33,7 +33,6 @@ export class ValuePropEditorComponent {
     }
     sections: any = [];
 
-
     selectSection = (sectionCode) => this.sectionSelected.emit(sectionCode);
 
     onUpdated(updatedData, section) {
@@ -46,7 +45,7 @@ export class ValuePropEditorComponent {
     onToggleMode(updated, section) {
         this.mode = updated.mode;
         section.data = updated.data;
-        console.log('updated.data', updated.data);
+        section.isDirty = false;
         this.update.emit(section);
     }
 

@@ -1,5 +1,6 @@
 <div *ngIf="mode !== 'EDIT'">
-    <div class="bg-light p-3" style="min-height: 75px;">
+    <div class="bg-light p-3" style="min-height: 100px;cursor: pointer;" (click)="onToggleMode('EDIT')"
+        title="Click to edit">
         <div class="p-2" *ngFor="let item of data.list">
             {{item.title}}
         </div>
@@ -21,9 +22,9 @@
         </div>
         <div class="p-2">
             <div class="input-group">
-                <input type="text" class="form-control" [(ngModel)]="newRecord.title" (keydown.enter)="add()" 
-                (keydown.escape)="onCancel($event)"
-                />
+                <input type="text" class="form-control" [appAutofocus]="mode === 'EDIT'" [(ngModel)]="newRecord.title"
+                    (keydown.control.enter)="onSave()" (keydown.enter)="add()" (keydown.escape)="onCancel($event)"
+                    (keydown.control.escape)="onToggleMode('VIEW')" />
                 <div class="input-group-append">
                     <button class="btn btn-primary" type="button" [disabled]="!canAdd()" (click)="add()">
                         <fa-icon icon="check"></fa-icon>

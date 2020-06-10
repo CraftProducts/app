@@ -42,6 +42,7 @@
     "primeicons": "^4.0.0-rc.2",
     "primeng": "^9.1.0",
     "rxjs": "^6.5.5",
+    "ts-key-enum": "^2.0.3",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
   },

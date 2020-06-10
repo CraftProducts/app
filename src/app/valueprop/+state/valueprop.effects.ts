@@ -28,7 +28,7 @@ export class ValuePropEffects {
 
     @Effect() loadTemplate = this.actions$.pipe(ofType(valuepropActions.ActionTypes.LoadTemplate),
         switchMap((action: any) =>
-            this.httpClient.get(`${this.templateFileLocation}/${action.payload}.yaml`, { responseType: "text" })
+            this.httpClient.get(`${this.templateFileLocation}/${action.payload.toLowerCase()}.yaml`, { responseType: "text" })
                 .pipe(
                     map(yamlString => load(yamlString)),
                     map(payload => ({ type: valuepropActions.ActionTypes.LoadTemplateSuccess, payload })),

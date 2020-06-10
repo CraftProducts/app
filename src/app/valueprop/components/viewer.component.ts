@@ -13,6 +13,7 @@ import { ComponentCanDeactivate } from 'src/app/lib/pending-changes.guard';
     templateUrl: './viewer.component.html'
 })
 export class ValuePropViewerComponent implements ComponentCanDeactivate, OnInit, OnDestroy {
+    public zoom = 100;
     editorVisible = false;
     mode = "VIEW";
     section: string;
@@ -89,6 +90,6 @@ export class ValuePropViewerComponent implements ComponentCanDeactivate, OnInit,
         return null;
     }
     onSectionUpdated(section) {
-        this.store$.dispatch(new SetModelDirtyAction(true));
+        this.store$.dispatch(new SetModelDirtyAction(section.isDirty));
     }
 }

@@ -1,10 +1,14 @@
 <div class="main-container">
-    <div class="body-container">
+    <div class="body-container" [style.zoom]="(zoom/100)">
         <app-layout-renderer class="w-100" [layout]="currentTemplate"></app-layout-renderer>
     </div>
 </div>
-<p-sidebar [(visible)]="editorVisible" [fullScreen]="true">
+<p-sidebar [(visible)]="editorVisible" [fullScreen]="true" styleClass="bg-light">
     <app-valueprop-editor [mode]="mode" [section]="section" [(data)]="currentTemplate" (onHide)="onHide()"
         (sectionSelected)="onSectionSelected($event)" (close)="onHide()" (update)="onSectionUpdated($event)">
     </app-valueprop-editor>
 </p-sidebar>
+
+<div class="zoom-slider" *ngIf="currentTemplate">
+    <p-slider [(ngModel)]="zoom" [min]="50" [max]="100" [step]="10"></p-slider>
+</div>

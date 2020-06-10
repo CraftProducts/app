@@ -23,7 +23,7 @@
                             </button>
                             <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="ml-3">
                                 <a ngbDropdownItem [routerLink]="[template.code]" *ngFor="let template of templates"
-                                    [title]="template.summary">
+                                    [title]="template.summary | stripmd">
                                     {{template.title}}
                                 </a>
                             </div>

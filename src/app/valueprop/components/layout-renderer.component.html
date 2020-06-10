@@ -1,6 +1,7 @@
 <as-split *ngIf="layout" [direction]="layout.orientation">
     <ng-template ngFor let-section [ngForOf]="layout.children" let-icol="index">
-        <as-split-area [order]="icol" [size]="section.size" [ngClass]="{'layout-panel pl-3 pr-2 pl-2 pt-2': section.type === 'panel'}">
+        <as-split-area [order]="icol" [size]="section.size"
+            [ngClass]="{'layout-panel pl-3 pr-2 pl-2 pt-2': section.type === 'panel'}">
             <ng-container [ngSwitch]="section.type">
                 <div *ngSwitchCase="'panel'">
                     <div class="btn-group btn-group-sm float-right btn-hover">
@@ -13,8 +14,12 @@
                     </div>
                     <div class="h5 font-weight-light">
                         <fa-icon *ngIf="section.icon && section.icon.length > 0" size="sm" [icon]="section.icon"
-                            [ngClass]="{'text-warning': section.isDirty, 'text-muted': !section.isDirty}"></fa-icon>
+                            class="text-muted"></fa-icon>
                         {{section.title}}
+
+                        <sup *ngIf="section.isDirty">
+                            <fa-icon icon="asterisk" size="xs" class="text-danger" title="Unsaved changes"></fa-icon>
+                        </sup>
                     </div>
                     <div class="ml-4"
                         *ngIf="!(section.data && (section.data.text || (section.data.list && section.data.list.length > 0)))">
@@ -25,8 +30,9 @@
                     </div>
 
                     <ul class="pl-3" *ngIf="section.data && section.data.list && section.data.list.length > 0">
-                        <li *ngFor="let item of section.data.list" class="text-truncate" [title]="item">
-                            {{item.title}}
+                        <li *ngFor="let item of section.data.list" class="text-truncate" [title]="item.title">
+                            <fa-icon icon="angle-right" size="xs" class="mr-1 text-muted"></fa-icon>
+                             {{item.title}}
                         </li>
                     </ul>
                 </div>

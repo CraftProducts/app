@@ -6,7 +6,7 @@ import { filter } from 'rxjs/operators';
 import { LoadAllTemplateAction, SetModelAction, CloseWorkspaceAction } from '../+state/valueprop.actions';
 import { Subscription } from 'rxjs';
 import { MessageService } from 'primeng/api';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { extractSections } from 'src/app/lib/utils';
 import { DomSanitizer } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment';
@@ -32,6 +32,7 @@ export class ValuePropHomeComponent implements OnInit, OnDestroy {
     isModelDirty$: Subscription;
     isModelDirty: boolean;
     showBanner = false;
+    eventNavigationEnd$: Subscription;
 
     constructor(public store$: Store<ValuePropState>,
         public messageService: MessageService,
@@ -40,8 +41,13 @@ export class ValuePropHomeComponent implements OnInit, OnDestroy {
         public router: Router) { }
 
     ngOnInit() {
+        this.eventNavigationEnd$ = this.router.events.subscribe((event) => {
+            if (event instanceof NavigationEnd) {
+                this.showBanner = this.activatedRoute.children.length === 0;
+            }
+        })
         this.showBanner = this.activatedRoute.children.length === 0;
-        
+
         this.store$.dispatch(new LoadAllTemplateAction(null));
 
         this.model$ = this.store$.select(p => p.valueProp.model)
@@ -59,6 +65,7 @@ export class ValuePropHomeComponent implements OnInit, OnDestroy {
             .subscribe(ct => this.currentTemplate = ct);
     }
     ngOnDestroy(): void {
+        this.eventNavigationEnd$ ? this.eventNavigationEnd$.unsubscribe() : null;
         this.model$ ? this.model$.unsubscribe() : null;
         this.templates$ ? this.templates$.unsubscribe() : null;
         this.currentTemplate$ ? this.currentTemplate$.unsubscribe() : null;
@@ -100,7 +107,8 @@ export class ValuePropHomeComponent implements OnInit, OnDestroy {
     }
 
     save() {
-        this.valueProModel = this.valueProModel || { templateCode: this.currentTemplate.code };
+        this.valueProModel = this.valueProModel || {};
+        this.valueProModel.templateCode = this.currentTemplate.code;
         this.valueProModel.sections = [];
         extractSections(this.currentTemplate, ['code', 'data'], this.valueProModel.sections);
 

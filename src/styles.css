@@ -83,6 +83,13 @@ body .ui-sidebar {
   height: calc(100% - 46pt);
   overflow: hidden;
 }
+.popup-container{
+  position: absolute;
+  width: 100%;
+  top: 80pt;
+  height: calc(100% - 80pt);
+  overflow: hidden;
+}
 .body-container {
   display: flex;
   flex-wrap: nowrap;
@@ -224,6 +231,7 @@ ngx-md p {
 }
 .layout-panel:hover .btn-hover {
   display: block;
+  cursor: pointer;
 }
 .as-split-gutter {
   background-color: #fff !important;
@@ -252,4 +260,13 @@ body .ui-sidebar .ui-sidebar-close {
 .bg-default {
   background-color: #ddd;
   color: #000;
+}
+.zoom-slider {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 200px;
+  height: 24pt;
+  padding: 12pt;
+  margin: 0 8pt 8pt 0;
 }

@@ -1,22 +1,25 @@
-<div class="bg-light">
-    <div class="pl-4 pr-4 pb-3" *ngIf="section">
-        <div class="row">
-            <div class="col-md-2 pl-0">
-                <button class="btn btn-link text-muted font-weight-light" (click)="closeEditor()">
-                    <fa-icon [icon]="['far', 'arrow-alt-circle-left']" size="3x"></fa-icon>
-                </button>
-            </div>
-            <div class="col-md-10">
-                <sub class="text-uppercase text-muted">{{section.code}}</sub>
-                <h3>{{section.title}} </h3>
+<div class="pl-4 pr-4 pb-3" *ngIf="section">
+    <div class="row mb-5">
+        <div class="col-sm-2 pl-0">
+            <button class="btn btn-link text-muted font-weight-light mt-3" (click)="closeEditor()">
+                <fa-icon [icon]="['far', 'arrow-alt-circle-left']" size="3x"></fa-icon>
+            </button>
+        </div>
+        <div class="col-sm-10">
+            <sub class="text-uppercase text-muted">{{section.code}}</sub>
+            <h3>{{section.title}} </h3>
+            <div class="text-muted text-truncate" *ngIf="section.summary" [title]="section.summary">
+                {{section.summary}}
             </div>
         </div>
     </div>
-    <div class="main-container border-top">
-        <div class="body-container bg-white">
-            <div class="w-100 p-4">
-                <div class="row">
-                    <div class="col-md-2">
+</div>
+<div class="popup-container border-top">
+    <div class="body-container bg-white">
+        <div class="w-100 p-4">
+            <div class="row">
+                <div class="col-md-2">
+                    <div class=" mb-5">
                         <div *ngFor="let s of sections">
                             <button class="btn btn-white btn-sm rounded-0 border-0 text-left w-100"
                                 (click)="selectSection(s.code)"
@@ -26,29 +29,25 @@
                             </button>
                         </div>
                     </div>
-                    <div class="col-md-10" *ngIf="section">
-                        <!-- <div class="text-muted text-truncate mb-4" *ngIf="section.summary" [title]="section.summary">
-                            <i>{{section.summary}}</i>
-                        </div> -->
-                        <div class="row">
-                            <div class="col-md-6">
-                                <app-text-editor *ngIf="section.datatype === 'text'" [mode]="mode"
-                                    [(data)]="section.data" (save)="onUpdated($event, section)"
-                                    (toggleMode)="onToggleMode($event, section)">
-                                </app-text-editor>
-                                <app-list-editor *ngIf="section.datatype === 'list'" [mode]="mode"
-                                    [(data)]="section.data" (save)="onUpdated($event, section)"
-                                    (toggleMode)="onToggleMode($event, section)">
-                                </app-list-editor>
-                            </div>
-                            <!-- <div class="offset-md-1 col-md-5">
+                </div>
+                <div class="col-md-10" *ngIf="section">
+                    <div class="row mb-5">
+                        <div class="col-md-6">
+                            <app-text-editor *ngIf="section.datatype === 'text'" [placeholder]="section.summary"
+                                [mode]="mode" [(data)]="section.data" (save)="onUpdated($event, section)"
+                                (toggleMode)="onToggleMode($event, section)">
+                            </app-text-editor>
+                            <app-list-editor *ngIf="section.datatype === 'list'" [mode]="mode" [(data)]="section.data"
+                                (save)="onUpdated($event, section)" (toggleMode)="onToggleMode($event, section)">
+                            </app-list-editor>
+                        </div>
+                        <!-- <div class="offset-md-1 col-md-5">
                                 <h4>Notes</h4>
                                 <div class="alert alert-warning"
                                     *ngIf="!section.data.notes || section.data.notes.length === 0">
                                     There are no notes yet.
                                 </div>
                             </div> -->
-                        </div>
                     </div>
                 </div>
             </div>

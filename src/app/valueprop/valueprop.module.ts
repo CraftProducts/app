@@ -4,6 +4,7 @@ import { Route, RouterModule } from '@angular/router';
 import { NgxMdModule } from 'ngx-md';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SidebarModule } from 'primeng/sidebar';
+import { SliderModule } from 'primeng/slider';
 import { FileUploadModule } from 'primeng/fileupload';
 import { AngularSplitModule } from 'angular-split';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -21,6 +22,8 @@ import { ValuePropEditorComponent } from './components/editor.component';
 import { ListEditorComponent } from './components/list-editor.component';
 import { PendingChangesGuard } from '../lib/pending-changes.guard';
 import { ValuePropBannerComponent } from './components/banner.component';
+import { AutofocusDirective } from '../lib/autofocus.directive';
+import { StripMarkdownPipe } from '../lib/stripmd.pipe';
 
 const routes: Route[] = [
   {
@@ -35,6 +38,7 @@ const routes: Route[] = [
 
 @NgModule({
   declarations: [
+    AutofocusDirective, StripMarkdownPipe, 
     ValuePropHomeComponent, ValuePropBannerComponent, ValuePropViewerComponent, ValuePropEditorComponent,
     TextEditorComponent, ListEditorComponent, LayoutRendererComponent
   ],
@@ -45,6 +49,7 @@ const routes: Route[] = [
     NgxMdModule,
     FontAwesomeModule,
 
+    SliderModule,
     SidebarModule,
     FileUploadModule,
     AngularSplitModule,

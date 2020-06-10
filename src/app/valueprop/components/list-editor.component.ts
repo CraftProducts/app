@@ -1,4 +1,4 @@
-import { Component, Input, EventEmitter, Output } from '@angular/core';
+import { Component, Input, EventEmitter, Output, HostListener } from '@angular/core';
 import * as _ from 'lodash';
 
 @Component({
@@ -26,11 +26,23 @@ export class ListEditorComponent {
     constructor() {
         this.resetNewRecord();
     }
-    onSave = () => this.save.emit(this.dataToEdit);
-    onToggleMode = (mode) => {
-        console.log('this.data', this.data);
-        this.toggleMode.emit({ mode, data: this.data });
+    @HostListener('window:keydown', ['$event'])
+    hotkeyHandler($event: any) {
+        if ($event.code === 'F2') {
+            this.onToggleMode('EDIT');
+            return false;
+        } else if ($event.code === 'KeyS' && $event.ctrlKey && this.mode === 'EDIT') {
+            this.onSave();
+            return false;
+        }
     }
+
+    onSave = () => {
+        this.add();
+        this.save.emit(this.dataToEdit);
+    }
+
+    onToggleMode = (mode) => this.toggleMode.emit({ mode, data: this.data });
 
     remove = (index) => this.dataToEdit.list.splice(index, 1);
 
@@ -44,7 +56,6 @@ export class ListEditorComponent {
             this.resetNewRecord();
         }
     }
-
     onCancel(event) {
         event.preventDefault();
         event.stopPropagation();

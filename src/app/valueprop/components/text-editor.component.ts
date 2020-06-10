@@ -1,5 +1,6 @@
-import { Component, Input, EventEmitter, Output } from '@angular/core';
+import { Component, Input, EventEmitter, Output, HostListener } from '@angular/core';
 import * as _ from 'lodash';
+import { Key } from 'ts-key-enum';
 
 @Component({
     selector: 'app-text-editor',
@@ -10,6 +11,7 @@ export class TextEditorComponent {
     @Output() toggleMode = new EventEmitter<any>();
 
     @Input() mode: string;
+    @Input() placeholder: string;
 
     private _data: any;
     @Input() set data(value: any) {
@@ -22,11 +24,23 @@ export class TextEditorComponent {
 
     dataToEdit: any;
 
+    @HostListener('window:keydown', ['$event'])
+    hotkeyHandler($event: any) {
+        if ($event.key === Key.F2) {
+            this.onToggleMode('EDIT');
+            return false;
+        } else if (($event.key === 's' || $event.key === 'S') && $event.ctrlKey && this.mode === 'EDIT') {
+            this.onSave();
+            return false;
+        }
+    }
+
     onSave = () => this.save.emit(this.dataToEdit);
-    onCancel(event) {
+    onEscape(event) {
         event.preventDefault();
         event.stopPropagation();
         this.onToggleMode('VIEW');
     }
-    onToggleMode = (mode) => this.toggleMode.emit(mode);
+
+    onToggleMode = (mode) => this.toggleMode.emit({ mode, data: this.data });
 }
