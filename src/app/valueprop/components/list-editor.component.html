@@ -1,10 +1,17 @@
 <div class="row">
     <div class="col-md-6">
         <div *ngIf="mode !== 'EDIT'">
-            <div class="bg-light p-3" style="min-height: 100px;cursor: pointer;" (click)="onToggleMode('EDIT')"
-                title="Click to edit">
-                <div class="p-2" *ngFor="let item of data.list">
-                    {{item.title}}
+            <div class="bg-light" title="F2 to edit">
+                <div class="list-item">
+                    <button class="btn btn-light p-2 text-left w-100" (click)="onSelectItem(item)"
+                        *ngFor="let item of data.list">
+                        <fa-icon icon="angle-right" class="pr-1 text-muted"></fa-icon>
+                        {{item.title}}
+                    </button>
+                </div>
+                <div class="p-3" *ngIf="!data.list || data.list.length === 0" style="cursor: pointer;"
+                    (click)="onToggleMode('EDIT')" title="Click to edit">
+                    <i>click to edit</i>
                 </div>
             </div>
             <div class="mt-3 text-right">
@@ -46,11 +53,7 @@
             </div>
         </div>
     </div>
-    <!-- <div class="offset-md-1 col-md-5">
-    <h4>Notes</h4>
-    <div class="alert alert-warning"
-        *ngIf="!section.data.notes || section.data.notes.length === 0">
-        There are no notes yet.
+    <div class="offset-md-1 col-md-5">
+        <app-listitem-editor [item]="selectedItem" (itemChange)="onItemChanged($event)"></app-listitem-editor>
     </div>
-</div> -->
 </div>

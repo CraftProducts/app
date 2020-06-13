@@ -22,7 +22,8 @@
                             </fa-icon>
                         </sup>
 
-                        <span *ngIf="section.data && section.data.notes && section.data.notes.length > 0" class="text-muted ml-2">
+                        <span *ngIf="section.data && section.data.notes && section.data.notes.length > 0"
+                            class="text-muted ml-2">
                             <small>{{section.data.notes.length}}</small>
                             <fa-icon size="xs" [icon]="['far', 'comments']" class="ml-1"></fa-icon>
                         </span>
@@ -35,12 +36,13 @@
                         <ngx-md [data]="section.data.text"></ngx-md>
                     </div>
 
-                    <ul class="pl-3" *ngIf="section.data && section.data.list && section.data.list.length > 0">
-                        <li *ngFor="let item of section.data.list" class="text-truncate" [title]="item.title">
-                            <fa-icon icon="angle-right" size="xs" class="mr-1 text-muted"></fa-icon>
+                    <div *ngIf="section.data && section.data.list && section.data.list.length > 0">
+                        <button *ngFor="let item of section.data.list" (click)="showItemDetails(item, section)"
+                            class="btn btn-sm btn-link text-dark w-100 text-left text-truncate" [title]="item.title">
+                            <fa-icon icon="angle-right" size="sm" class="mr-1 text-muted"></fa-icon>
                             {{item.title}}
-                        </li>
-                    </ul>
+                        </button>
+                    </div>
                 </div>
                 <app-layout-renderer *ngSwitchCase="'container'" [layout]="section"></app-layout-renderer>
             </ng-container>

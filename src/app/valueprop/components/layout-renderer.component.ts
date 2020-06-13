@@ -16,4 +16,9 @@ export class LayoutRendererComponent {
     showEditor(mode, section) {
         this.store$.dispatch(new SelectSectionAction({ mode, section }));
     }
+
+    showItemDetails(item, section) {
+        section.selectedItem = item;
+        this.store$.dispatch(new SelectSectionAction({ mode: 'VIEW', section }));
+    }
 }

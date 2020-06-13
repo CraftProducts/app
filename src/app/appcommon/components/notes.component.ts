@@ -22,10 +22,8 @@ export class NotesComponent {
         this.listChange.emit(this.list);
     }
 
-    canAdd = () => {
-        console.log(this.newRecord.note);
-        return this.newRecord && this.newRecord.note && this.newRecord.note.trim().length > 0;
-    }
+    canAdd = () => this.newRecord && this.newRecord.note && this.newRecord.note.trim().length > 0;
+    
     add() {
         if (this.canAdd()) {
             if (!this.list) {
@@ -44,7 +42,6 @@ export class NotesComponent {
     }
 
     resetNewRecord() {
-        console.log('resetting');
         this.newRecord = { timestamp: new Date(), note: '' };
     }
 }

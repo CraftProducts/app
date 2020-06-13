@@ -23,6 +23,7 @@ import { ListEditorComponent } from './components/list-editor.component';
 import { ValuePropBannerComponent } from './components/banner.component';
 import { AppCommonModule } from '../appcommon/appcommon.module';
 import { PendingChangesGuard, SharedLibModule } from 'shared-lib';
+import { ListitemEditorComponent } from './components/listitem-editor.component';
 
 const routes: Route[] = [
   {
@@ -38,7 +39,7 @@ const routes: Route[] = [
 @NgModule({
   declarations: [
     ValuePropHomeComponent, ValuePropBannerComponent, ValuePropViewerComponent, ValuePropEditorComponent,
-    TextEditorComponent, ListEditorComponent, LayoutRendererComponent
+    TextEditorComponent, ListEditorComponent, ListitemEditorComponent, LayoutRendererComponent
   ],
   imports: [
     CommonModule,

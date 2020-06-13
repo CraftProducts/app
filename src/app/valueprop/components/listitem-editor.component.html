@@ -1,0 +1,4 @@
+<div *ngIf="item">
+    <h4>{{item.title}}</h4>
+    <app-notes [(list)]="item.notes" (listChange)="onListChange($event)"></app-notes>
+</div>

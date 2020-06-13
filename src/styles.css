@@ -83,7 +83,7 @@ body .ui-sidebar {
   height: calc(100% - 46pt);
   overflow: hidden;
 }
-.popup-container{
+.popup-container {
   position: absolute;
   width: 100%;
   top: 80pt;
@@ -269,4 +269,8 @@ body .ui-sidebar .ui-sidebar-close {
   height: 24pt;
   padding: 12pt;
   margin: 0 8pt 8pt 0;
+}
+
+.list-item:hover {
+  background-color: #eee;
 }
