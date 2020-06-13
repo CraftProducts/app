@@ -219,7 +219,7 @@ ngx-md p {
   height: 100%;
   background-color: #f8f8f8;
   border: solid 2pt #f8f8f8;
-  overflow: hidden !important;
+  /* overflow: hidden !important; */
 }
 .layout-panel:hover {
   background-color: #eee;

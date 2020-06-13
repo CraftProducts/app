@@ -31,23 +31,17 @@
                     </div>
                 </div>
                 <div class="col-md-10" *ngIf="section">
-                    <div class="row mb-5">
-                        <div class="col-md-6">
-                            <app-text-editor *ngIf="section.datatype === 'text'" [placeholder]="section.summary"
-                                [mode]="mode" [(data)]="section.data" (save)="onUpdated($event, section)"
-                                (toggleMode)="onToggleMode($event, section)">
-                            </app-text-editor>
-                            <app-list-editor *ngIf="section.datatype === 'list'" [mode]="mode" [(data)]="section.data"
-                                (save)="onUpdated($event, section)" (toggleMode)="onToggleMode($event, section)">
-                            </app-list-editor>
-                        </div>
-                        <!-- <div class="offset-md-1 col-md-5">
-                                <h4>Notes</h4>
-                                <div class="alert alert-warning"
-                                    *ngIf="!section.data.notes || section.data.notes.length === 0">
-                                    There are no notes yet.
-                                </div>
-                            </div> -->
+                    <div class="mb-5">
+                        <app-text-editor *ngIf="section.datatype === 'text'" [placeholder]="section.summary"
+                            [mode]="mode" [(data)]="section.data" (save)="onUpdated($event, section)"
+                            (toggleMode)="onToggleMode($event, section)"
+                            (notesChanged)="onNotesChanged($event, section)"
+                            >
+                        </app-text-editor>
+                        <app-list-editor *ngIf="section.datatype === 'list'" [mode]="mode" [(data)]="section.data"
+                            (save)="onUpdated($event, section)" (toggleMode)="onToggleMode($event, section)">
+                        </app-list-editor>
+
                     </div>
                 </div>
             </div>

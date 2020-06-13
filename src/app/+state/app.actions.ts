@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { type } from 'src/app/lib/utils';
+import { type } from 'shared-lib';
 
 export const ActionTypes = {
     BootstrapApp: type("[BootstrapApp]"),

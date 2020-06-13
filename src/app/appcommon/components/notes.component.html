@@ -1,0 +1,32 @@
+<h5>Notes</h5>
+<!-- <div class="alert alert-warning" *ngIf="!list || list.length === 0">
+    There are no notes yet.
+</div> -->
+
+<div class="pb-3" *ngFor="let item of list;let idx = index">
+    <button class="btn btn-link btn-sm float-right text-muted" (click)="remove(idx)">
+        <fa-icon icon="times"></fa-icon>
+    </button>
+    <p>{{item.note}}</p>
+    <div class="small text-muted"> - {{item.timestamp | date:'mediumDate'}}</div>
+</div>
+
+<div class="pb-3">
+
+    <div (click)="isEditorVisible = true" *ngIf="!isEditorVisible" style="cursor:pointer"
+        class="bg-light rounded text-muted p-3" title="click to add note">
+        <i>click to add note</i>
+    </div>
+
+    <div *ngIf="isEditorVisible">
+        <textarea type="text" class="form-control bg-light form-control-sm" [appAutofocus]="isEditorVisible === true"
+            [(ngModel)]="newRecord.note" (keydown.control.enter)="add()" (keydown.escape)="onCancel($event)"
+            placeholder="add note..."></textarea>
+
+        <div class="text-right mt-2">
+            <button class="btn btn-light bg-default btn-sm" type="button" (click)="add()">
+                <fa-icon icon="check"></fa-icon> Add note
+            </button>
+        </div>
+    </div>
+</div>

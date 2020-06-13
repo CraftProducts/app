@@ -20,10 +20,9 @@ import { ValuePropViewerComponent } from './components/viewer.component';
 import { TextEditorComponent } from './components/text-editor.component';
 import { ValuePropEditorComponent } from './components/editor.component';
 import { ListEditorComponent } from './components/list-editor.component';
-import { PendingChangesGuard } from '../lib/pending-changes.guard';
 import { ValuePropBannerComponent } from './components/banner.component';
-import { AutofocusDirective } from '../lib/autofocus.directive';
-import { StripMarkdownPipe } from '../lib/stripmd.pipe';
+import { AppCommonModule } from '../appcommon/appcommon.module';
+import { PendingChangesGuard, SharedLibModule } from 'shared-lib';
 
 const routes: Route[] = [
   {
@@ -38,7 +37,6 @@ const routes: Route[] = [
 
 @NgModule({
   declarations: [
-    AutofocusDirective, StripMarkdownPipe, 
     ValuePropHomeComponent, ValuePropBannerComponent, ValuePropViewerComponent, ValuePropEditorComponent,
     TextEditorComponent, ListEditorComponent, LayoutRendererComponent
   ],
@@ -46,6 +44,10 @@ const routes: Route[] = [
     CommonModule,
     FormsModule,
     RouterModule,
+
+    SharedLibModule,
+    AppCommonModule,
+
     NgxMdModule,
     FontAwesomeModule,
 
@@ -55,13 +57,11 @@ const routes: Route[] = [
     AngularSplitModule,
 
     NgbModule,
+
     StoreModule.forFeature("valueProp", valuePropReducer, { initialState: valuePropInitialState }),
     EffectsModule.forFeature([ValuePropEffects]),
 
     RouterModule.forChild(routes)
-  ],
-  providers: [
-    PendingChangesGuard
   ]
 })
 export class ValuepropModule { }

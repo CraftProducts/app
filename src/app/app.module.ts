@@ -28,6 +28,7 @@ import { CommonModule } from '@angular/common';
 import { AngularSplitModule } from 'angular-split';
 import { NgxMdModule } from 'ngx-md';
 import { FormsModule } from '@angular/forms';
+import { AppCommonModule } from './appcommon/appcommon.module';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,9 @@ import { FormsModule } from '@angular/forms';
     BrowserModule,
     FormsModule,
     BrowserAnimationsModule,
+
+    AppCommonModule,
+
     NgbModule,
     HttpClientModule,
     LoadingBarHttpClientModule,

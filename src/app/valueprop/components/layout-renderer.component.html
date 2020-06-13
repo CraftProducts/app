@@ -18,8 +18,14 @@
                         {{section.title}}
 
                         <sup *ngIf="section.isDirty">
-                            <fa-icon icon="asterisk" size="xs" class="text-danger" title="Unsaved changes"></fa-icon>
+                            <fa-icon icon="asterisk" size="xs" class="text-danger ml-1" title="Unsaved changes">
+                            </fa-icon>
                         </sup>
+
+                        <span *ngIf="section.data && section.data.notes && section.data.notes.length > 0" class="text-muted ml-2">
+                            <small>{{section.data.notes.length}}</small>
+                            <fa-icon size="xs" [icon]="['far', 'comments']" class="ml-1"></fa-icon>
+                        </span>
                     </div>
                     <div class="ml-4"
                         *ngIf="!(section.data && (section.data.text || (section.data.list && section.data.list.length > 0)))">
@@ -32,7 +38,7 @@
                     <ul class="pl-3" *ngIf="section.data && section.data.list && section.data.list.length > 0">
                         <li *ngFor="let item of section.data.list" class="text-truncate" [title]="item.title">
                             <fa-icon icon="angle-right" size="xs" class="mr-1 text-muted"></fa-icon>
-                             {{item.title}}
+                            {{item.title}}
                         </li>
                     </ul>
                 </div>

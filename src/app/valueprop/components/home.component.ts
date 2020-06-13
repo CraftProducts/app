@@ -7,7 +7,7 @@ import { LoadAllTemplateAction, SetModelAction, CloseWorkspaceAction } from '../
 import { Subscription } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
-import { extractSections } from 'src/app/lib/utils';
+import { extractSections } from '../valueprop-utils';
 import { DomSanitizer } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment';
 

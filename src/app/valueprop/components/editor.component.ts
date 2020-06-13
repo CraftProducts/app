@@ -1,6 +1,6 @@
 import { Component, Input, EventEmitter, Output, HostListener } from '@angular/core';
 import * as _ from 'lodash';
-import { extractSections } from 'src/app/lib/utils';
+import { extractSections } from '../valueprop-utils';
 
 @Component({
     selector: 'app-valueprop-editor',
@@ -50,6 +50,17 @@ export class ValuePropEditorComponent {
         this.update.emit(section);
     }
 
+    onNotesChanged(notes, section) {
+        //TODO: think about notes update logic here
+        console.log(notes, section);
+        if (section.datatype === "text") {
+            section.notes = notes;
+        } if (section.datatype === "list") {
+            // need to locate list item and attach notes
+        }
+        section.isDirty = true;
+        this.update.emit(section);
+    }
     closeEditor() {
         this.close.emit(null);
     }

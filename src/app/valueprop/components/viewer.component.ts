@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { filter, map, tap } from 'rxjs/operators';
 import { LoadTemplateAction, SelectSectionAction, SetModelDirtyAction } from '../+state/valueprop.actions';
 import { Subscription } from 'rxjs';
-import { ComponentCanDeactivate } from 'src/app/lib/pending-changes.guard';
+import { ComponentCanDeactivate } from 'shared-lib'
 
 @Component({
     selector: 'app-valueprop-viewer',
