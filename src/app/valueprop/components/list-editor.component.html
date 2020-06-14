@@ -3,7 +3,7 @@
         <div *ngIf="mode !== 'EDIT'">
             <div class="bg-light" title="F2 to edit">
                 <div class="list-item">
-                    <button class="btn btn-light p-2 text-left w-100" (click)="onSelectItem(item)"
+                    <button class="btn btn-light p-2 text-left w-100 rounded-0" (click)="onSelectItem(item)"
                         *ngFor="let item of data.list">
                         <fa-icon icon="angle-right" class="pr-1 text-muted"></fa-icon>
                         {{item.title}}

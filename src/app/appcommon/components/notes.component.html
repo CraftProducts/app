@@ -1,32 +1,62 @@
-<h5>Notes</h5>
+<h5>
+    <fa-icon [icon]="['far', 'comments']" class="text-muted mr-1" size="xs"></fa-icon>
+    Notes
+</h5>
 <!-- <div class="alert alert-warning" *ngIf="!list || list.length === 0">
     There are no notes yet.
 </div> -->
+<div class="ml-2">
+    <div *ngFor="let item of list;let idx = index">
+        <div *ngIf="!item.editing" class="ml-2 border-left p-2">
+            <div class="btn-group btn-group-sm float-right">
+                <button class="btn btn-link text-muted" (click)="editItem(item)">
+                    <fa-icon icon="pencil-alt" size="sm"></fa-icon>
+                </button>
+                <button class="btn btn-link text-muted" (click)="remove(idx)">
+                    <fa-icon icon="times"></fa-icon>
+                </button>
+            </div>
+            <ngx-md [data]="item.note"></ngx-md>
+            <div class="small text-muted"> - {{item.timestamp | date:'mediumDate'}}</div>
+        </div>
 
-<div class="pb-3" *ngFor="let item of list;let idx = index">
-    <button class="btn btn-link btn-sm float-right text-muted" (click)="remove(idx)">
-        <fa-icon icon="times"></fa-icon>
-    </button>
-    <p>{{item.note}}</p>
-    <div class="small text-muted"> - {{item.timestamp | date:'mediumDate'}}</div>
-</div>
+        <div *ngIf="item.editing" class="p-3 bg-light">
+            <textarea class="form-control form-control-sm" [appAutofocus]="item.editing" [(ngModel)]="item.note"
+                (keydown.control.enter)="updateItem(item)" (keydown.escape)="cancelUpdatingItem($event, item)"
+                placeholder="update note..."></textarea>
+            <div>
+                <div class="btn-group btn-group-sm float-right">
+                    <button class="btn btn-link" (click)="updateItem(item)">
+                        <fa-icon icon="save" size="sm" class="mr-1"></fa-icon> <b>UPDATE</b>
+                    </button>
+                    <button class="btn btn-link text-muted" (click)="cancelUpdatingItem(null, item)">
+                        <fa-icon icon="times" class="mr-1"></fa-icon> <b>CANCEL</b>
+                    </button>
+                </div>
 
-<div class="pb-3">
+                <div class="small text-muted pt-2"> - {{item.timestamp | date:'mediumDate'}}</div>
+            </div>
+        </div>
 
-    <div (click)="isEditorVisible = true" *ngIf="!isEditorVisible" style="cursor:pointer"
-        class="bg-light rounded text-muted p-3" title="click to add note">
-        <i>click to add note</i>
     </div>
 
-    <div *ngIf="isEditorVisible">
-        <textarea type="text" class="form-control bg-light form-control-sm" [appAutofocus]="isEditorVisible === true"
-            [(ngModel)]="newRecord.note" (keydown.control.enter)="add()" (keydown.escape)="onCancel($event)"
-            placeholder="add note..."></textarea>
+    <div class="pb-3">
 
-        <div class="text-right mt-2">
-            <button class="btn btn-light bg-default btn-sm" type="button" (click)="add()">
-                <fa-icon icon="check"></fa-icon> Add note
-            </button>
+        <div (click)="showAddNoteEditor()" *ngIf="!isEditorVisible" style="cursor:pointer"
+            class="bg-light rounded text-muted p-3" title="click to add note">
+            <i>click to add note</i>
+        </div>
+
+        <div *ngIf="isEditorVisible">
+            <textarea type="text" class="form-control bg-light form-control-sm"
+                [appAutofocus]="isEditorVisible === true" [(ngModel)]="newRecord.note" (keydown.control.enter)="add()"
+                (keydown.escape)="onCancel($event)" placeholder="add note..."></textarea>
+
+            <div class="text-right mt-2">
+                <button class="btn btn-light bg-default btn-sm" type="button" (click)="add()">
+                    <fa-icon icon="check"></fa-icon> Add note
+                </button>
+            </div>
         </div>
     </div>
 </div>

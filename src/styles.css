@@ -222,8 +222,8 @@ ngx-md p {
   /* overflow: hidden !important; */
 }
 .layout-panel:hover {
-  background-color: #eee;
-  border: solid 2pt #eee;
+  border: solid 2pt #e8e8e8;
+  border-radius: 2pt;
 }
 
 .layout-panel .btn-hover {

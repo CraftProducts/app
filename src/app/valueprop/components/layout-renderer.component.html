@@ -38,7 +38,12 @@
 
                     <div *ngIf="section.data && section.data.list && section.data.list.length > 0">
                         <button *ngFor="let item of section.data.list" (click)="showItemDetails(item, section)"
-                            class="btn btn-sm btn-link text-dark w-100 text-left text-truncate" [title]="item.title">
+                            class="btn btn-sm btn-light w-100 text-left rounded-0 text-truncate" [title]="item.title">
+                            <span *ngIf="item && item.notes && item.notes.length > 0" class="text-muted float-right">
+                                <small>{{item.notes.length}}</small>
+                                <fa-icon size="xs" [icon]="['far', 'comments']" class="ml-1"></fa-icon>
+                            </span>
+
                             <fa-icon icon="angle-right" size="sm" class="mr-1 text-muted"></fa-icon>
                             {{item.title}}
                         </button>

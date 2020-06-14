@@ -23,7 +23,7 @@ export class NotesComponent {
     }
 
     canAdd = () => this.newRecord && this.newRecord.note && this.newRecord.note.trim().length > 0;
-    
+
     add() {
         if (this.canAdd()) {
             if (!this.list) {
@@ -43,5 +43,31 @@ export class NotesComponent {
 
     resetNewRecord() {
         this.newRecord = { timestamp: new Date(), note: '' };
+    }
+
+    editItem(item) {
+        item.editing = true;
+        item.memento = item.note;
+        this.isEditorVisible = false;
+    }
+
+    updateItem(item) {
+        item.editing = false;
+    }
+
+    cancelUpdatingItem(event, item) {
+        if (event) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        item.editing = false;
+        item.note = item.memento;
+    }
+
+    showAddNoteEditor() {
+        this.isEditorVisible = true;
+        if (this.list && this.list.length > 0) {
+            this.list.forEach(note => note.editing = false);
+        }
     }
 }

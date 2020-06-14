@@ -1,4 +1,8 @@
 <div *ngIf="item">
     <h4>{{item.title}}</h4>
+    <div class="alert bg-light">
+        <ngx-md [data]="item.summary"></ngx-md>
+    </div>
+
     <app-notes [(list)]="item.notes" (listChange)="onListChange($event)"></app-notes>
 </div>

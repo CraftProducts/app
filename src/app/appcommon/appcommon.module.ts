@@ -6,6 +6,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import * as _ from 'lodash';
 import { SharedLibModule } from 'shared-lib';
+import { NgxMdModule } from 'ngx-md';
 
 const componentList = [NotesComponent];
 
@@ -17,7 +18,9 @@ const componentList = [NotesComponent];
     FormsModule,
 
     SharedLibModule,
-    FontAwesomeModule
+
+    FontAwesomeModule,
+    NgxMdModule
   ]
 })
 export class AppCommonModule { }
