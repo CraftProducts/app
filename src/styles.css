@@ -274,3 +274,29 @@ body .ui-sidebar .ui-sidebar-close {
 .list-item:hover {
   background-color: #eee;
 }
+
+.select-card {
+  width: 15rem;
+  height: 12rem;
+  color: #555;
+}
+
+.select-card .card-title {
+  color: #000;
+}
+
+.select-card:hover,
+.select-card:hover .card-text,
+.select-card:hover .card-title {
+  background-color: #2e2f4b;
+  color: #fff;
+}
+
+.select-card .card-text {
+  overflow: none;
+}
+
+.pop-content {
+  background-color: #f8f8f8;
+  width: 400pt;
+}

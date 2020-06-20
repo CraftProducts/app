@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
@@ -29,6 +29,15 @@ import { AngularSplitModule } from 'angular-split';
 import { NgxMdModule } from 'ngx-md';
 import { FormsModule } from '@angular/forms';
 import { AppCommonModule } from './appcommon/appcommon.module';
+
+import { GapiSession } from './appcommon/googledrive/gapi.session';
+import { AppRepository } from './appcommon/googledrive/app.repository';
+import { FileRepository } from './appcommon/googledrive/file.repository';
+import { UserRepository } from './appcommon/googledrive/user.repository';
+
+export function initGapi(gapiSession: GapiSession) {
+  return () => gapiSession.initClient();
+}
 
 @NgModule({
   declarations: [
@@ -68,7 +77,12 @@ import { AppCommonModule } from './appcommon/appcommon.module';
     AppRoutingModule
   ],
   providers: [
-    MessageService
+    MessageService,
+    // { provide: APP_INITIALIZER, useFactory: initGapi, deps: [GapiSession], multi: true },
+    GapiSession,
+    AppRepository,
+    FileRepository,
+    UserRepository
   ],
   bootstrap: [AppComponent]
 })

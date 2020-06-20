@@ -24,6 +24,8 @@ import { ValuePropBannerComponent } from './components/banner.component';
 import { AppCommonModule } from '../appcommon/appcommon.module';
 import { PendingChangesGuard, SharedLibModule } from 'shared-lib';
 import { ListitemEditorComponent } from './components/listitem-editor.component';
+import { GDriveSelectorComponent } from './components/gdrive.component';
+import { NgTruncatePipeModule } from 'angular-pipes';
 
 const routes: Route[] = [
   {
@@ -40,12 +42,14 @@ const routes: Route[] = [
   declarations: [
     ValuePropHomeComponent, ValuePropBannerComponent, ValuePropViewerComponent, ValuePropEditorComponent,
     TextEditorComponent, ListEditorComponent, ListitemEditorComponent, LayoutRendererComponent
+
+    , GDriveSelectorComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
     RouterModule,
-
+    NgTruncatePipeModule,
     SharedLibModule,
     AppCommonModule,
 
