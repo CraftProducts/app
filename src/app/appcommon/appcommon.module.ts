@@ -7,7 +7,10 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import * as _ from 'lodash';
 import { SharedLibModule } from 'shared-lib';
 import { NgxMdModule } from 'ngx-md';
-const componentList = [NotesComponent];
+import { NavbarComponent } from './components/navbar.component';
+import { RouterModule } from '@angular/router';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+const componentList = [NotesComponent, NavbarComponent];
 
 @NgModule({
   declarations: componentList,
@@ -15,12 +18,14 @@ const componentList = [NotesComponent];
   imports: [
     CommonModule,
     FormsModule,
+    RouterModule,    
+    NgbModule,
 
     SharedLibModule,
 
     FontAwesomeModule,
     NgxMdModule
   ],
-  providers: [  ]
+  providers: []
 })
 export class AppCommonModule { }
