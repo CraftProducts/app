@@ -11,13 +11,13 @@ import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class JourneyEffects {
-    templateFileLocation = environment.templateFileLocation;
+    templateFileLocation = `${environment.templateFileLocation}/journeymaps`;
     
     constructor(private httpClient: HttpClient, private actions$: Actions) { }
 
     @Effect() loadAllTemplates = this.actions$.pipe(ofType(valuepropActions.ActionTypes.LoadAllTemplates),
         switchMap((action: any) =>
-            this.httpClient.get(`${this.templateFileLocation}/templates.yaml`, { responseType: "text" })
+            this.httpClient.get(`${this.templateFileLocation}/index.yaml`, { responseType: "text" })
                 .pipe(
                     map(yamlString => load(yamlString)),
                     map(payload => ({ type: valuepropActions.ActionTypes.LoadAllTemplatesSuccess, payload })),

@@ -1,5 +1,5 @@
 export interface ValueProp {
-  templates: any;
+  templateDetails: any;
   currentTemplate: any;
 
   model: any;

@@ -16,13 +16,15 @@ import { environment } from 'src/environments/environment';
     templateUrl: './home.component.html'
 })
 export class JourneyHomeComponent implements OnInit, OnDestroy {
+    landingUrl = 'journeymaps';
+
     public version = environment.VERSION;
 
     isWorkspaceEmpty = true;
     journeyModel: any;
 
-    templates$: Subscription;
-    templates: any;
+    templateDetails$: Subscription;
+    templateDetails: any;
 
     currentTemplate$: Subscription;
     currentTemplate: any;
@@ -56,9 +58,9 @@ export class JourneyHomeComponent implements OnInit, OnDestroy {
         this.isModelDirty$ = this.store$.select(p => p.journey.isModelDirty)
             .subscribe(p => this.isModelDirty = p);
 
-        this.templates$ = this.store$.select(p => p.journey.templates)
+        this.templateDetails$ = this.store$.select(p => p.journey.templates)
             .pipe(filter(templates => templates))
-            .subscribe(templates => this.templates = templates);
+            .subscribe(templates => this.templateDetails = templates);
 
         this.currentTemplate$ = this.store$.select(p => p.journey.currentTemplate)
             .subscribe(ct => this.currentTemplate = ct);
@@ -66,7 +68,7 @@ export class JourneyHomeComponent implements OnInit, OnDestroy {
     ngOnDestroy(): void {
         this.eventNavigationEnd$ ? this.eventNavigationEnd$.unsubscribe() : null;
         this.model$ ? this.model$.unsubscribe() : null;
-        this.templates$ ? this.templates$.unsubscribe() : null;
+        this.templateDetails$ ? this.templateDetails$.unsubscribe() : null;
         this.currentTemplate$ ? this.currentTemplate$.unsubscribe() : null;
     }
 

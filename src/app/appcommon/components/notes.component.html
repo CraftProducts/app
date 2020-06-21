@@ -9,7 +9,7 @@
     <div *ngFor="let item of list;let idx = index">
         <div *ngIf="!item.editing">
             <div class="small text-muted text-uppercase">{{item.timestamp | date:'mediumDate'}}</div>
-            <div class="ml-2 border-left p-2">
+            <div class="ml-2 border-left pt-0 pl-2 pr-2 pb-4">
                 <div class="btn-group btn-group-sm float-right">
                     <button class="btn btn-link text-muted" (click)="editItem(item)">
                         <fa-icon icon="pencil-alt" size="sm"></fa-icon>

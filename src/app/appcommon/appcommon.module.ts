@@ -10,7 +10,10 @@ import { NgxMdModule } from 'ngx-md';
 import { NavbarComponent } from './components/navbar.component';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-const componentList = [NotesComponent, NavbarComponent];
+import { BannerComponent } from './components/banner.component';
+import { NgTruncatePipeModule } from 'angular-pipes';
+
+const componentList = [NotesComponent, NavbarComponent, BannerComponent];
 
 @NgModule({
   declarations: componentList,
@@ -18,8 +21,9 @@ const componentList = [NotesComponent, NavbarComponent];
   imports: [
     CommonModule,
     FormsModule,
-    RouterModule,    
+    RouterModule,
     NgbModule,
+    NgTruncatePipeModule,
 
     SharedLibModule,
 

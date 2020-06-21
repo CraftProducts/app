@@ -1,7 +1,7 @@
-<app-navbar [version]="version" [currentTemplate]="currentTemplate" landingUrl="journeys" purposeTitle="Journey"
-    title="Journeys" [templates]="templates" [isModelDirty]="isModelDirty" (closeWorkspace)="closeWorkspace()"
-    (save)="save()" (reset)="reset()"></app-navbar>
+<app-navbar *ngIf="templateDetails" [version]="version" [currentTemplate]="currentTemplate" [landingUrl]="landingUrl"
+    purposeTitle="Journey" [title]="templateDetails.title" [templates]="templateDetails.templates"
+    [isModelDirty]="isModelDirty" (closeWorkspace)="closeWorkspace()" (save)="save()" (reset)="reset()"></app-navbar>
 
-<!-- <app-gdrive></app-gdrive> -->
-<!-- <app-journey-banner *ngIf="showBanner" [templates]="templates"></app-journey-banner> -->
+<app-banner *ngIf="showBanner" [templateDetails]="templateDetails"></app-banner>
+
 <router-outlet></router-outlet>

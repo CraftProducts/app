@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import * as _ from 'lodash';
 import { Store } from '@ngrx/store';
 import { ValuePropState } from '../+state/valueprop.state';
-import { filter } from 'rxjs/operators';
+import { filter, tap } from 'rxjs/operators';
 import { LoadAllTemplateAction, SetModelAction, CloseWorkspaceAction } from '../+state/valueprop.actions';
 import { Subscription } from 'rxjs';
 import { MessageService } from 'primeng/api';
@@ -21,10 +21,10 @@ export class ValuePropHomeComponent implements OnInit, OnDestroy {
     public version = environment.VERSION;
 
     isWorkspaceEmpty = true;
-    valueProModel: any;
+    instance: any;
 
-    templates$: Subscription;
-    templates: any;
+    templateDetails$: Subscription;
+    templateDetails: any;
 
     currentTemplate$: Subscription;
     currentTemplate: any;
@@ -58,9 +58,9 @@ export class ValuePropHomeComponent implements OnInit, OnDestroy {
         this.isModelDirty$ = this.store$.select(p => p.valueProp.isModelDirty)
             .subscribe(p => this.isModelDirty = p);
 
-        this.templates$ = this.store$.select(p => p.valueProp.templates)
-            .pipe(filter(templates => templates))
-            .subscribe(templates => this.templates = templates);
+        this.templateDetails$ = this.store$.select(p => p.valueProp.templateDetails)
+            .pipe(filter(details => details))
+            .subscribe(templateDetails => this.templateDetails = templateDetails);
 
         this.currentTemplate$ = this.store$.select(p => p.valueProp.currentTemplate)
             .subscribe(ct => this.currentTemplate = ct);
@@ -68,7 +68,7 @@ export class ValuePropHomeComponent implements OnInit, OnDestroy {
     ngOnDestroy(): void {
         this.eventNavigationEnd$ ? this.eventNavigationEnd$.unsubscribe() : null;
         this.model$ ? this.model$.unsubscribe() : null;
-        this.templates$ ? this.templates$.unsubscribe() : null;
+        this.templateDetails$ ? this.templateDetails$.unsubscribe() : null;
         this.currentTemplate$ ? this.currentTemplate$.unsubscribe() : null;
     }
 
@@ -77,10 +77,10 @@ export class ValuePropHomeComponent implements OnInit, OnDestroy {
         if (file) {
             this.getConfigurations(file)
                 .then((data) => {
-                    this.valueProModel = data;
+                    this.instance = data;
                     this.isWorkspaceEmpty = false;
-                    if (this.valueProModel) {
-                        this.store$.dispatch(new SetModelAction(this.valueProModel));
+                    if (this.instance) {
+                        this.store$.dispatch(new SetModelAction(this.instance));
                     }
                 }, (err) => {
                     this.messageService.add({
@@ -108,20 +108,20 @@ export class ValuePropHomeComponent implements OnInit, OnDestroy {
     }
 
     save() {
-        this.valueProModel = this.valueProModel || {};
-        this.valueProModel.templateCode = this.currentTemplate.code;
-        this.valueProModel.sections = [];
-        extractSections(this.currentTemplate, ['code', 'data'], this.valueProModel.sections);
+        this.instance = this.instance || {};
+        this.instance.templateCode = this.currentTemplate.code;
+        this.instance.sections = [];
+        extractSections(this.currentTemplate, ['code', 'data'], this.instance.sections);
 
         this.downloadDataFile();
-        this.store$.dispatch(new SetModelAction(this.valueProModel));
+        this.store$.dispatch(new SetModelAction(this.instance));
     }
     private downloadDataFile() {
-        var theJSON = JSON.stringify(this.valueProModel);
+        var theJSON = JSON.stringify(this.instance);
 
         var element = document.createElement('a');
         element.setAttribute('href', "data:text/json;charset=UTF-8," + encodeURIComponent(theJSON));
-        element.setAttribute('download', `${this.valueProModel.templateCode}.json`);
+        element.setAttribute('download', `${this.instance.templateCode}.json`);
         element.style.display = 'none';
         document.body.appendChild(element);
         element.click();
@@ -129,7 +129,7 @@ export class ValuePropHomeComponent implements OnInit, OnDestroy {
     }
 
     reset() {
-        this.store$.dispatch(new SetModelAction(this.valueProModel));
+        this.store$.dispatch(new SetModelAction(this.instance));
     }
 
     createNew() {

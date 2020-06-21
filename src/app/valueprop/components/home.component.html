@@ -1,6 +1,6 @@
-<app-navbar [version]="version" [currentTemplate]="currentTemplate" [landingUrl]="landingUrl" purposeTitle="Product"
-    title="Value Proposition Models" [templates]="templates" [isModelDirty]="isModelDirty"
-    (closeWorkspace)="closeWorkspace()" (save)="save()" (reset)="reset()"></app-navbar>
+<app-navbar *ngIf="templateDetails" [version]="version" [currentTemplate]="currentTemplate" [landingUrl]="landingUrl"
+    purposeTitle="Product" [title]="templateDetails.title" [templates]="templateDetails.templates"
+    [isModelDirty]="isModelDirty" (closeWorkspace)="closeWorkspace()" (save)="save()" (reset)="reset()"></app-navbar>
 
 <div class="m-2">
     <p-fileUpload #configUploader name="myfile[]" *ngIf="!isModelDirty" customUpload="true"
@@ -8,9 +8,10 @@
         accept="application/json" [auto]="true" styleClass="ui-button-secondary mr-2" chooseLabel="Open file"
         chooseIcon="fa fa-file">
     </p-fileUpload>
-<!-- 
+    <!-- 
     <app-gdrive></app-gdrive> -->
 </div>
 
-<app-valueprop-banner *ngIf="showBanner" [templates]="templates"></app-valueprop-banner>
+<app-banner *ngIf="showBanner" [templateDetails]="templateDetails"></app-banner>
+
 <router-outlet></router-outlet>

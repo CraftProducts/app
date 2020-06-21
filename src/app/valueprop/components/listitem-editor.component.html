@@ -1,7 +1,32 @@
 <div *ngIf="item">
     <h4>{{item.title}}</h4>
     <div class="alert bg-light">
-        <ngx-md [data]="item.summary"></ngx-md>
+        <div *ngIf="!editing">
+            <button class="btn btn-link text-muted float-right" (click)="edit()">
+                <fa-icon icon="pencil-alt" size="sm"></fa-icon>
+            </button>
+            <ngx-md *ngIf="item.summary && item.summary.length > 0" [data]="item.summary"></ngx-md>
+            <button class="btn btn-link btn-sm text-muted font-italic" *ngIf="!item.summary || item.summary.length === 0"
+                (click)="edit()">
+                click to add summary...
+            </button>
+        </div>
+        <div *ngIf="editing">
+            <textarea class="form-control form-control-sm" [appAutofocus]="editing" [(ngModel)]="item.summary"
+                (keydown.control.enter)="update()" rows="5" (keydown.escape)="cancelUpdating($event)"
+                placeholder="add summary..."></textarea>
+            <div class="text-right">
+                <div class="btn-group btn-group-sm">
+                    <button class="btn btn-link" (click)="update()">
+                        <fa-icon icon="save" size="sm" class="mr-1"></fa-icon> <b>UPDATE</b>
+                    </button>
+                    <button class="btn btn-link text-muted" (click)="cancelUpdating(null)">
+                        <fa-icon icon="times" class="mr-1"></fa-icon> <b>CANCEL</b>
+                    </button>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <app-notes [(list)]="item.notes" (listChange)="onListChange($event)"></app-notes>

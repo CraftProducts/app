@@ -20,7 +20,6 @@ import { ValuePropViewerComponent } from './components/viewer.component';
 import { TextEditorComponent } from './components/text-editor.component';
 import { ValuePropEditorComponent } from './components/editor.component';
 import { ListEditorComponent } from './components/list-editor.component';
-import { ValuePropBannerComponent } from './components/banner.component';
 import { AppCommonModule } from '../appcommon/appcommon.module';
 import { PendingChangesGuard, SharedLibModule } from 'shared-lib';
 import { ListitemEditorComponent } from './components/listitem-editor.component';
@@ -40,7 +39,7 @@ const routes: Route[] = [
 
 @NgModule({
   declarations: [
-    ValuePropHomeComponent, ValuePropBannerComponent, ValuePropViewerComponent, ValuePropEditorComponent,
+    ValuePropHomeComponent, ValuePropViewerComponent, ValuePropEditorComponent,
     TextEditorComponent, ListEditorComponent, ListitemEditorComponent, LayoutRendererComponent
 
     , GDriveSelectorComponent
