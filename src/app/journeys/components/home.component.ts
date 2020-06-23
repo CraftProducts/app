@@ -42,11 +42,9 @@ export class JourneyHomeComponent implements OnInit, OnDestroy {
         public router: Router) { }
 
     ngOnInit() {
-        this.eventNavigationEnd$ = this.router.events.subscribe((event) => {
-            if (event instanceof NavigationEnd) {
-                this.showBanner = this.activatedRoute.children.length === 0;
-            }
-        })
+        this.eventNavigationEnd$ = this.router.events
+            .pipe(filter(event => event instanceof NavigationEnd))
+            .subscribe(() => this.showBanner = this.activatedRoute.children.length === 0)
         this.showBanner = this.activatedRoute.children.length === 0;
 
         this.store$.dispatch(new LoadAllTemplateAction(null));

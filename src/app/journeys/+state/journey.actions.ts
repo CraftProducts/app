@@ -2,13 +2,13 @@ import { Action } from '@ngrx/store';
 import { type } from 'shared-lib';
 
 export const ActionTypes = {
-    LoadAllTemplates: type('[LoadAllTemplates]'),
-    LoadAllTemplatesFailed: type('[LoadAllTemplates] Failed'),
-    LoadAllTemplatesSuccess: type('[LoadAllTemplates] Success'),
+    LoadAllTemplates: type('[LoadAllJourneyMapTemplates]'),
+    LoadAllTemplatesFailed: type('[LoadAllJourneyMapTemplates] Failed'),
+    LoadAllTemplatesSuccess: type('[LoadAllJourneyMapTemplates] Success'),
 
-    LoadTemplate: type('[LoadTemplate]'),
-    LoadTemplateFailed: type('[LoadTemplate] Failed'),
-    LoadTemplateSuccess: type('[LoadTemplate] Success'),
+    LoadTemplate: type('[LoadJourneyMapTemplate]'),
+    LoadTemplateFailed: type('[LoadJourneyMapTemplate] Failed'),
+    LoadTemplateSuccess: type('[LoadJourneyMapTemplate] Success'),
 
     SetModel: type("[SetModel]"),
     SetModelDirty: type("[SetModelDirty]"),

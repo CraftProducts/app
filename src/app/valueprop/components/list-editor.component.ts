@@ -17,7 +17,6 @@ export class ListEditorComponent {
     @Input() set data(value: any) {
         this._data = value;
         this.dataToEdit = _.cloneDeep(value);
-        console.log(value);
     }
     get data() {
         return this._data;

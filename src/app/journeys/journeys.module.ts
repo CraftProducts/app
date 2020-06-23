@@ -19,6 +19,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { JourneyEffects } from './+state/journey.effects';
 import { JourneyHomeComponent } from './components/home.component';
 import { JourneyViewerComponent } from './components/viewer.component';
+import { TemplatesModule } from 'templates';
 
 const routes: Route[] = [
   {
@@ -37,6 +38,8 @@ const routes: Route[] = [
     NgTruncatePipeModule,
     SharedLibModule,
     AppCommonModule,
+
+    TemplatesModule,
 
     NgxMdModule,
     FontAwesomeModule,

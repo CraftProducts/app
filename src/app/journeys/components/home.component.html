@@ -2,6 +2,6 @@
     purposeTitle="Journey" [title]="templateDetails.title" [templates]="templateDetails.templates"
     [isModelDirty]="isModelDirty" (closeWorkspace)="closeWorkspace()" (save)="save()" (reset)="reset()"></app-navbar>
 
-<app-banner *ngIf="showBanner" [templateDetails]="templateDetails"></app-banner>
+<!-- <templates-selector *ngIf="showBanner" [templateDetails]="templateDetails"></templates-selector> -->
 
-<router-outlet></router-outlet>
+<router-outlet></router-outlet> 

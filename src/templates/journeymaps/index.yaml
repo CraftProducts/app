@@ -2,7 +2,7 @@ title: Journey maps
 summary: |
   The general goal of a journey map is to document the journey that a customer takes when interacting with the organisation.
 
-templates:
+list:
   - code: cxjourneymaps
     title: Customer experience journey map
     summary: |

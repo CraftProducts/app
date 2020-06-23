@@ -23,6 +23,10 @@
       "shared-lib": [
         "dist/shared-lib/shared-lib",
         "dist/shared-lib"
+      ],
+      "templates": [
+        "dist/templates/templates",
+        "dist/templates"
       ]
     }
   },

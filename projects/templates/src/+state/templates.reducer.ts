@@ -1,0 +1,17 @@
+import { Templates } from './templates.state';
+import { ActionTypes } from './templates.actions';
+import * as _ from 'lodash';
+
+export function templatesReducer(state: Templates, action: any): Templates {
+    switch (action.type) {
+        case ActionTypes.LoadGroupsSuccess: {
+            return { ...state, groups: action.payload };
+        }
+
+        case ActionTypes.LoadGroupTemplatesSuccess: {
+            return { ...state, groupTemplates: action.payload };
+        }
+
+        default: return state;
+    }
+}

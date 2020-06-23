@@ -1,0 +1,30 @@
+<div class="container mt-4" *ngIf="details">
+    <h3 class="mb-4 text-center">
+        {{details.title}}
+        <button class="btn btn-link" type="button" placement="bottom" [ngbPopover]="popContent"
+            popoverClass="pop-content">
+            <fa-icon [icon]="['far', 'question-circle']" class="text-muted"></fa-icon>
+        </button>
+    </h3>
+    <ng-template #popContent>
+        <div class="p-2">
+            <ngx-md [data]="details.summary"></ngx-md>
+        </div>
+    </ng-template>
+
+    <div *ngIf="details.list && details.list.length" class="clearfix d-flex justify-content-center flex-wrap">
+        <a [routerLink]="['/', group, template.code]" class="mr-4 mb-4 card select-card custom-shadow"
+            *ngFor="let template of details.list">
+            <div class="p-3">
+                <h4 class="card-title text-truncate mb-2">{{template.title}}</h4>
+                <div class="card-text small">
+                    <ngx-md>{{template.summary | truncate:240:'...'}}</ngx-md>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="alert alert-warning" *ngIf="!details.list || details.list.length === 0">
+        <fa-icon icon="triangle-exclamation"></fa-icon>
+        No templates registered yet.
+    </div>
+</div>

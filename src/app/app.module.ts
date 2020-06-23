@@ -34,6 +34,7 @@ import { GapiSession } from './appcommon/googledrive/gapi.session';
 import { AppRepository } from './appcommon/googledrive/app.repository';
 import { FileRepository } from './appcommon/googledrive/file.repository';
 import { UserRepository } from './appcommon/googledrive/user.repository';
+import { IBACKEND_URLS } from 'shared-lib';
 
 export function initGapi(gapiSession: GapiSession) {
   return () => gapiSession.initClient();
@@ -82,7 +83,8 @@ export function initGapi(gapiSession: GapiSession) {
     GapiSession,
     AppRepository,
     FileRepository,
-    UserRepository
+    UserRepository,
+    { provide: IBACKEND_URLS, useValue: environment.backendUrls },
   ],
   bootstrap: [AppComponent]
 })
