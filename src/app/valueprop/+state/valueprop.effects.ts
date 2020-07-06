@@ -15,26 +15,26 @@ export class ValuePropEffects {
     
     constructor(private httpClient: HttpClient, private actions$: Actions) { }
 
-    @Effect() loadAllTemplates = this.actions$.pipe(ofType(valuepropActions.ActionTypes.LoadAllTemplates),
-        switchMap((action: any) =>
-            this.httpClient.get(`${this.templateFileLocation}/index.yaml`, { responseType: "text" })
-                .pipe(
-                    map(yamlString => load(yamlString)),
-                    map(payload => ({ type: valuepropActions.ActionTypes.LoadAllTemplatesSuccess, payload })),
-                    catchError(() => of({ type: valuepropActions.ActionTypes.LoadAllTemplatesFailed }))
-                )
-        )
-    );
+    // @Effect() loadAllTemplates = this.actions$.pipe(ofType(valuepropActions.ActionTypes.LoadAllTemplates),
+    //     switchMap((action: any) =>
+    //         this.httpClient.get(`${this.templateFileLocation}/index.yaml`, { responseType: "text" })
+    //             .pipe(
+    //                 map(yamlString => load(yamlString)),
+    //                 map(payload => ({ type: valuepropActions.ActionTypes.LoadAllTemplatesSuccess, payload })),
+    //                 catchError(() => of({ type: valuepropActions.ActionTypes.LoadAllTemplatesFailed }))
+    //             )
+    //     )
+    // );
 
-    @Effect() loadTemplate = this.actions$.pipe(ofType(valuepropActions.ActionTypes.LoadTemplate),
-        switchMap((action: any) =>
-            this.httpClient.get(`${this.templateFileLocation}/${action.payload.toLowerCase()}.yaml`, { responseType: "text" })
-                .pipe(
-                    map(yamlString => load(yamlString)),
-                    map(payload => ({ type: valuepropActions.ActionTypes.LoadTemplateSuccess, payload })),
-                    catchError(() => of({ type: valuepropActions.ActionTypes.LoadTemplateFailed }))
-                )
-        )
-    );
+    // @Effect() loadTemplate = this.actions$.pipe(ofType(valuepropActions.ActionTypes.LoadTemplate),
+    //     switchMap((action: any) =>
+    //         this.httpClient.get(`${this.templateFileLocation}/${action.payload.toLowerCase()}.yaml`, { responseType: "text" })
+    //             .pipe(
+    //                 map(yamlString => load(yamlString)),
+    //                 map(payload => ({ type: valuepropActions.ActionTypes.LoadTemplateSuccess, payload })),
+    //                 catchError(() => of({ type: valuepropActions.ActionTypes.LoadTemplateFailed }))
+    //             )
+    //     )
+    // );
 
 }

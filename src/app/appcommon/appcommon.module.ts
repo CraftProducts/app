@@ -1,4 +1,4 @@
-import { NgModule, ModuleWithProviders, APP_INITIALIZER } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NotesComponent } from './components/notes.component';
 import { FormsModule } from '@angular/forms';
@@ -10,10 +10,9 @@ import { NgxMdModule } from 'ngx-md';
 import { NavbarComponent } from './components/navbar.component';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { BannerComponent } from './components/banner.component';
 import { NgTruncatePipeModule } from 'angular-pipes';
 
-const componentList = [NotesComponent, NavbarComponent, BannerComponent];
+const componentList = [NotesComponent, NavbarComponent];
 
 @NgModule({
   declarations: componentList,

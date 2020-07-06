@@ -35,6 +35,7 @@ import { AppRepository } from './appcommon/googledrive/app.repository';
 import { FileRepository } from './appcommon/googledrive/file.repository';
 import { UserRepository } from './appcommon/googledrive/user.repository';
 import { IBACKEND_URLS } from 'shared-lib';
+import { WorkbenchComponent } from './components/workbench.component';
 
 export function initGapi(gapiSession: GapiSession) {
   return () => gapiSession.initClient();
@@ -42,7 +43,7 @@ export function initGapi(gapiSession: GapiSession) {
 
 @NgModule({
   declarations: [
-    AppComponent, NavbarComponent, ToolsComponent, PageNotFoundComponent
+    AppComponent, WorkbenchComponent, NavbarComponent, ToolsComponent, PageNotFoundComponent
   ],
   imports: [
     CommonModule,

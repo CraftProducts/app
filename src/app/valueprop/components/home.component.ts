@@ -1,12 +1,12 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+ import { Component, OnInit, OnDestroy } from '@angular/core';
 import * as _ from 'lodash';
 import { Store } from '@ngrx/store';
 import { ValuePropState } from '../+state/valueprop.state';
-import { filter, tap } from 'rxjs/operators';
-import { LoadAllTemplateAction, SetModelAction, CloseWorkspaceAction } from '../+state/valueprop.actions';
+import { filter } from 'rxjs/operators';
+import { SetModelAction, CloseWorkspaceAction } from '../+state/valueprop.actions';
 import { Subscription } from 'rxjs';
 import { MessageService } from 'primeng/api';
-import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { extractSections } from '../valueprop-utils';
 import { DomSanitizer } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment';
@@ -23,8 +23,8 @@ export class ValuePropHomeComponent implements OnInit, OnDestroy {
     isWorkspaceEmpty = true;
     instance: any;
 
-    templateDetails$: Subscription;
-    templateDetails: any;
+    // templateDetails$: Subscription;
+     templateDetails: any;
 
     currentTemplate$: Subscription;
     currentTemplate: any;
@@ -32,8 +32,8 @@ export class ValuePropHomeComponent implements OnInit, OnDestroy {
     model$: Subscription;
     isModelDirty$: Subscription;
     isModelDirty: boolean;
-    showBanner = false;
-    eventNavigationEnd$: Subscription;
+    // showBanner = false;
+    // eventNavigationEnd$: Subscription;
 
     constructor(public store$: Store<ValuePropState>,
         public messageService: MessageService,
@@ -42,12 +42,15 @@ export class ValuePropHomeComponent implements OnInit, OnDestroy {
         public router: Router) { }
 
     ngOnInit() {
-        this.eventNavigationEnd$ = this.router.events
-            .pipe(filter(event => event instanceof NavigationEnd))
-            .subscribe(() => this.showBanner = this.activatedRoute.children.length === 0)
-        this.showBanner = this.activatedRoute.children.length === 0;
+        // this.eventNavigationEnd$ = this.router.events
+        //     .pipe(filter(event => event instanceof NavigationEnd))
+        //     .subscribe(() => this.showBanner = this.activatedRoute.children.length === 0)
+        // this.showBanner = this.activatedRoute.children.length === 0;
 
-        this.store$.dispatch(new LoadAllTemplateAction(null));
+        // this.store$.dispatch(new LoadAllTemplateAction(null));
+        // this.templateDetails$ = this.store$.select(p => p.valueProp.templateDetails)
+        //     .pipe(filter(details => details))
+        //     .subscribe(templateDetails => this.templateDetails = templateDetails);
 
         this.model$ = this.store$.select(p => p.valueProp.model)
             .pipe(filter(p => p))
@@ -56,17 +59,13 @@ export class ValuePropHomeComponent implements OnInit, OnDestroy {
         this.isModelDirty$ = this.store$.select(p => p.valueProp.isModelDirty)
             .subscribe(p => this.isModelDirty = p);
 
-        this.templateDetails$ = this.store$.select(p => p.valueProp.templateDetails)
-            .pipe(filter(details => details))
-            .subscribe(templateDetails => this.templateDetails = templateDetails);
-
         this.currentTemplate$ = this.store$.select(p => p.valueProp.currentTemplate)
             .subscribe(ct => this.currentTemplate = ct);
     }
     ngOnDestroy(): void {
-        this.eventNavigationEnd$ ? this.eventNavigationEnd$.unsubscribe() : null;
+        // this.eventNavigationEnd$ ? this.eventNavigationEnd$.unsubscribe() : null;
         this.model$ ? this.model$.unsubscribe() : null;
-        this.templateDetails$ ? this.templateDetails$.unsubscribe() : null;
+        //this.templateDetails$ ? this.templateDetails$.unsubscribe() : null;
         this.currentTemplate$ ? this.currentTemplate$.unsubscribe() : null;
     }
 

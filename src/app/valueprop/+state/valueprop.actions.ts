@@ -2,13 +2,13 @@ import { Action } from '@ngrx/store';
 import { type } from 'shared-lib';
 
 export const ActionTypes = {
-    LoadAllTemplates: type('[LoadAllTemplates]'),
-    LoadAllTemplatesFailed: type('[LoadAllTemplates] Failed'),
-    LoadAllTemplatesSuccess: type('[LoadAllTemplates] Success'),
+    // LoadAllTemplates: type('[LoadAllTemplates]'),
+    // LoadAllTemplatesFailed: type('[LoadAllTemplates] Failed'),
+    // LoadAllTemplatesSuccess: type('[LoadAllTemplates] Success'),
 
-    LoadTemplate: type('[LoadTemplate]'),
-    LoadTemplateFailed: type('[LoadTemplate] Failed'),
-    LoadTemplateSuccess: type('[LoadTemplate] Success'),
+    // LoadTemplate: type('[LoadValuePropTemplate]'),
+    // LoadTemplateFailed: type('[LoadValuePropTemplate] Failed'),
+    // LoadTemplateSuccess: type('[LoadValuePropTemplate] Success'),
 
     SetModel: type("[SetModel]"),
     SetModelDirty: type("[SetModelDirty]"),
@@ -18,14 +18,14 @@ export const ActionTypes = {
     SelectSection: type('[SelectSection]')
 }
 
-export class LoadTemplateAction implements Action {
-    type = ActionTypes.LoadTemplate;
-    constructor(public payload: any) { }
-}
-export class LoadAllTemplateAction implements Action {
-    type = ActionTypes.LoadAllTemplates;
-    constructor(public payload: any) { }
-}
+// export class LoadTemplateAction implements Action {
+//     type = ActionTypes.LoadTemplate;
+//     constructor(public payload: any) { }
+// }
+// export class LoadAllTemplateAction implements Action {
+//     type = ActionTypes.LoadAllTemplates;
+//     constructor(public payload: any) { }
+// }
 
 export class SetModelAction implements Action {
     type = ActionTypes.SetModel;
@@ -46,8 +46,8 @@ export class SelectSectionAction implements Action {
 }
 
 export type Actions =
-    LoadTemplateAction
-    | LoadAllTemplateAction
+    // LoadTemplateAction
+    // | LoadAllTemplateAction
 
     | SetModelAction
     | SetModelDirtyAction

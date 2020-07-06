@@ -1,5 +1,7 @@
 import { App } from './app.state';
 
 export const appInitialState: App = {
-    returnUrl: ''
+    returnUrl: '',
+    currentTemplate: null,
+    isModelDirty: false
 };

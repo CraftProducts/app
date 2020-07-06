@@ -3,8 +3,8 @@ import * as _ from 'lodash';
 import { Store } from '@ngrx/store';
 import { ValuePropState } from '../+state/valueprop.state';
 import { ActivatedRoute } from '@angular/router';
-import { filter, map, tap } from 'rxjs/operators';
-import { LoadTemplateAction, SelectSectionAction, SetModelDirtyAction } from '../+state/valueprop.actions';
+import { filter } from 'rxjs/operators';
+import { SelectSectionAction, SetModelDirtyAction } from '../+state/valueprop.actions';
 import { Subscription } from 'rxjs';
 import { ComponentCanDeactivate } from 'shared-lib'
 
@@ -43,10 +43,6 @@ export class ValuePropViewerComponent implements ComponentCanDeactivate, OnInit,
         this.isModelDirty$ = this.store$.select(p => p.valueProp.isModelDirty)
             .subscribe(p => this.isModelDirty = p);
 
-        this.params$ = this.activatedRoute.params
-            .pipe(filter(p => p && p["template"] && p["template"].length > 0), map(p => p["template"]))
-            .subscribe(template => this.store$.dispatch(new LoadTemplateAction(template)));
-
         this.selectedSection$ = this.store$.select(p => p.valueProp.selectedSection)
             .subscribe(selectedSection => {
                 if (selectedSection) {
@@ -58,7 +54,7 @@ export class ValuePropViewerComponent implements ComponentCanDeactivate, OnInit,
                 }
             });
 
-        this.currentTemplate$ = this.store$.select(p => p.valueProp.currentTemplate)
+        this.currentTemplate$ = this.store$.select(p => p.app.currentTemplate)
             .pipe(filter(template => template))
             .subscribe(template => this.currentTemplate = template);
     }

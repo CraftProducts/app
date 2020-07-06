@@ -27,13 +27,7 @@ import { GDriveSelectorComponent } from './components/gdrive.component';
 import { NgTruncatePipeModule } from 'angular-pipes';
 
 const routes: Route[] = [
-  {
-    path: '', component: ValuePropHomeComponent, children: [
       { path: ':template', component: ValuePropViewerComponent, canDeactivate: [PendingChangesGuard] }
-      //   { path: 'storyboard', component: SearchStoryboardViewComponent },
-      //   { path: 'timeline', component: SearchTimelineViewComponent }
-    ]
-  },
 ];
 
 

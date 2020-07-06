@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angu
 import * as _ from 'lodash';
 
 @Component({
-    selector: 'app-navbar',
+    selector: 'app-toolbar',
     templateUrl: './navbar.component.html'
 })
 export class NavbarComponent {

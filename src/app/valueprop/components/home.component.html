@@ -1,6 +1,6 @@
-<app-navbar *ngIf="templateDetails" [version]="version" [currentTemplate]="currentTemplate" [landingUrl]="landingUrl"
+<app-toolbar *ngIf="templateDetails" [version]="version" [currentTemplate]="currentTemplate" [landingUrl]="landingUrl"
     purposeTitle="Product" [title]="templateDetails.title" [templates]="templateDetails.templates"
-    [isModelDirty]="isModelDirty" (closeWorkspace)="closeWorkspace()" (save)="save()" (reset)="reset()"></app-navbar>
+    [isModelDirty]="isModelDirty" (closeWorkspace)="closeWorkspace()" (save)="save()" (reset)="reset()"></app-toolbar>
 
 <div class="m-2">
     <p-fileUpload #configUploader name="myfile[]" *ngIf="!isModelDirty" customUpload="true"
@@ -12,7 +12,5 @@
     <!-- <app-gdrive></app-gdrive> -->
 
 </div>
-
-<app-banner *ngIf="showBanner" [templateDetails]="templateDetails"></app-banner>
 
 <router-outlet></router-outlet>

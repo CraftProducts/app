@@ -1,4 +1,5 @@
 export interface Templates {
+  redirectTo: string;
   groups: any;
   groupTemplates: any;
 }

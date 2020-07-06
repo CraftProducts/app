@@ -9,11 +9,11 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgxMdModule } from 'ngx-md';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { templatesReducer } from '../+state/templates.reducer';
-import { templatesInitialState } from '../+state/templates.init';
-import { TemplatesEffects } from '../+state/templates.effects';
-import { GroupsComponent } from '../components/groups.component';
-import { ListComponent } from '../components/list.component';
+import { templatesReducer } from './+state/templates.reducer';
+import { templatesInitialState } from './+state/templates.init';
+import { TemplatesEffects } from './+state/templates.effects';
+import { GroupsComponent } from './components/groups.component';
+import { ListComponent } from './components/list.component';
 
 const routes: Route[] = [
   {

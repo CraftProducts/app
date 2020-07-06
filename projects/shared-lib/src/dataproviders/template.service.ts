@@ -26,7 +26,7 @@ export class TemplateService {
     }
 
     public loadTemplate(groupCode, templateCode) {
-        return this.httpClient.get(`${this.templateFileLocation}/${groupCode.toLowerCase()}/${templateCode.toLowerCase()}/index.yaml`, { responseType: "text" })
+        return this.httpClient.get(`${this.templateFileLocation}/${groupCode.toLowerCase()}/${templateCode.toLowerCase()}.yaml`, { responseType: "text" })
             .pipe(map(yamlString => load(yamlString)))
     }
 }

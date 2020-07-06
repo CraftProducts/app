@@ -4,18 +4,18 @@ import * as _ from 'lodash';
 
 export function valuePropReducer(state: ValueProp, action: any): ValueProp {
     switch (action.type) {
-        case ActionTypes.LoadAllTemplatesSuccess: {
-            return { ...state, templateDetails: action.payload };
-        }
+        // case ActionTypes.LoadAllTemplatesSuccess: {
+        //     return { ...state, templateDetails: action.payload };
+        // }
 
-        case ActionTypes.LoadTemplateSuccess: {
-            const currentTemplate = action.payload;
-            const model = state.model;
+        // case ActionTypes.LoadTemplateSuccess: {
+        //     const currentTemplate = action.payload;
+        //     const model = state.model;
 
-            initializeData(model, currentTemplate);
+        //     initializeData(model, currentTemplate);
 
-            return { ...state, currentTemplate };
-        }
+        //     return { ...state, currentTemplate };
+        // }
 
         case ActionTypes.SetModel: {
             const model = action.payload;

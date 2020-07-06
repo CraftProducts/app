@@ -14,25 +14,36 @@ import { ActivatedRoute } from '@angular/router';
 export class ListComponent implements OnInit, OnDestroy {
     @Input() templateDetails: any;
     isCollapsed = true;
+
+    group$: Subscription;
     group: string;
+
     details$: Subscription;
     details: any;
+
+    redirectTo$: Subscription;
+    redirectTo = '/';
+
     constructor(public store$: Store<TemplatesState>, public activatedRoute: ActivatedRoute) { }
 
     ngOnInit(): void {
-        this.activatedRoute.params
+        this.redirectTo$ = this.store$.select(p => p.templates.redirectTo)
+            .subscribe(p => this.redirectTo = `/${p}`);
+
+        this.group$ = this.activatedRoute.params
             .pipe(filter(p => p && p["group"] && p["group"].length > 0), map(p => p["group"]))
             .subscribe(group => {
-                console.log('param', group);
                 this.group = group;
                 this.store$.dispatch(new LoadGroupTemplatesAction(group));
             });
 
         this.details$ = this.store$.select(p => p.templates.groupTemplates)
-            .pipe(filter(details => details), tap(p => console.log('groupTemplates', p)))
+            .pipe(filter(details => details))
             .subscribe(templateDetails => this.details = templateDetails);
     }
     ngOnDestroy(): void {
+        this.redirectTo$ ? this.redirectTo$.unsubscribe() : null;
+        this.group$ ? this.group$.unsubscribe() : null;
         this.details$ ? this.details$.unsubscribe() : null;
     }
 }
