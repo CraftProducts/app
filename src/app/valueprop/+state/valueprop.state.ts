@@ -1,10 +1,10 @@
 export interface ValueProp {
   templateDetails: any;
-  currentTemplate: any;
+  templateModel: any;
 
-  model: any;
-  isModelDirty: boolean;
-  
+  modelInstance: any;
+  modelDataset: any;
+
   selectedSection: any;
 }
 

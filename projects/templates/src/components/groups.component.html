@@ -20,7 +20,7 @@
             <div *ngIf="details.list && details.list.length > 0"
                 class="clearfix d-flex justify-content-center flex-wrap">
                 <a [routerLink]="[item.code]" class="mr-4 mb-4 card select-card custom-shadow"
-                    *ngFor="let item of details.list">
+                    *ngFor="let item of details.list" [title]="item.title">
                     <div class="p-3">
                         <h4 class="card-title text-truncate mb-2">{{item.title}}</h4>
                         <div class="card-text small">

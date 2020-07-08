@@ -13,7 +13,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { valuePropReducer } from './+state/valueprop.reducer';
 import { valuePropInitialState } from './+state/valueprop.init';
 import { ValuePropEffects } from './+state/valueprop.effects';
-import { ValuePropHomeComponent } from "./components/home.component";
+import { ValuePropHomeComponent } from "./components/_home.component";
 import { FormsModule } from '@angular/forms';
 import { LayoutRendererComponent } from './components/layout-renderer.component';
 import { ValuePropViewerComponent } from './components/viewer.component';
@@ -29,7 +29,6 @@ import { NgTruncatePipeModule } from 'angular-pipes';
 const routes: Route[] = [
       { path: ':template', component: ValuePropViewerComponent, canDeactivate: [PendingChangesGuard] }
 ];
-
 
 @NgModule({
   declarations: [

@@ -1,10 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AppState } from '../+state/app.state';
-import { ActivatedRoute, Router, UrlSerializer, PRIMARY_OUTLET } from '@angular/router';
+import { Router, PRIMARY_OUTLET } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { map } from 'rxjs/operators';
 import { LoadTemplateAction } from '../+state/app.actions';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-workbench',

@@ -10,9 +10,6 @@ export const ActionTypes = {
     LoadTemplate: type('[LoadTemplate]'),
     LoadTemplateFailed: type('[LoadTemplate] Failed'),
     LoadTemplateSuccess: type('[LoadTemplate] Success'),
-
-    SaveModel: type("[SaveModel]"),
-    ResetModel: type("[ResetModel]")
 }
 
 export const ModeTypes = {
@@ -35,21 +32,8 @@ export class LoadTemplateAction implements Action {
     constructor(public payload: any) { }
 }
 
-export class SaveModelAction implements Action {
-    type = ActionTypes.SaveModel;
-    constructor(public payload: any) { }
-}
-
-export class ResetModelAction implements Action {
-    type = ActionTypes.ResetModel;
-    constructor(public payload: any) { }
-}
-
 export type Actions =
     BootstrapAppAction
     | SetReturnUrlAction
     | LoadTemplateAction
-
-    | SaveModelAction
-    | ResetModelAction
     ;

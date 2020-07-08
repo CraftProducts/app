@@ -3,29 +3,36 @@ import * as _ from 'lodash';
 import { Store } from '@ngrx/store';
 import { ValuePropState } from '../+state/valueprop.state';
 import { ActivatedRoute } from '@angular/router';
-import { filter } from 'rxjs/operators';
-import { SelectSectionAction, SetModelDirtyAction } from '../+state/valueprop.actions';
+import { SelectSectionAction } from '../+state/valueprop.actions';
 import { Subscription } from 'rxjs';
 import { ComponentCanDeactivate } from 'shared-lib'
+import { BaseTemplateViewer } from './base-template-viewer';
+import { SetModelAction, SetModelDirtyAction, ResetModelAction } from 'src/app/appcommon/lib/CommonActions';
+import { extractSections } from '../valueprop-utils';
 
 @Component({
     selector: 'app-valueprop-viewer',
     templateUrl: './viewer.component.html'
 })
-export class ValuePropViewerComponent implements ComponentCanDeactivate, OnInit, OnDestroy {
+export class ValuePropViewerComponent extends BaseTemplateViewer implements ComponentCanDeactivate, OnInit, OnDestroy {
+    onExtractSections(modelInstance: any, fieldlist: any, sections: any): void {
+        extractSections(modelInstance, fieldlist, sections);
+    }
+
     public zoom = 100;
     editorVisible = false;
     mode = "VIEW";
+
+    selectedSection$: Subscription;
     section: string;
 
-    currentTemplate$: Subscription;
-    selectedSection$: Subscription;
     params$: Subscription;
 
-    isModelDirty$: Subscription;
-    isModelDirty: boolean;
+    model$: Subscription;
+    model: boolean;
 
     constructor(public store$: Store<ValuePropState>, public activatedRoute: ActivatedRoute) {
+        super(store$);
     }
 
     @HostListener('window:beforeunload', ['$event'])
@@ -37,14 +44,18 @@ export class ValuePropViewerComponent implements ComponentCanDeactivate, OnInit,
     }
     canDeactivate = () => !this.isModelDirty;
 
-    currentTemplate: any;
-
     ngOnInit() {
-        this.isModelDirty$ = this.store$.select(p => p.valueProp.isModelDirty)
-            .subscribe(p => this.isModelDirty = p);
+        this.subscribeTemplates();
+
+        this.model$ = this.store$.select(p => p.valueProp.modelInstance)
+            .subscribe(model => {
+                this.model = model;
+                console.log('this.model', this.model);
+            });
 
         this.selectedSection$ = this.store$.select(p => p.valueProp.selectedSection)
             .subscribe(selectedSection => {
+                console.log('selectedSection', selectedSection);
                 if (selectedSection) {
                     this.mode = selectedSection.mode;
                     this.section = selectedSection.section;
@@ -53,15 +64,16 @@ export class ValuePropViewerComponent implements ComponentCanDeactivate, OnInit,
                     this.editorVisible = false;
                 }
             });
-
-        this.currentTemplate$ = this.store$.select(p => p.app.currentTemplate)
-            .pipe(filter(template => template))
-            .subscribe(template => this.currentTemplate = template);
     }
+
+    onTemplatesLoaded(loadedTemplate): void {
+        this.store$.dispatch(new SetModelAction(loadedTemplate));
+    }
+
     ngOnDestroy(): void {
+        this.unsubscribeTemplates();
         this.params$ ? this.params$.unsubscribe() : null;
         this.selectedSection$ ? this.selectedSection$.unsubscribe() : null;
-        this.currentTemplate$ ? this.currentTemplate$.unsubscribe() : null;
     }
 
     onHide() {

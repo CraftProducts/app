@@ -1,19 +1,19 @@
- import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import * as _ from 'lodash';
 import { Store } from '@ngrx/store';
 import { ValuePropState } from '../+state/valueprop.state';
 import { filter } from 'rxjs/operators';
-import { SetModelAction, CloseWorkspaceAction } from '../+state/valueprop.actions';
 import { Subscription } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { Router, ActivatedRoute } from '@angular/router';
 import { extractSections } from '../valueprop-utils';
 import { DomSanitizer } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment';
+import { SetModelAction, CloseWorkspaceAction } from 'src/app/appcommon/lib/CommonActions';
 
 @Component({
     selector: 'app-valueprop-home',
-    templateUrl: './home.component.html'
+    templateUrl: './_home.component.html'
 })
 export class ValuePropHomeComponent implements OnInit, OnDestroy {
     landingUrl = 'valueprop';
@@ -23,8 +23,7 @@ export class ValuePropHomeComponent implements OnInit, OnDestroy {
     isWorkspaceEmpty = true;
     instance: any;
 
-    // templateDetails$: Subscription;
-     templateDetails: any;
+    templateDetails: any;
 
     currentTemplate$: Subscription;
     currentTemplate: any;
@@ -32,8 +31,6 @@ export class ValuePropHomeComponent implements OnInit, OnDestroy {
     model$: Subscription;
     isModelDirty$: Subscription;
     isModelDirty: boolean;
-    // showBanner = false;
-    // eventNavigationEnd$: Subscription;
 
     constructor(public store$: Store<ValuePropState>,
         public messageService: MessageService,
@@ -42,30 +39,18 @@ export class ValuePropHomeComponent implements OnInit, OnDestroy {
         public router: Router) { }
 
     ngOnInit() {
-        // this.eventNavigationEnd$ = this.router.events
-        //     .pipe(filter(event => event instanceof NavigationEnd))
-        //     .subscribe(() => this.showBanner = this.activatedRoute.children.length === 0)
-        // this.showBanner = this.activatedRoute.children.length === 0;
-
-        // this.store$.dispatch(new LoadAllTemplateAction(null));
-        // this.templateDetails$ = this.store$.select(p => p.valueProp.templateDetails)
-        //     .pipe(filter(details => details))
-        //     .subscribe(templateDetails => this.templateDetails = templateDetails);
-
-        this.model$ = this.store$.select(p => p.valueProp.model)
+        this.model$ = this.store$.select(p => p.valueProp.modelInstance)
             .pipe(filter(p => p))
             .subscribe(p => this.router.navigate([p.templateCode], { relativeTo: this.activatedRoute }));
 
-        this.isModelDirty$ = this.store$.select(p => p.valueProp.isModelDirty)
+        this.isModelDirty$ = this.store$.select(p => p.app.isModelDirty)
             .subscribe(p => this.isModelDirty = p);
 
-        this.currentTemplate$ = this.store$.select(p => p.valueProp.currentTemplate)
+        this.currentTemplate$ = this.store$.select(p => p.valueProp.templateModel)
             .subscribe(ct => this.currentTemplate = ct);
     }
     ngOnDestroy(): void {
-        // this.eventNavigationEnd$ ? this.eventNavigationEnd$.unsubscribe() : null;
         this.model$ ? this.model$.unsubscribe() : null;
-        //this.templateDetails$ ? this.templateDetails$.unsubscribe() : null;
         this.currentTemplate$ ? this.currentTemplate$.unsubscribe() : null;
     }
 
@@ -80,10 +65,7 @@ export class ValuePropHomeComponent implements OnInit, OnDestroy {
                         this.store$.dispatch(new SetModelAction(this.instance));
                     }
                 }, (err) => {
-                    this.messageService.add({
-                        severity: 'error', detail: 'Error:' + err,
-                        life: 5000, closable: true
-                    });
+                    this.messageService.add({ severity: 'error', detail: 'Error:' + err, life: 5000, closable: true });
                     configUploader.clear();
                 })
         }

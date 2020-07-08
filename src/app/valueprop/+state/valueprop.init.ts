@@ -2,10 +2,10 @@ import { ValueProp } from './valueprop.state';
 
 export const valuePropInitialState: ValueProp = {
     templateDetails: null,
-    currentTemplate: null,
+    templateModel: null,
 
-    model: null,
-    isModelDirty: false,
-    
+    modelInstance: null,
+    modelDataset: null,
+
     selectedSection: null
 };

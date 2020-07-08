@@ -1,36 +1,40 @@
 import { ValueProp } from './valueprop.state';
 import { ActionTypes } from './valueprop.actions';
 import * as _ from 'lodash';
+import { CommonActionTypes } from 'src/app/appcommon/lib/CommonActions';
 
 export function valuePropReducer(state: ValueProp, action: any): ValueProp {
+    console.log(action.type, action.payload);
     switch (action.type) {
-        // case ActionTypes.LoadAllTemplatesSuccess: {
-        //     return { ...state, templateDetails: action.payload };
-        // }
+        case CommonActionTypes.SetModel: {
+            return { ...state, modelInstance: action.payload, templateModel: action.payload }
+            // const model = action.payload;
+            // const currentTemplate = state.currentTemplate;
 
-        // case ActionTypes.LoadTemplateSuccess: {
-        //     const currentTemplate = action.payload;
-        //     const model = state.model;
+            // initializeData(model, currentTemplate);
 
-        //     initializeData(model, currentTemplate);
-
-        //     return { ...state, currentTemplate };
-        // }
-
-        case ActionTypes.SetModel: {
-            const model = action.payload;
-            const currentTemplate = state.currentTemplate;
-
-            initializeData(model, currentTemplate);
-
-            return { ...state, model, currentTemplate, isModelDirty: false };
+            // return { ...state, model, currentTemplate};
         }
-        case ActionTypes.SetModelDirty: {
-            return { ...state, isModelDirty: action.payload };
+        case CommonActionTypes.SaveModel: {
+            const children = state.modelInstance.children;
+            resetModelChildren(children, false);
+            return {
+                ...state,
+                selectedSection: null,
+                modelInstance: { ...state.modelInstance, children }
+            };
         }
-
-        case ActionTypes.CloseWorkspace: {
-            return { ...state, currentTemplate: null, model: null, isModelDirty: false, selectedSection: null };
+        case CommonActionTypes.ResetModel: {
+            const children = state.modelInstance.children;
+            resetModelChildren(children, true);
+            return {
+                ...state,
+                selectedSection: null,
+                modelInstance: { ...state.modelInstance, children }
+            };
+        }
+        case CommonActionTypes.CloseWorkspace: {
+            return { ...state, templateModel: null, modelInstance: null, selectedSection: null };
         }
 
         case ActionTypes.SelectSection: {
@@ -39,16 +43,31 @@ export function valuePropReducer(state: ValueProp, action: any): ValueProp {
 
         default: return state;
     }
-
-    function initializeData(model: any, currentTemplate: any) {
-        if (model && currentTemplate &&
-            model.sections && model.sections.length > 0 &&
-            model.templateCode.toLowerCase() === currentTemplate.code.toLowerCase()) {
-            populateModelData(currentTemplate, model.sections);
+    function resetModelChildren(children, resetData) {
+        if (!children) return null;
+        if (children.length > 0) {
+            children.forEach(child => {
+                console.log('chld', child);
+                child.isDirty = false;
+                if (resetData) {
+                    child.data = {};
+                }
+                resetModelChildren(child.children, resetData);
+            });
         }
     }
+    function initializeModelSections(modelDataset: any, currentTemplate: any) {
+        console.log(modelDataset, currentTemplate);
+        console.log(modelDataset.templateCode, modelDataset.sections);
+        if (modelDataset && currentTemplate &&
+            modelDataset.sections && modelDataset.sections.length > 0 &&
+            modelDataset.templateCode.toLowerCase() === currentTemplate.code.toLowerCase()) {
+            populateModelDataset(currentTemplate, modelDataset.sections);
+        }
+        return modelDataset.sections;
+    }
 
-    function populateModelData(section, lookupSections) {
+    function populateModelDataset(section, lookupSections) {
         if (!section) return;
 
         if (section.type === 'panel') {
@@ -57,7 +76,7 @@ export function valuePropReducer(state: ValueProp, action: any): ValueProp {
             section.isDirty = false;
         }
         if (section.children && section.children.length > 0) {
-            section.children.forEach(s => populateModelData(s, lookupSections));
+            section.children.forEach(s => populateModelDataset(s, lookupSections));
         }
     }
 }

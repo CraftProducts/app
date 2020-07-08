@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../+state/app.state';
 import { Subscription } from 'rxjs';
-import { SaveModelAction, ResetModelAction } from '../+state/app.actions';
+import { UserModelCommandTypes, UserModelCommandAction } from '../appcommon/lib/CommonActions';
 
 @Component({
     selector: 'app-navbar',
@@ -25,9 +25,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
 
     onSave() {
-        this.store$.dispatch(new SaveModelAction(null));
+        this.store$.dispatch(new UserModelCommandAction(UserModelCommandTypes.Save));
     }
     onReset() {
-        this.store$.dispatch(new ResetModelAction(null));
+        this.store$.dispatch(new UserModelCommandAction(UserModelCommandTypes.Reset));
     }
 }

@@ -1,7 +1,7 @@
 <app-toolbar *ngIf="templateDetails" [version]="version" [currentTemplate]="currentTemplate" [landingUrl]="landingUrl"
     purposeTitle="Product" [title]="templateDetails.title" [templates]="templateDetails.templates"
     [isModelDirty]="isModelDirty" (closeWorkspace)="closeWorkspace()" (save)="save()" (reset)="reset()"></app-toolbar>
-
+<!-- 
 <div class="m-2">
     <p-fileUpload #configUploader name="myfile[]" *ngIf="!isModelDirty" customUpload="true"
         (uploadHandler)="onFileUpload($event, configUploader)" maxFileSize="1000000" mode="basic"
@@ -9,8 +9,8 @@
         chooseIcon="fa fa-file">
     </p-fileUpload>
 
-    <!-- <app-gdrive></app-gdrive> -->
+    <app-gdrive></app-gdrive>
 
-</div>
+</div> -->
 
 <router-outlet></router-outlet>

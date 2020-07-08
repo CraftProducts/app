@@ -1,6 +1,7 @@
 import * as _ from 'lodash';
 import { App } from './app.state';
 import { ActionTypes } from './app.actions';
+import { CommonActionTypes } from '../appcommon/lib/CommonActions';
 
 export function appReducer(state: App, action: any): App {
     switch (action.type) {
@@ -16,13 +17,12 @@ export function appReducer(state: App, action: any): App {
             return { ...state, currentTemplate: action.payload };
         }
 
-        case ActionTypes.SaveModel:
-        case ActionTypes.ResetModel: {
-            return { ...state, isModelDirty: false };
+        case CommonActionTypes.UserModelCommand: {
+            return { ...state, userModelCommand: action.payload, isModelDirty: false };
         }
 
-        case "[SetModelDirty]": {   //this comes from individual module actions . e.g. valueprop.actions, journeymaps.actions
-            return { ...state, isModelDirty: true };
+        case CommonActionTypes.SetModelDirty: {
+            return { ...state, isModelDirty: true, userModelCommand: '' };
         }
 
         default: return state;
