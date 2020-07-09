@@ -13,8 +13,12 @@ export function appReducer(state: App, action: any): App {
             return { ...state, returnUrl: action.payload };
         }
 
+        case ActionTypes.LoadTemplate: {
+            return { ...state, templateToLoad: action.payload };
+        }
         case ActionTypes.LoadTemplateSuccess: {
-            return { ...state, currentTemplate: action.payload };
+            const currentTemplate = action.payload;
+            return { ...state, loadedTemplate: currentTemplate };
         }
 
         case CommonActionTypes.UserModelCommand: {
@@ -22,7 +26,7 @@ export function appReducer(state: App, action: any): App {
         }
 
         case CommonActionTypes.SetModelDirty: {
-            return { ...state, isModelDirty: true, userModelCommand: '' };
+            return { ...state, isModelDirty: true, userModelCommand: null };
         }
 
         default: return state;

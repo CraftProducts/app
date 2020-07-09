@@ -4,16 +4,20 @@ import * as _ from 'lodash';
 import { CommonActionTypes } from 'src/app/appcommon/lib/CommonActions';
 
 export function valuePropReducer(state: ValueProp, action: any): ValueProp {
-    console.log(action.type, action.payload);
     switch (action.type) {
         case CommonActionTypes.SetModel: {
             return { ...state, modelInstance: action.payload, templateModel: action.payload }
-            // const model = action.payload;
-            // const currentTemplate = state.currentTemplate;
-
-            // initializeData(model, currentTemplate);
-
-            // return { ...state, model, currentTemplate};
+        }
+        case CommonActionTypes.OpenModel: {
+            const data = action.payload;
+            const children = state.modelInstance.children;
+            resetModelChildren(children, false);
+            populateModelDataset(state.modelInstance, data.sections);
+            return {
+                ...state,
+                selectedSection: null,
+                modelInstance: { ...state.modelInstance, children }
+            };
         }
         case CommonActionTypes.SaveModel: {
             const children = state.modelInstance.children;
@@ -47,7 +51,6 @@ export function valuePropReducer(state: ValueProp, action: any): ValueProp {
         if (!children) return null;
         if (children.length > 0) {
             children.forEach(child => {
-                console.log('chld', child);
                 child.isDirty = false;
                 if (resetData) {
                     child.data = {};
@@ -56,27 +59,17 @@ export function valuePropReducer(state: ValueProp, action: any): ValueProp {
             });
         }
     }
-    function initializeModelSections(modelDataset: any, currentTemplate: any) {
-        console.log(modelDataset, currentTemplate);
-        console.log(modelDataset.templateCode, modelDataset.sections);
-        if (modelDataset && currentTemplate &&
-            modelDataset.sections && modelDataset.sections.length > 0 &&
-            modelDataset.templateCode.toLowerCase() === currentTemplate.code.toLowerCase()) {
-            populateModelDataset(currentTemplate, modelDataset.sections);
-        }
-        return modelDataset.sections;
-    }
 
-    function populateModelDataset(section, lookupSections) {
-        if (!section) return;
+    function populateModelDataset(node, lookupSections) {
+        if (!node) return;
 
-        if (section.type === 'panel') {
-            const found = _.find(lookupSections, { code: section.code });
-            section.data = found.data;
-            section.isDirty = false;
+        if (node.type === 'panel') {
+            const found = _.find(lookupSections, { code: node.code });
+            node.data = found.data;
+            node.isDirty = false;
         }
-        if (section.children && section.children.length > 0) {
-            section.children.forEach(s => populateModelDataset(s, lookupSections));
+        if (node.children && node.children.length > 0) {
+            node.children.forEach(s => populateModelDataset(s, lookupSections));
         }
     }
 }

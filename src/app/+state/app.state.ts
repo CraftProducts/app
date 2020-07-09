@@ -1,9 +1,10 @@
 export interface App {
   returnUrl: string;
-  currentTemplate: any;
+  templateToLoad: any;
+  loadedTemplate: any;
 
   isModelDirty: boolean;
-  userModelCommand: string;
+  userModelCommand: any;
 }
 
 export interface AppState {

@@ -2,13 +2,13 @@ import { Store } from '@ngrx/store';
 import { ValuePropState } from '../+state/valueprop.state';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { UserModelCommandTypes, ResetModelAction, SaveModelAction } from 'src/app/appcommon/lib/CommonActions';
+import { UserModelCommandTypes, ResetModelAction, SaveModelAction, OpenModelAction } from 'src/app/appcommon/lib/CommonActions';
 
 export abstract class BaseTemplateViewer {
     instance: any;
 
-    currentTemplate$: Subscription;
-    currentTemplate: any;
+    loadedTemplate$: Subscription;
+    loadedTemplate: any;
 
     userModelCommand$: Subscription;
     userModelCommand: any;
@@ -22,10 +22,10 @@ export abstract class BaseTemplateViewer {
     abstract onTemplatesLoaded(loadedTemplate): void
 
     subscribeTemplates() {
-        this.currentTemplate$ = this.store$.select(p => p.app.currentTemplate)
+        this.loadedTemplate$ = this.store$.select(p => p.app.loadedTemplate)
             .pipe(filter(template => template))
             .subscribe(template => {
-                this.currentTemplate = template;
+                this.loadedTemplate = template;
                 this.onTemplatesLoaded(template);
             });
 
@@ -33,9 +33,13 @@ export abstract class BaseTemplateViewer {
             .subscribe(p => this.isModelDirty = p);
 
         this.userModelCommand$ = this.store$.select(p => p.app.userModelCommand)
-            .subscribe(command => {
-                this.userModelCommand = command;
-                switch (this.userModelCommand) {
+            .pipe(filter(p => p))
+            .subscribe(userCommand => {
+                this.userModelCommand = userCommand;
+                switch (this.userModelCommand.command) {
+                    case UserModelCommandTypes.Open:
+                        this.onOpenModel(this.userModelCommand.data);
+                        break;
                     case UserModelCommandTypes.Save:
                         this.onSaveModel();
                         break;
@@ -52,15 +56,18 @@ export abstract class BaseTemplateViewer {
     unsubscribeTemplates() {
         this.isModelDirty$ ? this.isModelDirty$.unsubscribe() : null;
         this.userModelCommand$ ? this.userModelCommand$.unsubscribe() : null;
-        this.currentTemplate$ ? this.currentTemplate$.unsubscribe() : null;
+        this.loadedTemplate$ ? this.loadedTemplate$.unsubscribe() : null;
     }
 
+    onOpenModel(dataset) {
+        this.store$.dispatch(new OpenModelAction(dataset));
+    }
     abstract onExtractSections(modelInstance, fieldlist, sections): void
     onSaveModel(): void {
         this.instance = this.instance || {};
-        this.instance.templateCode = this.currentTemplate.code;
+        this.instance.templateCode = this.loadedTemplate.code;
         this.instance.sections = [];
-        this.onExtractSections(this.currentTemplate, ['code', 'data'], this.instance.sections);
+        this.onExtractSections(this.loadedTemplate, ['code', 'data'], this.instance.sections);
 
         this.downloadDataFile();
         this.store$.dispatch(new SaveModelAction(this.instance));

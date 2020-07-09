@@ -48,14 +48,10 @@ export class ValuePropViewerComponent extends BaseTemplateViewer implements Comp
         this.subscribeTemplates();
 
         this.model$ = this.store$.select(p => p.valueProp.modelInstance)
-            .subscribe(model => {
-                this.model = model;
-                console.log('this.model', this.model);
-            });
+            .subscribe(model => this.model = model);
 
         this.selectedSection$ = this.store$.select(p => p.valueProp.selectedSection)
             .subscribe(selectedSection => {
-                console.log('selectedSection', selectedSection);
                 if (selectedSection) {
                     this.mode = selectedSection.mode;
                     this.section = selectedSection.section;
@@ -80,7 +76,7 @@ export class ValuePropViewerComponent extends BaseTemplateViewer implements Comp
         this.store$.dispatch(new SelectSectionAction(null));
     }
     onSectionSelected(sectionCode) {
-        const selected = this.searchSectionInLayout(this.currentTemplate, sectionCode);
+        const selected = this.searchSectionInLayout(this.loadedTemplate, sectionCode);
         this.store$.dispatch(new SelectSectionAction({ mode: this.mode, section: selected }));
     }
     searchSectionInLayout(layout, sectionCode) {
