@@ -4,6 +4,7 @@
             <div class="bg-light" title="F2 to edit">
                 <div class="list-item">
                     <button class="btn btn-light p-2 text-left w-100 rounded-0" (click)="onSelectItem(item)"
+                        [ngClass]="{'selected-list-item': selectedItem && selectedItem.title === item.title}"
                         *ngFor="let item of data.list">
                         <fa-icon icon="angle-right" class="pr-1 text-muted"></fa-icon>
                         {{item.title}}
@@ -53,7 +54,7 @@
             </div>
         </div>
     </div>
-    <div class="offset-md-1 col-md-5">
-        <app-listitem-editor [item]="selectedItem" (itemChange)="onItemChanged($event)"></app-listitem-editor>
+    <div *ngIf="mode !== 'EDIT'" class="offset-md-1 col-md-5">
+        <app-listitem-editor [item]="selectedItem" (itemChange)="onItemChanged($event)" (delete)="onDelete($event)"></app-listitem-editor>
     </div>
 </div>

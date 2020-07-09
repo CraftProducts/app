@@ -7,12 +7,14 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import * as _ from 'lodash';
 import { SharedLibModule } from 'shared-lib';
 import { NgxMdModule } from 'ngx-md';
-import { NavbarComponent } from './components/navbar.component';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgTruncatePipeModule } from 'angular-pipes';
+import { ListitemEditorComponent } from './components/listitem-editor.component';
+import { ListEditorComponent } from './components/list-editor.component';
+import { TextEditorComponent } from './components/text-editor.component';
 
-const componentList = [NotesComponent, NavbarComponent];
+const componentList = [NotesComponent, TextEditorComponent, ListEditorComponent, ListitemEditorComponent];
 
 @NgModule({
   declarations: componentList,

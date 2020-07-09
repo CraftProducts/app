@@ -271,7 +271,8 @@ body .ui-sidebar .ui-sidebar-close {
   margin: 0 8pt 8pt 0;
 }
 
-.list-item:hover {
+.list-item:hover,
+.selected-list-item {
   background-color: #eee;
 }
 

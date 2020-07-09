@@ -6,8 +6,8 @@ import { ActivatedRoute } from '@angular/router';
 import { SelectSectionAction } from '../+state/valueprop.actions';
 import { Subscription } from 'rxjs';
 import { ComponentCanDeactivate } from 'shared-lib'
-import { BaseTemplateViewer } from './base-template-viewer';
-import { SetModelAction, SetModelDirtyAction, ResetModelAction } from 'src/app/appcommon/lib/CommonActions';
+import { BaseTemplateViewer } from '../../appcommon/components/base-template-viewer';
+import { SetModelAction, SetModelDirtyAction } from 'src/app/appcommon/lib/CommonActions';
 import { extractSections } from '../valueprop-utils';
 
 @Component({
@@ -15,9 +15,6 @@ import { extractSections } from '../valueprop-utils';
     templateUrl: './viewer.component.html'
 })
 export class ValuePropViewerComponent extends BaseTemplateViewer implements ComponentCanDeactivate, OnInit, OnDestroy {
-    onExtractSections(modelInstance: any, fieldlist: any, sections: any): void {
-        extractSections(modelInstance, fieldlist, sections);
-    }
 
     public zoom = 100;
     editorVisible = false;
@@ -70,6 +67,10 @@ export class ValuePropViewerComponent extends BaseTemplateViewer implements Comp
         this.unsubscribeTemplates();
         this.params$ ? this.params$.unsubscribe() : null;
         this.selectedSection$ ? this.selectedSection$.unsubscribe() : null;
+    }
+
+    onExtractSections(modelInstance: any, fieldlist: any, sections: any): void {
+        extractSections(modelInstance, fieldlist, sections);
     }
 
     onHide() {

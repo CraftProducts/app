@@ -9,3 +9,16 @@ export function type<T>(label: T | ''): T {
   typeCache[<string>label] = true;
   return <T>label;
 }
+
+export function generateCode(length: number = 10): string {
+  return random() // Math.random()
+      .toString(36)
+      .replace(/[^a-z]+/g, '')
+      .substr(0, length);
+}
+
+function random() {
+  const seed = Math.random();
+  const x = Math.sin(seed) * 10000;
+  return x - Math.floor(x);
+}

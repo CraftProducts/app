@@ -1,5 +1,6 @@
 import { Component, Input, EventEmitter, Output, HostListener } from '@angular/core';
 import * as _ from 'lodash';
+import { generateCode } from 'shared-lib';
 
 @Component({
     selector: 'app-list-editor',
@@ -17,6 +18,7 @@ export class ListEditorComponent {
     @Input() set data(value: any) {
         this._data = value;
         this.dataToEdit = _.cloneDeep(value);
+        this.selectedItem = null;
     }
     get data() {
         return this._data;
@@ -73,7 +75,7 @@ export class ListEditorComponent {
     }
 
     resetNewRecord() {
-        this.newRecord = { sequence: 0, title: '', notes: [] };
+        this.newRecord = { sequence: 0, title: '', code: generateCode(), notes: [] };
     }
 
     onSelectItem(item) {
@@ -82,5 +84,15 @@ export class ListEditorComponent {
 
     onItemChanged(args) {
         this.itemChange.emit(args);
+    }
+
+    onDelete(item) {
+        if (this.data && this.data.list) {
+            const removed = _.remove(this.data.list, { code: item.code });
+            if (removed && removed.length > 0) {
+                this.selectedItem = null;
+                this.save.emit(this.data);
+            }
+        }
     }
 }

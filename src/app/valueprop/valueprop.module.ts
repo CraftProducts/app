@@ -13,29 +13,22 @@ import { EffectsModule } from '@ngrx/effects';
 import { valuePropReducer } from './+state/valueprop.reducer';
 import { valuePropInitialState } from './+state/valueprop.init';
 import { ValuePropEffects } from './+state/valueprop.effects';
-import { ValuePropHomeComponent } from "./components/_home.component";
 import { FormsModule } from '@angular/forms';
 import { LayoutRendererComponent } from './components/layout-renderer.component';
 import { ValuePropViewerComponent } from './components/viewer.component';
-import { TextEditorComponent } from './components/text-editor.component';
 import { ValuePropEditorComponent } from './components/editor.component';
-import { ListEditorComponent } from './components/list-editor.component';
 import { AppCommonModule } from '../appcommon/appcommon.module';
 import { PendingChangesGuard, SharedLibModule } from 'shared-lib';
-import { ListitemEditorComponent } from './components/listitem-editor.component';
 import { GDriveSelectorComponent } from './components/gdrive.component';
 import { NgTruncatePipeModule } from 'angular-pipes';
 
 const routes: Route[] = [
-      { path: ':template', component: ValuePropViewerComponent, canDeactivate: [PendingChangesGuard] }
+  { path: ':template', component: ValuePropViewerComponent, canDeactivate: [PendingChangesGuard] }
 ];
 
 @NgModule({
   declarations: [
-    ValuePropHomeComponent, ValuePropViewerComponent, ValuePropEditorComponent,
-    TextEditorComponent, ListEditorComponent, ListitemEditorComponent, LayoutRendererComponent
-
-    , GDriveSelectorComponent
+    ValuePropViewerComponent, ValuePropEditorComponent, LayoutRendererComponent, GDriveSelectorComponent
   ],
   imports: [
     CommonModule,

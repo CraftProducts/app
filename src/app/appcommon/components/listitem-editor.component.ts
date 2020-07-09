@@ -9,6 +9,7 @@ import { Key } from 'ts-key-enum';
 export class ListitemEditorComponent {
     @Input() item: any;
     @Output() itemChange = new EventEmitter<any>();
+    @Output() delete = new EventEmitter<any>();
 
     editing = false;
     memento = '';
@@ -28,10 +29,14 @@ export class ListitemEditorComponent {
             event.stopPropagation();
         }
         this.editing = false;
-        this.item.summary = this.memento;        
+        this.item.summary = this.memento;
     }
 
     onListChange(args) {
         this.itemChange.emit(this.item);
+    }
+
+    onDelete() {
+        this.delete.emit(this.item);
     }
 }

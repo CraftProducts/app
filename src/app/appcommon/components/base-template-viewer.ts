@@ -1,8 +1,8 @@
 import { Store } from '@ngrx/store';
-import { ValuePropState } from '../+state/valueprop.state';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { UserModelCommandTypes, ResetModelAction, SaveModelAction, OpenModelAction } from 'src/app/appcommon/lib/CommonActions';
+import { AppState } from 'src/app/+state/app.state';
 
 export abstract class BaseTemplateViewer {
     instance: any;
@@ -16,8 +16,7 @@ export abstract class BaseTemplateViewer {
     isModelDirty$: Subscription;
     isModelDirty: boolean;
 
-    constructor(public store$: Store<ValuePropState>) {
-    }
+    constructor(public store$: Store<AppState>) { }
 
     abstract onTemplatesLoaded(loadedTemplate): void
 
@@ -62,7 +61,9 @@ export abstract class BaseTemplateViewer {
     onOpenModel(dataset) {
         this.store$.dispatch(new OpenModelAction(dataset));
     }
+    
     abstract onExtractSections(modelInstance, fieldlist, sections): void
+
     onSaveModel(): void {
         this.instance = this.instance || {};
         this.instance.templateCode = this.loadedTemplate.code;

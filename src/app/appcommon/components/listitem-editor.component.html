@@ -1,13 +1,18 @@
 <div *ngIf="item">
-    <h4>{{item.title}}</h4>
+    <button class="btn btn-sm btn-link text-danger float-right" (click)="onDelete()">
+        <fa-icon icon="times"></fa-icon> Delete
+    </button>
+    <h4>
+        {{item.title}}
+    </h4>
     <div class="alert bg-light">
         <div *ngIf="!editing">
             <button class="btn btn-link text-muted float-right" (click)="edit()">
                 <fa-icon icon="pencil-alt" size="sm"></fa-icon>
             </button>
             <ngx-md *ngIf="item.summary && item.summary.length > 0" [data]="item.summary"></ngx-md>
-            <button class="btn btn-link btn-sm text-muted font-italic" *ngIf="!item.summary || item.summary.length === 0"
-                (click)="edit()">
+            <button class="btn btn-link btn-sm text-muted font-italic"
+                *ngIf="!item.summary || item.summary.length === 0" (click)="edit()">
                 click to add summary...
             </button>
         </div>
@@ -26,7 +31,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 
     <app-notes [(list)]="item.notes" (listChange)="onListChange($event)"></app-notes>

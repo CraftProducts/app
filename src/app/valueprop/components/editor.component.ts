@@ -51,12 +51,6 @@ export class ValuePropEditorComponent {
     }
 
     onNotesChanged(notes, section) {
-        //TODO: think about notes update logic here
-        // if (section.datatype === "text") {
-        //     section.notes = notes;
-        // } if (section.datatype === "list") {
-        //     // need to locate list item and attach notes
-        // }
         section.isDirty = true;
         this.update.emit(section);
     }

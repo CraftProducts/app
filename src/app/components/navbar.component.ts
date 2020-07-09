@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../+state/app.state';
 import { Subscription } from 'rxjs';
 import { UserModelCommandTypes, UserModelCommandAction } from '../appcommon/lib/CommonActions';
+import { MessageService } from 'primeng/api';
 
 @Component({
     selector: 'app-navbar',
@@ -14,7 +15,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     isModelDirty: boolean;
 
     isCollapsed = true;
-    constructor(public store$: Store<AppState>) {
+    constructor(public store$: Store<AppState>, public messageService: MessageService) {
     }
     ngOnInit(): void {
         this.isModelDirty$ = this.store$.select(p => p.app.isModelDirty)
@@ -40,8 +41,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
                         this.store$.dispatch(new UserModelCommandAction({ command: UserModelCommandTypes.Open, data }));
                     }
                 }, (err) => {
-                    // this.messageService.add({ severity: 'error', detail: 'Error:' + err, life: 5000, closable: true });
-                    // configUploader.clear();
+                    this.messageService.add({ severity: 'error', detail: 'Error:' + err, life: 5000, closable: true });
                 })
         }
     }
@@ -54,7 +54,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
                 try {
                     resolve(JSON.parse(data))
                 } catch (ex) {
-                    reject("Invalid file")
+                    reject("Invalid file. System only supports ProductPurpose compliant JSON files.")
                 }
             };
             reader.readAsText(file);
