@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import * as _ from 'lodash';
 import { Store } from '@ngrx/store';
 import { ValuePropState } from '../+state/valueprop.state';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SelectSectionAction } from '../+state/valueprop.actions';
 import { Subscription } from 'rxjs';
 import { ComponentCanDeactivate } from 'shared-lib'
@@ -28,8 +28,8 @@ export class ValuePropViewerComponent extends BaseTemplateViewer implements Comp
     model$: Subscription;
     model: boolean;
 
-    constructor(public store$: Store<ValuePropState>, public activatedRoute: ActivatedRoute) {
-        super(store$);
+    constructor(public store$: Store<ValuePropState>, public router: Router, public activatedRoute: ActivatedRoute) {
+        super(store$, router, activatedRoute);
     }
 
     @HostListener('window:beforeunload', ['$event'])
@@ -59,8 +59,8 @@ export class ValuePropViewerComponent extends BaseTemplateViewer implements Comp
             });
     }
 
-    onTemplatesLoaded(loadedTemplate): void {
-        this.store$.dispatch(new SetModelAction(loadedTemplate));
+    onTemplatesLoaded(template, dataset): void {
+        this.store$.dispatch(new SetModelAction({ template, dataset }));
     }
 
     ngOnDestroy(): void {
@@ -95,6 +95,8 @@ export class ValuePropViewerComponent extends BaseTemplateViewer implements Comp
         return null;
     }
     onSectionUpdated(section) {
-        this.store$.dispatch(new SetModelDirtyAction(section.isDirty));
+        if (section.isDirty) {
+            this.store$.dispatch(new SetModelDirtyAction(section.isDirty));
+        }
     }
 }

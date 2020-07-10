@@ -3,6 +3,8 @@ export interface App {
   templateToLoad: any;
   loadedTemplate: any;
 
+  loadedFile: any;
+  
   isModelDirty: boolean;
   userModelCommand: any;
 }

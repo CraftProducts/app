@@ -4,6 +4,7 @@ import { ActionTypes } from './app.actions';
 import { CommonActionTypes } from '../appcommon/lib/CommonActions';
 
 export function appReducer(state: App, action: any): App {
+    console.log(action.type, action.payload);
     switch (action.type) {
         case ActionTypes.BootstrapAppSuccess: {
             return { ...state, returnUrl: '' };
@@ -13,12 +14,23 @@ export function appReducer(state: App, action: any): App {
             return { ...state, returnUrl: action.payload };
         }
 
+        case ActionTypes.LoadFile: {
+            return { ...state, loadedFile: action.payload, isModelDirty: false };
+        }
+
         case ActionTypes.LoadTemplate: {
-            return { ...state, templateToLoad: action.payload };
+            let loadedFile = action.payload.mode && action.payload.mode.toLowerCase() === 'file'
+                ? state.loadedFile
+                : { ...state.loadedFile, filename: `${action.payload.templateCode}.json`, content: null }
+
+            return { ...state, loadedFile, templateToLoad: action.payload };
         }
         case ActionTypes.LoadTemplateSuccess: {
-            const currentTemplate = action.payload;
-            return { ...state, loadedTemplate: currentTemplate };
+            const loadedTemplate = action.payload;
+            if (state.templateToLoad) {
+                loadedTemplate.groupCode = state.templateToLoad.groupCode;
+            }
+            return { ...state, loadedTemplate, isModelDirty: false };
         }
 
         case CommonActionTypes.UserModelCommand: {

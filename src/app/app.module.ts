@@ -34,7 +34,7 @@ import { GapiSession } from './appcommon/googledrive/gapi.session';
 import { AppRepository } from './appcommon/googledrive/app.repository';
 import { FileRepository } from './appcommon/googledrive/file.repository';
 import { UserRepository } from './appcommon/googledrive/user.repository';
-import { IBACKEND_URLS } from 'shared-lib';
+import { IBACKEND_URLS, SharedLibModule } from 'shared-lib';
 import { WorkbenchComponent } from './components/workbench.component';
 
 export function initGapi(gapiSession: GapiSession) {
@@ -52,6 +52,7 @@ export function initGapi(gapiSession: GapiSession) {
     BrowserAnimationsModule,
 
     AppCommonModule,
+    SharedLibModule,
 
     NgbModule,
     HttpClientModule,

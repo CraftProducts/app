@@ -46,7 +46,6 @@ export class ValuePropEditorComponent {
     onToggleMode(updated, section) {
         this.mode = updated.mode;
         section.data = updated.data;
-        section.isDirty = false;
         this.update.emit(section);
     }
 

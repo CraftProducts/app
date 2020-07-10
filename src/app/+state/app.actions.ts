@@ -7,6 +7,8 @@ export const ActionTypes = {
 
     SetReturnUrl: type("[SetReturnUrl]"),
 
+    LoadFile: type("[LoadFile]"),
+
     LoadTemplate: type('[LoadTemplate]'),
     LoadTemplateFailed: type('[LoadTemplate] Failed'),
     LoadTemplateSuccess: type('[LoadTemplate] Success'),
@@ -24,6 +26,11 @@ export class BootstrapAppAction implements Action {
 
 export class SetReturnUrlAction implements Action {
     type = ActionTypes.SetReturnUrl;
+    constructor(public payload: any) { }
+}
+
+export class LoadFileAction implements Action {
+    type = ActionTypes.LoadFile;
     constructor(public payload: any) { }
 }
 

@@ -1,10 +1,5 @@
 export interface ValueProp {
-  templateDetails: any;
-  templateModel: any;
-
   modelInstance: any;
-  modelDataset: any;
-
   selectedSection: any;
 }
 

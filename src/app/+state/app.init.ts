@@ -5,6 +5,8 @@ export const appInitialState: App = {
     templateToLoad: null,
     loadedTemplate: null,
 
+    loadedFile: null,
+    
     isModelDirty: false,
     userModelCommand: null
 };

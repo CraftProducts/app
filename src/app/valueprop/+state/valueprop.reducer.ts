@@ -5,23 +5,20 @@ import { CommonActionTypes } from 'src/app/appcommon/lib/CommonActions';
 import { generateCode } from 'shared-lib';
 
 export function valuePropReducer(state: ValueProp, action: any): ValueProp {
+
     switch (action.type) {
         case CommonActionTypes.SetModel: {
-            return { ...state, modelInstance: action.payload, templateModel: action.payload }
-        }
-        case CommonActionTypes.OpenModel: {
-            const data = action.payload;
-            const children = state.modelInstance.children;
+            const modelInstance = action.payload.template;
+            const dataset = action.payload.dataset;
+            const children = modelInstance.children;
             resetModelChildren(children, false);
-            data.sections = makeBackwardCompatible(data.sections);
-            populateModelDataset(state.modelInstance, data.sections);
-            return {
-                ...state,
-                selectedSection: null,
-                modelDataset: data,
-                modelInstance: { ...state.modelInstance, children }
-            };
+            if (dataset) {
+                dataset.sections = makeBackwardCompatible(dataset.sections);
+                populateModelDataset(modelInstance, dataset.sections);
+            }
+            return { ...state, selectedSection: null, modelInstance }
         }
+
         case CommonActionTypes.SaveModel: {
             const children = state.modelInstance.children;
             resetModelChildren(children, false);
@@ -34,17 +31,13 @@ export function valuePropReducer(state: ValueProp, action: any): ValueProp {
         case CommonActionTypes.ResetModel: {
             const children = state.modelInstance.children;
             resetModelChildren(children, true);
-            if (state.modelDataset) {
-                populateModelDataset(state.modelInstance, state.modelDataset.sections);
+            if (action.payload) {
+                populateModelDataset(state.modelInstance, action.payload.sections);
             }
-            return {
-                ...state,
-                selectedSection: null,
-                modelInstance: { ...state.modelInstance, children }
-            };
+            return { ...state, selectedSection: null, modelInstance: { ...state.modelInstance, children } };
         }
         case CommonActionTypes.CloseWorkspace: {
-            return { ...state, templateModel: null, modelInstance: null, selectedSection: null };
+            return { ...state, modelInstance: null, selectedSection: null };
         }
 
         case ActionTypes.SelectSection: {
@@ -71,7 +64,7 @@ export function valuePropReducer(state: ValueProp, action: any): ValueProp {
 
         if (node.type === 'panel') {
             const found = _.find(lookupSections, { code: node.code });
-            node.data = _.cloneDeep(found.data);
+            node.data = found && found.data ? _.cloneDeep(found.data) : {};
             node.isDirty = false;
         }
         if (node.children && node.children.length > 0) {
@@ -82,7 +75,7 @@ export function valuePropReducer(state: ValueProp, action: any): ValueProp {
     function makeBackwardCompatible(sections) {
         sections.map(section => {
             if (section.data && section.data.list) {
-                section.data.list.forEach(element => element.code = element.code || generateCode());
+                section.data.list.forEach(element => element.code = element.code || generateCode(10));
             }
         });
         return sections;
