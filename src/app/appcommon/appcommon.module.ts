@@ -10,11 +10,13 @@ import { NgxMdModule } from 'ngx-md';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgTruncatePipeModule } from 'angular-pipes';
-import { ListitemEditorComponent } from './components/listitem-editor.component';
+import { RecordEditorComponent } from './components/record-editor.component';
 import { ListEditorComponent } from './components/list-editor.component';
 import { TextEditorComponent } from './components/text-editor.component';
+import { LinksComponent } from './components/links.component';
 
-const componentList = [NotesComponent, TextEditorComponent, ListEditorComponent, ListitemEditorComponent];
+const componentList = [NotesComponent, LinksComponent,
+  TextEditorComponent, ListEditorComponent, RecordEditorComponent];
 
 @NgModule({
   declarations: componentList,

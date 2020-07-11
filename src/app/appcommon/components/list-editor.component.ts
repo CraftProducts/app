@@ -75,7 +75,7 @@ export class ListEditorComponent {
     }
 
     resetNewRecord() {
-        this.newRecord = { sequence: 0, title: '', code: generateCode(), notes: [] };
+        this.newRecord = { sequence: 0, title: '', code: generateCode(10), notes: [], links: [] };
     }
 
     onSelectItem(item) {

@@ -35,13 +35,12 @@
 
                         <app-text-editor *ngIf="section.datatype === 'text'" [placeholder]="section.summary"
                             [mode]="mode" [(data)]="section.data" (save)="onUpdated($event, section)"
-                            (toggleMode)="onToggleMode($event, section)"
-                            (notesChanged)="onNotesChanged($event, section)">
+                            (toggleMode)="onToggleMode($event, section)" (itemChange)="onItemChanged($event, section)">
                         </app-text-editor>
-                        
+
                         <app-list-editor *ngIf="section.datatype === 'list'" [mode]="mode" [(data)]="section.data"
                             (save)="onUpdated($event, section)" (toggleMode)="onToggleMode($event, section)"
-                            (itemChange)="onNotesChanged($event, section)" [selectedItem]="section.selectedItem">
+                            (itemChange)="onItemChanged($event, section)" [selectedItem]="section.selectedItem">
                         </app-list-editor>
 
                     </div>

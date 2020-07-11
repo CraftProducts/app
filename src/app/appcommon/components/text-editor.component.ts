@@ -7,7 +7,7 @@ import { Key } from 'ts-key-enum';
     templateUrl: './text-editor.component.html'
 })
 export class TextEditorComponent {
-    @Output() notesChanged = new EventEmitter<any>();
+    @Output() itemChange = new EventEmitter<any>();
     @Output() save = new EventEmitter<any>();
     @Output() toggleMode = new EventEmitter<any>();
 
@@ -38,6 +38,7 @@ export class TextEditorComponent {
 
     onSave = () => {
         this.dataToEdit.notes = this.data.notes;
+        this.dataToEdit.links = this.data.links;
         this.save.emit(this.dataToEdit);
     }
     onEscape(event) {
@@ -48,7 +49,5 @@ export class TextEditorComponent {
 
     onToggleMode = (mode) => this.toggleMode.emit({ mode, data: this.data });
 
-    onListChange(args) {
-        this.notesChanged.emit(args);
-    }
+    onItemChanged = (args) => this.itemChange.emit(args);
 }

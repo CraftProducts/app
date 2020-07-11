@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { NgModule, APP_INITIALIZER } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
@@ -35,7 +35,6 @@ import { AppRepository } from './appcommon/googledrive/app.repository';
 import { FileRepository } from './appcommon/googledrive/file.repository';
 import { UserRepository } from './appcommon/googledrive/user.repository';
 import { IBACKEND_URLS, SharedLibModule } from 'shared-lib';
-import { WorkbenchComponent } from './components/workbench.component';
 
 export function initGapi(gapiSession: GapiSession) {
   return () => gapiSession.initClient();
@@ -43,7 +42,7 @@ export function initGapi(gapiSession: GapiSession) {
 
 @NgModule({
   declarations: [
-    AppComponent, WorkbenchComponent, NavbarComponent, ToolsComponent, PageNotFoundComponent
+    AppComponent, NavbarComponent, ToolsComponent, PageNotFoundComponent
   ],
   imports: [
     CommonModule,

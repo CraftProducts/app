@@ -1,0 +1,70 @@
+<div *ngIf="item" class="border-left alert pb-5">
+    <button class="btn btn-sm btn-link text-danger float-right" (click)="onDelete()" *ngIf="showDelete">
+        <fa-icon icon="times"></fa-icon> Delete
+    </button>
+    <h4 class="mb-3">
+        {{item.title}}
+    </h4>
+
+    <ul ngbNav #nav="ngbNav" class="nav-tabs mt-2" [(activeId)]="selectedTab" [destroyOnHide]="false">
+        <li [ngbNavItem]="1">
+            <a ngbNavLink>Description</a>
+            <ng-template ngbNavContent>
+                <div class="alert bg-light">
+                    <div *ngIf="!editing">
+                        <button class="btn btn-link text-muted float-right" (click)="edit()">
+                            <fa-icon icon="pencil-alt" size="sm"></fa-icon>
+                        </button>
+                        <ngx-md *ngIf="item.summary && item.summary.length > 0" [data]="item.summary"></ngx-md>
+                        <button class="btn btn-link btn-sm text-muted font-italic"
+                            *ngIf="!item.summary || item.summary.length === 0" (click)="edit()">
+                            click to add summary...
+                        </button>
+                    </div>
+                    <div *ngIf="editing">
+                        <textarea class="form-control form-control-sm" [appAutofocus]="editing"
+                            [(ngModel)]="item.summary" (keydown.control.enter)="update()" rows="5"
+                            (keydown.escape)="cancelUpdating($event)" placeholder="add summary..."></textarea>
+                        <div class="text-right">
+                            <div class="btn-group btn-group-sm">
+                                <button class="btn btn-link" (click)="update()">
+                                    <fa-icon icon="save" size="sm" class="mr-1"></fa-icon> <b>UPDATE</b>
+                                </button>
+                                <button class="btn btn-link text-muted" (click)="cancelUpdating(null)">
+                                    <fa-icon icon="times" class="mr-1"></fa-icon> <b>CANCEL</b>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+        </li>
+
+
+        <li [ngbNavItem]="2">
+            <a ngbNavLink>
+                <fa-icon [icon]="['far', 'comments']"></fa-icon>
+                <span class="ml-1" *ngIf="item.notes && item.notes.length > 0">
+                    {{item.notes.length}}
+                </span>
+                Notes
+            </a>
+            <ng-template ngbNavContent>
+                <app-notes [(list)]="item.notes" (listChange)="onListChange($event)"></app-notes>
+            </ng-template>
+        </li>
+        <li [ngbNavItem]="3">
+            <a ngbNavLink>
+                <fa-icon icon="link"></fa-icon>
+                <span class="ml-1" *ngIf="item.links && item.links.length > 0">
+                    {{item.links.length}}
+                </span>
+                Links
+            </a>
+            <ng-template ngbNavContent>
+                <app-links [(list)]="item.links" (listChange)="onListChange($event)"></app-links>
+            </ng-template>
+        </li>
+    </ul>
+    <div [ngbNavOutlet]="nav" class="pt-3"></div>
+</div>

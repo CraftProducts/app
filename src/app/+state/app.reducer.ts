@@ -23,7 +23,7 @@ export function appReducer(state: App, action: any): App {
                 ? state.loadedFile
                 : { ...state.loadedFile, filename: `${action.payload.templateCode}.json`, content: null }
 
-            return { ...state, loadedFile, templateToLoad: action.payload };
+            return { ...state, loadedFile, templateToLoad: action.payload, userModelCommand: null };
         }
         case ActionTypes.LoadTemplateSuccess: {
             const loadedTemplate = action.payload;

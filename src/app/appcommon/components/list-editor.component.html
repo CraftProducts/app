@@ -55,6 +55,7 @@
         </div>
     </div>
     <div *ngIf="mode !== 'EDIT'" class="offset-md-1 col-md-5">
-        <app-listitem-editor [item]="selectedItem" (itemChange)="onItemChanged($event)" (delete)="onDelete($event)"></app-listitem-editor>
+        <app-record-editor [item]="selectedItem" (itemChange)="onItemChanged($event)" [showDelete]="true" (delete)="onDelete($event)">
+        </app-record-editor>
     </div>
 </div>

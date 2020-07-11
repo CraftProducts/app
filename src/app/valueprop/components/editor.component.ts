@@ -49,7 +49,7 @@ export class ValuePropEditorComponent {
         this.update.emit(section);
     }
 
-    onNotesChanged(notes, section) {
+    onItemChanged(item, section) {
         section.isDirty = true;
         this.update.emit(section);
     }

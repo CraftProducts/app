@@ -29,6 +29,7 @@
         </div>
     </div>
     <div class="offset-md-1 col-md-5">
-        <app-notes [(list)]="data.notes" (listChange)="onListChange($event)"></app-notes>
+        <app-record-editor [item]="data" (itemChange)="onItemChanged($event)" [showDelete]="false">
+        </app-record-editor>
     </div>
 </div>

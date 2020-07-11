@@ -3,13 +3,24 @@ import * as _ from 'lodash';
 import { Key } from 'ts-key-enum';
 
 @Component({
-    selector: 'app-listitem-editor',
-    templateUrl: './listitem-editor.component.html'
+    selector: 'app-record-editor',
+    templateUrl: './record-editor.component.html'
 })
-export class ListitemEditorComponent {
-    @Input() item: any;
+export class RecordEditorComponent {
+    private _item: any;
+    @Input() set item(value: any) {
+        this._item = value;
+        this.selectedTab = 1;
+    }
+    get item() {
+        return this._item;
+    }
+
+    @Input() showDelete: boolean;
     @Output() itemChange = new EventEmitter<any>();
     @Output() delete = new EventEmitter<any>();
+
+    selectedTab = 1;
 
     editing = false;
     memento = '';
