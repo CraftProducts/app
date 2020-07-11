@@ -14,8 +14,9 @@ import { RecordEditorComponent } from './components/record-editor.component';
 import { ListEditorComponent } from './components/list-editor.component';
 import { TextEditorComponent } from './components/text-editor.component';
 import { LinksComponent } from './components/links.component';
+import { TasksComponent } from './components/tasks.component';
 
-const componentList = [NotesComponent, LinksComponent,
+const componentList = [NotesComponent, LinksComponent, TasksComponent,
   TextEditorComponent, ListEditorComponent, RecordEditorComponent];
 
 @NgModule({

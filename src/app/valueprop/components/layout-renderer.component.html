@@ -31,6 +31,11 @@
                                 <small>{{section.data.links.length}}</small>
                                 <fa-icon size="xs" icon="link" class="ml-1"></fa-icon>
                             </span>
+
+                            <span *ngIf="section.data.tasks && section.data.tasks.length > 0" class="text-muted ml-2">
+                                <small>{{section.data.tasks.length}}</small>
+                                <fa-icon size="xs" icon="tasks" class="ml-1"></fa-icon>
+                            </span>
                         </span>
                     </div>
                     <div class="ml-4"

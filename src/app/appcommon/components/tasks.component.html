@@ -1,0 +1,41 @@
+<div class="list-group list-group-flush" *ngFor="let item of list;let idx = index">
+    <div class="list-group-item p-1" *ngIf="!item.editing">
+        <div class="btn-group btn-group-sm float-right">
+            <button class="btn btn-link text-muted" (click)="editItem(item)">
+                <fa-icon icon="pencil-alt" size="sm"></fa-icon>
+            </button>
+            <button class="btn btn-link text-muted" (click)="remove(idx)">
+                <fa-icon icon="times"></fa-icon>
+            </button>
+        </div>
+        <input type="checkbox" [(ngModel)]="item.completed">
+        <span [ngClass]="{'strikethrough': item.completed}">
+            {{item.title}}
+        </span>
+    </div>
+
+    <div *ngIf="item.editing" class="p-3 bg-light">
+
+        <div class="input-group input-group-sm">
+            <input type="text" class="form-control form-control-sm" [appAutofocus]="item.editing"
+                [(ngModel)]="item.title" placeholder="update task..." (keydown.enter)="updateItem(item)"
+                (keydown.escape)="cancelUpdatingItem($event, item)">
+            <div class="input-group-append">
+                <button class="btn btn-link" (click)="updateItem(item)">
+                    <fa-icon icon="check"></fa-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="input-group input-group-sm">
+    <input type="text" class="form-control form-control-sm" [(ngModel)]="newRecord.title" (keydown.enter)="add()"
+        (keydown.escape)="onCancel($event)" placeholder="add new task...">
+    <div class="input-group-append">
+        <button class="btn btn-primary" type="button" [disabled]="!canAdd()" (click)="add()">
+            <fa-icon icon="check"></fa-icon>
+        </button>
+    </div>
+</div>

@@ -301,3 +301,7 @@ body .ui-sidebar .ui-sidebar-close {
   background-color: #f8f8f8;
   width: 400pt;
 }
+
+.strikethrough {
+  text-decoration: line-through;
+}

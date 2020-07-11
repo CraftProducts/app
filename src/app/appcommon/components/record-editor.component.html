@@ -65,6 +65,18 @@
                 <app-links [(list)]="item.links" (listChange)="onListChange($event)"></app-links>
             </ng-template>
         </li>
+        <li [ngbNavItem]="4">
+            <a ngbNavLink>
+                <fa-icon icon="tasks"></fa-icon>
+                <span class="ml-1" *ngIf="item.tasks && item.tasks.length > 0">
+                    {{item.tasks.length}}
+                </span>
+                Tasks
+            </a>
+            <ng-template ngbNavContent>
+                <app-tasks [(list)]="item.tasks" (listChange)="onListChange($event)"></app-tasks>
+            </ng-template>
+        </li>
     </ul>
     <div [ngbNavOutlet]="nav" class="pt-3"></div>
 </div>
