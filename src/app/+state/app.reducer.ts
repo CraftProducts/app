@@ -4,7 +4,7 @@ import { ActionTypes } from './app.actions';
 import { CommonActionTypes } from '../appcommon/lib/CommonActions';
 
 export function appReducer(state: App, action: any): App {
-    console.log(action.type, action.payload);
+
     switch (action.type) {
         case ActionTypes.BootstrapAppSuccess: {
             return { ...state, returnUrl: '' };
