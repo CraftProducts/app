@@ -3,18 +3,17 @@ import * as _ from 'lodash';
 import { Store } from '@ngrx/store';
 import { ValuePropState } from '../+state/valueprop.state';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SelectSectionAction } from '../+state/valueprop.actions';
 import { Subscription } from 'rxjs';
 import { ComponentCanDeactivate } from 'shared-lib'
 import { BaseTemplateViewer } from '../../appcommon/components/base-template-viewer';
-import { SetModelAction, SetModelDirtyAction } from 'src/app/appcommon/lib/CommonActions';
+import { SetModelAction, SetModelDirtyAction, SelectSectionAction } from 'src/app/appcommon/lib/CommonActions';
 import { extractSections } from '../valueprop-utils';
 
 @Component({
-    selector: 'app-valueprop-viewer',
-    templateUrl: './viewer.component.html'
+    selector: 'app-valueprop-home',
+    templateUrl: './home.component.html'
 })
-export class ValuePropViewerComponent extends BaseTemplateViewer implements ComponentCanDeactivate, OnInit, OnDestroy {
+export class ValuePropHomeComponent extends BaseTemplateViewer implements ComponentCanDeactivate, OnInit, OnDestroy {
 
     public zoom = 100;
     editorVisible = false;
@@ -71,6 +70,14 @@ export class ValuePropViewerComponent extends BaseTemplateViewer implements Comp
 
     onExtractSections(modelInstance: any, fieldlist: any, sections: any): void {
         extractSections(modelInstance, fieldlist, sections);
+    }
+
+    onShowEditor(eventArgs) {
+        this.store$.dispatch(new SelectSectionAction(eventArgs));
+    }
+    onShowItemDetails(eventArgs) {
+        eventArgs.section.selectedItem = eventArgs.item;
+        this.store$.dispatch(new SelectSectionAction({ mode: 'VIEW', section: eventArgs.section.eventArgs }));
     }
 
     onHide() {

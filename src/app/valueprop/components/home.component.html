@@ -1,12 +1,12 @@
 <div class="main-container">
     <div class="body-container" [style.zoom]="(zoom/100)">
-        <app-layout-renderer class="w-100" [layout]="model"></app-layout-renderer>
+        <app-split-layout class="w-100" [layout]="model" (showEditor)="onShowEditor($event)"></app-split-layout>
     </div>
 </div>
 <p-sidebar [(visible)]="editorVisible" [fullScreen]="true" styleClass="bg-light">
-    <app-valueprop-editor [mode]="mode" [section]="section" [(data)]="model" (onHide)="onHide()"
+    <app-section-editor [mode]="mode" [section]="section" [(data)]="model" (onHide)="onHide()"
         (sectionSelected)="onSectionSelected($event)" (close)="onHide()" (update)="onSectionUpdated($event)">
-    </app-valueprop-editor>
+    </app-section-editor>
 </p-sidebar>
 
 <div class="zoom-slider" *ngIf="model">

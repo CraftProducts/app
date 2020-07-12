@@ -9,7 +9,9 @@ export const CommonActionTypes = {
     CloseWorkspace: type("[CloseWorkspace]"),
 
     SetModelDirty: type("[SetModelDirty]"),
-    UserModelCommand: type("[UserModelCommand]")
+    UserModelCommand: type("[UserModelCommand]"),
+
+    SelectSection: type('[SelectSection]')
 }
 
 export const UserModelCommandTypes = {
@@ -43,5 +45,10 @@ export class ResetModelAction implements Action {
 }
 export class CloseWorkspaceAction implements Action {
     type = CommonActionTypes.CloseWorkspace;
+    constructor(public payload: any) { }
+}
+
+export class SelectSectionAction implements Action {
+    type = CommonActionTypes.SelectSection;
     constructor(public payload: any) { }
 }

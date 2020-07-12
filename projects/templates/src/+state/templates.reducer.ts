@@ -8,6 +8,10 @@ export function templatesReducer(state: Templates, action: any): Templates {
             return { ...state, redirectTo: action.payload };
         }
 
+        // case ActionTypes.SetBreadcrumb: {
+        //     return { ...state, breadcrumb: action.payload };
+        // }
+
         case ActionTypes.LoadGroupsSuccess: {
             return { ...state, groups: action.payload };
         }

@@ -5,10 +5,12 @@
             <ng-container [ngSwitch]="section.type">
                 <div *ngSwitchCase="'panel'">
                     <div class="btn-group btn-group-sm float-right btn-hover">
-                        <button class="btn btn-link text-muted" (click)="showEditor('EDIT', section)">
+                        <button class="btn btn-link text-muted"
+                            (click)="onShowEditor({mode: 'EDIT', section: section})">
                             <fa-icon icon="pencil-alt"></fa-icon>
                         </button>
-                        <button class="btn btn-link text-muted" (click)="showEditor('VIEW', section)">
+                        <button class="btn btn-link text-muted"
+                            (click)="onShowEditor({mode: 'VIEW', section: section})">
                             <fa-icon icon="expand-alt"></fa-icon>
                         </button>
                     </div>
@@ -47,8 +49,8 @@
                     </div>
 
                     <div *ngIf="section.data && section.data.list && section.data.list.length > 0">
-                        <button *ngFor="let item of section.data.list" (click)="showItemDetails(item, section)"
-                            class="btn btn-sm btn-light w-100 text-left rounded-0 text-truncate" [title]="item.title">
+                        <button *ngFor="let item of section.data.list" (click)="onShowItemDetails(item, section)"
+                            class="btn btn-sm btn-link hover-link text-dark w-100 text-left rounded-0 text-truncate" [title]="item.title">
 
                             <span class="text-primary float-right">
                                 <span *ngIf="item.notes && item.notes.length > 0" class="ml-2">
@@ -69,7 +71,8 @@
                         </button>
                     </div>
                 </div>
-                <app-layout-renderer *ngSwitchCase="'container'" [layout]="section"></app-layout-renderer>
+                <app-split-layout *ngSwitchCase="'container'" [layout]="section" (showEditor)="onShowEditor($event)">
+                </app-split-layout>
             </ng-container>
         </as-split-area>
     </ng-template>

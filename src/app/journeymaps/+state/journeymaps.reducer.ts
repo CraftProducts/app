@@ -1,10 +1,10 @@
-import { ValueProp } from './valueprop.state';
-import { ActionTypes } from './valueprop.actions';
+import { Journeymaps } from './journeymaps.state';
+import { ActionTypes } from './journeymaps.actions';
 import * as _ from 'lodash';
 import { CommonActionTypes } from 'src/app/appcommon/lib/CommonActions';
 import { generateCode } from 'shared-lib';
 
-export function valuePropReducer(state: ValueProp, action: any): ValueProp {
+export function journeymapsReducer(state: Journeymaps, action: any): Journeymaps {
 
     switch (action.type) {
         case CommonActionTypes.SetModel: {
@@ -40,7 +40,7 @@ export function valuePropReducer(state: ValueProp, action: any): ValueProp {
             return { ...state, modelInstance: null, selectedSection: null };
         }
 
-        case CommonActionTypes.SelectSection: {
+        case ActionTypes.SelectSection: {
             return { ...state, selectedSection: action.payload };
         }
 

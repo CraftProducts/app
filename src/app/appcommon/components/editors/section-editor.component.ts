@@ -1,12 +1,12 @@
 import { Component, Input, EventEmitter, Output, HostListener } from '@angular/core';
 import * as _ from 'lodash';
-import { extractSections } from '../valueprop-utils';
+import { extractSections } from '../../../valueprop/valueprop-utils';
 
 @Component({
-    selector: 'app-valueprop-editor',
-    templateUrl: './editor.component.html'
+    selector: 'app-section-editor',
+    templateUrl: './section-editor.component.html'
 })
-export class ValuePropEditorComponent {
+export class SectionEditorComponent {
     @Output() close = new EventEmitter<any>();
     @Output() sectionSelected = new EventEmitter<any>();
 

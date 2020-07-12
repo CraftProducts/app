@@ -10,21 +10,21 @@ import { AngularSplitModule } from 'angular-split';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { valuePropReducer } from './+state/valueprop.reducer';
-import { valuePropInitialState } from './+state/valueprop.init';
-import { ValuePropEffects } from './+state/valueprop.effects';
+import { journeymapsReducer } from './+state/journeymaps.reducer';
+import { journeymapsInitialState } from './+state/journeymaps.init';
+import { JourneymapsEffects } from './+state/journeymaps.effects';
 import { FormsModule } from '@angular/forms';
-import { ValuePropHomeComponent } from './components/home.component';
+import { JourneymapsHomeComponent } from './components/home.component';
 import { AppCommonModule } from '../appcommon/appcommon.module';
 import { PendingChangesGuard, SharedLibModule } from 'shared-lib';
 import { NgTruncatePipeModule } from 'angular-pipes';
 
 const routes: Route[] = [
-  { path: ':template', component: ValuePropHomeComponent, canDeactivate: [PendingChangesGuard] }
+  { path: ':template', component: JourneymapsHomeComponent, canDeactivate: [PendingChangesGuard] }
 ];
 
 @NgModule({
-  declarations: [ValuePropHomeComponent],
+  declarations: [JourneymapsHomeComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -43,10 +43,10 @@ const routes: Route[] = [
 
     NgbModule,
 
-    StoreModule.forFeature("valueProp", valuePropReducer, { initialState: valuePropInitialState }),
-    EffectsModule.forFeature([ValuePropEffects]),
+    StoreModule.forFeature("journeymaps", journeymapsReducer, { initialState: journeymapsInitialState }),
+    EffectsModule.forFeature([JourneymapsEffects]),
 
     RouterModule.forChild(routes)
   ]
 })
-export class ValuepropModule { }
+export class JourneymapsModule { }

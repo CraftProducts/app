@@ -10,14 +10,22 @@ import { NgxMdModule } from 'ngx-md';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgTruncatePipeModule } from 'angular-pipes';
-import { RecordEditorComponent } from './components/record-editor.component';
-import { ListEditorComponent } from './components/list-editor.component';
-import { TextEditorComponent } from './components/text-editor.component';
+import { RecordEditorComponent } from './components/editors/record-editor.component';
+import { ListEditorComponent } from './components/editors/list-editor.component';
+import { TextEditorComponent } from './components/editors/text-editor.component';
 import { LinksComponent } from './components/links.component';
 import { TasksComponent } from './components/tasks.component';
+import { GDriveSelectorComponent } from './googledrive/gdrive.component';
+import { SplitLayoutRendererComponent } from './components/renderers/split-layout.component';
+import { AngularSplitModule } from 'angular-split';
+import { SectionEditorComponent } from './components/editors/section-editor.component';
 
-const componentList = [NotesComponent, LinksComponent, TasksComponent,
-  TextEditorComponent, ListEditorComponent, RecordEditorComponent];
+const componentList = [
+  SplitLayoutRendererComponent, 
+  NotesComponent, LinksComponent, TasksComponent,
+  SectionEditorComponent, TextEditorComponent, ListEditorComponent, RecordEditorComponent,
+  GDriveSelectorComponent
+];
 
 @NgModule({
   declarations: componentList,
@@ -28,7 +36,7 @@ const componentList = [NotesComponent, LinksComponent, TasksComponent,
     RouterModule,
     NgbModule,
     NgTruncatePipeModule,
-
+    AngularSplitModule,
     SharedLibModule,
 
     FontAwesomeModule,

@@ -19,13 +19,21 @@ export class GroupsComponent implements OnInit, OnDestroy {
     details: any;
 
     redirectTo$: Subscription;
+    showBreadcrumb = true;
+
     constructor(public store$: Store<TemplatesState>, public router: Router, public activatedRoute: ActivatedRoute) { }
 
     ngOnInit(): void {
 
         this.redirectTo$ = this.activatedRoute.data
-            .pipe(filter(p => p["redirectTo"] && p["redirectTo"].length > 0), map(p => p["redirectTo"]))
-            .subscribe(redirectTo => this.store$.dispatch(new SetRedirectPathAction(redirectTo)));
+            .subscribe(data => {
+                if (data["redirectTo"] && data["redirectTo"].length > 0) {
+                    this.store$.dispatch(new SetRedirectPathAction(data["redirectTo"]));
+                }
+                if (data["breadcrumb"]) {
+                    this.showBreadcrumb = data["breadcrumb"] === 'show';
+                }
+            });
 
         this.eventNavigationEnd$ = this.router.events
             .pipe(filter(event => event instanceof NavigationEnd))

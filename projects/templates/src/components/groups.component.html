@@ -24,7 +24,7 @@
                     <div class="p-3">
                         <h4 class="card-title text-truncate mb-2">{{item.title}}</h4>
                         <div class="card-text small">
-                            <ngx-md>{{item.summary | truncate:240:'...'}}</ngx-md>
+                            <ngx-md>{{item.summary | truncate:200:'...'}}</ngx-md>
                         </div>
                     </div>
                 </a>
@@ -37,7 +37,7 @@
         </div>
     </div>
     <div *ngIf="!showBanner">
-        <a class="btn btn-link mr-2" routerLink="..">
+        <a class="btn btn-link mr-2" routerLink=".." *ngIf="showBreadcrumb">
             <fa-icon icon="angle-left" class="mr-1"></fa-icon> BACK
         </a>
         <router-outlet></router-outlet>

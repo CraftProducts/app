@@ -309,3 +309,10 @@ body .ui-sidebar .ui-sidebar-close {
 .text-brand {
   color: #015492;
 }
+
+.hover-link{
+  text-decoration: none!important;
+}
+.hover-link:hover {
+  border: solid 1px #aaa;
+}
