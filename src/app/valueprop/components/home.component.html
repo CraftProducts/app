@@ -1,6 +1,14 @@
 <div class="main-container">
-    <div class="body-container" [style.zoom]="(zoom/100)">
-        <app-split-layout class="w-100" [layout]="model" (showEditor)="onShowEditor($event)"></app-split-layout>
+    <div class="body-container" *ngIf="model" [style.zoom]="(zoom/100)">
+        <ng-container [ngSwitch]="model.layout">
+            <div class="container-fluid mt-3" *ngSwitchCase="'freeflow'">
+                <app-freeflow-layout class="w-100" [layout]="model" (showEditor)="onShowEditor($event)">
+                </app-freeflow-layout>
+            </div>
+
+            <app-split-layout *ngSwitchDefault class="w-100" [layout]="model" (showEditor)="onShowEditor($event)">
+            </app-split-layout>
+        </ng-container>
     </div>
 </div>
 <p-sidebar [(visible)]="editorVisible" [fullScreen]="true" styleClass="bg-light">

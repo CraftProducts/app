@@ -19,9 +19,14 @@ import { GDriveSelectorComponent } from './googledrive/gdrive.component';
 import { SplitLayoutRendererComponent } from './components/renderers/split-layout.component';
 import { AngularSplitModule } from 'angular-split';
 import { SectionEditorComponent } from './components/editors/section-editor.component';
+import { FreeflowLayoutRendererComponent } from './components/renderers/freeflow-layout.component';
+import { PanelRendererComponent } from './components/renderers/panel.component';
+import { MatrixRendererComponent } from './components/renderers/matrix.component';
 
 const componentList = [
-  SplitLayoutRendererComponent, 
+  SplitLayoutRendererComponent, FreeflowLayoutRendererComponent,
+  PanelRendererComponent, MatrixRendererComponent,
+  
   NotesComponent, LinksComponent, TasksComponent,
   SectionEditorComponent, TextEditorComponent, ListEditorComponent, RecordEditorComponent,
   GDriveSelectorComponent

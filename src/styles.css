@@ -310,9 +310,16 @@ body .ui-sidebar .ui-sidebar-close {
   color: #015492;
 }
 
-.hover-link{
-  text-decoration: none!important;
+.hover-link {
+  text-decoration: none !important;
 }
 .hover-link:hover {
   border: solid 1px #aaa;
+}
+
+.flex-fill {
+  margin-bottom: 0.75rem;
+}
+.flex-fill:not(:last-child) {
+  margin-right: 0.75rem;
 }

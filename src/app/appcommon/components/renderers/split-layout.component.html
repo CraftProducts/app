@@ -1,76 +1,9 @@
 <as-split *ngIf="layout" [direction]="layout.orientation">
     <ng-template ngFor let-section [ngForOf]="layout.children" let-icol="index">
-        <as-split-area [order]="icol" [size]="section.size"
-            [ngClass]="{'layout-panel pl-3 pr-2 pl-2 pt-2': section.type === 'panel'}">
+        <as-split-area [order]="icol" [size]="section.size">
             <ng-container [ngSwitch]="section.type">
-                <div *ngSwitchCase="'panel'">
-                    <div class="btn-group btn-group-sm float-right btn-hover">
-                        <button class="btn btn-link text-muted"
-                            (click)="onShowEditor({mode: 'EDIT', section: section})">
-                            <fa-icon icon="pencil-alt"></fa-icon>
-                        </button>
-                        <button class="btn btn-link text-muted"
-                            (click)="onShowEditor({mode: 'VIEW', section: section})">
-                            <fa-icon icon="expand-alt"></fa-icon>
-                        </button>
-                    </div>
-                    <div class="h5 font-weight-light text-brand">
-                        <fa-icon *ngIf="section.icon && section.icon.length > 0" size="sm" [icon]="section.icon"
-                            class="text-brand"></fa-icon>
-                        {{section.title}}
-
-                        <sup *ngIf="section.isDirty">
-                            <fa-icon icon="asterisk" size="xs" class="text-danger ml-1" title="Unsaved changes">
-                            </fa-icon>
-                        </sup>
-                        <span *ngIf="section.data" class="text-primary">
-                            <sup *ngIf="section.data.notes && section.data.notes.length > 0" class="ml-2">
-                                <small>{{section.data.notes.length}}</small>
-                                <fa-icon size="xs" [icon]="['far', 'comments']" class="ml-1"></fa-icon>
-                            </sup>
-
-                            <sup *ngIf="section.data.links && section.data.links.length > 0" class="ml-2">
-                                <small>{{section.data.links.length}}</small>
-                                <fa-icon size="xs" icon="link" class="ml-1"></fa-icon>
-                            </sup>
-
-                            <sup *ngIf="section.data.tasks && section.data.tasks.length > 0" class="ml-2">
-                                <small>{{section.data.tasks.length}}</small>
-                                <fa-icon size="xs" icon="tasks" class="ml-1"></fa-icon>
-                            </sup>
-                        </span>
-                    </div>
-                    <div class="ml-4"
-                        *ngIf="!(section.data && (section.data.text || (section.data.list && section.data.list.length > 0)))">
-                        <ngx-md class="text-muted font-italic" [data]="section.summary"></ngx-md>
-                    </div>
-                    <div *ngIf="section.data && section.data.text && section.datatype === 'text'" class=" ml-4">
-                        <ngx-md [data]="section.data.text"></ngx-md>
-                    </div>
-
-                    <div *ngIf="section.data && section.data.list && section.data.list.length > 0">
-                        <button *ngFor="let item of section.data.list" (click)="onShowItemDetails(item, section)"
-                            class="btn btn-sm btn-link hover-link text-dark w-100 text-left rounded-0 text-truncate" [title]="item.title">
-
-                            <span class="text-primary float-right">
-                                <span *ngIf="item.notes && item.notes.length > 0" class="ml-2">
-                                    <small>{{item.notes.length}}</small>
-                                    <fa-icon size="xs" [icon]="['far', 'comments']" class="ml-1"></fa-icon>
-                                </span>
-                                <span *ngIf="item.links && item.links.length > 0" class="ml-2">
-                                    <small>{{item.links.length}}</small>
-                                    <fa-icon size="xs" icon="link" class="ml-1"></fa-icon>
-                                </span>
-                                <span *ngIf="item.tasks && item.tasks.length > 0" class="ml-2">
-                                    <small>{{item.tasks.length}}</small>
-                                    <fa-icon size="xs" icon="tasks" class="ml-1"></fa-icon>
-                                </span>
-                            </span>
-                            <fa-icon icon="angle-right" size="sm" class="mr-1 text-muted"></fa-icon>
-                            {{item.title}}
-                        </button>
-                    </div>
-                </div>
+                <app-panel [section]="section" *ngSwitchCase="'panel'" (showEditor)="onShowEditor($event)">
+                </app-panel>
                 <app-split-layout *ngSwitchCase="'container'" [layout]="section" (showEditor)="onShowEditor($event)">
                 </app-split-layout>
             </ng-container>

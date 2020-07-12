@@ -10,6 +10,11 @@ summary: |
   Product-market fit happens when your product’s value proposition meets your target user’s underserved needs.
 
 list:
+  - code: cxjourneymaps
+    title: Customer experience
+    summary: |
+      A Customer Experience map visually identifies and organizes every encounter a customer has (or could have) with your company and brand. These interactions are commonly referred to as “touchpoints”.
+
   - code: productvisionboard
     title: Product vision board
     summary: |

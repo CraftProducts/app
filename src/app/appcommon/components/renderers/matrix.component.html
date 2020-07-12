@@ -1,0 +1,22 @@
+<div class="table-responsive mb-3">
+    <table class="table  table-borderless table-sm mb-0">
+        <thead>
+            <tr class="bg-light">
+                <th>&nbsp;</th>
+                <th *ngFor="let col of section.columns">{{col.title}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let row of section.rows">
+                <td class="bg-light" style="min-width: 150px;">
+                    <h5>{{row.title}}</h5>
+                    <i class="text-muted"> {{row.summary}} </i>
+                </td>
+                <td *ngFor="let col of section.columns">
+                    <app-panel [section]="getSection(row, col)" (showEditor)="onShowEditor($event)">
+                    </app-panel>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

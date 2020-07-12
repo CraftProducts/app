@@ -25,7 +25,7 @@ export class ValuePropHomeComponent extends BaseTemplateViewer implements Compon
     params$: Subscription;
 
     model$: Subscription;
-    model: boolean;
+    model: any;
 
     constructor(public store$: Store<ValuePropState>, public router: Router, public activatedRoute: ActivatedRoute) {
         super(store$, router, activatedRoute);
