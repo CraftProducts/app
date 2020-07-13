@@ -5,7 +5,7 @@ import { CommonActionTypes } from 'src/app/appcommon/lib/CommonActions';
 import { generateCode } from 'shared-lib';
 
 export function valuePropReducer(state: ValueProp, action: any): ValueProp {
-
+    console.log(action.type, action.payload);
     switch (action.type) {
         case CommonActionTypes.SetModel: {
             const modelInstance = action.payload.template;
@@ -29,6 +29,7 @@ export function valuePropReducer(state: ValueProp, action: any): ValueProp {
             };
         }
         case CommonActionTypes.ResetModel: {
+
             const children = state.modelInstance.children;
             resetModelChildren(children, true);
             if (action.payload) {
@@ -62,7 +63,7 @@ export function valuePropReducer(state: ValueProp, action: any): ValueProp {
     function populateModelDataset(node, lookupSections) {
         if (!node) return;
 
-        if (node.type === 'panel') {
+        if (node.type === 'panel' || node.type === 'matrix') {
             const found = _.find(lookupSections, { code: node.code });
             node.data = found && found.data ? _.cloneDeep(found.data) : {};
             node.isDirty = false;

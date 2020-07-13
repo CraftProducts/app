@@ -1,0 +1,22 @@
+<div class="row mb-3">
+    <div class="col-md-3">
+        <select class="form-control form-control-sm" [(ngModel)]="selectedItem.colCode">
+            <option>-- select phase --</option>
+            <option *ngFor="let col of section.columns" [value]="col.code">{{col.title}}</option>
+        </select>
+    </div>
+    <div class="col-md-3">
+        <select class="form-control form-control-sm" [(ngModel)]="selectedItem.rowCode">
+            <option>-- select state --</option>
+            <option *ngFor="let row of section.rows" [value]="row.code">{{row.title}}</option>
+        </select>
+    </div>
+</div>
+
+<app-text-editor *ngIf="selectedItem.datatype === 'text'" [placeholder]="selectedItem.summary" [mode]="mode"
+    [(data)]="selectedItem.data">
+</app-text-editor>
+
+<app-list-editor *ngIf="selectedItem.datatype === 'list'" [mode]="mode" [(data)]="selectedItem.data"
+    [selectedItem]="section.selectedItem">
+</app-list-editor>

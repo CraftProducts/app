@@ -13,17 +13,25 @@ export class MatrixRendererComponent {
         this.showEditor.emit(eventArgs);
     }
 
-    onShowItemDetails(item, section) {
-        section.selectedItem = item;
-        this.onShowEditor({ mode: 'VIEW', section });
+    onShowItemDetails(row, col) {
+        this.section.selectedItem = this.getSection(row, col);
+        this.onShowEditor({ mode: 'VIEW', section: this.section });
     }
 
     getSection(row, col) {
-        return {
-            datatype: 'text',
-            data: {
-                text: 'sample text'
+        const subSection = {
+            rowCode: row.code,
+            colCode: col.code,
+            datatype: row.datatype,
+            data: null
+        }
+        if (this.section.data) {
+            const found = _.find(this.section.data, { rowCode: row.code, colCode: col.code });
+            if (found) {
+                subSection.data = found.data;
             }
         }
+
+        return subSection;
     }
 }

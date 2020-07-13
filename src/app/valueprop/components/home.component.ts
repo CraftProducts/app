@@ -89,7 +89,8 @@ export class ValuePropHomeComponent extends BaseTemplateViewer implements Compon
     }
     searchSectionInLayout(layout, sectionCode) {
         if (layout) {
-            if (layout.type === 'panel' && layout.code.toUpperCase() === sectionCode.toUpperCase()) {
+            if ((layout.type === 'panel' || layout.type === 'matrix') &&
+                layout.code.toUpperCase() === sectionCode.toUpperCase()) {
                 return layout;
             } else if (layout.children && layout.children.length > 0) {
                 let result = null;
