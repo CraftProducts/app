@@ -21,7 +21,6 @@ h5 {
 
 ::-webkit-scrollbar-thumb {
   background-color: #aaa;
-  border-radius: 4pt;
 }
 ::-webkit-scrollbar {
   width: 10px;
@@ -317,9 +316,10 @@ body .ui-sidebar .ui-sidebar-close {
   border: solid 1px #aaa;
 }
 
-.flex-fill {
-  margin-bottom: 0.75rem;
-}
-.flex-fill:not(:last-child) {
+.flex-row app-panel:not(:last-child) .layout-panel {
   margin-right: 0.75rem;
+}
+
+.matrix-header {
+  background-color: #f0f8ff;
 }

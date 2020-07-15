@@ -1,7 +1,7 @@
 <div class="main-container">
     <div class="body-container" *ngIf="model" [style.zoom]="(zoom/100)">
         <ng-container [ngSwitch]="model.layout">
-            <div class="container-fluid mt-3" *ngSwitchCase="'freeflow'">
+            <div class="container-fluid mt-2" *ngSwitchCase="'freeflow'">
                 <app-freeflow-layout class="w-100" [layout]="model" (showEditor)="onShowEditor($event)">
                 </app-freeflow-layout>
             </div>

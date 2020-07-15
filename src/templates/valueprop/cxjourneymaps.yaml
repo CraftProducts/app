@@ -82,7 +82,7 @@ children:
         code: EMOTIONS
         title: Emotions
         summary: 'whats the emotion'
-        datatype: scale
+        datatype: select
         options:
           - Very sad
           - Sad

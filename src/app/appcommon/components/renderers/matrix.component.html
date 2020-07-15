@@ -1,21 +1,23 @@
 <!-- <pre>{{section.data|json}}</pre> -->
-<div class="table-responsive mb-3">
-    <table class="table  table-borderless table-sm mb-0 border-bottom">
+<div class="table-responsive">
+    <table class="table table-bordered table-sm mb-0">
         <thead>
-            <tr class="border-bottom">
+            <tr class="matrix-header">
                 <th>&nbsp;</th>
-                <th *ngFor="let col of section.columns">
+                <th class="" *ngFor="let col of section.columns">
                     <h5 class="text-capitalize">{{col.title}}</h5>
                 </th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let row of section.rows" class="bg-light border-bottom">
-                <td class="border-right" style="min-width: 150px;">
-                    <h5>{{row.title}}</h5>
-                    <i class="text-muted"> {{row.summary}} </i>
+            <tr *ngFor="let row of section.rows" class="bg-light">
+                <td class="matrix-header" style="min-width: 150px;">
+                    <h5 placement="right" [ngbPopover]="row.summary" triggers="mouseenter:mouseleave">
+                        {{row.title}}
+                        <fa-icon [icon]="['far','question-circle']" class="text-muted font-weight-light" size="xs"></fa-icon>
+                    </h5>
                 </td>
-                <td class="border-right" *ngFor="let col of section.columns">
+                <td class="" *ngFor="let col of section.columns">
                     <div style="width: 350px;">
                         <app-panel [section]="getSection(row, col)" (click)="onShowItemDetails(row, col)">
                         </app-panel>

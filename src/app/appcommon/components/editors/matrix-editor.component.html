@@ -17,13 +17,10 @@
     </div>
     <app-text-editor *ngIf="section.selectedItem.datatype === 'text'" [placeholder]="section.selectedItem.summary"
         [mode]="mode" [(data)]="section.selectedItem.data" (toggleMode)="onToggleMode($event)"
-        (save)="onUpdated($event)" (itemChange)="onItemChanged($event)"
-        >
+        (save)="onUpdated($event)" (itemChange)="onItemChanged($event)">
     </app-text-editor>
 
-    <app-list-editor *ngIf="section.selectedItem.datatype === 'list'" [mode]="mode"
-        [(data)]="section.selectedItem.data" (toggleMode)="onToggleMode($event)"
-        (save)="onUpdated($event)" (itemChange)="onItemChanged($event)"
-        >
+    <app-list-editor *ngIf="section.selectedItem.datatype === 'list'" [mode]="mode" [(data)]="section.selectedItem.data"
+        (toggleMode)="onToggleMode($event)" (save)="onUpdated($event)" (itemChange)="onItemChanged($event)">
     </app-list-editor>
 </div>

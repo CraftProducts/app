@@ -1,14 +1,15 @@
-<div *ngIf="layout" class="d-flex"
+<div *ngIf="layout" class="d-flex mb-3"
     [ngClass]="{'flex-column': layout.orientation === 'vertical', 'flex-row': layout.orientation === 'horizontal'}">
     <ng-template ngFor let-section [ngForOf]="layout.children" let-icol="index">
 
         <ng-container [ngSwitch]="section.type">
-            <app-panel [section]="section" class="mb-3" [ngStyle]="{'flex':section.size}" *ngSwitchCase="'panel'"
+            <app-panel [section]="section" [ngStyle]="{'flex':section.size}" *ngSwitchCase="'panel'"
                 (showEditor)="onShowEditor($event)">
             </app-panel>
-            <app-matrix [section]="section" *ngSwitchCase="'matrix'" (showEditor)="onShowEditor($event)">
-            </app-matrix>
-
+            <div class="mb-3" *ngSwitchCase="'matrix'">
+                <app-matrix [section]="section" (showEditor)="onShowEditor($event)">
+                </app-matrix>
+            </div>
             <app-freeflow-layout *ngSwitchCase="'container'" [layout]="section" (showEditor)="onShowEditor($event)">
             </app-freeflow-layout>
 
