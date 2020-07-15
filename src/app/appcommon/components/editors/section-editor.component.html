@@ -44,9 +44,7 @@
                         </app-list-editor>
 
                         <div *ngIf="section.type === 'matrix'">
-                            <app-matrix-editor [mode]="mode" [(section)]="section" (save)="onUpdated($event, section)"
-                                (toggleMode)="onToggleMode($event, section)"
-                                (itemChange)="onItemChanged($event, section)" [selectedItem]="section.selectedItem">
+                            <app-matrix-editor [mode]="mode" [(section)]="section" (itemChange)="onItemChanged($event, section)" >
                             </app-matrix-editor>
                         </div>
                     </div>

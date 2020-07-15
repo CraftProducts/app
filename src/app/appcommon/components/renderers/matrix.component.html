@@ -10,13 +10,13 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let row of section.rows">
-                <td class="bg-light border-right border-bottom" style="min-width: 150px;">
+            <tr *ngFor="let row of section.rows" class="bg-light border-bottom">
+                <td class="border-right" style="min-width: 150px;">
                     <h5>{{row.title}}</h5>
                     <i class="text-muted"> {{row.summary}} </i>
                 </td>
-                <td *ngFor="let col of section.columns">
-                    <div class="p-2" style="width: 350px;">
+                <td class="border-right" *ngFor="let col of section.columns">
+                    <div style="width: 350px;">
                         <app-panel [section]="getSection(row, col)" (click)="onShowItemDetails(row, col)">
                         </app-panel>
                     </div>

@@ -25,12 +25,8 @@ export class MatrixRendererComponent {
             datatype: row.datatype,
             data: null
         }
-        if (this.section.data) {
-            const found = _.find(this.section.data, { rowCode: row.code, colCode: col.code });
-            if (found) {
-                subSection.data = found.data;
-            }
-        }
+        const found = _.find(this.section.data, { rowCode: row.code, colCode: col.code });
+        subSection.data = (found) ? found.data : {};
 
         return subSection;
     }

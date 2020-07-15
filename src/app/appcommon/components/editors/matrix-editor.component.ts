@@ -7,84 +7,52 @@ import { generateCode } from 'shared-lib';
     templateUrl: './matrix-editor.component.html'
 })
 export class MatrixEditorComponent {
-    @Output() itemChange = new EventEmitter<any>();
-    @Output() save = new EventEmitter<any>();
-    @Output() toggleMode = new EventEmitter<any>();
-
     @Input() mode: string;
-    @Input() selectedItem = { rowCode: null, colCode: null, summary: null, data: null, datatype: null };
-
     @Input() section: any;
-
-    private _data: any;
-    @Input() set data(value: any) {
-        this._data = value;
-        this.dataToEdit = _.cloneDeep(value);
-        this.selectedItem = null;
-    }
-    get data() {
-        return this._data;
-    }
-
-    dataToEdit: any;
-    newRecord: any;
+    @Output() itemChange = new EventEmitter<any>();
 
     constructor() {
-        this.resetNewRecord();
     }
 
-    onSave = () => {
-        this.add();
-        this.save.emit(this.dataToEdit);
+    onToggleMode = (eventArgs) => {
+        this.mode = eventArgs.mode;
+        // this.section.selectedItem.data = eventArgs.data;
+        // this.itemChange.emit(this.section);
     }
 
-    onToggleMode = (mode) => {
-        if (mode === 'VIEW') {
-            this.selectedItem = null;
+    onChange() {
+        if (this.section.selectedItem) {
+            const rowCode = this.section.selectedItem.rowCode;
+            const colCode = this.section.selectedItem.colCode;
+
+            const dtFound = _.find(this.section.rows, { code: rowCode });
+            this.section.selectedItem.datatype = (dtFound) ? dtFound.datatype : 'text';
+
+            const found = _.find(this.section.data, { rowCode, colCode });
+            this.section.selectedItem.data = (found) ? found.data : {};
         }
-        this.toggleMode.emit({ mode, data: this.data });
     }
 
-    remove = (index) => this.dataToEdit.list.splice(index, 1);
+    onUpdated(updatedData) {
+        if (this.section.selectedItem) {
+            this.section.selectedItem.data = updatedData;
 
-    canAdd = () => this.newRecord && this.newRecord.title && this.newRecord.title.trim().length > 0;
-    add() {
-        if (this.canAdd()) {
-            if (!this.dataToEdit.list) {
-                this.dataToEdit.list = [];
+            this.section.data = this.section.data || [];
+
+            const rowCode = this.section.selectedItem.rowCode;
+            const colCode = this.section.selectedItem.colCode;
+            const found = _.find(this.section.data, { rowCode, colCode });
+            if (found) {
+                found.data = updatedData;
+            } else {
+                this.section.data.push(this.section.selectedItem);
             }
-            this.dataToEdit.list.push(_.clone(this.newRecord));
-            this.resetNewRecord();
+
         }
-    }
-    onCancel(event) {
-        event.preventDefault();
-        event.stopPropagation();
-        if (this.newRecord.title.trim().length === 0) {
-            this.onToggleMode('VIEW');
-        }
-        this.resetNewRecord();
+
+        this.itemChange.emit(this.section);
+        this.mode = 'VIEW';
     }
 
-    resetNewRecord() {
-        this.newRecord = { sequence: 0, title: '', code: generateCode(10), notes: [], links: [] };
-    }
-
-    onSelectItem(item) {
-        this.selectedItem = item;
-    }
-
-    onItemChanged(args) {
-        this.itemChange.emit(args);
-    }
-
-    onDelete(item) {
-        if (this.data && this.data.list) {
-            const removed = _.remove(this.data.list, { code: item.code });
-            if (removed && removed.length > 0) {
-                this.selectedItem = null;
-                this.save.emit(this.data);
-            }
-        }
-    }
+    onItemChanged = (args) => this.itemChange.emit(args);
 }

@@ -1,22 +1,29 @@
-<div class="row mb-3">
-    <div class="col-md-3">
-        <select class="form-control form-control-sm" [(ngModel)]="selectedItem.colCode">
-            <option>-- select phase --</option>
-            <option *ngFor="let col of section.columns" [value]="col.code">{{col.title}}</option>
-        </select>
+<div *ngIf="section">
+    <div class="row mb-3">
+        <div class="col-md-3">
+            <select class="form-control form-control-sm" [(ngModel)]="section.selectedItem.colCode"
+                (change)="onChange()">
+                <option>-- select phase --</option>
+                <option *ngFor="let col of section.columns" [value]="col.code">{{col.title}}</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <select class="form-control form-control-sm" [(ngModel)]="section.selectedItem.rowCode"
+                (change)="onChange()">
+                <option>-- select state --</option>
+                <option *ngFor="let row of section.rows" [value]="row.code">{{row.title}}</option>
+            </select>
+        </div>
     </div>
-    <div class="col-md-3">
-        <select class="form-control form-control-sm" [(ngModel)]="selectedItem.rowCode">
-            <option>-- select state --</option>
-            <option *ngFor="let row of section.rows" [value]="row.code">{{row.title}}</option>
-        </select>
-    </div>
+    <app-text-editor *ngIf="section.selectedItem.datatype === 'text'" [placeholder]="section.selectedItem.summary"
+        [mode]="mode" [(data)]="section.selectedItem.data" (toggleMode)="onToggleMode($event)"
+        (save)="onUpdated($event)" (itemChange)="onItemChanged($event)"
+        >
+    </app-text-editor>
+
+    <app-list-editor *ngIf="section.selectedItem.datatype === 'list'" [mode]="mode"
+        [(data)]="section.selectedItem.data" (toggleMode)="onToggleMode($event)"
+        (save)="onUpdated($event)" (itemChange)="onItemChanged($event)"
+        >
+    </app-list-editor>
 </div>
-
-<app-text-editor *ngIf="selectedItem.datatype === 'text'" [placeholder]="selectedItem.summary" [mode]="mode"
-    [(data)]="selectedItem.data">
-</app-text-editor>
-
-<app-list-editor *ngIf="selectedItem.datatype === 'list'" [mode]="mode" [(data)]="selectedItem.data"
-    [selectedItem]="section.selectedItem">
-</app-list-editor>
