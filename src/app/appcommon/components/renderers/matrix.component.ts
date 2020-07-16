@@ -23,6 +23,7 @@ export class MatrixRendererComponent {
             rowCode: row.code,
             colCode: col.code,
             datatype: row.datatype,
+            options: row.options,
             data: null
         }
         const found = _.find(this.section.data, { rowCode: row.code, colCode: col.code });

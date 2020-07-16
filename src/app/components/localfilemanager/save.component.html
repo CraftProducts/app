@@ -1,0 +1,23 @@
+<div class="alert-warning p-1" *ngIf="!filenameEditorVisible">
+    <fa-icon icon="info-circle" class="ml-2 mr-1"></fa-icon>
+    Unsaved changes found.
+    <button class="btn btn-sm btn-link" (click)="toggleFilenameEditor()">
+        <fa-icon icon="save"></fa-icon> Save
+    </button>
+    <button class="btn btn-sm btn-link text-danger" (click)="onReset()">
+        <fa-icon icon="times" class=" text-danger"></fa-icon> Discard
+    </button>
+</div>
+
+<div class="input-group" *ngIf="filenameEditorVisible">
+    <input type="text" (keydown.enter)="onSave()" [appAutofocus]="filenameEditorVisible"
+        (keydown.escape)="toggleFilenameEditor()" class="form-control" [(ngModel)]="filename">
+    <div class="input-group-append">
+        <button class="btn btn-primary" [disabled]="!canSave()" (click)="onSave()">
+            <fa-icon icon="save"></fa-icon> Save
+        </button>
+        <button class="btn btn-default" (click)="toggleFilenameEditor()">
+            <fa-icon icon="times"></fa-icon>
+        </button>
+    </div>
+</div>

@@ -23,4 +23,9 @@
     <app-list-editor *ngIf="section.selectedItem.datatype === 'list'" [mode]="mode" [(data)]="section.selectedItem.data"
         (toggleMode)="onToggleMode($event)" (save)="onUpdated($event)" (itemChange)="onItemChanged($event)">
     </app-list-editor>
+
+    <app-select-editor *ngIf="section.selectedItem.datatype === 'select'" [mode]="mode"
+        [options]="section.selectedItem.options" [(data)]="section.selectedItem.data"
+        (toggleMode)="onToggleMode($event)" (save)="onUpdated($event)" (itemChange)="onItemChanged($event)">
+    </app-select-editor>
 </div>

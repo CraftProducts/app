@@ -11,10 +11,12 @@
         </thead>
         <tbody>
             <tr *ngFor="let row of section.rows" class="bg-light">
-                <td class="matrix-header" style="min-width: 150px;">
-                    <h5 placement="right" [ngbPopover]="row.summary" triggers="mouseenter:mouseleave">
+                <td class="matrix-header" style="min-width: 150px;" [ngbPopover]="row.summary"
+                    triggers="mouseenter:mouseleave" placement="right">
+                    <h5>
                         {{row.title}}
-                        <fa-icon [icon]="['far','question-circle']" class="text-muted font-weight-light" size="xs"></fa-icon>
+                        <!-- <fa-icon [icon]="['far','question-circle']" class="text-muted font-weight-light" size="xs">
+                        </fa-icon> -->
                     </h5>
                 </td>
                 <td class="" *ngFor="let col of section.columns">

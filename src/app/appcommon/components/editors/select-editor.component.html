@@ -1,0 +1,36 @@
+<div class="row" *ngIf="data">
+    <div class="col-md-6">
+
+        <pre>{{data.selectedOption|json}}</pre>
+        <div *ngIf="mode !== 'EDIT'">
+            <div class="bg-light p-3">
+                <div *ngFor="let opt of options">
+                    <input type="radio" name="select" [value]="opt.code" disabled [(ngModel)]="data.selectedOption">
+                    {{opt.title}}
+                </div>
+            </div>
+            <div class="mt-3 text-right">
+                <button class="btn btn-primary" (click)="onToggleMode('EDIT')">
+                    <fa-icon icon="pencil-alt"></fa-icon> Edit
+                </button>
+            </div>
+        </div>
+        <div *ngIf="mode === 'EDIT'">
+            <div *ngFor="let opt of options">
+                <input type="radio" name="select" [value]="opt.code" [(ngModel)]="dataToEdit.selectedOption"> {{opt.title}}
+            </div>
+            <div class="mt-3 text-right">
+                <button class="btn btn-primary mr-2" (click)="onSave()">
+                    <fa-icon icon="save"></fa-icon> Save
+                </button>
+                <button class="btn btn-light" (click)="onToggleMode('VIEW')">
+                    <fa-icon icon="times"></fa-icon> Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="offset-md-1 col-md-5">
+        <app-record-editor [item]="data" (itemChange)="onItemChanged($event)" [showDelete]="false">
+        </app-record-editor>
+    </div>
+</div>

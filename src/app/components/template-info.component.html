@@ -1,0 +1,8 @@
+<div *ngIf="loadedTemplate" style="margin-top:-10pt" class="border-left ml-3 pl-3">
+    <sub class="text-primary">
+        <a (click)="goBack()">TEMPLATES</a>
+    </sub>
+    <div class="h5 font-weight-light mb-0" [ngbPopover]="loadedTemplate.summary" triggers="mouseenter:mouseleave">
+        {{loadedTemplate.title}}
+    </div>
+</div>

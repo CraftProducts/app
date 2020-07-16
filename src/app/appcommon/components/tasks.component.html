@@ -29,9 +29,14 @@
         </div>
     </div>
 </div>
-<div class="input-group input-group-sm">
+<div (click)="showAddEditor()" *ngIf="!isEditorVisible" style="cursor:pointer"
+    class="bg-light rounded text-muted p-3" title="click to add task">
+    <i>click to add task</i>
+</div>
+
+<div class="input-group input-group-sm" *ngIf="isEditorVisible">
     <input type="text" class="form-control form-control-sm" [(ngModel)]="newRecord.title" (keydown.enter)="add()"
-        (keydown.escape)="onCancel($event)" placeholder="add new task...">
+        (keydown.escape)="onCancel($event)" placeholder="add new task..." [appAutofocus]="isEditorVisible === true">
     <div class="input-group-append">
         <button class="btn btn-primary" type="button" [disabled]="!canAdd()" (click)="add()">
             <fa-icon icon="check"></fa-icon>

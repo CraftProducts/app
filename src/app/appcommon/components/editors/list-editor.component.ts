@@ -1,58 +1,13 @@
 import { Component, Input, EventEmitter, Output, HostListener } from '@angular/core';
 import * as _ from 'lodash';
 import { generateCode } from 'shared-lib';
+import { BaseEditor } from './base-editor';
 
 @Component({
     selector: 'app-list-editor',
     templateUrl: './list-editor.component.html'
 })
-export class ListEditorComponent {
-    @Output() itemChange = new EventEmitter<any>();
-    @Output() save = new EventEmitter<any>();
-    @Output() toggleMode = new EventEmitter<any>();
-
-    @Input() mode: string;
-    @Input() selectedItem: any;
-
-    private _data: any;
-    @Input() set data(value: any) {
-        this._data = value;
-        this.dataToEdit = _.cloneDeep(value);
-        this.selectedItem = null;
-    }
-    get data() {
-        return this._data;
-    }
-
-    dataToEdit: any;
-    newRecord: any;
-
-    constructor() {
-        this.resetNewRecord();
-    }
-    @HostListener('window:keydown', ['$event'])
-    hotkeyHandler($event: any) {
-        if ($event.code === 'F2') {
-            this.onToggleMode('EDIT');
-            return false;
-        } else if ($event.code === 'KeyS' && $event.ctrlKey && this.mode === 'EDIT') {
-            this.onSave();
-            return false;
-        }
-    }
-
-    onSave = () => {
-        this.add();
-        this.save.emit(this.dataToEdit);
-    }
-
-    onToggleMode = (mode) => {
-        if (mode === 'VIEW') {
-            this.selectedItem = null;
-        }
-        this.toggleMode.emit({ mode, data: this.data });
-    }
-
+export class ListEditorComponent extends BaseEditor {
     remove = (index) => this.dataToEdit.list.splice(index, 1);
 
     canAdd = () => this.newRecord && this.newRecord.title && this.newRecord.title.trim().length > 0;
@@ -75,15 +30,7 @@ export class ListEditorComponent {
     }
 
     resetNewRecord() {
-        this.newRecord = { sequence: 0, title: '', code: generateCode(10), notes: [], links: [] };
-    }
-
-    onSelectItem(item) {
-        this.selectedItem = item;
-    }
-
-    onItemChanged(args) {
-        this.itemChange.emit(args);
+        this.newRecord = { sequence: 0, title: '', code: generateCode(10), notes: [], links: [], tasks: [] };
     }
 
     onDelete(item) {

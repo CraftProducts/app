@@ -18,6 +18,9 @@ export function appReducer(state: App, action: any): App {
             return { ...state, loadedFile: action.payload, isModelDirty: false };
         }
 
+        case ActionTypes.ResetTemplate: {
+            return { ...state, loadedFile: null, loadedTemplate: null, templateToLoad: null, userModelCommand: null };
+        }
         case ActionTypes.LoadTemplate: {
             let loadedFile = action.payload.mode && action.payload.mode.toLowerCase() === 'file'
                 ? state.loadedFile

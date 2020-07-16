@@ -24,13 +24,15 @@ import { PanelRendererComponent } from './components/renderers/panel.component';
 import { MatrixRendererComponent } from './components/renderers/matrix.component';
 
 import { MatrixEditorComponent } from './components/editors/matrix-editor.component';
+import { SelectEditorComponent } from './components/editors/select-editor.component';
 
 const componentList = [
   SplitLayoutRendererComponent, FreeflowLayoutRendererComponent,
   PanelRendererComponent, MatrixRendererComponent,
-  
+
   NotesComponent, LinksComponent, TasksComponent,
-  SectionEditorComponent, TextEditorComponent, ListEditorComponent, MatrixEditorComponent, RecordEditorComponent,
+  SectionEditorComponent, TextEditorComponent, ListEditorComponent, SelectEditorComponent,
+  MatrixEditorComponent, RecordEditorComponent,
   GDriveSelectorComponent
 ];
 

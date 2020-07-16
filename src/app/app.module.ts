@@ -35,6 +35,9 @@ import { AppRepository } from './appcommon/googledrive/app.repository';
 import { FileRepository } from './appcommon/googledrive/file.repository';
 import { UserRepository } from './appcommon/googledrive/user.repository';
 import { IBACKEND_URLS, SharedLibModule } from 'shared-lib';
+import { LoadLocalFileComponent } from './components/localfilemanager/load.component';
+import { SaveLocalFileComponent } from './components/localfilemanager/save.component';
+import { TemplateInfoComponent } from './components/template-info.component';
 
 export function initGapi(gapiSession: GapiSession) {
   return () => gapiSession.initClient();
@@ -42,7 +45,8 @@ export function initGapi(gapiSession: GapiSession) {
 
 @NgModule({
   declarations: [
-    AppComponent, NavbarComponent, ToolsComponent, PageNotFoundComponent
+    AppComponent, PageNotFoundComponent, 
+    NavbarComponent, ToolsComponent, TemplateInfoComponent, LoadLocalFileComponent, SaveLocalFileComponent
   ],
   imports: [
     CommonModule,

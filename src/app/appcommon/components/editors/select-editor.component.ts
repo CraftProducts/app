@@ -3,11 +3,12 @@ import * as _ from 'lodash';
 import { BaseEditor } from './base-editor';
 
 @Component({
-    selector: 'app-text-editor',
-    templateUrl: './text-editor.component.html'
+    selector: 'app-select-editor',
+    templateUrl: './select-editor.component.html'
 })
-export class TextEditorComponent extends BaseEditor {
-    @Input() placeholder: string;
+export class SelectEditorComponent extends BaseEditor {
+    @Input() options: any;
+    
     resetNewRecord(): void { }
 
     add(): void {
