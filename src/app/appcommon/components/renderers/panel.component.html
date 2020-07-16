@@ -37,32 +37,38 @@
             *ngIf="!(section.data && (section.data.text || (section.data.list && section.data.list.length > 0)))">
             <ngx-md class="text-muted font-italic" [data]="section.summary"></ngx-md>
         </div>
-        <div *ngIf="section.data && section.data.text && section.datatype === 'text'" class=" ml-4">
-            <ngx-md [data]="section.data.text"></ngx-md>
-        </div>
+        <div *ngIf="section.data">
+            <div *ngIf="section.data.text && section.datatype === 'text'" class=" ml-4">
+                <ngx-md [data]="section.data.text"></ngx-md>
+            </div>
 
-        <div *ngIf="section.data && section.data.list && section.data.list.length > 0">
-            <button *ngFor="let item of section.data.list" (click)="onShowItemDetails(item, section)"
-                class="btn btn-sm btn-link hover-link text-dark w-100 text-left rounded-0 text-truncate"
-                [title]="item.title">
+            <div *ngIf="section.data.selectedValue && section.datatype === 'select'" class=" ml-4">
+                {{getSelectedValue(section.data.selectedValue)}}
+            </div>
 
-                <span class="text-primary float-right">
-                    <span *ngIf="item.notes && item.notes.length > 0" class="ml-2">
-                        <small>{{item.notes.length}}</small>
-                        <fa-icon size="xs" [icon]="['far', 'comments']" class="ml-1"></fa-icon>
+            <div *ngIf="section.data.list && section.data.list.length > 0">
+                <button *ngFor="let item of section.data.list" (click)="onShowItemDetails(item, section)"
+                    class="btn btn-sm btn-link hover-link text-dark w-100 text-left rounded-0 text-truncate"
+                    [title]="item.title">
+
+                    <span class="text-primary float-right">
+                        <span *ngIf="item.notes && item.notes.length > 0" class="ml-2">
+                            <small>{{item.notes.length}}</small>
+                            <fa-icon size="xs" [icon]="['far', 'comments']" class="ml-1"></fa-icon>
+                        </span>
+                        <span *ngIf="item.links && item.links.length > 0" class="ml-2">
+                            <small>{{item.links.length}}</small>
+                            <fa-icon size="xs" icon="link" class="ml-1"></fa-icon>
+                        </span>
+                        <span *ngIf="item.tasks && item.tasks.length > 0" class="ml-2">
+                            <small>{{item.tasks.length}}</small>
+                            <fa-icon size="xs" icon="tasks" class="ml-1"></fa-icon>
+                        </span>
                     </span>
-                    <span *ngIf="item.links && item.links.length > 0" class="ml-2">
-                        <small>{{item.links.length}}</small>
-                        <fa-icon size="xs" icon="link" class="ml-1"></fa-icon>
-                    </span>
-                    <span *ngIf="item.tasks && item.tasks.length > 0" class="ml-2">
-                        <small>{{item.tasks.length}}</small>
-                        <fa-icon size="xs" icon="tasks" class="ml-1"></fa-icon>
-                    </span>
-                </span>
-                <fa-icon icon="angle-right" size="sm" class="mr-1 text-muted"></fa-icon>
-                {{item.title}}
-            </button>
+                    <fa-icon icon="angle-right" size="sm" class="mr-1 text-muted"></fa-icon>
+                    {{item.title}}
+                </button>
+            </div>
         </div>
     </div>
 </div>

@@ -15,7 +15,7 @@
             </select>
         </div>
     </div>
-    <app-text-editor *ngIf="section.selectedItem.datatype === 'text'" [placeholder]="section.selectedItem.summary"
+    <app-text-editor *ngIf="section.selectedItem.datatype === 'text'" placeholder=""
         [mode]="mode" [(data)]="section.selectedItem.data" (toggleMode)="onToggleMode($event)"
         (save)="onUpdated($event)" (itemChange)="onItemChanged($event)">
     </app-text-editor>

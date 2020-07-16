@@ -1,6 +1,5 @@
-import { Component, Input, EventEmitter, Output, HostListener } from '@angular/core';
+import { Component, Input, EventEmitter, Output } from '@angular/core';
 import * as _ from 'lodash';
-import { generateCode } from 'shared-lib';
 
 @Component({
     selector: 'app-matrix-editor',
@@ -11,13 +10,8 @@ export class MatrixEditorComponent {
     @Input() section: any;
     @Output() itemChange = new EventEmitter<any>();
 
-    constructor() {
-    }
-
     onToggleMode = (eventArgs) => {
         this.mode = eventArgs.mode;
-        // this.section.selectedItem.data = eventArgs.data;
-        // this.itemChange.emit(this.section);
     }
 
     onChange() {

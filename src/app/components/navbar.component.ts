@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import * as _ from 'lodash';
+import { ResetTemplateAction } from '../+state/app.actions';
 
 @Component({
     selector: 'app-navbar',
@@ -25,4 +26,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
     ngOnDestroy(): void {
         this.isModelDirty$ ? this.isModelDirty$.unsubscribe() : null;
     }
+    goBack() {
+        this.store$.dispatch(new ResetTemplateAction(null));
+        this.router.navigate(['/tools']);
+    }
+
 }

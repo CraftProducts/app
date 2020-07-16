@@ -17,4 +17,7 @@ export class PanelRendererComponent {
         section.selectedItem = item;
         this.onShowEditor({ mode: 'VIEW', section });
     }
+    getSelectedValue(selectedValue) {
+        return selectedValue;
+    }
 }

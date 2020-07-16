@@ -19,9 +19,9 @@
                         </fa-icon> -->
                     </h5>
                 </td>
-                <td class="" *ngFor="let col of section.columns">
+                <td *ngFor="let col of row.columns;let idx = index">
                     <div style="width: 350px;">
-                        <app-panel [section]="getSection(row, col)" (click)="onShowItemDetails(row, col)">
+                        <app-panel [section]="row.columns[idx]" (showEditor)="onShowItemDetails(row.columns[idx])">
                         </app-panel>
                     </div>
                 </td>

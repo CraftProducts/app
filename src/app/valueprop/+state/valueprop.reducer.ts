@@ -5,7 +5,7 @@ import { CommonActionTypes } from 'src/app/appcommon/lib/CommonActions';
 import { generateCode } from 'shared-lib';
 
 export function valuePropReducer(state: ValueProp, action: any): ValueProp {
-    console.log(action.type, action.payload);
+    // console.log(action.type, action.payload);
     switch (action.type) {
         case CommonActionTypes.SetModel: {
             const modelInstance = action.payload.template;
@@ -52,8 +52,24 @@ export function valuePropReducer(state: ValueProp, action: any): ValueProp {
         if (children.length > 0) {
             children.forEach(child => {
                 child.isDirty = false;
-                if (resetData) {
-                    child.data = {};
+
+                if (child.type === 'matrix' && child.rows && child.columns) {
+                    child.rows.forEach(row => {
+                        row.columns = [];
+                        child.columns.forEach(column => {
+                            row.columns.push({
+                                rowCode: row.code,
+                                colCode: column.code,
+                                datatype: row.datatype,
+                                data: { text: '', notes: [], tasks: [], links: [] },
+                                options: row.options
+                            });
+                        });
+                    })
+                }
+
+                if (!child.data || resetData) {
+                    child.data = child.type === 'matrix' ? [] : {};
                 }
                 resetModelChildren(child.children, resetData);
             });
@@ -63,8 +79,23 @@ export function valuePropReducer(state: ValueProp, action: any): ValueProp {
     function populateModelDataset(node, lookupSections) {
         if (!node) return;
 
-        if (node.type === 'panel' || node.type === 'matrix') {
+        if (node.type === 'panel') {
             const found = _.find(lookupSections, { code: node.code });
+            node.data = found && found.data ? _.cloneDeep(found.data) : {};
+            node.isDirty = false;
+        } else if (node.type === 'matrix') {
+            const found = _.find(lookupSections, { code: node.code });
+            if (found && found.data && found.data.length > 0) {
+                found.data.forEach(dt => {
+                    const rowFound = _.find(node.rows, { code: dt.rowCode });
+                    if (rowFound && rowFound.columns && rowFound.columns.length > 0) {
+                        const colFound = _.find(rowFound.columns, { colCode: dt.colCode });
+                        if (colFound) {
+                            colFound.data = dt.data;
+                        }
+                    }
+                });
+            }
             node.data = found && found.data ? _.cloneDeep(found.data) : {};
             node.isDirty = false;
         }
