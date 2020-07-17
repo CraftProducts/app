@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-md bg-white">
     <div class="container-fluid p-0">
-        <a class="text-dark h4"  (click)="goBack()">
+        <a class="text-dark h4" (click)="goBack()">
             <img src="./assets/logo.png" height="26pt" />
             <span class="font-weight-light ml-2">Product</span>
             <span class="text-brand">Purpose</span>
@@ -12,9 +12,9 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent" [ngbCollapse]="isCollapsed">
-            <ul class="navbar-nav mr-sm-auto">
-                <app-template-info></app-template-info>
-            </ul>
+
+            <app-template-info></app-template-info>
+
             <ul class="navbar-nav ml-sm-auto">
                 <li *ngIf="isModelDirty">
                     <app-save-localfile></app-save-localfile>

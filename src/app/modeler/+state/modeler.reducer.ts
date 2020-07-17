@@ -1,10 +1,9 @@
-import { ValueProp } from './valueprop.state';
-import { ActionTypes } from './valueprop.actions';
+import { Modeler } from './modeler.state';
 import * as _ from 'lodash';
 import { CommonActionTypes } from 'src/app/appcommon/lib/CommonActions';
 import { generateCode } from 'shared-lib';
 
-export function valuePropReducer(state: ValueProp, action: any): ValueProp {
+export function modelerReducer(state: Modeler, action: any): Modeler {
     // console.log(action.type, action.payload);
     switch (action.type) {
         case CommonActionTypes.SetModel: {

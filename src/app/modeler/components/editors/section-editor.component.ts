@@ -1,6 +1,6 @@
 import { Component, Input, EventEmitter, Output, HostListener } from '@angular/core';
 import * as _ from 'lodash';
-import { extractSections } from '../../../valueprop/valueprop-utils';
+import { extractSections } from 'src/app/modeler/modeler-utils';
 
 @Component({
     selector: 'app-section-editor',

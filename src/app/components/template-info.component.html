@@ -1,8 +1,19 @@
-<div *ngIf="loadedTemplate" style="margin-top:-10pt" class="border-left ml-3 pl-3">
-    <sub class="text-primary">
-        <a (click)="goBack()">TEMPLATE</a>
-    </sub>
-    <div class="h5 font-weight-light mb-0" [ngbPopover]="loadedTemplate.summary" triggers="mouseenter:mouseleave">
-        {{loadedTemplate.title}}
-    </div>
-</div>
+<ul class="navbar-nav mr-sm-auto">
+    <!-- <li style="margin-top:-10pt" class="border-left ml-3 pl-3">
+        <sub class="text-primary">
+            <a (click)="goBack()">TOOL</a>
+        </sub>
+        <div class="h5 font-weight-light mb-0 text-truncate">
+            Journeymaps
+        </div>
+    </li> -->
+    <li *ngIf="loadedTemplate" style="margin-top:-10pt" class="border-left ml-3 pl-3">
+        <sub class="text-primary">
+            <a (click)="goBack()">TEMPLATE</a>
+        </sub>
+        <div class="h5 font-weight-light mb-0 text-truncate" [ngbPopover]="loadedTemplate.summary"
+            triggers="mouseenter:mouseleave">
+            {{loadedTemplate.title}}
+        </div>
+    </li>
+</ul>

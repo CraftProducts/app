@@ -28,16 +28,26 @@ export abstract class BaseTemplateViewer {
     subscribeTemplates() {
         this.activatedRouteQueryparams$ = this.activatedRoute.queryParams
             .subscribe((qp) => {
-                const segments = this.router.parseUrl(this.router.url).root.children[PRIMARY_OUTLET].segments;
-                (segments.length >= 2)
-                    ? this.store$.dispatch(new LoadTemplateAction({ groupCode: segments[0].path, templateCode: segments[1].path, mode: qp.mode }))
-                    : this.router.navigate(['']);
+                const primaryUrlSegmentGroup = this.router.parseUrl(this.router.url).root.children[PRIMARY_OUTLET];
+                if (primaryUrlSegmentGroup && primaryUrlSegmentGroup.segments) {
+                    switch (primaryUrlSegmentGroup.segments.length) {
+                        case 1:
+                            this.router.navigate(['tools', primaryUrlSegmentGroup.segments[0].path]);
+                            break;
+                        case 2:
+                            this.store$.dispatch(
+                                new LoadTemplateAction({
+                                    groupCode: primaryUrlSegmentGroup.segments[0].path,
+                                    templateCode: primaryUrlSegmentGroup.segments[1].path,
+                                    mode: qp.mode
+                                }))
+                            break;
+                        default: this.router.navigate(['tools']);
+                    }
+                } else {
+                    this.router.navigate(['tools']);
+                }
             })
-
-        this.activatedRouteParams$ = this.activatedRoute.params
-            .subscribe(() => {
-
-            });
 
         const loadedTemplateQ = this.store$.select(p => p.app.loadedTemplate).pipe(filter(p => p));
         const loadedFileQ = this.store$.select(p => p.app.loadedFile);

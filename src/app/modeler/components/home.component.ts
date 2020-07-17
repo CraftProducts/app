@@ -1,19 +1,19 @@
 import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import * as _ from 'lodash';
 import { Store } from '@ngrx/store';
-import { ValuePropState } from '../+state/valueprop.state';
+import { ModelerState } from '../+state/modeler.state';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ComponentCanDeactivate } from 'shared-lib'
-import { BaseTemplateViewer } from '../../appcommon/components/base-template-viewer';
 import { SetModelAction, SetModelDirtyAction, SelectSectionAction } from 'src/app/appcommon/lib/CommonActions';
-import { extractSections } from '../valueprop-utils';
+import { extractSections } from '../modeler-utils';
+import { BaseTemplateViewer } from './base-template-viewer';
 
 @Component({
-    selector: 'app-valueprop-home',
+    selector: 'app-modeler-home',
     templateUrl: './home.component.html'
 })
-export class ValuePropHomeComponent extends BaseTemplateViewer implements ComponentCanDeactivate, OnInit, OnDestroy {
+export class ModelerHomeComponent extends BaseTemplateViewer implements ComponentCanDeactivate, OnInit, OnDestroy {
 
     public zoom = 100;
     editorVisible = false;
@@ -27,8 +27,9 @@ export class ValuePropHomeComponent extends BaseTemplateViewer implements Compon
     model$: Subscription;
     model: any;
 
-    constructor(public store$: Store<ValuePropState>, public router: Router, public activatedRoute: ActivatedRoute) {
+    constructor(public store$: Store<ModelerState>, public router: Router, public activatedRoute: ActivatedRoute) {
         super(store$, router, activatedRoute);
+        console.log('ModelerHomeComponent');
     }
 
     @HostListener('window:beforeunload', ['$event'])
@@ -43,10 +44,10 @@ export class ValuePropHomeComponent extends BaseTemplateViewer implements Compon
     ngOnInit() {
         this.subscribeTemplates();
 
-        this.model$ = this.store$.select(p => p.valueProp.modelInstance)
+        this.model$ = this.store$.select(p => p.modeler.modelInstance)
             .subscribe(model => this.model = model);
 
-        this.selectedSection$ = this.store$.select(p => p.valueProp.selectedSection)
+        this.selectedSection$ = this.store$.select(p => p.modeler.selectedSection)
             .subscribe(selectedSection => {
                 if (selectedSection) {
                     this.mode = selectedSection.mode;
