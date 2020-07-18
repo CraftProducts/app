@@ -3,7 +3,6 @@ import { type } from 'shared-lib';
 
 export const ActionTypes = {
     SetRedirectPath: type('[SetRedirectPath]'),
-//    SetBreadcrumb: type('[SetBreadcrumb]'),
 
     LoadGroups: type('[LoadGroups]'),
     LoadGroupsFailed: type('[LoadGroups] Failed'),
@@ -11,18 +10,15 @@ export const ActionTypes = {
 
     LoadGroupTemplates: type('[LoadGroupTemplates]'),
     LoadGroupTemplatesFailed: type('[LoadGroupTemplates] Failed'),
-    LoadGroupTemplatesSuccess: type('[LoadGroupTemplates] Success')
+    LoadGroupTemplatesSuccess: type('[LoadGroupTemplates] Success'),
+
+    LoadFile: type("[LoadFile]")
 }
 
 export class SetRedirectPathAction implements Action {
     type = ActionTypes.SetRedirectPath;
     constructor(public payload: any) { }
 }
-
-// export class SetBreadcrumbAction implements Action {
-//     type = ActionTypes.SetBreadcrumb;
-//     constructor(public payload: any) { }
-// }
 
 export class LoadGroupsAction implements Action {
     type = ActionTypes.LoadGroups;
@@ -34,8 +30,14 @@ export class LoadGroupTemplatesAction implements Action {
     constructor(public payload: any) { }
 }
 
+export class LoadFileAction implements Action {
+    type = ActionTypes.LoadFile;
+    constructor(public payload: any) { }
+}
+
 export type Actions =
     SetRedirectPathAction
     | LoadGroupsAction
     | LoadGroupTemplatesAction
+    | LoadFileAction
     ;

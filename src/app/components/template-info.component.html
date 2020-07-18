@@ -1,19 +1,28 @@
 <ul class="navbar-nav mr-sm-auto">
-    <!-- <li style="margin-top:-10pt" class="border-left ml-3 pl-3">
-        <sub class="text-primary">
-            <a (click)="goBack()">TOOL</a>
-        </sub>
-        <div class="h5 font-weight-light mb-0 text-truncate">
-            Journeymaps
-        </div>
-    </li> -->
-    <li *ngIf="loadedTemplate" style="margin-top:-10pt" class="border-left ml-3 pl-3">
-        <sub class="text-primary">
-            <a (click)="goBack()">TEMPLATE</a>
-        </sub>
-        <div class="h5 font-weight-light mb-0 text-truncate" [ngbPopover]="loadedTemplate.summary"
-            triggers="mouseenter:mouseleave">
-            {{loadedTemplate.title}}
+    <li>
+        <div class="breadcrumb m-0 p-0 bg-white">
+            <div class="breadcrumb-item">
+                <a routerLink="tools">
+                    <fa-icon icon="home"></fa-icon>
+                    Tools
+                </a>
+            </div>
+            <div *ngIf="selectedTemplateGroup" class="breadcrumb-item">
+                <a [routerLink]="['tools', selectedTemplateGroup.code]" class="text-truncate"
+                    [ngbPopover]="selectedTemplateGroup.summary" triggers="mouseenter:mouseleave">
+                    {{selectedTemplateGroup.title}}
+                </a>
+            </div>
+            <div *ngIf="!selectedTemplateGroup && loadedTemplate" class="breadcrumb-item">
+                <a [routerLink]="['tools', loadedTemplate.groupCode]" class="text-truncate">
+                    Group
+                </a>
+            </div>
+            <div *ngIf="loadedTemplate" class="breadcrumb-item">
+                <div class="text-truncate" [ngbPopover]="loadedTemplate.summary" triggers="mouseenter:mouseleave">
+                    {{loadedTemplate.title}}
+                </div>
+            </div>
         </div>
     </li>
 </ul>

@@ -2,10 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../+state/app.state';
 import { Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { Router } from '@angular/router';
-import { ResetTemplateAction } from '../+state/app.actions';
 
 @Component({
     selector: 'app-template-info',
@@ -16,18 +14,20 @@ export class TemplateInfoComponent implements OnInit, OnDestroy {
     loadedTemplate$: Subscription;
     loadedTemplate: any;
 
+    selectedTemplateGroup$: Subscription;
+    selectedTemplateGroup: any;
+
     constructor(public store$: Store<AppState>, public router: Router) {
     }
     ngOnInit(): void {
         this.loadedTemplate$ = this.store$.select(p => p.app.loadedTemplate)
             .subscribe(template => this.loadedTemplate = template);
+
+        this.selectedTemplateGroup$ = this.store$.select(p => p.app.selectedTemplateGroup)
+            .subscribe(templateGroup => this.selectedTemplateGroup = templateGroup);
     }
     ngOnDestroy(): void {
         this.loadedTemplate$ ? this.loadedTemplate$.unsubscribe() : null;
-    }
-
-    goBack() {
-        this.store$.dispatch(new ResetTemplateAction(null));
-        this.router.navigate(['/tools']);
+        this.selectedTemplateGroup$ ? this.selectedTemplateGroup$.unsubscribe() : null;
     }
 }

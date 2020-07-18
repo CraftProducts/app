@@ -1,45 +1,63 @@
-<div class="container">
-    <div *ngIf="showBanner" class="mt-5">
-        <div *ngIf="!details">
-            <fa-icon icon="spinner" [spin]="true" aria-hidden="true"></fa-icon> loading...
-        </div>
-        <div *ngIf="details">
-            <h3 class="mb-4 text-center">
-                {{details.title}}
-                <button class="btn btn-link" type="button" placement="bottom" [ngbPopover]="popContent"
-                    popoverClass="pop-content">
-                    <fa-icon [icon]="['far', 'question-circle']" class="text-muted"></fa-icon>
-                </button>
-            </h3>
-            <ng-template #popContent>
-                <div class="p-2">
-                    <ngx-md [data]="details.summary"></ngx-md>
+<div class="main-container">
+    <div class="body-container bg-light">
+
+        <div class="container text-center">
+            <div *ngIf="showBanner" class="mt-5">
+                <div *ngIf="!details">
+                    <fa-icon icon="spinner" [spin]="true" aria-hidden="true"></fa-icon> loading...
                 </div>
-            </ng-template>
-
-            <div *ngIf="details.list && details.list.length > 0"
-                class="clearfix d-flex justify-content-center flex-wrap">
-                <a [routerLink]="[item.code]" class="mr-4 mb-4 card select-card custom-shadow"
-                    *ngFor="let item of details.list" [title]="item.title">
-                    <div class="p-3">
-                        <h4 class="card-title text-truncate mb-2">{{item.title}}</h4>
-                        <div class="card-text small">
-                            <ngx-md>{{item.summary | truncate:200:'...'}}</ngx-md>
+                <div *ngIf="details">
+                    <h3 class="mb-4">
+                        {{details.title}}
+                        <button class="btn btn-link" type="button" placement="bottom" [ngbPopover]="popContent"
+                            popoverClass="pop-content">
+                            <fa-icon [icon]="['far', 'question-circle']" class="text-muted"></fa-icon>
+                        </button>
+                    </h3>
+                    <ng-template #popContent>
+                        <div class="p-2">
+                            <ngx-md [data]="details.summary"></ngx-md>
                         </div>
-                    </div>
-                </a>
-            </div>
+                    </ng-template>
 
-            <div class="alert alert-warning" *ngIf="!details.list || details.list.length === 0">
-                <fa-icon icon="triangle-exclamation"></fa-icon>
-                No tools registered yet.
+                    <div class="clearfix d-flex justify-content-center flex-wrap">
+
+                        <div class="mr-4 mb-4 card select-card custom-shadow alert-primary">
+                            <div class="p-3">
+                                <h4 class="card-title text-truncate mb-2">Open existing file</h4>
+                                <div class="card-text small">
+                                    Open previously created file for viewing or editing purpose.
+                                    <div class="mt-4">
+                                        <app-load-localfile></app-load-localfile>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <ng-container *ngIf="details.list && details.list.length > 0">
+                            <a [routerLink]="[item.code]" class="mr-4 mb-4 card select-card custom-shadow"
+                                *ngFor="let item of details.list" [title]="item.title">
+                                <div class="p-3">
+                                    <h4 class="card-title text-truncate mb-2">{{item.title}}</h4>
+                                    <div class="card-text small">
+                                        <ngx-md>{{item.summary | truncate:200:'...'}}</ngx-md>
+                                    </div>
+                                </div>
+                            </a>
+                        </ng-container>
+
+                        <div class="alert alert-warning" *ngIf="!details.list || details.list.length === 0">
+                            <fa-icon icon="triangle-exclamation"></fa-icon>
+                            No tools registered yet.
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="!showBanner">
+                <router-outlet></router-outlet>
             </div>
         </div>
-    </div>
-    <div *ngIf="!showBanner">
-        <a class="btn btn-link mr-2" routerLink=".." *ngIf="showBreadcrumb">
-            <fa-icon icon="angle-left" class="mr-1"></fa-icon> BACK
-        </a>
-        <router-outlet></router-outlet>
     </div>
 </div>

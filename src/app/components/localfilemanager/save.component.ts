@@ -4,7 +4,6 @@ import { AppState } from '../../+state/app.state';
 import { Subscription } from 'rxjs';
 import { UserModelCommandTypes, UserModelCommandAction } from '../../appcommon/lib/CommonActions';
 import { MessageService } from 'primeng/api';
-import { LoadFileAction } from '../../+state/app.actions';
 import { filter } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import * as _ from 'lodash';

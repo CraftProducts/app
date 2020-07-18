@@ -14,6 +14,7 @@ import { templatesInitialState } from './+state/templates.init';
 import { TemplatesEffects } from './+state/templates.effects';
 import { GroupsComponent } from './components/groups.component';
 import { ListComponent } from './components/list.component';
+import { LoadLocalFileComponent } from './components/localfilemanager/load.component';
 
 const routes: Route[] = [
   {
@@ -23,7 +24,7 @@ const routes: Route[] = [
   }
 ];
 
-const components = [GroupsComponent, ListComponent];
+const components = [GroupsComponent, ListComponent, LoadLocalFileComponent];
 @NgModule({
   declarations: components,
   // exports: components,

@@ -3,9 +3,39 @@ import { App } from './app.state';
 import { ActionTypes } from './app.actions';
 import { CommonActionTypes } from '../appcommon/lib/CommonActions';
 
+//hack
+const TemplateModuleActionTypes = {
+    LoadGroups: "[LoadGroups]",
+    LoadGroupTemplatesSuccess: "[LoadGroupTemplates] Success",
+    LoadFile: "[LoadFile]"
+}
 export function appReducer(state: App, action: any): App {
 
     switch (action.type) {
+
+        // ----------------------- TEMPLATE MODULE ACTIONS ----------------------------
+        case TemplateModuleActionTypes.LoadGroups: {
+            return { ...state, selectedTemplateGroup: null, loadedFile: null, loadedTemplate: null, templateToLoad: null, userModelCommand: null };
+        }
+        case TemplateModuleActionTypes.LoadGroupTemplatesSuccess: {
+            return {
+                ...state,
+                selectedTemplateGroup: action.payload ? _.pick(action.payload, ['code', 'title', 'summary']) : null
+            }
+        }
+        case TemplateModuleActionTypes.LoadFile: {
+            return { ...state, loadedFile: action.payload, isModelDirty: false };
+        }
+        // ----------------------- TEMPLATE MODULE ACTIONS ----------------------------
+
+        case CommonActionTypes.UserModelCommand: {
+            return { ...state, userModelCommand: action.payload, isModelDirty: false };
+        }
+
+        case CommonActionTypes.SetModelDirty: {
+            return { ...state, isModelDirty: true, userModelCommand: null };
+        }
+
         case ActionTypes.BootstrapAppSuccess: {
             return { ...state, returnUrl: '' };
         }
@@ -14,13 +44,6 @@ export function appReducer(state: App, action: any): App {
             return { ...state, returnUrl: action.payload };
         }
 
-        case ActionTypes.LoadFile: {
-            return { ...state, loadedFile: action.payload, isModelDirty: false };
-        }
-
-        case ActionTypes.ResetTemplate: {
-            return { ...state, loadedFile: null, loadedTemplate: null, templateToLoad: null, userModelCommand: null };
-        }
         case ActionTypes.LoadTemplate: {
             let loadedFile = action.payload.mode && action.payload.mode.toLowerCase() === 'file'
                 ? state.loadedFile
@@ -34,14 +57,6 @@ export function appReducer(state: App, action: any): App {
                 loadedTemplate.groupCode = state.templateToLoad.groupCode;
             }
             return { ...state, loadedTemplate, isModelDirty: false };
-        }
-
-        case CommonActionTypes.UserModelCommand: {
-            return { ...state, userModelCommand: action.payload, isModelDirty: false };
-        }
-
-        case CommonActionTypes.SetModelDirty: {
-            return { ...state, isModelDirty: true, userModelCommand: null };
         }
 
         default: return state;

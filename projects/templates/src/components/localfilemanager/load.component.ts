@@ -1,30 +1,20 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../+state/app.state';
 import { Subscription } from 'rxjs';
 import { MessageService } from 'primeng/api';
-import { LoadFileAction } from '../../+state/app.actions';
 import { filter } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import * as _ from 'lodash';
+import { LoadFileAction } from '../../+state/templates.actions';
+import { TemplatesState } from '../../+state/templates.state';
 
 @Component({
     selector: 'app-load-localfile',
     templateUrl: './load.component.html'
 })
-export class LoadLocalFileComponent implements OnInit, OnDestroy {
+export class LoadLocalFileComponent {
 
-    loadedFile$: Subscription;
-
-    constructor(public store$: Store<AppState>, public router: Router, public messageService: MessageService) {
-    }
-    ngOnInit(): void {
-        this.loadedFile$ = this.store$.select(p => p.app.loadedFile)
-            .pipe(filter(file => file && file.content))
-            .subscribe(file => this.router.navigate([file.content.groupCode, file.content.templateCode], { queryParams: { mode: 'file' } }));
-    }
-    ngOnDestroy(): void {
-        this.loadedFile$ ? this.loadedFile$.unsubscribe() : null;
+    constructor(public store$: Store<TemplatesState>, public messageService: MessageService) {
     }
 
     handleFileInput(files: FileList) {
