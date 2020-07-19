@@ -25,8 +25,11 @@ export class GroupsComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
 
         this.redirectTo$ = this.activatedRoute.data
-            .pipe(filter(p => p["redirectTo"] && p["redirectTo"].length > 0), map(p => p["redirectTo"]))
-            .subscribe(data => this.store$.dispatch(new SetRedirectPathAction(data["redirectTo"])));
+            .pipe(
+                filter(data => data["redirectTo"] && data["redirectTo"].length > 0),
+                map(data => data["redirectTo"])
+            )
+            .subscribe(redirectTo => this.store$.dispatch(new SetRedirectPathAction(redirectTo)));
 
         this.eventNavigationEnd$ = this.router.events
             .pipe(filter(event => event instanceof NavigationEnd))

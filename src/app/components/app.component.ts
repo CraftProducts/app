@@ -19,7 +19,7 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.loadedFile$ = this.store$.select(p => p.app.loadedFile)
       .pipe(filter(file => file && file.content))
-      .subscribe(file => this.router.navigate([file.content.groupCode, file.content.templateCode], { queryParams: { mode: 'file' } }));
+      .subscribe(file => this.router.navigate(['modeler', file.content.groupCode, file.content.templateCode], { queryParams: { mode: 'file' } }));
   }
 
   ngOnDestroy(): void {

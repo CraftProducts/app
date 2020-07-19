@@ -2,8 +2,12 @@
     <ng-template ngFor let-section [ngForOf]="layout.children" let-icol="index">
         <as-split-area [order]="icol" [size]="section.size">
             <ng-container [ngSwitch]="section.type">
-                <app-panel [section]="section" *ngSwitchCase="'panel'" (showEditor)="onShowEditor($event)">
+                <app-panel *ngSwitchCase="'panel'" [section]="section" (showEditor)="onShowEditor($event)">
                 </app-panel>
+                
+                <app-matrix *ngSwitchCase="'matrix'" [section]="section" (showEditor)="onShowEditor($event)">
+                </app-matrix>
+
                 <app-split-layout *ngSwitchCase="'container'" [layout]="section" (showEditor)="onShowEditor($event)">
                 </app-split-layout>
             </ng-container>

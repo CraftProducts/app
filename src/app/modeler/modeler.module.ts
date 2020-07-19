@@ -31,6 +31,7 @@ import { SectionEditorComponent } from './components/editors/section-editor.comp
 import { TextEditorComponent } from './components/editors/text-editor.component';
 import { RecordEditorComponent } from './components/editors/record-editor.component';
 import { MatrixEditorComponent } from './components/editors/matrix-editor.component';
+import { ExportSidebarComponent } from './components/exports/export-sidebar.component';
 
 const routes: Route[] = [
   { path: '', component: ModelerHomeComponent, canDeactivate: [PendingChangesGuard] }
@@ -44,6 +45,8 @@ const routes: Route[] = [
     NotesComponent, LinksComponent, TasksComponent,
     SectionEditorComponent, TextEditorComponent, ListEditorComponent, SelectEditorComponent,
     MatrixEditorComponent, RecordEditorComponent,
+
+    ExportSidebarComponent
   ],
   imports: [
     CommonModule,

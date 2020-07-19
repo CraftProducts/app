@@ -15,7 +15,11 @@ export function appReducer(state: App, action: any): App {
 
         // ----------------------- TEMPLATE MODULE ACTIONS ----------------------------
         case TemplateModuleActionTypes.LoadGroups: {
-            return { ...state, selectedTemplateGroup: null, loadedFile: null, loadedTemplate: null, templateToLoad: null, userModelCommand: null };
+            return {
+                ...state, selectedTemplateGroup: null, loadedFile: null, loadedTemplate: null,
+                templateToLoad: null,
+                userModelCommand: null
+            };
         }
         case TemplateModuleActionTypes.LoadGroupTemplatesSuccess: {
             return {

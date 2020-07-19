@@ -1,7 +1,7 @@
 <div class="main-container">
     <div class="body-container" *ngIf="model" [style.zoom]="(zoom/100)">
         <ng-container [ngSwitch]="model.layout">
-            <div class="container-fluid mt-2" *ngSwitchCase="'freeflow'">
+            <div class="container-fluid mb-3" *ngSwitchCase="'freeflow'">
                 <app-freeflow-layout class="w-100" [layout]="model" (showEditor)="onShowEditor($event)">
                 </app-freeflow-layout>
             </div>
@@ -20,3 +20,9 @@
 <div class="zoom-slider" *ngIf="model">
     <p-slider [(ngModel)]="zoom" [min]="50" [max]="100" [step]="10"></p-slider>
 </div>
+
+<p-sidebar [(visible)]="showExportSidebar" styleClass="bg-light" styleClass="ui-sidebar-md" position="right"
+    (onHide)="showExportSidebar = false">
+    <app-export-sidebar *ngIf="model" [model]="model" [filename]="filename" (close)="showExportSidebar = false">
+    </app-export-sidebar>
+</p-sidebar>

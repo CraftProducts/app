@@ -29,7 +29,6 @@ export class ModelerHomeComponent extends BaseTemplateViewer implements Componen
 
     constructor(public store$: Store<ModelerState>, public router: Router, public activatedRoute: ActivatedRoute) {
         super(store$, router, activatedRoute);
-        console.log('ModelerHomeComponent');
     }
 
     @HostListener('window:beforeunload', ['$event'])
@@ -108,4 +107,6 @@ export class ModelerHomeComponent extends BaseTemplateViewer implements Componen
             this.store$.dispatch(new SetModelDirtyAction(section.isDirty));
         }
     }
+
+    
 }

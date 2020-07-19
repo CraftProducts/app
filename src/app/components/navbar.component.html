@@ -19,9 +19,11 @@
                 <li *ngIf="isModelDirty">
                     <app-save-localfile></app-save-localfile>
                 </li>
-                <!-- <li *ngIf="!isModelDirty">
-                    <app-load-localfile></app-load-localfile>
-                </li> -->
+                <li *ngIf="!isModelDirty && templateLoaded">
+                    <button class="btn btn-link" (click)="onExport()">
+                        <fa-icon icon="download"></fa-icon>
+                    </button>
+                </li>
                 <li class="nav-item">
                     <app-tools></app-tools>
                 </li>

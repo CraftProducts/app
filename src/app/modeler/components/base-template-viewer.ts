@@ -15,12 +15,14 @@ export abstract class BaseTemplateViewer {
     activatedRouteQueryparams$: Subscription;
     combined$: Subscription;
 
+    filename = '';
     userModelCommand$: Subscription;
     userModelCommand: any;
 
     isModelDirty$: Subscription;
     isModelDirty: boolean;
 
+    showExportSidebar = false;
     constructor(public store$: Store<AppState>, public router: Router, public activatedRoute: ActivatedRoute) { }
 
     abstract onTemplatesLoaded(template, dataset): void
@@ -31,14 +33,14 @@ export abstract class BaseTemplateViewer {
                 const primaryUrlSegmentGroup = this.router.parseUrl(this.router.url).root.children[PRIMARY_OUTLET];
                 if (primaryUrlSegmentGroup && primaryUrlSegmentGroup.segments) {
                     switch (primaryUrlSegmentGroup.segments.length) {
-                        case 1:
-                            this.router.navigate(['tools', primaryUrlSegmentGroup.segments[0].path]);
-                            break;
                         case 2:
+                            this.router.navigate(['tools', primaryUrlSegmentGroup.segments[1].path]);
+                            break;
+                        case 3:
                             this.store$.dispatch(
                                 new LoadTemplateAction({
-                                    groupCode: primaryUrlSegmentGroup.segments[0].path,
-                                    templateCode: primaryUrlSegmentGroup.segments[1].path,
+                                    groupCode: primaryUrlSegmentGroup.segments[1].path,
+                                    templateCode: primaryUrlSegmentGroup.segments[2].path,
                                     mode: qp.mode
                                 }))
                             break;
@@ -84,6 +86,9 @@ export abstract class BaseTemplateViewer {
                     case UserModelCommandTypes.Close:
                         this.onCloseModel();
                         break;
+                    case UserModelCommandTypes.Export:
+                        this.showExportSidebar = true;
+                        break;
                 }
             });
     }
@@ -98,13 +103,14 @@ export abstract class BaseTemplateViewer {
     abstract onExtractSections(modelInstance, fieldlist, sections): void
 
     onSaveModel(filename): void {
+        this.filename = filename;
         this.instance = this.instance || {};
         this.instance.groupCode = this.loadedTemplate.groupCode;
         this.instance.templateCode = this.loadedTemplate.code;
         this.instance.sections = [];
         this.onExtractSections(this.loadedTemplate, ['code', 'data'], this.instance.sections);
 
-        this.downloadDataFile(filename);
+        this.downloadDataFile();
         this.store$.dispatch(new SaveModelAction(this.instance));
     }
 
@@ -115,13 +121,13 @@ export abstract class BaseTemplateViewer {
         console.log('onCloseModel');
     }
 
-    private downloadDataFile(filename) {
+    private downloadDataFile() {
         var theJSON = JSON.stringify(this.instance);
-        filename = filename || `${this.instance.templateCode}.json`;
+        this.filename = this.filename || `${this.instance.templateCode}.json`;
 
         var element = document.createElement('a');
         element.setAttribute('href', "data:text/json;charset=UTF-8," + encodeURIComponent(theJSON));
-        element.setAttribute('download', filename);
+        element.setAttribute('download', this.filename);
         element.style.display = 'none';
         document.body.appendChild(element);
         element.click();

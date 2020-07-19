@@ -18,6 +18,7 @@ export const UserModelCommandTypes = {
     Save: "Save",
     Reset: "Reset",
     Close: "Close",
+    Export: "Export"
 }
 
 export class UserModelCommandAction implements Action {
