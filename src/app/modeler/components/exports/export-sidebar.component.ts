@@ -15,6 +15,7 @@ export class ExportSidebarComponent implements OnInit {
     options: any;
 
     ngOnInit(): void {
+        console.log('this.model', this.model);
         this.options = {
             appTitle: environment.appTitle,
             filename: this.filename || this.model.code,
@@ -25,6 +26,7 @@ export class ExportSidebarComponent implements OnInit {
                 summary: this.model.summary,
                 author: environment.appTitle
             },
+            includeEmptySections: true,
             includePaging: true,
             includeNotes: true
         };
@@ -33,7 +35,6 @@ export class ExportSidebarComponent implements OnInit {
     onClose = () => this.close.emit();
 
     exportToPptx() {
-        console.log('exportToPptx', this.model);
         createPptx(this.model, this.options)
     }
 }

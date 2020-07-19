@@ -19,6 +19,14 @@
                 <label for="name">Summary</label>
                 <textarea class="form-control" rows="5" [(ngModel)]="options.mainSlide.summary"></textarea>
             </div>
+            <div class="form-group">
+                <label>Include</label>
+                <div class="mt-1">
+                    <input type="checkbox" [(ngModel)]="options.includeEmptySections"> Empty sections <br>
+                    <input type="checkbox" [(ngModel)]="options.includePaging"> Page numbers <br>
+                    <input type="checkbox" [(ngModel)]="options.includeNotes"> Notes <br>
+                </div>
+            </div>
         </div>
     </div>
     <div class="pane-footer">
