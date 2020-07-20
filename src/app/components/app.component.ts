@@ -10,7 +10,6 @@ import { filter } from 'rxjs/operators';
   templateUrl: './app.component.html'
 })
 export class AppComponent implements OnInit, OnDestroy {
-  title = 'ProductPurpose';
   loadedFile$: Subscription;
 
   constructor(public store$: Store<AppState>, public router: Router) {

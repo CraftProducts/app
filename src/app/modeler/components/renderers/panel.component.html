@@ -1,5 +1,5 @@
 <div class="layout-panel">
-    <div class="btn-group btn-group-sm btn-hover">
+    <div class="btn-group btn-group-sm btn-hover" style="z-index: 1;">
         <button class="btn btn-link text-muted" (click)="onShowEditor({mode: 'EDIT', section: section})">
             <fa-icon icon="pencil-alt"></fa-icon>
         </button>
@@ -8,7 +8,24 @@
         </button>
     </div>
     <div class=" p-2">
-        <div class="h5 font-weight-light text-brand">
+        <div *ngIf="section.data" class="text-primary float-right mr-2">
+            <sup *ngIf="section.data.notes && section.data.notes.length > 0" class="ml-2">
+                <small>{{section.data.notes.length}}</small>
+                <fa-icon size="xs" [icon]="['far', 'comments']" class="ml-1"></fa-icon>
+            </sup>
+
+            <sup *ngIf="section.data.links && section.data.links.length > 0" class="ml-2">
+                <small>{{section.data.links.length}}</small>
+                <fa-icon size="xs" icon="link" class="ml-1"></fa-icon>
+            </sup>
+
+            <sup *ngIf="section.data.tasks && section.data.tasks.length > 0" class="ml-2">
+                <small>{{section.data.tasks.length}}</small>
+                <fa-icon size="xs" icon="tasks" class="ml-1"></fa-icon>
+            </sup>
+        </div>
+
+        <div class="h5 font-weight-light text-brand" *ngIf="section.isDirty || (section.title && section.title.length > 0)">
             <fa-icon *ngIf="section.icon && section.icon.length > 0" size="sm" [icon]="section.icon" class="text-brand">
             </fa-icon>
             {{section.title}}
@@ -16,33 +33,17 @@
                 <fa-icon icon="asterisk" size="xs" class="text-danger ml-1" title="Unsaved changes">
                 </fa-icon>
             </sup>
-            <span *ngIf="section.data" class="text-primary">
-                <sup *ngIf="section.data.notes && section.data.notes.length > 0" class="ml-2">
-                    <small>{{section.data.notes.length}}</small>
-                    <fa-icon size="xs" [icon]="['far', 'comments']" class="ml-1"></fa-icon>
-                </sup>
-
-                <sup *ngIf="section.data.links && section.data.links.length > 0" class="ml-2">
-                    <small>{{section.data.links.length}}</small>
-                    <fa-icon size="xs" icon="link" class="ml-1"></fa-icon>
-                </sup>
-
-                <sup *ngIf="section.data.tasks && section.data.tasks.length > 0" class="ml-2">
-                    <small>{{section.data.tasks.length}}</small>
-                    <fa-icon size="xs" icon="tasks" class="ml-1"></fa-icon>
-                </sup>
-            </span>
         </div>
         <div class="ml-4"
             *ngIf="!(section.data && (section.data.text || (section.data.list && section.data.list.length > 0)))">
             <ngx-md class="text-muted font-italic" [data]="section.summary"></ngx-md>
         </div>
         <div *ngIf="section.data">
-            <div *ngIf="section.data.text && section.datatype === 'text'" class=" ml-4">
+            <div *ngIf="section.data.text && section.datatype === 'text'" >
                 <ngx-md [data]="section.data.text"></ngx-md>
             </div>
 
-            <div *ngIf="section.data.selectedValue && section.datatype === 'select'" class=" ml-4">
+            <div *ngIf="section.data.selectedValue && section.datatype === 'select'" class="badge badge-secondary">
                 {{getSelectedValue(section.data.selectedValue)}}
             </div>
 

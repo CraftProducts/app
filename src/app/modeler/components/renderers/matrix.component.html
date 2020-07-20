@@ -10,9 +10,8 @@
         </thead>
         <tbody>
             <tr *ngFor="let row of section.rows" class="bg-light">
-                <td class="matrix-header" style="min-width: 150px;" [ngbPopover]="row.summary"
-                    triggers="mouseenter:mouseleave" placement="right">
-                    <h5>
+                <td class="matrix-header" style="min-width: 150px;">
+                    <h5 class="pl-2 mt-2" [ngbPopover]="row.summary" triggers="mouseenter:mouseleave" placement="right">
                         {{row.title}}
                         <!-- <fa-icon [icon]="['far','question-circle']" class="text-muted font-weight-light" size="xs">
                         </fa-icon> -->

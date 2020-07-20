@@ -34,7 +34,7 @@ export abstract class BaseTemplateViewer {
                 if (primaryUrlSegmentGroup && primaryUrlSegmentGroup.segments) {
                     switch (primaryUrlSegmentGroup.segments.length) {
                         case 2:
-                            this.router.navigate(['tools', primaryUrlSegmentGroup.segments[1].path]);
+                            this.router.navigate(['toolbox', primaryUrlSegmentGroup.segments[1].path]);
                             break;
                         case 3:
                             this.store$.dispatch(
@@ -44,10 +44,10 @@ export abstract class BaseTemplateViewer {
                                     mode: qp.mode
                                 }))
                             break;
-                        default: this.router.navigate(['tools']);
+                        default: this.router.navigate(['toolbox']);
                     }
                 } else {
-                    this.router.navigate(['tools']);
+                    this.router.navigate(['toolbox']);
                 }
             })
 

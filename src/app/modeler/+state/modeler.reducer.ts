@@ -51,7 +51,6 @@ export function modelerReducer(state: Modeler, action: any): Modeler {
         if (children.length > 0) {
             children.forEach(child => {
                 child.isDirty = false;
-
                 if (child.type === 'matrix' && child.rows && child.columns) {
                     child.rows.forEach(row => {
                         row.columns = [];
@@ -59,6 +58,8 @@ export function modelerReducer(state: Modeler, action: any): Modeler {
                             row.columns.push({
                                 rowCode: row.code,
                                 colCode: column.code,
+                                rowTitle: row.title,
+                                colTitle: column.title,
                                 datatype: row.datatype,
                                 data: { text: '', notes: [], tasks: [], links: [] },
                                 options: row.options

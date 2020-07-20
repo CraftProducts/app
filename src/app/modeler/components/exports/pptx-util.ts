@@ -10,20 +10,26 @@ export function createPptx(model, options) {
     }
 
     const sections = [];
-    extractSections(model, ['title', 'summary', 'code', 'data', 'datatype'], sections);
-    console.log('sections', sections);
+    extractSections(model, ['title', 'summary', 'code', 'data', 'datatype', 'type'], sections);
+    console.log('sections', model, sections);
     defineSeparatorSlideMaster(pptx, options);
     defineTextSlideMaster(pptx, options);
 
     if (sections && sections.length > 0) {
         sections.forEach(section => {
-            const sectionSlide = pptx.addSlide("SEPARATOR_SLIDE");
-            sectionSlide.addText(section.title, { placeholder: "body", align: "center", valign: "middle", fontSize: 80 });
-            if (section.data && section.datatype) {
+            createSectionSlide(section);
+        });
+    }
+
+    function createSectionSlide(section: any) {
+        const sectionSlide = pptx.addSlide("SEPARATOR_SLIDE");
+        sectionSlide.addText(section.title, { placeholder: "body", align: "center", valign: "middle", fontSize: 80 });
+        if (section.data) {
+            if (section.datatype) {
                 const datatype = section.datatype.toLowerCase();
                 if (datatype === 'text' || datatype === 'list') {
 
-                    const dataSlide = createDataSlide(section);
+                    const dataSlide = prepareDataSlide(section);
                     let noteText = '';
 
                     switch (datatype) {
@@ -45,7 +51,7 @@ export function createPptx(model, options) {
                                     return {
                                         text: record.title,
                                         options: { fontSize: 24, breakLine: true, bullet: true }
-                                    }
+                                    };
                                 });
                                 dataSlide.addText(list, { placeholder: "body" });
                             }
@@ -57,14 +63,19 @@ export function createPptx(model, options) {
                         dataSlide.addNotes(noteText);
                     }
                 }
-
             }
-        });
+            if (section.type === 'matrix' && section.data.length > 0) {
+                section.data.forEach(record => {
+                    record.title = `${record.rowTitle}:${record.colTitle}`;
+                    createSectionSlide(record);
+                });
+            }
+        }
     }
 
     pptx.writeFile(`${options.filename}.pptx`);
 
-    function createDataSlide(section: any) {
+    function prepareDataSlide(section: any) {
         const listSlide = pptx.addSlide("TEXT_SLIDE");
         listSlide.addText(section.title, { placeholder: "title", align: "left", color: "FFFFFF", fontSize: 44 });
         return listSlide;

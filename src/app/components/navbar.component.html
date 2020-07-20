@@ -1,9 +1,9 @@
 <nav class="navbar navbar-expand-md bg-white">
     <div class="container-fluid p-0">
-        <a class="text-dark h5 mt-2 mr-3 border-right pr-3" routerLink="/tools">
+        <a class="text-dark h5 mt-2 mr-3 border-right pr-3" routerLink="/toolbox">
             <img src="./assets/logo.png" height="20pt" />
-            <span class="font-weight-light ml-2">Product</span>
-            <span class="text-brand">Purpose</span>
+            <span class="font-weight-light ml-2">Craft</span>
+            <span class="text-brand">Product</span>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
@@ -22,6 +22,7 @@
                 <li *ngIf="!isModelDirty && templateLoaded">
                     <button class="btn btn-link" (click)="onExport()">
                         <fa-icon icon="download"></fa-icon>
+                        <span class="d-inline d-md-none ml-2"> Export</span>
                     </button>
                 </li>
                 <li class="nav-item">
