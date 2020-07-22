@@ -28,7 +28,8 @@ export class ExportSidebarComponent implements OnInit {
             },
             includeEmptySections: true,
             includePaging: true,
-            includeNotes: true
+            includeNotes: true,
+            // includeDescription: true
         };
     }
 

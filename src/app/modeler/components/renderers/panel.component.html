@@ -1,4 +1,4 @@
-<div class="layout-panel">
+<div class="layout-panel" [ngClass]="{'panel-is-dirty': section && section.isDirty}">
     <div class="btn-group btn-group-sm btn-hover" style="z-index: 1;">
         <button class="btn btn-link text-muted" (click)="onShowEditor({mode: 'EDIT', section: section})">
             <fa-icon icon="pencil-alt"></fa-icon>
@@ -25,21 +25,20 @@
             </sup>
         </div>
 
-        <div class="h5 font-weight-light text-brand" *ngIf="section.isDirty || (section.title && section.title.length > 0)">
+        <div class="h5 font-weight-light text-brand" *ngIf="(section.title && section.title.length > 0)">
             <fa-icon *ngIf="section.icon && section.icon.length > 0" size="sm" [icon]="section.icon" class="text-brand">
             </fa-icon>
             {{section.title}}
-            <sup *ngIf="section.isDirty">
+            <!-- <sup *ngIf="section.isDirty">
                 <fa-icon icon="asterisk" size="xs" class="text-danger ml-1" title="Unsaved changes">
                 </fa-icon>
-            </sup>
+            </sup> -->
         </div>
-        <div class="ml-4"
-            *ngIf="!(section.data && (section.data.text || (section.data.list && section.data.list.length > 0)))">
-            <ngx-md class="text-muted font-italic" [data]="section.summary"></ngx-md>
+        <div *ngIf="!(section.data && (section.data.text || (section.data.list && section.data.list.length > 0)))">
+            <ngx-md class="text-muted small font-italic" [data]="section.summary"></ngx-md>
         </div>
         <div *ngIf="section.data">
-            <div *ngIf="section.data.text && section.datatype === 'text'" >
+            <div *ngIf="section.data.text && section.datatype === 'text'">
                 <ngx-md [data]="section.data.text"></ngx-md>
             </div>
 

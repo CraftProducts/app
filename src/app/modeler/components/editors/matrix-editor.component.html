@@ -1,14 +1,14 @@
 <div *ngIf="section">
-    <div class="row mb-3">
+    <div class="row">
         <div class="col-md-3">
-            <select class="form-control form-control-sm" [(ngModel)]="section.selectedItem.colCode"
+            <select class="form-control form-control-sm mb-3" [(ngModel)]="colCode"
                 (change)="onChange()">
                 <option>-- select phase --</option>
                 <option *ngFor="let col of section.columns" [value]="col.code">{{col.title}}</option>
             </select>
         </div>
         <div class="col-md-3">
-            <select class="form-control form-control-sm" [(ngModel)]="section.selectedItem.rowCode"
+            <select class="form-control form-control-sm mb-3" [(ngModel)]="rowCode"
                 (change)="onChange()">
                 <option>-- select state --</option>
                 <option *ngFor="let row of section.rows" [value]="row.code">{{row.title}}</option>

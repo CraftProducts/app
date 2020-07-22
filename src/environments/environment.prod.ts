@@ -2,7 +2,7 @@ import { version } from '../../package.json';
 
 export const environment = {
   production: true,
-  appTitle: 'Craft',
+  appTitle: 'CraftProduct',
   VERSION: version, 
   templateFileLocation: 'https://raw.githubusercontent.com/adhamankar/productpurpose/master/templates',
   google: {

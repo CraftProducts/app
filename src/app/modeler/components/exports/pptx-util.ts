@@ -1,73 +1,38 @@
 import PptxGenJS from "pptxgenjs";
-import { extractSections } from '../../modeler-utils';
+import { extractSections, SECTIONTYPES, DATATYPES } from '../../modeler-utils';
 import * as _ from 'lodash';
+import { environment } from 'src/environments/environment';
+
+const MASTER_SLIDES = {
+    Separator: `${environment.appTitle} Separator slide`,
+    Text: `${environment.appTitle} Text slide`
+}
 
 export function createPptx(model, options) {
     let pptx = generatePptx(options);
 
-    if (options.includeMainSlide) {
-        createMainSlide(pptx, options);
-    }
+    createMainSlide(pptx, options);
 
     const sections = [];
     extractSections(model, ['title', 'summary', 'code', 'data', 'datatype', 'type'], sections);
     console.log('sections', model, sections);
-    defineSeparatorSlideMaster(pptx, options);
-    defineTextSlideMaster(pptx, options);
 
-    if (sections && sections.length > 0) {
-        sections.forEach(section => {
-            createSectionSlide(section);
-        });
-    }
+    sections.forEach(section => createSectionSlide(section));
 
     function createSectionSlide(section: any) {
-        const sectionSlide = pptx.addSlide("SEPARATOR_SLIDE");
-        sectionSlide.addText(section.title, { placeholder: "body", align: "center", valign: "middle", fontSize: 80 });
-        if (section.data) {
-            if (section.datatype) {
-                const datatype = section.datatype.toLowerCase();
-                if (datatype === 'text' || datatype === 'list') {
+        if (options.includeEmptySections ||
+            (section.type === SECTIONTYPES.panel && sectionHasData(section)) ||
+            section.type === SECTIONTYPES.matrix && section.data.length > 0) {
+            const sectionSlide = pptx.addSlide(MASTER_SLIDES.Separator);
+            sectionSlide.addText(section.title, { placeholder: "body", align: "center", valign: "middle", fontSize: 80 });
 
-                    const dataSlide = prepareDataSlide(section);
-                    let noteText = '';
+            createDataSlide(section);
 
-                    switch (datatype) {
-                        case 'text':
-                            if ((section.data.text && section.data.text.length > 0) || options.includeEmptySections) {
-                                dataSlide.addText(section.data.text, { placeholder: "body" });
-
-                                noteText = prepareNoteText(section.data, options.includeNotes);
-                            }
-                            break;
-                        case 'list':
-                            if ((section.data.list && section.data.list.length > 0) || options.includeEmptySections) {
-                                const list = _.map(section.data.list || [], record => {
-                                    let recordNoteText = prepareNoteText(record, options.includeNotes);
-                                    if (recordNoteText && recordNoteText.length > 0) {
-                                        recordNoteText = record.title + '\n' + recordNoteText;
-                                        noteText = noteText + recordNoteText;
-                                    }
-                                    return {
-                                        text: record.title,
-                                        options: { fontSize: 24, breakLine: true, bullet: true }
-                                    };
-                                });
-                                dataSlide.addText(list, { placeholder: "body" });
-                            }
-                            break;
-                        case 'matrix':
-                            break;
-                    }
-                    if (noteText && noteText.length > 0) {
-                        dataSlide.addNotes(noteText);
-                    }
-                }
-            }
-            if (section.type === 'matrix' && section.data.length > 0) {
+            if (section.type === SECTIONTYPES.matrix && section.data.length > 0) {
+                section.data = _.orderBy(section.data, ['colCode', 'rowCode']);
                 section.data.forEach(record => {
-                    record.title = `${record.rowTitle}:${record.colTitle}`;
-                    createSectionSlide(record);
+                    record.title = `${record.colTitle}:${record.rowTitle}`;
+                    createDataSlide(record);
                 });
             }
         }
@@ -75,8 +40,64 @@ export function createPptx(model, options) {
 
     pptx.writeFile(`${options.filename}.pptx`);
 
+    function createDataSlide(section: any) {
+        if (section.data && section.datatype) {
+            let dataSlide = null;
+            let noteText = '';
+            switch (section.datatype.toLowerCase()) {
+                case DATATYPES.text:
+                    if (section.data.text && section.data.text.length > 0) {
+                        dataSlide = prepareDataSlide(section);
+                        dataSlide.addText(section.data.text, { placeholder: "body" });
+
+                        noteText = prepareNoteText(section.data, options.includeNotes);
+                    }
+                    break;
+                case DATATYPES.list:
+                    if (section.data.list && section.data.list.length > 0) {
+                        dataSlide = prepareDataSlide(section);
+                        const list = _.map(section.data.list || [], record => {
+                            let recordNoteText = prepareNoteText(record, options.includeNotes);
+                            if (recordNoteText && recordNoteText.length > 0) {
+                                recordNoteText = record.title + '\n' + recordNoteText;
+                                noteText = noteText + recordNoteText;
+                            }
+                            return {
+                                text: record.title,
+                                options: { fontSize: 24, breakLine: true, bullet: true }
+                            };
+                        });
+                        dataSlide.addText(list, { placeholder: "body" });
+                    }
+                    break;
+                case DATATYPES.select:
+                    console.log('DATATYPES.select', section.data)
+                    if (section.data.selectedValue && section.data.selectedValue.length > 0) {
+                        dataSlide = prepareDataSlide(section);
+                        dataSlide.addText(section.data.selectedValue, { placeholder: "body" });
+
+                        noteText = prepareNoteText(section.data, options.includeNotes);
+                    }
+                    break;
+            }
+            if (dataSlide && noteText && noteText.length > 0) {
+                dataSlide.addNotes(noteText);
+            }
+        }
+    }
+
+    function sectionHasData(section) {
+        if (section.data && section.datatype) {
+            if ((section.datatype === DATATYPES.text && section.data.text && section.data.text.length > 0) ||
+                (section.datatype === DATATYPES.list && section.data.list && section.data.list.length > 0) ||
+                (section.datatype === DATATYPES.select && section.data.selectedValue && section.data.selectedValue.length > 0)) {
+                return true;
+            }
+        }
+        return false;
+    }
     function prepareDataSlide(section: any) {
-        const listSlide = pptx.addSlide("TEXT_SLIDE");
+        const listSlide = pptx.addSlide(MASTER_SLIDES.Text);
         listSlide.addText(section.title, { placeholder: "title", align: "left", color: "FFFFFF", fontSize: 44 });
         return listSlide;
     }
@@ -101,9 +122,9 @@ function createMainSlide(pptx: PptxGenJS, options: any) {
     mainSlide.color = "ffffff";
     mainSlide
         .addImage({ x: ".1", y: ".1", w: ".4", h: ".4", path: "./assets/logo.png" })
-        .addText(`Created using ${options.appTitle}`, { x: "0", y: "96%", w: "100%", align: "right", color: "333333", fontSize: 12 })
+        .addText(`Crafted using ${options.appTitle}`, { x: "0", y: "96%", w: "100%", align: "right", color: "333333", fontSize: 12 })
 
-        .addText(options.mainSlide.title, { x: "10%", y: "40%", w: "80%", fontSize: 60, wrap: false })
+        .addText(options.mainSlide.title, { x: "10%", y: "40%", w: "80%", fontSize: 50, wrap: false })
         .addText(options.mainSlide.summary, { x: "10%", y: "47%", w: "80%", fontSize: 24, valign: "top" })
         .addText(options.mainSlide.author, { x: "10%", y: "65%", w: "80%", fontSize: 18 })
         .addText(new Date().toDateString(), { x: "10%", y: "70%", w: "80%", fontSize: 18 });
@@ -111,7 +132,7 @@ function createMainSlide(pptx: PptxGenJS, options: any) {
 
 function defineSeparatorSlideMaster(pptx: PptxGenJS, options) {
     pptx.defineSlideMaster({
-        title: "SEPARATOR_SLIDE",
+        title: MASTER_SLIDES.Separator,
         bkgd: "f1f1f1",
         objects: [
             {
@@ -127,7 +148,7 @@ function defineSeparatorSlideMaster(pptx: PptxGenJS, options) {
 
 function defineTextSlideMaster(pptx: PptxGenJS, options) {
     pptx.defineSlideMaster({
-        title: "TEXT_SLIDE",
+        title: MASTER_SLIDES.Text,
         objects: [
             { rect: { x: 0, y: 0, w: "100%", h: 1, fill: "31A6FD" } },
             {
@@ -154,5 +175,9 @@ function generatePptx(options: any) {
     pptx.title = options.mainSlide.title;
 
     pptx.layout = "LAYOUT_WIDE";
+
+    defineSeparatorSlideMaster(pptx, options);
+    defineTextSlideMaster(pptx, options);
+
     return pptx;
 }

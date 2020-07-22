@@ -5,7 +5,7 @@
 import { version } from '../../package.json';
 
 export const environment = {
-  appTitle: 'Craft',
+  appTitle: 'CraftProduct',
   templateFileLocation: './templates',
   VERSION: version,
   production: false,

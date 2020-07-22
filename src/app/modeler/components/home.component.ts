@@ -6,7 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ComponentCanDeactivate } from 'shared-lib'
 import { SetModelAction, SetModelDirtyAction, SelectSectionAction } from 'src/app/appcommon/lib/CommonActions';
-import { extractSections } from '../modeler-utils';
+import { extractSections, SECTIONTYPES } from '../modeler-utils';
 import { BaseTemplateViewer } from './base-template-viewer';
 
 @Component({
@@ -89,7 +89,7 @@ export class ModelerHomeComponent extends BaseTemplateViewer implements Componen
     }
     searchSectionInLayout(layout, sectionCode) {
         if (layout) {
-            if ((layout.type === 'panel' || layout.type === 'matrix') &&
+            if ((layout.type === SECTIONTYPES.panel || layout.type === SECTIONTYPES.matrix) &&
                 layout.code.toUpperCase() === sectionCode.toUpperCase()) {
                 return layout;
             } else if (layout.children && layout.children.length > 0) {

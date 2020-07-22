@@ -1,24 +1,25 @@
-<div class="table-responsive">
+<div class="table-responsive mt-4 mb-4">
     <table class="table table-bordered table-sm mb-0">
         <thead>
-            <tr class="matrix-header">
-                <th>&nbsp;</th>
-                <th class="" *ngFor="let col of section.columns">
-                    <h5 class="text-capitalize">{{col.title}}</h5>
+            <tr class="text-center">
+                <th class="border-0">&nbsp;</th>
+                <th class="border-0" *ngFor="let col of section.columns">
+                    <h5 class="text-capitalize text-brand font-weight-light">{{col.title}}</h5>
                 </th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let row of section.rows" class="bg-light">
-                <td class="matrix-header" style="min-width: 150px;">
-                    <h5 class="pl-2 mt-2" [ngbPopover]="row.summary" triggers="mouseenter:mouseleave" placement="right">
+                <td class="bg-white" style="min-width: 150px;">
+                    <h5 class="pl-2 mt-2 text-brand" [ngbPopover]="row.summary" triggers="mouseenter:mouseleave"
+                        placement="right">
                         {{row.title}}
                         <!-- <fa-icon [icon]="['far','question-circle']" class="text-muted font-weight-light" size="xs">
                         </fa-icon> -->
                     </h5>
                 </td>
-                <td *ngFor="let col of row.columns;let idx = index">
-                    <div style="width: 350px;">
+                <td class=" p-0" *ngFor="let col of row.columns;let idx = index">
+                    <div class="mb-1" style="width: 350px;">
                         <app-panel [section]="row.columns[idx]" (showEditor)="onShowItemDetails(row.columns[idx])">
                         </app-panel>
                     </div>

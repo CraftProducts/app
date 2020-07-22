@@ -2,6 +2,7 @@ import { Modeler } from './modeler.state';
 import * as _ from 'lodash';
 import { CommonActionTypes } from 'src/app/appcommon/lib/CommonActions';
 import { generateCode } from 'shared-lib';
+import { SECTIONTYPES } from '../modeler-utils';
 
 export function modelerReducer(state: Modeler, action: any): Modeler {
     // console.log(action.type, action.payload);
@@ -51,25 +52,29 @@ export function modelerReducer(state: Modeler, action: any): Modeler {
         if (children.length > 0) {
             children.forEach(child => {
                 child.isDirty = false;
-                if (child.type === 'matrix' && child.rows && child.columns) {
+                if (child.type === SECTIONTYPES.matrix && child.rows && child.columns) {
                     child.rows.forEach(row => {
-                        row.columns = [];
-                        child.columns.forEach(column => {
-                            row.columns.push({
-                                rowCode: row.code,
-                                colCode: column.code,
-                                rowTitle: row.title,
-                                colTitle: column.title,
-                                datatype: row.datatype,
-                                data: { text: '', notes: [], tasks: [], links: [] },
-                                options: row.options
+                        if (!row.columns || row.columns.length === 0 || resetData) {
+                            row.columns = [];
+                            child.columns.forEach(column => {
+                                row.columns.push({
+                                    rowCode: row.code,
+                                    colCode: column.code,
+                                    rowTitle: row.title,
+                                    colTitle: column.title,
+                                    datatype: row.datatype,
+                                    data: { text: '', notes: [], tasks: [], links: [] },
+                                    options: row.options
+                                });
                             });
-                        });
+                        } else if (resetData === false && row.columns) {
+                            row.columns.forEach(column => column.isDirty = false);
+                        }
                     })
                 }
 
                 if (!child.data || resetData) {
-                    child.data = child.type === 'matrix' ? [] : {};
+                    child.data = child.type === SECTIONTYPES.matrix ? [] : {};
                 }
                 resetModelChildren(child.children, resetData);
             });
@@ -79,11 +84,11 @@ export function modelerReducer(state: Modeler, action: any): Modeler {
     function populateModelDataset(node, lookupSections) {
         if (!node) return;
 
-        if (node.type === 'panel') {
+        if (node.type === SECTIONTYPES.panel) {
             const found = _.find(lookupSections, { code: node.code });
             node.data = found && found.data ? _.cloneDeep(found.data) : {};
             node.isDirty = false;
-        } else if (node.type === 'matrix') {
+        } else if (node.type === SECTIONTYPES.matrix) {
             const found = _.find(lookupSections, { code: node.code });
             if (found && found.data && found.data.length > 0) {
                 found.data.forEach(dt => {

@@ -6,7 +6,7 @@ import * as _ from 'lodash';
     templateUrl: './matrix.component.html'
 })
 export class MatrixRendererComponent {
-    @Input() section:any;    
+    @Input() section: any;
     @Output() showEditor = new EventEmitter<any>();
 
     onShowEditor(eventArgs) {
@@ -14,6 +14,7 @@ export class MatrixRendererComponent {
     }
 
     onShowItemDetails(section) {
+        console.log('onShowItemDetails', section);
         this.section.selectedItem = section;
         this.onShowEditor({ mode: 'VIEW', section: this.section });
     }
