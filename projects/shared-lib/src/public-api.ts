@@ -10,4 +10,5 @@ export * from './lib/backend-urls';
 
 export * from './dataproviders/template.service';
 
-export * from './lib/shared-lib.module';
+export { LoadLocalFileComponent, UploadFileTypes } from './components/load-localfile.component'
+export * from './shared-lib.module';

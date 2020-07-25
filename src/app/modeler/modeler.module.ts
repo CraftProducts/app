@@ -32,6 +32,8 @@ import { TextEditorComponent } from './components/editors/text-editor.component'
 import { RecordEditorComponent } from './components/editors/record-editor.component';
 import { MatrixEditorComponent } from './components/editors/matrix-editor.component';
 import { ExportSidebarComponent } from './components/exports/export-sidebar.component';
+import { MetadataRendererComponent } from './components/renderers/metadata.component';
+import { ImageEditorComponent } from './components/editors/image-editor.component';
 
 const routes: Route[] = [
   { path: '', component: ModelerHomeComponent, canDeactivate: [PendingChangesGuard] }
@@ -40,10 +42,10 @@ const routes: Route[] = [
 @NgModule({
   declarations: [ModelerHomeComponent,
     SplitLayoutRendererComponent, FreeflowLayoutRendererComponent,
-    PanelRendererComponent, MatrixRendererComponent,
+    PanelRendererComponent, MatrixRendererComponent, MetadataRendererComponent,
 
     NotesComponent, LinksComponent, TasksComponent,
-    SectionEditorComponent, TextEditorComponent, ListEditorComponent, SelectEditorComponent,
+    SectionEditorComponent, TextEditorComponent, ListEditorComponent, SelectEditorComponent, ImageEditorComponent,
     MatrixEditorComponent, RecordEditorComponent,
 
     ExportSidebarComponent

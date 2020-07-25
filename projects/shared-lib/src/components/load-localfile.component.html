@@ -1,6 +1,6 @@
 <button type="button" class="btn btn-sm btn-primary" (click)="fileInput.click()">
-    <fa-icon icon="upload" class="mr-1"></fa-icon>
-    <span>Open local file</span>
+    <fa-icon [icon]="icon" class="mr-1"></fa-icon>
+    <span>{{label}}</span>
     <input #fileInput type="file" (change)="handleFileInput($event.target.files)" style="display:none;"
-        accept="application/json" />
+        [accept]="accept" />
 </button>

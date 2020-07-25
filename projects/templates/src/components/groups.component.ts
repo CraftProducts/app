@@ -3,9 +3,10 @@ import * as _ from 'lodash';
 import { Store } from '@ngrx/store';
 import { TemplatesState } from '../+state/templates.state';
 import { Subscription } from 'rxjs';
-import { LoadGroupsAction, SetRedirectPathAction } from '../+state/templates.actions';
+import { LoadGroupsAction, SetRedirectPathAction, LoadFileAction } from '../+state/templates.actions';
 import { filter, tap, map } from 'rxjs/operators';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
+import { MessageService } from 'primeng/api';
 
 @Component({
     selector: 'templates-groups',
@@ -20,7 +21,8 @@ export class GroupsComponent implements OnInit, OnDestroy {
 
     redirectTo$: Subscription;
 
-    constructor(public store$: Store<TemplatesState>, public router: Router, public activatedRoute: ActivatedRoute) { }
+    constructor(public store$: Store<TemplatesState>, public router: Router, public activatedRoute: ActivatedRoute,
+        public messageService: MessageService) { }
 
     ngOnInit(): void {
 
@@ -47,5 +49,16 @@ export class GroupsComponent implements OnInit, OnDestroy {
         this.redirectTo$ ? this.redirectTo$.unsubscribe() : null;
         this.eventNavigationEnd$ ? this.eventNavigationEnd$.unsubscribe() : null;
         this.details$ ? this.details$.unsubscribe() : null;
+    }
+
+    onFileLoaded(fileContent) {
+        if (fileContent && fileContent.content) {
+            fileContent.content = JSON.parse(fileContent.content);
+        }
+        this.store$.dispatch(new LoadFileAction(fileContent));
+    }
+
+    onFileLoadingError(err) {
+        this.messageService.add({ severity: 'error', detail: 'Error:' + err, life: 5000, closable: true })
     }
 }

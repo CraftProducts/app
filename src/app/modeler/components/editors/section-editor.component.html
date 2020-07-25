@@ -38,6 +38,11 @@
                             (toggleMode)="onToggleMode($event, section)" (itemChange)="onItemChanged($event, section)">
                         </app-text-editor>
 
+                        <app-image-editor *ngIf="section.datatype === 'image'" [placeholder]="section.summary"
+                            [mode]="mode" [(data)]="section.data" (save)="onUpdated($event, section)"
+                            (toggleMode)="onToggleMode($event, section)" (itemChange)="onItemChanged($event, section)">
+                        </app-image-editor>
+
                         <app-list-editor *ngIf="section.datatype === 'list'" [mode]="mode" [(data)]="section.data"
                             (save)="onUpdated($event, section)" (toggleMode)="onToggleMode($event, section)"
                             (itemChange)="onItemChanged($event, section)" [selectedItem]="section.selectedItem">

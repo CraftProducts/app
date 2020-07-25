@@ -28,7 +28,11 @@
                                 <div class="card-text small">
                                     Open previously created file for viewing or editing purpose.
                                     <div class="mt-4">
-                                        <app-load-localfile></app-load-localfile>
+                                        <sharedlib-load-localfile (fileLoaded)="onFileLoaded($event)"
+                                            (error)="onFileLoadingError($event)"
+                                            errorMessage="Invalid file. System only supports CraftProduct compliant JSON files."
+                                            label="Open local file" accept="application/json" icon="upload">
+                                        </sharedlib-load-localfile>
                                     </div>
                                 </div>
                             </div>

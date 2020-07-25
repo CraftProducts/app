@@ -8,33 +8,17 @@
         </button>
     </div>
     <div class=" p-2">
-        <div *ngIf="section.data" class="text-primary float-right mr-2">
-            <sup *ngIf="section.data.notes && section.data.notes.length > 0" class="ml-2">
-                <small>{{section.data.notes.length}}</small>
-                <fa-icon size="xs" [icon]="['far', 'comments']" class="ml-1"></fa-icon>
-            </sup>
-
-            <sup *ngIf="section.data.links && section.data.links.length > 0" class="ml-2">
-                <small>{{section.data.links.length}}</small>
-                <fa-icon size="xs" icon="link" class="ml-1"></fa-icon>
-            </sup>
-
-            <sup *ngIf="section.data.tasks && section.data.tasks.length > 0" class="ml-2">
-                <small>{{section.data.tasks.length}}</small>
-                <fa-icon size="xs" icon="tasks" class="ml-1"></fa-icon>
-            </sup>
-        </div>
-
-        <div class="h5 font-weight-light text-brand" *ngIf="(section.title && section.title.length > 0)">
+        <app-metadata *ngIf="section.data" [data]="section.data"></app-metadata>
+        <div class="h5 font-weight-light text-brand"
+            *ngIf="(section.title && section.title.length > 0 && !(section.data && section.data.image && section.datatype === 'image'))">
             <fa-icon *ngIf="section.icon && section.icon.length > 0" size="sm" [icon]="section.icon" class="text-brand">
             </fa-icon>
             {{section.title}}
-            <!-- <sup *ngIf="section.isDirty">
-                <fa-icon icon="asterisk" size="xs" class="text-danger ml-1" title="Unsaved changes">
-                </fa-icon>
-            </sup> -->
         </div>
-        <div *ngIf="!(section.data && (section.data.text || (section.data.list && section.data.list.length > 0)))">
+        <div *ngIf="!(section.data && (section.data.text || 
+                                        section.data.selectedValue || 
+                                        section.data.image || 
+                                        (section.data.list && section.data.list.length > 0)))">
             <ngx-md class="text-muted small font-italic" [data]="section.summary"></ngx-md>
         </div>
         <div *ngIf="section.data">
@@ -46,25 +30,17 @@
                 {{getSelectedValue(section.data.selectedValue)}}
             </div>
 
+            <div *ngIf="section.data.image && section.datatype === 'image'" class="text-center align-middle">
+                <img [src]="section.data.image" style="max-height: 100px;max-width: 100px;" />
+            </div>
+
             <div *ngIf="section.data.list && section.data.list.length > 0">
                 <button *ngFor="let item of section.data.list" (click)="onShowItemDetails(item, section)"
                     class="btn btn-sm btn-link hover-link text-dark w-100 text-left rounded-0 text-truncate"
                     [title]="item.title">
 
-                    <span class="text-primary float-right">
-                        <span *ngIf="item.notes && item.notes.length > 0" class="ml-2">
-                            <small>{{item.notes.length}}</small>
-                            <fa-icon size="xs" [icon]="['far', 'comments']" class="ml-1"></fa-icon>
-                        </span>
-                        <span *ngIf="item.links && item.links.length > 0" class="ml-2">
-                            <small>{{item.links.length}}</small>
-                            <fa-icon size="xs" icon="link" class="ml-1"></fa-icon>
-                        </span>
-                        <span *ngIf="item.tasks && item.tasks.length > 0" class="ml-2">
-                            <small>{{item.tasks.length}}</small>
-                            <fa-icon size="xs" icon="tasks" class="ml-1"></fa-icon>
-                        </span>
-                    </span>
+                    <app-metadata [data]="item"></app-metadata>
+
                     <fa-icon icon="angle-right" size="sm" class="mr-1 text-muted"></fa-icon>
                     {{item.title}}
                 </button>
