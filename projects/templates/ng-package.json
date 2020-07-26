@@ -2,6 +2,16 @@
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
   "dest": "../../dist/templates",
   "lib": {
-    "entryFile": "src/public-api.ts"
+    "entryFile": "src/public-api.ts",
+    "umdModuleIds": {
+      "@ng-bootstrap/ng-bootstrap": "ngBootstrap",
+      "@fortawesome/angular-fontawesome": "angularFontawesome",
+      "angular-pipes" : "angularPipes",
+      "shared-lib" : "sharedLib",
+      "ngx-md" : "ngxMd",
+      "@ngrx/store" : "ngrxStore",
+      "primeng/api" : "primeApi",
+      "@ngrx/effects": "ngexEffects"
+    }
   }
 }

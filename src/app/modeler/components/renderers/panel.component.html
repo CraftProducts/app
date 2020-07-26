@@ -1,15 +1,15 @@
-<div class="layout-panel" [ngClass]="{'panel-is-dirty': section && section.isDirty}">
+<div class="layout-panel layout-panel-{{section.datatype}}" [ngClass]="{'panel-is-dirty': section && section.isDirty}">
     <div class="btn-group btn-group-sm btn-hover" style="z-index: 1;">
-        <button class="btn btn-link text-muted" (click)="onShowEditor({mode: 'EDIT', section: section})">
+        <!-- <button class="btn btn-link text-muted" (click)="onShowEditor({mode: 'EDIT', section: section})">
             <fa-icon icon="pencil-alt"></fa-icon>
-        </button>
+        </button> -->
         <button class="btn btn-link text-muted" (click)="onShowEditor({mode: 'VIEW', section: section})">
             <fa-icon icon="expand-alt"></fa-icon>
         </button>
     </div>
-    <div class=" p-2">
+    <div>
         <app-metadata *ngIf="section.data" [data]="section.data"></app-metadata>
-        <div class="h5 font-weight-light text-brand"
+        <div class="h6"
             *ngIf="(section.title && section.title.length > 0 && !(section.data && section.data.image && section.datatype === 'image'))">
             <fa-icon *ngIf="section.icon && section.icon.length > 0" size="sm" [icon]="section.icon" class="text-brand">
             </fa-icon>
@@ -21,30 +21,38 @@
                                         (section.data.list && section.data.list.length > 0)))">
             <ngx-md class="text-muted small font-italic" [data]="section.summary"></ngx-md>
         </div>
-        <div *ngIf="section.data">
-            <div *ngIf="section.data.text && section.datatype === 'text'">
-                <ngx-md [data]="section.data.text"></ngx-md>
-            </div>
+        <div *ngIf="section.data" [ngSwitch]="section.datatype">
+            <ng-container *ngSwitchCase="'text'">
+                <div>
+                    <ngx-md *ngIf="section.data.text" [data]="section.data.text"></ngx-md>
+                </div>
+            </ng-container>
 
-            <div *ngIf="section.data.selectedValue && section.datatype === 'select'" class="badge badge-secondary">
-                {{getSelectedValue(section.data.selectedValue)}}
-            </div>
+            <ng-container *ngSwitchCase="'select'">
+                <div *ngIf="section.data.selectedValue" class="badge badge-secondary">
+                    {{getSelectedValue(section.data.selectedValue)}}
+                </div>
+            </ng-container>
 
-            <div *ngIf="section.data.image && section.datatype === 'image'" class="text-center align-middle">
-                <img [src]="section.data.image" style="max-height: 100px;max-width: 100px;" />
-            </div>
+            <ng-container *ngSwitchCase="'image'">
+                <div class="text-center align-middle">
+                    <img *ngIf="section.data.image" [src]="section.data.image"
+                        [style.max-height.px]="section.properties.height"
+                        [style.max-width.px]="section.properties.width" />
+                </div>
+            </ng-container>
 
-            <div *ngIf="section.data.list && section.data.list.length > 0">
-                <button *ngFor="let item of section.data.list" (click)="onShowItemDetails(item, section)"
-                    class="btn btn-sm btn-link hover-link text-dark w-100 text-left rounded-0 text-truncate"
-                    [title]="item.title">
-
-                    <app-metadata [data]="item"></app-metadata>
-
-                    <fa-icon icon="angle-right" size="sm" class="mr-1 text-muted"></fa-icon>
-                    {{item.title}}
-                </button>
-            </div>
+            <ng-container *ngSwitchCase="'list'">
+                <div *ngIf="section.data.list && section.data.list.length > 0">
+                    <button class="btn panel-list-item" (click)="onShowItemDetails(item, section)" [title]="item.title"
+                        *ngFor="let item of section.data.list">
+                        <app-metadata [data]="item"></app-metadata>
+                        <div class="item-text">
+                            {{item.title}}
+                        </div>
+                    </button>
+                </div>
+            </ng-container>
         </div>
     </div>
 </div>

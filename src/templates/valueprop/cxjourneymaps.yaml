@@ -13,6 +13,9 @@ children:
         title: Persona Photo
         summary: Representative phot of target audience
         datatype: image
+        properties:
+          height: 200
+          width: 200
 
       - type: panel
         size: 20

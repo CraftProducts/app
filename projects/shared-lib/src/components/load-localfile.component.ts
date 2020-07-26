@@ -19,6 +19,7 @@ export class LoadLocalFileComponent {
     @Input() icon: string;
     @Input() accept: string;
     @Input() readAs: string;  //text / binary 
+    @Input() cssClass: string;
 
     handleFileInput(files: FileList) {
         const file = files && files.length === 1 ? files[0] : null;
@@ -40,7 +41,7 @@ export class LoadLocalFileComponent {
                     reject(this.errorMessage)
                 }
             };
-            
+
             this.readAs = this.readAs || UploadFileTypes.TEXT;
 
             switch (this.readAs.toUpperCase()) {

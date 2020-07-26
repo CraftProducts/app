@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { ModelerState } from '../+state/modeler.state';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { ComponentCanDeactivate } from 'shared-lib'
+import { ComponentCanDeactivate, UNLOAD_WARNING_MESSAGE } from 'shared-lib'
 import { SetModelAction, SetModelDirtyAction, SelectSectionAction } from 'src/app/appcommon/lib/CommonActions';
 import { extractSections, SECTIONTYPES } from '../modeler-utils';
 import { BaseTemplateViewer } from './base-template-viewer';
@@ -34,8 +34,7 @@ export class ModelerHomeComponent extends BaseTemplateViewer implements Componen
     @HostListener('window:beforeunload', ['$event'])
     unloadNotification($event: any) {
         if (!this.canDeactivate()) {
-            $event.returnValue =
-                'WARNING: You have unsaved changes. Press Cancel to go back and save these changes, or OK to lose these changes.';
+            $event.returnValue = UNLOAD_WARNING_MESSAGE;
         }
     }
     canDeactivate = () => !this.isModelDirty;
@@ -108,5 +107,5 @@ export class ModelerHomeComponent extends BaseTemplateViewer implements Componen
         }
     }
 
-    
+
 }

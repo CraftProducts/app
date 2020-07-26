@@ -1,8 +1,9 @@
 <div class="row" *ngIf="data">
     <div class="col-md-6">
         <div *ngIf="mode !== 'EDIT'">
-            <div class="text-center p-3">
-                <img [src]="data.image"  height="100" width="100" *ngIf="data.image">
+            <div class="alert bg-light text-center" [style.min-height.px]="properties.height">
+                <img [src]="data.image" *ngIf="data.image" [style.max-height.px]="properties.height"
+                    [style.max-width.px]="properties.width">
             </div>
             <div class="mt-3 text-right">
                 <button class="btn btn-primary" (click)="onToggleMode('EDIT')">
@@ -11,16 +12,20 @@
             </div>
         </div>
         <div *ngIf="mode === 'EDIT'">
+            <div class="alert bg-light text-center">
+                <div>
+                    <img [src]="dataToEdit.image" *ngIf="dataToEdit.image" [style.max-height.px]="properties.height"
+                        [style.max-width.px]="properties.width" />
+                    <div class="text-muted small mt-3 mb-3">
+                        Recommended image size: {{properties.height}} X {{properties.width}} px.
+                    </div>
+                </div>
 
-            <div>
-                <img [src]="dataToEdit.image" height="100" width="100" *ngIf="dataToEdit.image" />
-                <div class="text-muted small mt-3 mb-3">Recommended image size: 100 X 100 px.</div>
+                <sharedlib-load-localfile (fileLoaded)="onFileLoaded($event)" (error)="onFileLoadingError($event)"
+                    errorMessage="Invalid file. Choose image files." label="Update photo" accept="image/*" icon="user"
+                    cssClass="btn-default" readAs="DATAURL">
+                </sharedlib-load-localfile>
             </div>
-
-            <sharedlib-load-localfile (fileLoaded)="onFileLoaded($event)" (error)="onFileLoadingError($event)"
-                errorMessage="Invalid file. Choose image files." label="Open photo" accept="image/*" icon="user"
-                readAs="DATAURL">
-            </sharedlib-load-localfile>
 
             <div class="mt-3 text-right">
                 <button class="btn btn-primary mr-2" (click)="onSave()">

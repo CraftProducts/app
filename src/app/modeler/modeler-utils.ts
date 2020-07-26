@@ -9,7 +9,8 @@ export const SECTIONTYPES = {
 export const DATATYPES = {
     text: 'text',
     list: 'list',
-    select: 'select'
+    select: 'select',
+    image: 'image'
 }
 
 export function extractSections(data, fieldlist, sections) {

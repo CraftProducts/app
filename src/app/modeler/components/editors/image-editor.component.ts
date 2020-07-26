@@ -9,6 +9,7 @@ import { MessageService } from 'primeng/api';
 })
 export class ImageEditorComponent extends BaseEditor {
     @Input() placeholder: string;
+    @Input() properties: any;
     resetNewRecord(): void { }
 
     constructor(public messageService: MessageService) {
@@ -28,26 +29,10 @@ export class ImageEditorComponent extends BaseEditor {
     }
 
     onFileLoaded(fileContent) {
-        console.log('fileContent', fileContent);
         this.dataToEdit.image = fileContent.content;
-        console.log('this.dataToEdit.image', this.dataToEdit.image);
-        //this.store$.dispatch(new LoadFileAction(fileContent));
     }
 
     onFileLoadingError(err) {
-        console.log(err);
         this.messageService.add({ severity: 'error', detail: 'Error:' + err, life: 5000, closable: true })
-    }
-
-    getDataUrl(img) {
-        // Create canvas
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-        // Set width and height
-        canvas.width = img.width;
-        canvas.height = img.height;
-        // Draw the image
-        ctx.drawImage(img, 0, 0);
-        return canvas.toDataURL('image/jpeg');
     }
 }

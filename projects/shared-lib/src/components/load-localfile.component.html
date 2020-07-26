@@ -1,4 +1,5 @@
-<button type="button" class="btn btn-sm btn-primary" (click)="fileInput.click()">
+<button type="button" class="btn btn-sm" [class]="cssClass" [ngClass]="{'btn-primary': !cssClass}"
+    (click)="fileInput.click()">
     <fa-icon [icon]="icon" class="mr-1"></fa-icon>
     <span>{{label}}</span>
     <input #fileInput type="file" (change)="handleFileInput($event.target.files)" style="display:none;"

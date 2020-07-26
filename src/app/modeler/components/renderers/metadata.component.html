@@ -1,14 +1,14 @@
-<span class="text-primary float-right">
-    <span *ngIf="data.notes && data.notes.length > 0" class="ml-2">
+<div class="metadata">
+    <div *ngIf="data.notes && data.notes.length > 0">
         <small>{{data.notes.length}}</small>
         <fa-icon size="xs" [icon]="['far', 'comments']" class="ml-1"></fa-icon>
-    </span>
-    <span *ngIf="data.links && data.links.length > 0" class="ml-2">
+    </div>
+    <div *ngIf="data.links && data.links.length > 0">
         <small>{{data.links.length}}</small>
         <fa-icon size="xs" icon="link" class="ml-1"></fa-icon>
-    </span>
-    <span *ngIf="data.tasks && data.tasks.length > 0" class="ml-2">
+    </div>
+    <div *ngIf="data.tasks && data.tasks.length > 0">
         <small>{{data.tasks.length}}</small>
         <fa-icon size="xs" icon="tasks" class="ml-1"></fa-icon>
-    </span>
-</span>
+    </div>
+</div>
