@@ -44,7 +44,8 @@
 
             <ng-container *ngSwitchCase="'list'">
                 <div *ngIf="section.data.list && section.data.list.length > 0">
-                    <button class="btn panel-list-item" (click)="onShowItemDetails(item, section)" [title]="item.title"
+                    <button class="btn panel-listitem-{{section.properties.view}}"
+                        (click)="onShowItemDetails(item, section)" [title]="item.title"
                         *ngFor="let item of section.data.list">
                         <app-metadata [data]="item"></app-metadata>
                         <div class="item-text">

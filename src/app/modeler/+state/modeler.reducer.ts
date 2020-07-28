@@ -4,6 +4,7 @@ import { CommonActionTypes } from 'src/app/appcommon/lib/CommonActions';
 import { generateCode } from 'shared-lib';
 import { SECTIONTYPES, DATATYPES } from '../modeler-utils';
 
+const DEFAULT_LIST_PROPERTIES = { view: 'list' };
 const DEFAULT_IMAGE_PROPERTIES = { height: 100, width: 100 };
 
 export function modelerReducer(state: Modeler, action: any): Modeler {
@@ -112,10 +113,12 @@ export function modelerReducer(state: Modeler, action: any): Modeler {
     }
 
     function initPanelProperties(child: any) {
+        if (child.datatype === DATATYPES.list) {
+            child.properties = child.properties || DEFAULT_LIST_PROPERTIES;
+            child.properties.view = child.properties.view || DEFAULT_LIST_PROPERTIES.view;
+        }
         if (child.datatype === DATATYPES.image) {
             child.properties = child.properties || DEFAULT_IMAGE_PROPERTIES;
-
-            //when user specified properties object but not child properties
             child.properties.height = child.properties.height || DEFAULT_IMAGE_PROPERTIES.height;
             child.properties.width = child.properties.width || DEFAULT_IMAGE_PROPERTIES.width;
         }
@@ -130,14 +133,13 @@ export function modelerReducer(state: Modeler, action: any): Modeler {
                 rowTitle: row.title,
                 colTitle: column.title,
                 datatype: row.datatype,
+                properties: row.properties,
                 data: { text: '', notes: [], tasks: [], links: [] }
             };
             if (row.datatype === DATATYPES.list) {
                 rowColumn.options = row.options;
             }
-            if (row.datatype === DATATYPES.image) {
-                rowColumn.properties = row.properties || DEFAULT_IMAGE_PROPERTIES;
-            }
+            initPanelProperties(rowColumn);
             row.columns.push(rowColumn);
         });
     }

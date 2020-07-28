@@ -1,3 +1,7 @@
+body,
+.bg-light {
+  background-color: #f2f2f2 !important;
+}
 a {
   cursor: pointer;
 }
@@ -97,7 +101,7 @@ body .ui-sidebar {
   overflow: auto;
   width: 100%;
   height: 100%;
-  background-color: #f8f8f8;
+  padding-top: 20pt;
 }
 .footer-container {
   bottom: 0;
@@ -181,7 +185,7 @@ ngx-md p {
   margin-bottom: 0;
 }
 .navbar {
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 5px 0 rgba(0, 0, 0, 0.23);
+  /* box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 5px 0 rgba(0, 0, 0, 0.23); */
   z-index: 2;
 }
 
@@ -239,7 +243,7 @@ ngx-md p {
   content: none !important;
 }
 .as-split-gutter {
-  background-color: #f8f8f8 !important;
+  background-color: #f2f2f2 !important;
 }
 
 .as-split-gutter .as-split-gutter-icon {
@@ -337,7 +341,7 @@ body .ui-sidebar .ui-sidebar-close {
 .matrix .layout-panel {
   margin: 8pt;
 }
-.matrix .layout-panel:not(.layout-panel-text) {
+.matrix .layout-panel {
   background-color: transparent;
   box-shadow: none;
 }
@@ -347,19 +351,19 @@ body .ui-sidebar .ui-sidebar-close {
 .matrix-header {
   background-color: #f0f8ff;
 }
-.panel-list-item {
+.panel-listitem-list {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   width: 100%;
   text-align: left;
 }
-.panel-list-item::before {
+.panel-listitem-list::before {
   content: "•";
   margin-right: 8pt;
   float: left;
 }
-.panel-list-item:hover {
+.panel-listitem-list:hover {
   background-color: #f0f9ff;
 }
 .metadata,
@@ -368,11 +372,11 @@ body .ui-sidebar .ui-sidebar-close {
   margin-right: 0.5rem;
   color: #666;
 }
-.matrix .panel-list-item .metadata div {
+.panel-listitem-tile .metadata div {
   float: none;
   margin: 0;
 }
-.matrix .panel-list-item {
+.panel-listitem-tile {
   padding: 8pt;
   width: 150px;
   height: 75px;
@@ -382,21 +386,18 @@ body .ui-sidebar .ui-sidebar-close {
   float: left;
   position: relative;
   white-space: normal;
+  font-size: 80%;
 }
-.matrix .panel-list-item::before {
-  content: none;
-}
-.matrix.panel-list-item:hover {
-  background-color: transparent;
+.panel-listitem-tile:hover {
   box-shadow: 0px 0 6px 0 rgba(136, 136, 136, 1);
 }
-
-.matrix .panel-list-item .item-text {
+.panel-listitem-tile .item-text {
   margin: 0;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  width: 90%;
 }
 .panel-is-dirty {
   border-left: solid 1px #f00;

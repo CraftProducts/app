@@ -1,6 +1,6 @@
-<nav class="navbar navbar-expand-md bg-white">
+<nav class="navbar navbar-expand-md">
     <div class="container-fluid p-0">
-        <a class="text-dark h5 mt-2 mr-3 border-right pr-3" routerLink="/toolbox">
+        <a class="text-dark mr-2 btn btn-lg btn-light bg-white" routerLink="/toolbox">
             <img src="./assets/logo.png" height="20pt" />
             <span class="font-weight-light ml-2">Craft</span>
             <span class="text-brand">Product</span>
@@ -20,7 +20,7 @@
                     <app-save-localfile></app-save-localfile>
                 </li>
                 <li *ngIf="!isModelDirty && templateLoaded">
-                    <button class="btn btn-link" (click)="onExport()">
+                    <button class="btn btn-light bg-white" (click)="onExport()">
                         <fa-icon icon="download"></fa-icon>
                         <span class="d-inline d-md-none ml-2"> Export</span>
                     </button>
