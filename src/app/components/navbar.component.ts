@@ -43,4 +43,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     onExport() {
         this.store$.dispatch(new UserModelCommandAction({ command: UserModelCommandTypes.Export }));
     }
+    onCustomizeTheme() {
+        this.store$.dispatch(new UserModelCommandAction({ command: UserModelCommandTypes.CustomizeTheme }));
+    }
 }

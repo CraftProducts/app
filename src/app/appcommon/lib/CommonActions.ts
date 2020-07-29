@@ -7,6 +7,7 @@ export const CommonActionTypes = {
     SaveModel: type("[SaveModel]"),
     ResetModel: type("[ResetModel]"),
     CloseWorkspace: type("[CloseWorkspace]"),
+    UpdateTheme: type("[UpdateTheme]"),
 
     SetModelDirty: type("[SetModelDirty]"),
     UserModelCommand: type("[UserModelCommand]"),
@@ -18,7 +19,8 @@ export const UserModelCommandTypes = {
     Save: "Save",
     Reset: "Reset",
     Close: "Close",
-    Export: "Export"
+    Export: "Export",
+    CustomizeTheme: "CustomizeTheme"
 }
 
 export class UserModelCommandAction implements Action {
@@ -46,6 +48,10 @@ export class ResetModelAction implements Action {
 }
 export class CloseWorkspaceAction implements Action {
     type = CommonActionTypes.CloseWorkspace;
+    constructor(public payload: any) { }
+}
+export class UpdateThemeAction implements Action {
+    type = CommonActionTypes.UpdateTheme;
     constructor(public payload: any) { }
 }
 

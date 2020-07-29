@@ -1,0 +1,28 @@
+<div class="pane">
+    <div class="pane-header">
+        <button class="btn btn-sm btn-link text-white float-right" (click)="onClose()">
+            <fa-icon icon="times" size="lg"></fa-icon>
+        </button>
+
+        <h4>
+            <fa-icon icon="paint-brush" class="mr-1" size="sm"></fa-icon>
+            Customize theme
+        </h4>
+    </div>
+    <div class="pane-body">
+        <div class="container pt-3 text-center" *ngIf="themeToEdit">
+            <app-theme-list-editor [list]="themeToEdit.panels" title="Panels"></app-theme-list-editor>
+            <app-theme-list-editor [list]="themeToEdit.matrix" title="Matrix"></app-theme-list-editor>
+        </div>
+    </div>
+    <div class="pane-footer">
+        <button class="btn btn-sm btn-primary mr-1" (click)="onSave()">
+            <fa-icon icon="save" class=" mr-1"></fa-icon>
+            Apply
+        </button>
+        <button class="btn btn-sm btn-default mr-1" (click)="onReset()">
+            <fa-icon icon="redo" class=" mr-1"></fa-icon>
+            Reset
+        </button>
+    </div>
+</div>

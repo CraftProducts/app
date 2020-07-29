@@ -1,9 +1,10 @@
-<div class="layout-panel layout-panel-{{section.datatype}}" [ngClass]="{'panel-is-dirty': section && section.isDirty}">
+<div class="layout-panel layout-panel-{{section.datatype}}" [ngClass]="{'panel-is-dirty': section && section.isDirty}"
+    [style.background-color]="section.theme.bgColor" [style.color]="section.theme.color">
     <div class="btn-group btn-group-sm btn-hover" style="z-index: 1;">
-        <!-- <button class="btn btn-link text-muted" (click)="onShowEditor({mode: 'EDIT', section: section})">
+        <!-- <button class="btn btn-link" (click)="onShowEditor({mode: 'EDIT', section: section})">
             <fa-icon icon="pencil-alt"></fa-icon>
         </button> -->
-        <button class="btn btn-link text-muted" (click)="onShowEditor({mode: 'VIEW', section: section})">
+        <button class="btn btn-link" (click)="onShowEditor({mode: 'VIEW', section: section})">
             <fa-icon icon="expand-alt"></fa-icon>
         </button>
     </div>
@@ -11,7 +12,7 @@
         <app-metadata *ngIf="section.data" [data]="section.data"></app-metadata>
         <div class="h6"
             *ngIf="(section.title && section.title.length > 0 && !(section.data && section.data.image && section.datatype === 'image'))">
-            <fa-icon *ngIf="section.icon && section.icon.length > 0" size="sm" [icon]="section.icon" class="text-brand">
+            <fa-icon *ngIf="section.icon && section.icon.length > 0" size="sm" [icon]="section.icon">
             </fa-icon>
             {{section.title}}
         </div>
@@ -19,7 +20,7 @@
                                         section.data.selectedValue || 
                                         section.data.image || 
                                         (section.data.list && section.data.list.length > 0)))">
-            <ngx-md class="text-muted small font-italic" [data]="section.summary"></ngx-md>
+            <ngx-md class="small font-italic" [data]="section.summary"></ngx-md>
         </div>
         <div *ngIf="section.data" [ngSwitch]="section.datatype">
             <ng-container *ngSwitchCase="'text'">
@@ -46,7 +47,8 @@
                 <div *ngIf="section.data.list && section.data.list.length > 0">
                     <button class="btn panel-listitem-{{section.properties.view}}"
                         (click)="onShowItemDetails(item, section)" [title]="item.title"
-                        *ngFor="let item of section.data.list">
+                        *ngFor="let item of section.data.list" [style.background-color]="section.theme.tile.bgColor"
+                        [style.color]="section.theme.tile.color">
                         <app-metadata [data]="item"></app-metadata>
                         <div class="item-text">
                             {{item.title}}

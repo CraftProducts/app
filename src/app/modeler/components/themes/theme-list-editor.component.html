@@ -1,0 +1,46 @@
+<table class="table table-sm">
+    <tbody>
+        <tr class="alert-primary">
+            <td colspan="7" class="h5">{{title}}</td>
+        </tr>
+        <tr>
+            <td colspan="4">&nbsp;</td>
+            <td colspan="3" class="bg-light border-left">Tiles</td>
+        </tr>
+        <tr class="small text-uppercase">
+            <td width="1%">&nbsp;</td>
+            <td width="20%">bgcolor</td>
+            <td width="20%">fontcolor</td>
+            <td width="10%">&nbsp;</td>
+            <td width="20%" class="bg-light">bgcolor</td>
+            <td width="20%" class="bg-light">fontcolor</td>
+            <td class="bg-light">&nbsp;</td>
+        </tr>
+
+        <tr *ngFor="let panel of list;let idx = index">
+            <td>
+                <button class="btn p-0 btn-link text-danger" title="Remove" (click)="onRemove(idx)">
+                    <fa-icon icon="times"></fa-icon>
+                </button>
+            </td>
+            <td><input type="color" [(ngModel)]="panel.bgColor"></td>
+            <td><input type="color" [(ngModel)]="panel.color"></td>
+            <td [style.background-color]="panel.bgColor" [style.color]="panel.color" class="p-1">
+                panel
+            </td>
+            <td class="bg-light"><input type="color" [(ngModel)]="panel.tile.bgColor"></td>
+            <td class="bg-light"><input type="color" [(ngModel)]="panel.tile.color"></td>
+            <td [style.background-color]="panel.tile.bgColor" [style.color]="panel.tile.color" class="pt-1 pl-2 pr-2">
+                tile
+            </td>
+        </tr>
+        <tr>
+            <td colspan="7" class="text-left">
+                <button class="btn btn-sm btn-link" (click)="onAdd()">
+                    <fa-icon icon="plus" class="mr-1"></fa-icon>
+                    add new
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>

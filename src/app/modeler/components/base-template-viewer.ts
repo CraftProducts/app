@@ -1,7 +1,7 @@
 import { Store } from '@ngrx/store';
 import { Subscription, combineLatest } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { UserModelCommandTypes, ResetModelAction, SaveModelAction } from 'src/app/appcommon/lib/CommonActions';
+import { UserModelCommandTypes, ResetModelAction, SaveModelAction, UpdateThemeAction } from 'src/app/appcommon/lib/CommonActions';
 import { AppState } from 'src/app/+state/app.state';
 import { ActivatedRoute, Router, PRIMARY_OUTLET } from '@angular/router';
 import { LoadTemplateAction } from 'src/app/+state/app.actions';
@@ -23,6 +23,7 @@ export abstract class BaseTemplateViewer {
     isModelDirty: boolean;
 
     showExportSidebar = false;
+    showThemeEditorSidebar = false;
     constructor(public store$: Store<AppState>, public router: Router, public activatedRoute: ActivatedRoute) { }
 
     abstract onTemplatesLoaded(template, dataset): void
@@ -81,13 +82,16 @@ export abstract class BaseTemplateViewer {
                         this.onSaveModel(this.userModelCommand.data);
                         break;
                     case UserModelCommandTypes.Reset:
-                        this.onResetModel(this.userModelCommand.data);
+                        this.store$.dispatch(new ResetModelAction(this.userModelCommand.data));
                         break;
                     case UserModelCommandTypes.Close:
-                        this.onCloseModel();
+                        console.error('Not supported');
                         break;
                     case UserModelCommandTypes.Export:
                         this.showExportSidebar = true;
+                        break;
+                    case UserModelCommandTypes.CustomizeTheme:
+                        this.showThemeEditorSidebar = true;
                         break;
                 }
             });
@@ -112,13 +116,6 @@ export abstract class BaseTemplateViewer {
 
         this.downloadDataFile();
         this.store$.dispatch(new SaveModelAction(this.instance));
-    }
-
-    onResetModel(dataset): void {
-        this.store$.dispatch(new ResetModelAction(dataset));
-    }
-    onCloseModel(): void {
-        console.log('onCloseModel');
     }
 
     private downloadDataFile() {

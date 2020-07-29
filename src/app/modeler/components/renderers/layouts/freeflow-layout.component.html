@@ -1,4 +1,4 @@
-<div *ngIf="layout" class="d-flex mb-5" [ngClass]="{
+<div *ngIf="layout" class="d-flex" [ngClass]="{
         'flex-column': layout.orientation === 'vertical', 
         'flex-row align-content-start flex-wrap': layout.orientation === 'horizontal'
 }">
@@ -6,11 +6,11 @@
 
         <ng-container [ngSwitch]="section.type">
 
-            <app-panel *ngSwitchCase="'panel'" class="mt-3" [section]="section" [ngStyle]="{'flex':section.size}"
+            <app-panel *ngSwitchCase="'panel'" class="mt-4" [section]="section" [ngStyle]="{'flex':section.size}"
                 (showEditor)="onShowEditor($event)">
             </app-panel>
 
-            <app-matrix *ngSwitchCase="'matrix'" class="mt-3" [section]="section" (showEditor)="onShowEditor($event)">
+            <app-matrix *ngSwitchCase="'matrix'" class="mt-4" [section]="section" (showEditor)="onShowEditor($event)">
             </app-matrix>
 
             <app-freeflow-layout *ngSwitchCase="'container'" [layout]="section" (showEditor)="onShowEditor($event)">

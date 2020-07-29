@@ -125,7 +125,7 @@ body .ui-sidebar {
   padding: 8pt;
   height: 100%;
   min-height: 40pt;
-  background-color: #ffffff;
+  /* background-color: #ffffff; */
   position: relative;
   box-shadow: 3px 6px 6px -6px rgba(136, 136, 136, 1);
   border-radius: 2pt;
@@ -187,16 +187,6 @@ ngx-md p {
 .navbar {
   /* box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 5px 0 rgba(0, 0, 0, 0.23); */
   z-index: 2;
-}
-
-.sticky-title {
-  position: sticky;
-  z-index: 1;
-  top: 0;
-  background-color: #fff;
-
-  /* background-color: #f8f9fa; */
-  /* box-shadow: -1px 2px 4px #ccc; */
 }
 
 .hover-container {
@@ -338,6 +328,15 @@ body .ui-sidebar .ui-sidebar-close {
 .matrix {
   margin: 1.5rem 0;
 }
+.matrix tr td {
+  border-right: solid 1px #eee !important;
+  border-bottom: solid 1px #eee !important;
+}
+.matrix-label-cell {
+  min-width: 150px;
+  background-color: #fff;
+  border-bottom: solid 1px #eee !important;
+}
 .matrix .layout-panel {
   margin: 8pt;
 }
@@ -348,9 +347,7 @@ body .ui-sidebar .ui-sidebar-close {
 .matrix .layout-panel.layout-panel-list {
   padding: 0 !important;
 }
-.matrix-header {
-  background-color: #f0f8ff;
-}
+
 .panel-listitem-list {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -363,14 +360,13 @@ body .ui-sidebar .ui-sidebar-close {
   margin-right: 8pt;
   float: left;
 }
-.panel-listitem-list:hover {
+/* .panel-listitem-list:hover {
   background-color: #f0f9ff;
-}
+} */
 .metadata,
 .metadata div {
   float: right;
   margin-right: 0.5rem;
-  color: #666;
 }
 .panel-listitem-tile .metadata div {
   float: none;
@@ -382,7 +378,7 @@ body .ui-sidebar .ui-sidebar-close {
   height: 75px;
   box-shadow: 0px 6px 6px -3px rgba(136, 136, 136, 1);
   margin: 0 1rem 1rem 0;
-  background-color: #fff9b8;
+  /* background-color: #fff9b8; */
   float: left;
   position: relative;
   white-space: normal;

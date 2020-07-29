@@ -12,6 +12,11 @@ export const DATATYPES = {
     select: 'select',
     image: 'image'
 }
+export const LISTVIEWTYPES = {
+    list: 'list',
+    tile: 'tile'
+}
+
 
 export function extractSections(data, fieldlist, sections) {
     if (!data) return;

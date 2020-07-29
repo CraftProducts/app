@@ -37,8 +37,6 @@ children:
         title: User expectations
         summary: describes the goal/s or experience/s that the user desires
         datatype: list
-        properties:
-          view: tile
 
   - type: matrix
     code: PHASES

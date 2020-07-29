@@ -18,8 +18,8 @@ import { ModelerHomeComponent } from './components/home.component';
 import { AppCommonModule } from '../appcommon/appcommon.module';
 import { PendingChangesGuard, SharedLibModule } from 'shared-lib';
 import { NgTruncatePipeModule } from 'angular-pipes';
-import { SplitLayoutRendererComponent } from './components/renderers/split-layout.component';
-import { FreeflowLayoutRendererComponent } from './components/renderers/freeflow-layout.component';
+import { SplitLayoutRendererComponent } from './components/renderers/layouts/split-layout.component';
+import { FreeflowLayoutRendererComponent } from './components/renderers/layouts/freeflow-layout.component';
 import { MatrixRendererComponent } from './components/renderers/matrix.component';
 import { PanelRendererComponent } from './components/renderers/panel.component';
 import { NotesComponent } from './components/metadata/notes.component';
@@ -34,6 +34,8 @@ import { MatrixEditorComponent } from './components/editors/matrix-editor.compon
 import { ExportSidebarComponent } from './components/exports/export-sidebar.component';
 import { MetadataRendererComponent } from './components/renderers/metadata.component';
 import { ImageEditorComponent } from './components/editors/image-editor.component';
+import { ThemeEditorComponent } from './components/themes/theme-editor.component';
+import { ThemeListEditorComponent } from './components/themes/theme-list-editor.component';
 
 const routes: Route[] = [
   { path: '', component: ModelerHomeComponent, canDeactivate: [PendingChangesGuard] }
@@ -48,7 +50,7 @@ const routes: Route[] = [
     SectionEditorComponent, TextEditorComponent, ListEditorComponent, SelectEditorComponent, ImageEditorComponent,
     MatrixEditorComponent, RecordEditorComponent,
 
-    ExportSidebarComponent
+    ExportSidebarComponent, ThemeEditorComponent, ThemeListEditorComponent
   ],
   imports: [
     CommonModule,

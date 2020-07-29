@@ -1,5 +1,5 @@
 <div class="table-responsive matrix">
-    <table class="table table-bordered table-sm mb-0">
+    <table class="table table-borderless table-sm mb-0">
         <thead>
             <tr class="text-center">
                 <th class="border-left-0 border-bottom-0">&nbsp;</th>
@@ -10,7 +10,7 @@
         </thead>
         <tbody>
             <tr *ngFor="let row of section.rows">
-                <td style="min-width: 150px;" class="border-left-0">
+                <td class="matrix-label-cell border-left-0">
                     <div class="pl-2 mt-2 h6" [ngbPopover]="row.summary" triggers="mouseenter:mouseleave"
                         placement="right">
                         {{row.title}}
@@ -18,7 +18,9 @@
                         </fa-icon> -->
                     </div>
                 </td>
-                <td *ngFor="let col of row.columns;let idx = index">
+                <td *ngFor="let col of row.columns;let idx = index" [style.background-color]="col.cellTheme.bgColor"
+                    [style.color]="col.cellTheme.color">
+
                     <div class="mb-1" style="width: 375px;">
                         <app-panel [section]="row.columns[idx]" (showEditor)="onShowItemDetails(row.columns[idx])">
                         </app-panel>
