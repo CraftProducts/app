@@ -4,15 +4,15 @@ summary: |
   The general goal of a journey map is to document the journey that a customer takes when interacting with the organisation.
 
 list:
-  - code: jmcxideation
-    title: Ideation
-    summary: |
-      Contains the basic elements of a Customer Journey Map made to generate new ideas and solutions without digging to deep into e.g. touch points.
-
   - code: cxjourneymaps
     title: Customer experience
     summary: |
       A Customer Experience map visually identifies and organizes every encounter a customer has (or could have) with your company and brand. These interactions are commonly referred to as “touchpoints”.
+
+  - code: jmcxideation
+    title: Ideation
+    summary: |
+      Contains the basic elements of a Customer Journey Map made to generate new ideas and solutions without digging to deep into e.g. touch points.
 
   - code: uxjourneymaps
     title: User experience

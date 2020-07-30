@@ -1,0 +1,83 @@
+code: businessmodelcanvas
+title: Business model canvas
+summary: Business Model Canvas is a strategic management and lean startup template for developing new or documenting existing business models.
+orientation: vertical
+children:
+  - type: container
+    size: 80
+    orientation: horizontal
+    children:
+      - type: panel
+        size: 20
+        icon: link
+        code: PARTNERS
+        title: Key partners
+        datatype: list        
+
+      - type: container
+        size: 20
+        orientation: vertical
+        children:
+          - type: panel
+            size: 50
+            icon: check-circle
+            code: ACTIVITIES
+            title: Key activities
+            datatype: list
+
+          - type: panel
+            size: 50
+            icon: industry
+            code: RESOURCES
+            title: Key resources
+            datatype: list
+
+      - type: panel
+        size: 20
+        icon: gift
+        code: VALUEPROPOSITIONS
+        title: Value prepositions
+        datatype: text        
+
+      - type: container
+        size: 20
+        orientation: vertical
+        children:
+          - type: panel
+            size: 50
+            icon: heart
+            code: CUSTOMERRELATIONSHIPS
+            title: Customer relationships
+            datatype: list
+
+          - type: panel
+            size: 50
+            icon: truck
+            code: CHANNELS
+            title: Channels
+            datatype: list
+
+      - type: panel
+        size: 20
+        icon: user-tag
+        code: CUSTOMERSEGMENTS
+        title: Customer segments
+        datatype: list        
+
+  - type: container
+    size: 20
+    orientation: horizontal
+    children:
+      - type: panel
+        size: 50
+        icon: tags
+        code: COSTSTRUCTURE
+        title: Cost structure
+        datatype: list        
+
+      - type: panel
+        size: 50
+        icon: donate
+        code: REVENUESTREAMS
+        title: Cost structure
+        datatype: list        

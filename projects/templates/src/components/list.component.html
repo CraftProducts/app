@@ -15,8 +15,8 @@
     <div *ngIf="details.list && details.list.length" class="clearfix d-flex justify-content-center flex-wrap">
         <a [routerLink]="[redirectTo, group, template.code]" class="mr-4 mb-4 card select-card custom-shadow"
             *ngFor="let template of details.list">
-            <div class="p-3">
-                <h4 class="card-title text-truncate mb-2">{{template.title}}</h4>
+            <div class="p-3" style="overflow: hidden;">
+                <h5 class="card-title mb-2 font-weight-normal">{{template.title}}</h5>
                 <div class="card-text small">
                     <ngx-md>{{template.summary | truncate:200:'...'}}</ngx-md>
                 </div>
