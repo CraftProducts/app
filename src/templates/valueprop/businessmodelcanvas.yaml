@@ -79,5 +79,5 @@ children:
         size: 50
         icon: donate
         code: REVENUESTREAMS
-        title: Cost structure
+        title: Revenue streams
         datatype: list        
