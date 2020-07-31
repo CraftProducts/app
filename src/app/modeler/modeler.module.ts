@@ -36,6 +36,8 @@ import { MetadataRendererComponent } from './components/renderers/metadata.compo
 import { ImageEditorComponent } from './components/editors/image-editor.component';
 import { ThemeEditorComponent } from './components/themes/theme-editor.component';
 import { ThemeListEditorComponent } from './components/themes/theme-list-editor.component';
+import { MatrixCustomizerComponent } from './components/renderers/matrix-customizer.component';
+import { MatrixListCustomizerComponent } from './components/renderers/matrix-list-customizer.component';
 
 const routes: Route[] = [
   { path: '', component: ModelerHomeComponent, canDeactivate: [PendingChangesGuard] }
@@ -44,7 +46,8 @@ const routes: Route[] = [
 @NgModule({
   declarations: [ModelerHomeComponent,
     SplitLayoutRendererComponent, FreeflowLayoutRendererComponent,
-    PanelRendererComponent, MatrixRendererComponent, MetadataRendererComponent,
+    PanelRendererComponent, MetadataRendererComponent, 
+    MatrixRendererComponent, MatrixCustomizerComponent, MatrixListCustomizerComponent,
 
     NotesComponent, LinksComponent, TasksComponent,
     SectionEditorComponent, TextEditorComponent, ListEditorComponent, SelectEditorComponent, ImageEditorComponent,

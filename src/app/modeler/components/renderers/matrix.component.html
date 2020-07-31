@@ -1,10 +1,14 @@
 <div class="table-responsive matrix">
-    <table class="table table-borderless table-sm mb-0">
+    <table class="table table-borderless table-sm mb-0" *ngIf="!isCustomizerVisible">
         <thead>
             <tr class="text-center">
-                <th class="border-left-0 border-bottom-0">&nbsp;</th>
+                <th class="border-left-0 border-bottom-0 text-left">
+                    <button class="btn btn-light btn-sm btn-edit-hover w-100" (click)="isCustomizerVisible = true">
+                        <fa-icon icon="pencil-alt"></fa-icon> customize
+                    </button>
+                </th>
                 <th class=" border-bottom-0" *ngFor="let col of section.columns">
-                    <div class="text-capitalize h6">{{col.title}}</div>
+                    <div class="text-capitalize h6 p-1">{{col.title}}</div>
                 </th>
             </tr>
         </thead>
@@ -29,4 +33,11 @@
             </tr>
         </tbody>
     </table>
+
 </div>
+
+<p-sidebar [(visible)]="isCustomizerVisible" styleClass="bg-light" styleClass="ui-sidebar-md" position="left"
+    (onHide)="isCustomizerVisible = false">
+    <app-matrix-customizer *ngIf="section"  (close)="isCustomizerVisible = false" [matrix]="section"></app-matrix-customizer>
+</p-sidebar>
+

@@ -337,6 +337,14 @@ body .ui-sidebar .ui-sidebar-close {
   background-color: #fff;
   border-bottom: solid 1px #eee !important;
 }
+.matrix .btn-edit-hover {
+  display: none;
+}
+.matrix:hover .btn-edit-hover {
+  cursor: pointer;
+  display: block;
+}
+
 .matrix .layout-panel {
   margin: 8pt;
 }

@@ -9,6 +9,8 @@ export class MatrixRendererComponent {
     @Input() section: any;
     @Output() showEditor = new EventEmitter<any>();
 
+    isCustomizerVisible = false;
+    
     onShowEditor(eventArgs) {
         this.showEditor.emit(eventArgs);
     }

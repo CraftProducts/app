@@ -1,0 +1,51 @@
+<div class="pane">
+    <div class="pane-header">
+        <button class="btn btn-sm btn-link text-white float-right" (click)="onClose()">
+            <fa-icon icon="times" size="lg"></fa-icon>
+        </button>
+
+        <h4>
+            <fa-icon icon="pencil-alt" class="mr-1" size="sm"></fa-icon>
+            Customize
+        </h4>
+    </div>
+    <div class="pane-body">
+        <div class="container pt-3" *ngIf="dataToEdit">
+
+            <ul ngbNav #nav="ngbNav" class="nav-tabs mt-2" [destroyOnHide]="false">
+                <li [ngbNavItem]="1">
+                    <a ngbNavLink>Rows</a>
+                    <ng-template ngbNavContent>
+                        <app-matrix-list-customizer [(list)]="dataToEdit.rows" [hasDatatype]="true">
+                        </app-matrix-list-customizer>
+                    </ng-template>
+                </li>
+
+                <li [ngbNavItem]="2">
+                    <a ngbNavLink>Columns</a>
+                    <ng-template ngbNavContent>
+                        <app-matrix-list-customizer [(list)]="dataToEdit.columns">
+                        </app-matrix-list-customizer>
+                    </ng-template>
+                </li>
+            </ul>
+            <div [ngbNavOutlet]="nav" class="pt-3"></div>
+
+        </div>
+    </div>
+    <div class="pane-footer">
+        <button class="btn btn-sm btn-primary mr-1">
+            <fa-icon icon="save" class=" mr-1"></fa-icon>
+            Save &amp; close
+        </button>
+
+        <button class="btn btn-sm btn-secondary" (click)="onReset()">
+            <fa-icon icon="redo" class=" mr-1"></fa-icon>
+            Reset
+        </button>
+        <button class="btn btn-sm btn-default" (click)="onClose()">
+            <fa-icon icon="times" class=" mr-1"></fa-icon>
+            Cancel
+        </button>
+    </div>
+</div>

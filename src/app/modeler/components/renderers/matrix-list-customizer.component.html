@@ -1,0 +1,67 @@
+<div *ngIf="!recordToEdit">
+    <div *ngFor="let record of getOrderedList(); let idx = index">
+        <div class="row">
+            <div class="col-md-2">
+                <div class="btn-group btn-group-sm">
+                    <button class="btn btn-sm btn-light text-muted" *ngIf="idx > 0" (click)="onMoveup(idx)">
+                        <fa-icon icon="long-arrow-alt-up" [fixedWidth]="true"></fa-icon>
+                    </button>
+                    <button class="btn btn-sm btn-light text-muted" [ngStyle]="{'margin-left.rem': idx === 0 ? 2 : 0}"
+                        *ngIf="list && idx < (list.length - 1)" (click)="onMovedown(idx)">
+                        <fa-icon icon="long-arrow-alt-down" [fixedWidth]="true"></fa-icon>
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-8 pl-0">
+                <h6>
+                    {{record.title}}
+                    <span class="badge badge-info" *ngIf="hasDatatype">{{record.datatype}}</span>
+                </h6>
+                <div class="text-muted">{{record.summary}}</div>
+                <ul *ngIf="hasDatatype && record.datatype === 'select' && record.options" class="mt-2 text-muted">
+                    <li *ngFor="let option of record.options">{{option.title}}</li>
+                </ul>
+            </div>
+            <div class="col-md-2">
+                <div class="btn-group btn-group-sm">
+                    <button class="btn btn-sm btn-link text-primary" (click)="onEdit(idx)">
+                        <fa-icon icon="pencil-alt" [fixedWidth]="true"></fa-icon>
+                    </button>
+                    <button class="btn btn-sm btn-link text-danger" (click)="onRemove(idx)">
+                        <fa-icon icon="times" [fixedWidth]="true"></fa-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <hr *ngIf="list && idx < (list.length - 1)">
+    </div>
+</div>
+
+<div class="card bg-light" *ngIf="recordToEdit">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-8">
+                <input type="text" class="form-control" placeholder="title" [(ngModel)]="recordToEdit.title">
+            </div>
+            <div class="col-md-4" *ngIf="hasDatatype">
+                <select class="form-control form-control-sm" [(ngModel)]="recordToEdit.datatype">
+                    <option value="text">Text</option>
+                    <option value="list">List</option>
+                    <option value="select">Dropdown</option>
+                </select>
+            </div>
+        </div>
+
+        <textarea class="mt-2 form-control form-control-sm" rows="3" placeholder="summary"
+            [(ngModel)]="recordToEdit.summary"></textarea>
+
+        <div class="mt-3 text-right">
+            <button class="card-link btn btn-sm btn-primary">
+                <fa-icon [icon]="['far', 'check-circle']"></fa-icon> Update
+            </button>
+            <button class="card-link btn btn-sm btn-light" (click)="onCancelEdit()">
+                <fa-icon icon="times"></fa-icon> Cancel
+            </button>
+        </div>
+    </div>
+</div>
