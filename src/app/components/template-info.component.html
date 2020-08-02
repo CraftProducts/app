@@ -14,8 +14,8 @@
                 </a>
             </div>
             <div *ngIf="!selectedTemplateGroup && loadedTemplate" class="breadcrumb-item">
-                <a [routerLink]="['toolbox', loadedTemplate.groupCode]" class="text-truncate">
-                    Group
+                <a [routerLink]="['toolbox', loadedTemplate.groupCode]" class="text-truncate text-capitalize">
+                    {{loadedTemplate.groupCode}}
                 </a>
             </div>
             <div *ngIf="loadedTemplate" class="breadcrumb-item">

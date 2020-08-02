@@ -1,14 +1,8 @@
 import * as _ from 'lodash';
 import { App } from './app.state';
-import { ActionTypes } from './app.actions';
+import { ActionTypes, TemplateModuleActionTypes } from './app.actions';
 import { CommonActionTypes } from '../appcommon/lib/CommonActions';
 
-//hack
-const TemplateModuleActionTypes = {
-    LoadGroups: "[LoadGroups]",
-    LoadGroupTemplatesSuccess: "[LoadGroupTemplates] Success",
-    LoadFile: "[LoadFile]"
-}
 export function appReducer(state: App, action: any): App {
 
     switch (action.type) {
@@ -17,8 +11,7 @@ export function appReducer(state: App, action: any): App {
         case TemplateModuleActionTypes.LoadGroups: {
             return {
                 ...state, selectedTemplateGroup: null, loadedFile: null, loadedTemplate: null,
-                templateToLoad: null,
-                userModelCommand: null
+                templateToLoad: null, userModelCommand: null
             };
         }
         case TemplateModuleActionTypes.LoadGroupTemplatesSuccess: {
@@ -60,6 +53,11 @@ export function appReducer(state: App, action: any): App {
             if (state.templateToLoad) {
                 loadedTemplate.groupCode = state.templateToLoad.groupCode;
             }
+            return { ...state, loadedTemplate, isModelDirty: false };
+        }
+        case ActionTypes.LoadCustomTemplate: {
+            const loadedTemplate = action.payload;
+            loadedTemplate.groupCode = "custom";
             return { ...state, loadedTemplate, isModelDirty: false };
         }
 

@@ -38,12 +38,14 @@ export abstract class BaseTemplateViewer {
                             this.router.navigate(['toolbox', primaryUrlSegmentGroup.segments[1].path]);
                             break;
                         case 3:
-                            this.store$.dispatch(
-                                new LoadTemplateAction({
-                                    groupCode: primaryUrlSegmentGroup.segments[1].path,
-                                    templateCode: primaryUrlSegmentGroup.segments[2].path,
-                                    mode: qp.mode
-                                }))
+                            if (primaryUrlSegmentGroup.segments[1].path.toLowerCase() !== "custom") {
+                                this.store$.dispatch(
+                                    new LoadTemplateAction({
+                                        groupCode: primaryUrlSegmentGroup.segments[1].path,
+                                        templateCode: primaryUrlSegmentGroup.segments[2].path,
+                                        mode: qp.mode
+                                    }))
+                            }
                             break;
                         default: this.router.navigate(['toolbox']);
                     }
@@ -59,7 +61,7 @@ export abstract class BaseTemplateViewer {
             .subscribe(([template, file]) => {
                 this.loadedTemplate = template;
 
-                if (!file || !file.content) {
+                if (!file || !file.content || file.type === 'template') {
                     this.onTemplatesLoaded(template, null);
                 }
 

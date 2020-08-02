@@ -19,14 +19,19 @@ export class LoadLocalFileComponent {
     @Input() icon: string;
     @Input() accept: string;
     @Input() readAs: string;  //text / binary 
-    @Input() cssClass: string;
+    @Input() cssClass = "btn-primary";
 
-    handleFileInput(files: FileList) {
-        const file = files && files.length === 1 ? files[0] : null;
+    handleFileInput(args) {
+        const files: FileList = args.target.files;
+        const nativeElement: any = event.srcElement;
+        const file = files && files.length === 1 ? files[0] : null;        
         if (file) {
             this.getConfigurations(file)
                 .then(
-                    (content) => (content) ? this.fileLoaded.emit({ filename: file.name, content }) : null,
+                    (content) => {
+                        nativeElement.value = "";
+                        (content) ? this.fileLoaded.emit({ filename: file.name, content }) : null;
+                    },
                     (err) => this.error.emit(err)
                 )
         }

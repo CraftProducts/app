@@ -9,9 +9,10 @@
       "angular-pipes" : "angularPipes",
       "shared-lib" : "sharedLib",
       "ngx-md" : "ngxMd",
+      "js-yaml": "jsYaml",
       "@ngrx/store" : "ngrxStore",
       "primeng/api" : "primeApi",
-      "@ngrx/effects": "ngexEffects"
+      "@ngrx/effects": "ngrxEffects"
     }
   }
 }

@@ -24,6 +24,31 @@
 
                         <div class="mr-4 mb-4 card select-card custom-shadow alert-primary">
                             <div class="p-3">
+                                <h5 class="card-title font-weight-normal mb-2">Use custom template</h5>
+                                <div class="card-text small">
+                                    Can't find a preexisting template? Use your own template.
+                                    <div class="m-4">
+                                        <sharedlib-load-localfile (fileLoaded)="onTemplateFileLoaded($event)"
+                                            (error)="onFileLoadingError($event)"
+                                            errorMessage="Invalid file. System only supports CraftProduct compliant YAML files."
+                                            label="Open template file" accept="application/x-yaml" icon="upload"
+                                            cssClass="btn-sm btn-primary">
+                                        </sharedlib-load-localfile>
+                                    </div>
+
+                                    <div class="text-right">
+                                        <a target="blank"
+                                            href="https://github.com/adhamankar/productpurpose/wiki/Creating-custom-template">
+                                            learn here
+                                            <fa-icon icon="angle-right" class="ml-1"></fa-icon>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- <div class="mr-4 mb-4 card select-card custom-shadow alert-info">
+                            <div class="p-3">
                                 <h5 class="card-title font-weight-normal mb-2">Open existing file</h5>
                                 <div class="card-text small">
                                     Open previously created file for viewing or editing purpose.
@@ -31,13 +56,13 @@
                                         <sharedlib-load-localfile (fileLoaded)="onFileLoaded($event)"
                                             (error)="onFileLoadingError($event)"
                                             errorMessage="Invalid file. System only supports CraftProduct compliant JSON files."
-                                            label="Open local file" accept="application/json" icon="upload">
+                                            label="Open local file" accept="application/json" icon="upload"
+                                            cssClass="btn-sm btn-primary">
                                         </sharedlib-load-localfile>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
+                        </div> -->
 
                         <ng-container *ngIf="details.list && details.list.length > 0">
                             <a [routerLink]="[item.code]" class="mr-4 mb-4 card select-card custom-shadow"

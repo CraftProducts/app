@@ -4,9 +4,10 @@ import { Store } from '@ngrx/store';
 import { TemplatesState } from '../+state/templates.state';
 import { Subscription } from 'rxjs';
 import { LoadGroupsAction, SetRedirectPathAction, LoadFileAction } from '../+state/templates.actions';
-import { filter, tap, map } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import { load } from 'js-yaml';
 
 @Component({
     selector: 'templates-groups',
@@ -53,12 +54,20 @@ export class GroupsComponent implements OnInit, OnDestroy {
 
     onFileLoaded(fileContent) {
         if (fileContent && fileContent.content) {
+            fileContent.type = 'data';
             fileContent.content = JSON.parse(fileContent.content);
         }
         this.store$.dispatch(new LoadFileAction(fileContent));
     }
 
-    onFileLoadingError(err) {
-        this.messageService.add({ severity: 'error', detail: 'Error:' + err, life: 5000, closable: true })
+    onTemplateFileLoaded(fileContent) {
+        if (fileContent && fileContent.content) {
+            fileContent.type = 'template';
+            fileContent.content = load(fileContent.content);
+        }
+        this.store$.dispatch(new LoadFileAction(fileContent));
     }
+
+    onFileLoadingError = (err) => this.messageService.add({ severity: 'error', detail: 'Error:' + err, life: 5000, closable: true })
+
 }

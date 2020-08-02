@@ -19,18 +19,25 @@
                 <li *ngIf="isModelDirty">
                     <app-save-localfile></app-save-localfile>
                 </li>
-                <li *ngIf="!isModelDirty && templateLoaded">
-                    <div class="btn-group">
-                        <button class="btn btn-light bg-white" (click)="onCustomizeTheme()" title="Customize theme">
-                            <fa-icon icon="paint-brush"></fa-icon>
-                            <span class="d-inline d-md-none ml-2"> Customize Theme</span>
-                        </button>
-                        <button class="btn btn-light bg-white" (click)="onExport()" title="Export">
-                            <fa-icon icon="download"></fa-icon>
-                            <span class="d-inline d-md-none ml-2"> Export</span>
-                        </button>
-                    </div>
-                </li>
+                <ng-container *ngIf="!isModelDirty">
+                    <li>
+                        <sharedlib-load-localfile (fileLoaded)="onFileLoaded($event)"
+                            (error)="onFileLoadingError($event)"
+                            errorMessage="Invalid file. System only supports CraftProduct compliant JSON files."
+                            label="Open local file" accept="application/json" icon="upload" cssClass="bg-white">
+                        </sharedlib-load-localfile>
+                        <div class="btn-group ml-2" *ngIf="templateLoaded">
+                            <button class="btn btn-light bg-white" (click)="onCustomizeTheme()" title="Customize theme">
+                                <fa-icon icon="paint-brush"></fa-icon>
+                                <span class="d-inline d-md-none ml-2"> Customize Theme</span>
+                            </button>
+                            <button class="btn btn-light bg-white" (click)="onExport()" title="Export">
+                                <fa-icon icon="download"></fa-icon>
+                                <span class="d-inline d-md-none ml-2"> Export</span>
+                            </button>
+                        </div>
+                    </li>
+                </ng-container>
                 <li class="nav-item">
                     <app-tools></app-tools>
                 </li>
