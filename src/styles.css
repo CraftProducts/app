@@ -34,6 +34,14 @@ h5 {
   background-color: #fafafa;
 }
 
+.table-responsive {
+  overflow: hidden;
+  padding-bottom: 7pt;
+}
+.table-responsive:hover {
+  overflow: auto;
+  padding-bottom: 0;
+}
 label {
   margin-bottom: 0;
 }

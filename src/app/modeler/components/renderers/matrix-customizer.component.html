@@ -14,17 +14,19 @@
 
             <ul ngbNav #nav="ngbNav" class="nav-tabs mt-2" [destroyOnHide]="false">
                 <li [ngbNavItem]="1">
-                    <a ngbNavLink>Rows</a>
+                    <a ngbNavLink>{{dataToEdit.properties.row.title}}</a>
                     <ng-template ngbNavContent>
-                        <app-matrix-list-customizer [(list)]="dataToEdit.rows" [hasDatatype]="true">
+                        <app-matrix-list-customizer [(list)]="dataToEdit.rows" [hasDatatype]="true"
+                            (editingRecord)="onEditingRecord($event)">
                         </app-matrix-list-customizer>
                     </ng-template>
                 </li>
 
                 <li [ngbNavItem]="2">
-                    <a ngbNavLink>Columns</a>
+                    <a ngbNavLink>{{dataToEdit.properties.column.title}}</a>
                     <ng-template ngbNavContent>
-                        <app-matrix-list-customizer [(list)]="dataToEdit.columns">
+                        <app-matrix-list-customizer [(list)]="dataToEdit.columns"
+                            (editingRecord)="onEditingRecord($event)">
                         </app-matrix-list-customizer>
                     </ng-template>
                 </li>
@@ -34,18 +36,20 @@
         </div>
     </div>
     <div class="pane-footer">
-        <button class="btn btn-sm btn-primary mr-1">
-            <fa-icon icon="save" class=" mr-1"></fa-icon>
-            Save &amp; close
-        </button>
+        <div *ngIf="!editingRecord">
+            <button class="btn btn-sm btn-primary mr-1" (click)="onSave()">
+                <fa-icon icon="save" class=" mr-1"></fa-icon>
+                Save &amp; close
+            </button>
 
-        <button class="btn btn-sm btn-secondary" (click)="onReset()">
-            <fa-icon icon="redo" class=" mr-1"></fa-icon>
-            Reset
-        </button>
-        <button class="btn btn-sm btn-default" (click)="onClose()">
-            <fa-icon icon="times" class=" mr-1"></fa-icon>
-            Cancel
-        </button>
+            <button class="btn btn-sm btn-secondary" (click)="onReset()">
+                <fa-icon icon="redo" class=" mr-1"></fa-icon>
+                Reset
+            </button>
+            <button class="btn btn-sm btn-default" (click)="onClose()">
+                <fa-icon icon="times" class=" mr-1"></fa-icon>
+                Cancel
+            </button>
+        </div>
     </div>
 </div>

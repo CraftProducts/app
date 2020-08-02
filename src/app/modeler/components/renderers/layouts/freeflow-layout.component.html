@@ -10,7 +10,7 @@
                 (showEditor)="onShowEditor($event)">
             </app-panel>
 
-            <app-matrix *ngSwitchCase="'matrix'" class="mt-4" [section]="section" (showEditor)="onShowEditor($event)">
+            <app-matrix *ngSwitchCase="'matrix'" class="mt-0" [section]="section" (showEditor)="onShowEditor($event)">
             </app-matrix>
 
             <app-freeflow-layout *ngSwitchCase="'container'" [layout]="section" (showEditor)="onShowEditor($event)">

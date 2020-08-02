@@ -2,10 +2,10 @@ import { Action } from '@ngrx/store';
 import { type } from 'shared-lib';
 
 export const ActionTypes = {
-    // SelectSection: type('[SelectSection]')
+    CustomizeSection: type('[CustomizeSection]')
 }
 
-// export class SelectSectionAction implements Action {
-//     type = ActionTypes.SelectSection;
-//     constructor(public payload: any) { }
-// }
+export class CustomizeSectionAction implements Action {
+    type = ActionTypes.CustomizeSection;
+    constructor(public payload: any) { }
+}

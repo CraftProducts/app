@@ -1,10 +1,11 @@
 <div class="table-responsive matrix">
-    <table class="table table-borderless table-sm mb-0" *ngIf="!isCustomizerVisible">
+    <table class="table table-borderless table-sm mb-0">
         <thead>
             <tr class="text-center">
-                <th class="border-left-0 border-bottom-0 text-left">
-                    <button class="btn btn-light btn-sm btn-edit-hover w-100" (click)="isCustomizerVisible = true">
-                        <fa-icon icon="pencil-alt"></fa-icon> customize
+                <th class="border-left-0 border-bottom-0 text-left p-0">
+                    <button class="btn btn-link bg-white btn-edit-hover w-100 rounded-0"
+                        (click)="isCustomizerVisible = true">
+                        customize <fa-icon icon="pencil-alt" class="ml-1" size="sm"></fa-icon>
                     </button>
                 </th>
                 <th class=" border-bottom-0" *ngFor="let col of section.columns">
@@ -18,8 +19,6 @@
                     <div class="pl-2 mt-2 h6" [ngbPopover]="row.summary" triggers="mouseenter:mouseleave"
                         placement="right">
                         {{row.title}}
-                        <!-- <fa-icon [icon]="['far','question-circle']" class="text-muted font-weight-light" size="xs">
-                        </fa-icon> -->
                     </div>
                 </td>
                 <td *ngFor="let col of row.columns;let idx = index" [style.background-color]="col.cellTheme.bgColor"
@@ -37,7 +36,7 @@
 </div>
 
 <p-sidebar [(visible)]="isCustomizerVisible" styleClass="bg-light" styleClass="ui-sidebar-md" position="left"
-    (onHide)="isCustomizerVisible = false">
-    <app-matrix-customizer *ngIf="section"  (close)="isCustomizerVisible = false" [matrix]="section"></app-matrix-customizer>
+    (onHide)="onClose()">
+    <app-matrix-customizer *ngIf="section" (close)="onClose()" (save)="onCustomize($event)" [matrix]="section">
+    </app-matrix-customizer>
 </p-sidebar>
-

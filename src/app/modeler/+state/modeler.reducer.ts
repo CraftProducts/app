@@ -3,29 +3,19 @@ import * as _ from 'lodash';
 import { CommonActionTypes } from 'src/app/appcommon/lib/CommonActions';
 import { generateCode } from 'shared-lib';
 import { SECTIONTYPES, DATATYPES, LISTVIEWTYPES } from '../modeler-utils';
+import { ActionTypes } from './modeler.actions';
 
 const DEFAULT_LIST_PROPERTIES = { view: 'list' };
 const DEFAULT_IMAGE_PROPERTIES = { height: 100, width: 100 };
 const DEFAULT_THEME = { bgColor: '#ffffff', tile: { bgColor: '#fff9b8' } }
-const COLORED_THEME = {
-    panels: [
-        { bgColor: '#8000FF', color: '#ffffff', tile: { bgColor: '#fff9b8', color: '#555555' } },
-        { bgColor: '#000080', color: '#ffffff', tile: { bgColor: '#fff9b8', color: '#555555' } }
-    ],
-    matrix: [
-        { bgColor: '#0EBCB8', color: '#ffffff', tile: { bgColor: '#fff9b8', color: '#555555' } },
-        { bgColor: '#FDC147', color: '#000000', tile: { bgColor: '#fff9b8', color: '#555555' } }
-    ]
-};
 
 export function modelerReducer(state: Modeler, action: any): Modeler {
     switch (action.type) {
         case CommonActionTypes.SetModel: {
             const modelInstance = action.payload.template;
+            resetModelChildren(modelInstance.children, false);
+
             const dataset = action.payload.dataset;
-            const children = modelInstance.children;
-            resetModelChildren(children, false);
-            //applyThemeChildren(children, COLORED_THEME);
             if (dataset) {
                 dataset.sections = makeBackwardCompatible(dataset.sections);
                 populateModelDataset(modelInstance, dataset.sections);
@@ -48,6 +38,12 @@ export function modelerReducer(state: Modeler, action: any): Modeler {
             return { ...state, selectedSection: null, modelInstance: { ...state.modelInstance, children } };
         }
 
+        case ActionTypes.CustomizeSection: {
+            const children = state.modelInstance.children;
+            updateSection(children, action.payload)
+            return { ...state, modelInstance: { ...state.modelInstance, children } };
+        }
+
         case CommonActionTypes.UpdateTheme: {
             const children = state.modelInstance.children;
             const theme = action.payload || DEFAULT_THEME;
@@ -65,54 +61,74 @@ export function modelerReducer(state: Modeler, action: any): Modeler {
 
         default: return state;
     }
+
     function resetModelChildren(children, resetData) {
         if (!children) return null;
-        if (children.length > 0) {
-            children.forEach((child) => {
-                child.isDirty = false;
-                if (child.type === SECTIONTYPES.panel) {
-                    initPanelProperties(child);
-                } else if (child.type === SECTIONTYPES.matrix && child.rows && child.columns) {
-                    child.rows.forEach((row) => {
-                        if (!row.columns || row.columns.length === 0 || resetData) {
-                            initMatrixRowColumn(row, child);
-                        } else if (resetData === false && row.columns) {
-                            row.columns.forEach(column => column.isDirty = false);
-                        }
-                    })
-                }
 
-                if (!child.data || resetData) {
-                    child.data = child.type === SECTIONTYPES.matrix ? [] : {};
-                }
-                resetModelChildren(child.children, resetData);
-            });
-        }
+        children.forEach((child) => {
+            child.isDirty = false;
+            if (child.type === SECTIONTYPES.panel) {
+                initPanelProperties(child);
+            } else if (child.type === SECTIONTYPES.matrix && child.rows && child.columns) {
+                updateMatrixSection(child, child, resetData);
+            }
+
+            if (!child.data || resetData) {
+                child.data = child.type === SECTIONTYPES.matrix ? [] : {};
+            }
+            resetModelChildren(child.children, resetData);
+        });
+    }
+
+    function updateSection(children, record) {
+        if (!children) return null;
+
+        children.forEach((child) => {
+            if (child.code === record.code && record.type === SECTIONTYPES.matrix) {
+                updateMatrixSection(child, record, false);
+            }
+            updateSection(child.children, record);
+        });
+    }
+
+    function updateMatrixSection(child: any, record: any, resetData: boolean) {
+        record.rows = record.rows || child.rows;
+        record.columns = record.columns || child.columns;
+
+        child.rows = _.orderBy(record.rows, 'sequence');
+        child.columns = _.orderBy(record.columns, 'sequence');
+        child.rows.forEach(row => {
+            if (!row.columns || row.columns.length === 0 || resetData) {
+                initMatrixRowColumn(row, child);
+            } else if (resetData === false && row.columns) {
+                row.columns.forEach(column => column.isDirty = false);
+            }
+        });
     }
 
     function applyThemeChildren(children, theme) {
         if (!children) return null;
-        if (children.length > 0) {
-            children.forEach((child, index) => {
 
-                if (child.type === SECTIONTYPES.panel) {
-                    child.theme = getProcessedTheme(child, theme.panels[index % theme.panels.length]);
-                }
+        children.forEach((child, index) => {
 
-                else if (child.type === SECTIONTYPES.matrix && child.rows) {
-                    child.rows.forEach((row, rowIndex) => {
-                        row.columns.forEach((column, columnIndex) => {
-                            const localTheme = theme.matrix[(rowIndex + columnIndex) % theme.matrix.length];
-                            column.cellTheme = localTheme;
-                            column.theme = getProcessedTheme(column, localTheme);
-                        });
-                    })
-                }
+            if (child.type === SECTIONTYPES.panel) {
+                child.theme = getProcessedTheme(child, theme.panels[index % theme.panels.length]);
+            }
 
-                applyThemeChildren(child.children, theme);
-            });
-        }
+            else if (child.type === SECTIONTYPES.matrix && child.rows) {
+                child.rows.forEach((row, rowIndex) => {
+                    row.columns.forEach((column, columnIndex) => {
+                        const localTheme = theme.matrix[(rowIndex + columnIndex) % theme.matrix.length];
+                        column.cellTheme = localTheme;
+                        column.theme = getProcessedTheme(column, localTheme);
+                    });
+                })
+            }
+
+            applyThemeChildren(child.children, theme);
+        });
     }
+
     function getProcessedTheme(node: any, theme: any) {
         const localTheme = _.cloneDeep(theme);
         localTheme.tile = (node.datatype === DATATYPES.list && node.properties.view === LISTVIEWTYPES.tile)
@@ -125,11 +141,15 @@ export function modelerReducer(state: Modeler, action: any): Modeler {
         if (!node) return;
 
         if (node.type === SECTIONTYPES.panel) {
+
             const found = _.find(lookupSections, { code: node.code });
             node.data = found && found.data ? _.cloneDeep(found.data) : {};
             node.isDirty = false;
+
         } else if (node.type === SECTIONTYPES.matrix) {
+
             const found = _.find(lookupSections, { code: node.code });
+            updateMatrixSection(node, found, false);
             if (found && found.data && found.data.length > 0) {
                 found.data.forEach(dt => {
                     const rowFound = _.find(node.rows, { code: dt.rowCode });
@@ -189,7 +209,7 @@ export function modelerReducer(state: Modeler, action: any): Modeler {
                 theme: DEFAULT_THEME
             };
 
-            if (row.datatype === DATATYPES.list) {
+            if (row.datatype === DATATYPES.select) {
                 rowColumn.options = row.options;
             }
 

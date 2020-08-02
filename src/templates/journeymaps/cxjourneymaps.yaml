@@ -42,6 +42,13 @@ children:
     code: PHASES
     title: Phases
     summary: Different phases involves during the user journey
+    properties:
+      row:
+        title: User activities
+        summary: Capture user activities
+      column:
+        title: Phases
+        summary: Various stages through which the user journey progresses
     columns:
       - sequence: 1
         code: DISCOVER

@@ -15,7 +15,6 @@ export function createPptx(model, options) {
 
     const sections = [];
     extractSections(model, ['title', 'summary', 'code', 'data', 'datatype', 'type'], sections);
-    console.log('sections', model, sections);
 
     sections.forEach(section => createSectionSlide(section));
 

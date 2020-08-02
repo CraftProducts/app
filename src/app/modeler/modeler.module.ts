@@ -38,6 +38,7 @@ import { ThemeEditorComponent } from './components/themes/theme-editor.component
 import { ThemeListEditorComponent } from './components/themes/theme-list-editor.component';
 import { MatrixCustomizerComponent } from './components/renderers/matrix-customizer.component';
 import { MatrixListCustomizerComponent } from './components/renderers/matrix-list-customizer.component';
+import { MatrixRecordCustomizerComponent } from './components/renderers/matrix-record-customizer.component';
 
 const routes: Route[] = [
   { path: '', component: ModelerHomeComponent, canDeactivate: [PendingChangesGuard] }
@@ -47,7 +48,7 @@ const routes: Route[] = [
   declarations: [ModelerHomeComponent,
     SplitLayoutRendererComponent, FreeflowLayoutRendererComponent,
     PanelRendererComponent, MetadataRendererComponent, 
-    MatrixRendererComponent, MatrixCustomizerComponent, MatrixListCustomizerComponent,
+    MatrixRendererComponent, MatrixCustomizerComponent, MatrixListCustomizerComponent, MatrixRecordCustomizerComponent,
 
     NotesComponent, LinksComponent, TasksComponent,
     SectionEditorComponent, TextEditorComponent, ListEditorComponent, SelectEditorComponent, ImageEditorComponent,

@@ -15,7 +15,6 @@ export class ExportSidebarComponent implements OnInit {
     options: any;
 
     ngOnInit(): void {
-        console.log('this.model', this.model);
         this.options = {
             appTitle: environment.appTitle,
             filename: this.filename || this.model.code,

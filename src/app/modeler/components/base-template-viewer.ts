@@ -112,7 +112,7 @@ export abstract class BaseTemplateViewer {
         this.instance.groupCode = this.loadedTemplate.groupCode;
         this.instance.templateCode = this.loadedTemplate.code;
         this.instance.sections = [];
-        this.onExtractSections(this.loadedTemplate, ['code', 'data'], this.instance.sections);
+        this.onExtractSections(this.loadedTemplate, ['code', 'data', 'rows', 'columns'], this.instance.sections);
 
         this.downloadDataFile();
         this.store$.dispatch(new SaveModelAction(this.instance));

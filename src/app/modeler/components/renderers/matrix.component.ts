@@ -1,5 +1,8 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import * as _ from 'lodash';
+import { ModelerState } from '../../+state/modeler.state';
+import { CustomizeSectionAction } from '../../+state/modeler.actions';
+import { Store } from '@ngrx/store';
 
 @Component({
     selector: 'app-matrix',
@@ -10,14 +13,21 @@ export class MatrixRendererComponent {
     @Output() showEditor = new EventEmitter<any>();
 
     isCustomizerVisible = false;
-    
-    onShowEditor(eventArgs) {
-        this.showEditor.emit(eventArgs);
+
+    constructor(public store$: Store<ModelerState>) {
     }
 
+    onShowEditor = (eventArgs) => this.showEditor.emit(eventArgs);
+
     onShowItemDetails(section) {
-        console.log('onShowItemDetails', section);
+        console.log('section', section);
         this.section.selectedItem = section;
         this.onShowEditor({ mode: 'VIEW', section: this.section });
+    }
+
+    onClose = () => this.isCustomizerVisible = false;
+    onCustomize(args) {
+        this.onClose();
+        this.store$.dispatch(new CustomizeSectionAction(args));
     }
 }

@@ -22,9 +22,26 @@ export function extractSections(data, fieldlist, sections) {
     if (!data) return;
 
     if (data.type === SECTIONTYPES.panel || data.type === SECTIONTYPES.matrix) {
-        sections.push(_.pick(data, fieldlist));
+        const record = _.cloneDeep(_.pick(data, fieldlist));
+
+        cleanupUnwantedProperties(record);
+        sections.push(record);
     }
     if (data.children && data.children.length > 0) {
         data.children.forEach(child => extractSections(child, fieldlist, sections));
     }
 }
+
+function cleanupUnwantedProperties(record: any) {
+
+    if (record.data && record.data.length > 0) {
+        record.data.forEach(data => {
+            delete data.rowTitle;
+            delete data.colTitle
+        })
+    }
+    if (record.rows) {
+        record.rows.forEach(row => delete row.columns);
+    }
+}
+
