@@ -20,6 +20,7 @@ export const UserModelCommandTypes = {
     Reset: "Reset",
     Close: "Close",
     Export: "Export",
+    SaveTemplate: "SaveTemplate",
     CustomizeTheme: "CustomizeTheme"
 }
 

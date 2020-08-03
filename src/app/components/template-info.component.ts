@@ -4,6 +4,7 @@ import { AppState } from '../+state/app.state';
 import { Subscription } from 'rxjs';
 import * as _ from 'lodash';
 import { Router } from '@angular/router';
+import { UserModelCommandAction, UserModelCommandTypes } from '../appcommon/lib/CommonActions';
 
 @Component({
     selector: 'app-template-info',
@@ -29,5 +30,13 @@ export class TemplateInfoComponent implements OnInit, OnDestroy {
     ngOnDestroy(): void {
         this.loadedTemplate$ ? this.loadedTemplate$.unsubscribe() : null;
         this.selectedTemplateGroup$ ? this.selectedTemplateGroup$.unsubscribe() : null;
+    }
+
+    onCustomizeTheme() {
+        this.store$.dispatch(new UserModelCommandAction({ command: UserModelCommandTypes.CustomizeTheme }));
+    }
+
+    onDownloadTemplate() {
+        this.store$.dispatch(new UserModelCommandAction({ command: UserModelCommandTypes.SaveTemplate }));
     }
 }

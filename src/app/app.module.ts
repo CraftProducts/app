@@ -35,7 +35,7 @@ import { AppRepository } from './appcommon/googledrive/app.repository';
 import { FileRepository } from './appcommon/googledrive/file.repository';
 import { UserRepository } from './appcommon/googledrive/user.repository';
 import { IBACKEND_URLS, SharedLibModule } from 'shared-lib';
-import { SaveLocalFileComponent } from './components/localfilemanager/save.component';
+import { SaveLocalFileComponent } from './components/save-localfile.component';
 import { TemplateInfoComponent } from './components/template-info.component';
 
 export function initGapi(gapiSession: GapiSession) {

@@ -15,7 +15,7 @@ export class SectionEditorComponent {
     @Input() set data(value: any) {
         this._data = value;
         this.sections = [];
-        extractSections(value, ['icon', 'code', 'title'], this.sections);
+        extractSections(value, ['icon', 'code', 'title', 'type', 'datatype'], this.sections);
     }
     get data() {
         return this._data;

@@ -1,10 +1,13 @@
 import { Store } from '@ngrx/store';
 import { Subscription, combineLatest } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { UserModelCommandTypes, ResetModelAction, SaveModelAction, UpdateThemeAction } from 'src/app/appcommon/lib/CommonActions';
+import { UserModelCommandTypes, ResetModelAction, SaveModelAction, UpdateThemeAction, CloseWorkspaceAction } from 'src/app/appcommon/lib/CommonActions';
 import { AppState } from 'src/app/+state/app.state';
 import { ActivatedRoute, Router, PRIMARY_OUTLET } from '@angular/router';
 import { LoadTemplateAction } from 'src/app/+state/app.actions';
+import { extractSections, prepareTemplateForDownload } from '../modeler-utils';
+import { dump } from "js-yaml";
+import * as _ from "lodash";
 
 export abstract class BaseTemplateViewer {
     instance: any;
@@ -87,13 +90,16 @@ export abstract class BaseTemplateViewer {
                         this.store$.dispatch(new ResetModelAction(this.userModelCommand.data));
                         break;
                     case UserModelCommandTypes.Close:
-                        console.error('Not supported');
+                        this.store$.dispatch(new CloseWorkspaceAction(null));
                         break;
                     case UserModelCommandTypes.Export:
                         this.showExportSidebar = true;
                         break;
                     case UserModelCommandTypes.CustomizeTheme:
                         this.showThemeEditorSidebar = true;
+                        break;
+                    case UserModelCommandTypes.SaveTemplate:
+                        this.onSaveTemplate();
                         break;
                 }
             });
@@ -106,7 +112,17 @@ export abstract class BaseTemplateViewer {
         this.userModelCommand$ ? this.userModelCommand$.unsubscribe() : null;
     }
 
-    abstract onExtractSections(modelInstance, fieldlist, sections): void
+    onSaveTemplate(): void {
+        this.filename = `${this.loadedTemplate.code}.yaml`;
+        const memento = _.cloneDeep(this.loadedTemplate);
+
+        prepareTemplateForDownload(memento);
+
+        const content = dump(memento);
+        const mimetype = "text/x-yaml";
+        this.downloadDataFile(this.filename, mimetype, content);
+        this.store$.dispatch(new SaveModelAction(this.instance));
+    }
 
     onSaveModel(filename): void {
         this.filename = filename;
@@ -114,19 +130,22 @@ export abstract class BaseTemplateViewer {
         this.instance.groupCode = this.loadedTemplate.groupCode;
         this.instance.templateCode = this.loadedTemplate.code;
         this.instance.sections = [];
-        this.onExtractSections(this.loadedTemplate, ['code', 'data', 'rows', 'columns'], this.instance.sections);
+        console.log('this.loadedTemplate', this.loadedTemplate);
+        extractSections(this.loadedTemplate, ['code', 'data', 'rows', 'columns'], this.instance.sections);
 
-        this.downloadDataFile();
+        console.log('this.instance.sections', this.instance.sections);
+
+        const content = JSON.stringify(this.instance);
+        this.filename = this.filename || `${this.instance.templateCode}.json`;
+        const mimetype = "text/json";
+        this.downloadDataFile(this.filename, mimetype, content);
         this.store$.dispatch(new SaveModelAction(this.instance));
     }
 
-    private downloadDataFile() {
-        var theJSON = JSON.stringify(this.instance);
-        this.filename = this.filename || `${this.instance.templateCode}.json`;
-
+    private downloadDataFile(filename, mimetype, content) {
         var element = document.createElement('a');
-        element.setAttribute('href', "data:text/json;charset=UTF-8," + encodeURIComponent(theJSON));
-        element.setAttribute('download', this.filename);
+        element.setAttribute('href', `data:${mimetype};charset=UTF-8,${encodeURIComponent(content)}`);
+        element.setAttribute('download', filename);
         element.style.display = 'none';
         document.body.appendChild(element);
         element.click();

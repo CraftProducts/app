@@ -67,10 +67,6 @@ export class ModelerHomeComponent extends BaseTemplateViewer implements Componen
         this.selectedSection$ ? this.selectedSection$.unsubscribe() : null;
     }
 
-    onExtractSections(modelInstance: any, fieldlist: any, sections: any): void {
-        extractSections(modelInstance, fieldlist, sections);
-    }
-
     onShowEditor(eventArgs) {
         this.store$.dispatch(new SelectSectionAction(eventArgs));
     }

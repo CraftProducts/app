@@ -21,10 +21,15 @@
                 <div class="col-md-2">
                     <div class=" mb-5">
                         <div *ngFor="let s of sections">
-                            <button class="btn btn-white btn-sm rounded-0 border-0 text-left w-100"
+                            <button class="btn btn-white btn-sm rounded-0 border-0 text-left w-100 mb-1"
                                 (click)="selectSection(s.code)"
                                 [ngClass]="{'active': section && section.code === s.code}">
-                                <sub class="text-uppercase text-primary">{{s.code}}</sub>
+
+                                <sub class="text-uppercase text-muted">
+                                    {{s.code}}
+                                    <span class="badge badge-info">{{s.datatype}}</span>
+                                    <span class="badge badge-info" *ngIf="s.type === 'matrix'">{{s.type}}</span>
+                                </sub>
                                 <div class="text-dark">{{s.title}}</div>
                             </button>
                         </div>
@@ -39,8 +44,9 @@
                         </app-text-editor>
 
                         <app-image-editor *ngIf="section.datatype === 'image'" [placeholder]="section.summary"
-                            [mode]="mode" [(data)]="section.data" [properties]="section.properties" (save)="onUpdated($event, section)"
-                            (toggleMode)="onToggleMode($event, section)" (itemChange)="onItemChanged($event, section)">
+                            [mode]="mode" [(data)]="section.data" [properties]="section.properties"
+                            (save)="onUpdated($event, section)" (toggleMode)="onToggleMode($event, section)"
+                            (itemChange)="onItemChanged($event, section)">
                         </app-image-editor>
 
                         <app-list-editor *ngIf="section.datatype === 'list'" [mode]="mode" [(data)]="section.data"
@@ -49,7 +55,8 @@
                         </app-list-editor>
 
                         <div *ngIf="section.type === 'matrix'">
-                            <app-matrix-editor [mode]="mode" [(section)]="section" (itemChange)="onItemChanged($event, section)" >
+                            <app-matrix-editor [mode]="mode" [(section)]="section"
+                                (itemChange)="onItemChanged($event, section)">
                             </app-matrix-editor>
                         </div>
                     </div>

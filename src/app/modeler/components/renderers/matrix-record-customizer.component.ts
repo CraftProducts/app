@@ -29,7 +29,7 @@ export class MatrixRecordCustomizerComponent {
 
     canUpdate() {
         if (!this.record.title || this.record.title.trim().length === 0) return false;
-        if (!this.record.datatype || this.record.datatype.length === 0) return false;
+        if (this.hasDatatype && (!this.record.datatype || this.record.datatype.length === 0)) return false;
 
         if (this.record.datatype === DATATYPES.select) {
             if (!this.record.options || this.record.options.length === 0) return false;

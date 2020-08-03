@@ -22,43 +22,58 @@ export class NavbarComponent implements OnInit, OnDestroy {
     isModelDirty: boolean;
 
     isCollapsed = true;
+    filename = "";
     constructor(public store$: Store<AppState>, public router: Router, public messageService: MessageService) {
     }
     ngOnInit(): void {
         this.isModelDirty$ = this.store$.select(p => p.app.isModelDirty)
-            .subscribe(p => this.isModelDirty = p);
+            .subscribe(p => {
+                this.isModelDirty = p;
+                if (this.isModelDirty && this.loadedTemplate && (!this.filename || this.filename.trim().length === 0)) {
+                    this.filename = `${this.loadedTemplate.code}.json`;
+                }
+            });
 
         this.loadedTemplate$ = this.store$.select(p => p.app.loadedTemplate)
             .pipe(
                 tap(() => this.templateLoaded = false),
-                filter(p => p),
                 tap(() => this.templateLoaded = true)
             )
-            .subscribe(template => this.loadedTemplate = template);
+            .subscribe(template => {
+                if (!template) {
+                    this.filename = "";
+                    this.onNavigateHome()
+                } else {
+                    this.loadedTemplate = template;
+                }
+            });
     }
     ngOnDestroy(): void {
         this.isModelDirty$ ? this.isModelDirty$.unsubscribe() : null;
         this.loadedTemplate$ ? this.loadedTemplate$.unsubscribe() : null;
     }
 
+    onNavigateHome() {
+        this.router.navigate(['toolbox']);
+    }
     onExport() {
         this.store$.dispatch(new UserModelCommandAction({ command: UserModelCommandTypes.Export }));
     }
-    onCustomizeTheme() {
-        this.store$.dispatch(new UserModelCommandAction({ command: UserModelCommandTypes.CustomizeTheme }));
-    }
 
     onFileLoaded(fileContent) {
-        console.log('onFileLoaded', fileContent);
         if (fileContent && fileContent.content) {
+            this.filename = fileContent.filename;
             fileContent.type = 'data';
             fileContent.content = JSON.parse(fileContent.content);
-            console.log(fileContent.content.groupCode, this.loadedTemplate);
-            if (!(fileContent.content.groupCode === 'custom' &&
-                this.loadedTemplate &&
-                this.loadedTemplate.groupCode === 'custom' &&
-                fileContent.content.templateCode === this.loadedTemplate.code)) {
-                this.messageService.add({ severity: 'error', detail: 'The loaded file is incompatible with the custom template', life: 5000, closable: true });
+            if (fileContent.content.groupCode === 'custom' &&
+                !(this.loadedTemplate &&
+                    this.loadedTemplate.groupCode === 'custom' &&
+                    fileContent.content.templateCode === this.loadedTemplate.code)) {
+                this.messageService.add({
+                    severity: "error", life: 10000, closable: true,
+                    summary: "Incompatible file",
+                    detail: `The loaded file was crafted using custom template (${fileContent.content.templateCode}). First load the custom template and they retry opening this file.`
+                });
             } else {
                 console.log('fileContent', fileContent)
                 this.store$.dispatch(new LoadFileAction(fileContent));

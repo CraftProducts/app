@@ -1,8 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../+state/app.state';
+import { AppState } from '../+state/app.state';
 import { Subscription } from 'rxjs';
-import { UserModelCommandTypes, UserModelCommandAction } from '../../appcommon/lib/CommonActions';
+import { UserModelCommandTypes, UserModelCommandAction } from '../appcommon/lib/CommonActions';
 import { MessageService } from 'primeng/api';
 import { filter } from 'rxjs/operators';
 import { Router } from '@angular/router';
@@ -10,13 +10,13 @@ import * as _ from 'lodash';
 
 @Component({
     selector: 'app-save-localfile',
-    templateUrl: './save.component.html'
+    templateUrl: './save-localfile.component.html'
 })
 export class SaveLocalFileComponent implements OnInit, OnDestroy {
-
     loadedFile$: Subscription;
     content: any;
-    filename = '';
+    @Input() filename = '';
+    @Input() isDirty = false;
 
     constructor(public store$: Store<AppState>, public router: Router, public messageService: MessageService) {
     }
@@ -44,5 +44,8 @@ export class SaveLocalFileComponent implements OnInit, OnDestroy {
     }
     onReset() {
         this.store$.dispatch(new UserModelCommandAction({ command: UserModelCommandTypes.Reset, data: this.content }));
+    }
+    onClose() {
+        this.store$.dispatch(new UserModelCommandAction({ command: UserModelCommandTypes.Close }));
     }
 }

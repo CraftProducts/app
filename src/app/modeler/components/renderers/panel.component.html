@@ -1,10 +1,10 @@
 <div class="layout-panel layout-panel-{{section.datatype}}" [ngClass]="{'panel-is-dirty': section && section.isDirty}"
     [style.background-color]="section.theme.bgColor" [style.color]="section.theme.color">
-    <div class="btn-group btn-group-sm btn-hover" style="z-index: 1;">
+    <div class="btn-group btn-group-sm btn-hover" style="z-index: 1;margin-top: -0.75rem;">
         <!-- <button class="btn btn-link" (click)="onShowEditor({mode: 'EDIT', section: section})">
             <fa-icon icon="pencil-alt"></fa-icon>
         </button> -->
-        <button class="btn btn-link" (click)="onShowEditor({mode: 'VIEW', section: section})">
+        <button class="btn btn-light" (click)="onShowEditor({mode: 'VIEW', section: section})">
             <fa-icon icon="expand-alt"></fa-icon>
         </button>
     </div>

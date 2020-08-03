@@ -1,10 +1,10 @@
-<nav class="navbar navbar-expand-md">
+<nav class="navbar navbar-expand-md" [ngClass]="{'bg-white': !isCollapsed}">
     <div class="container-fluid p-0">
-        <a class="text-dark mr-2 btn btn-lg btn-light bg-white" routerLink="/toolbox">
+        <button class="text-dark mr-2 btn btn-lg btn-light bg-white" (click)="onNavigateHome()">
             <img src="./assets/logo.png" height="20pt" />
             <span class="font-weight-light ml-2">Craft</span>
             <span class="text-brand">Product</span>
-        </a>
+        </button>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
             (click)="isCollapsed = !isCollapsed" style="z-index: 1001;">
@@ -16,23 +16,23 @@
             <app-template-info></app-template-info>
 
             <ul class="navbar-nav ml-sm-auto">
-                <li *ngIf="isModelDirty">
-                    <app-save-localfile></app-save-localfile>
+                <li>
+                    <div class="mr-2" *ngIf="(filename && filename.length > 0) || isModelDirty">
+                        <app-save-localfile [isDirty]="isModelDirty" [filename]="filename"></app-save-localfile>
+                    </div>
                 </li>
                 <ng-container *ngIf="!isModelDirty">
                     <li>
                         <sharedlib-load-localfile (fileLoaded)="onFileLoaded($event)"
                             (error)="onFileLoadingError($event)"
                             errorMessage="Invalid file. System only supports CraftProduct compliant JSON files."
-                            label="Open local file" accept="application/json" icon="upload" cssClass="bg-white">
+                            label="Open" accept="application/json" icon="upload" cssClass="bg-white mr-2">
                         </sharedlib-load-localfile>
-                        <div class="btn-group ml-2" *ngIf="templateLoaded">
-                            <button class="btn btn-light bg-white" (click)="onCustomizeTheme()" title="Customize theme">
-                                <fa-icon icon="paint-brush"></fa-icon>
-                                <span class="d-inline d-md-none ml-2"> Customize Theme</span>
-                            </button>
-                            <button class="btn btn-light bg-white" (click)="onExport()" title="Export">
-                                <fa-icon icon="download"></fa-icon>
+                    </li>
+                    <li>
+                        <div class="btn-group mr-2" *ngIf="templateLoaded">
+                            <button class="btn btn-link text-dark bg-white" (click)="onExport()" title="Export">
+                                <fa-icon icon="file-export"></fa-icon>
                                 <span class="d-inline d-md-none ml-2"> Export</span>
                             </button>
                         </div>

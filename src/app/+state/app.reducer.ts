@@ -8,12 +8,7 @@ export function appReducer(state: App, action: any): App {
     switch (action.type) {
 
         // ----------------------- TEMPLATE MODULE ACTIONS ----------------------------
-        case TemplateModuleActionTypes.LoadGroups: {
-            return {
-                ...state, selectedTemplateGroup: null, loadedFile: null, loadedTemplate: null,
-                templateToLoad: null, userModelCommand: null
-            };
-        }
+
         case TemplateModuleActionTypes.LoadGroupTemplatesSuccess: {
             return {
                 ...state,
@@ -27,6 +22,18 @@ export function appReducer(state: App, action: any): App {
 
         case CommonActionTypes.UserModelCommand: {
             return { ...state, userModelCommand: action.payload, isModelDirty: false };
+        }
+
+        case CommonActionTypes.CloseWorkspace: {
+            return {
+                ...state,
+                selectedTemplateGroup: null,
+                loadedFile: null,
+                loadedTemplate: null,
+                templateToLoad: null,
+                userModelCommand: null,
+                isModelDirty: false
+            };
         }
 
         case CommonActionTypes.SetModelDirty: {
@@ -64,4 +71,5 @@ export function appReducer(state: App, action: any): App {
         default: return state;
     }
 }
+
 

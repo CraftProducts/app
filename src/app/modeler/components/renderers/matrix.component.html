@@ -9,7 +9,10 @@
                     </button>
                 </th>
                 <th class=" border-bottom-0" *ngFor="let col of section.columns">
-                    <div class="text-capitalize h6 p-1">{{col.title}}</div>
+                    <div class="text-capitalize h6 p-1" [ngbPopover]="col.summary" triggers="mouseenter:mouseleave"
+                        placement="bottom">
+                        {{col.title}}
+                    </div>
                 </th>
             </tr>
         </thead>

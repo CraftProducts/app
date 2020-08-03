@@ -22,6 +22,27 @@
                 <div class="text-truncate" [ngbPopover]="loadedTemplate.summary" triggers="mouseenter:mouseleave">
                     {{loadedTemplate.title}}
                 </div>
+
+                <div class="btn-group btn-group-sm ml-2 ">
+                    <div ngbDropdown display="dynamic" placement="bottom-right">
+                        <a class="btn btn-link btn-sm hide-caret p-0 text-primary" id="dropdownBasic1" ngbDropdownToggle
+                            title="template tools">
+                            <fa-icon icon="ellipsis-h" [fixedWidth]="true"></fa-icon>
+                        </a>
+                        <div ngbDropdownMenu class="dropdown-menu-right pb-0">
+                            <button ngbDropdownItem (click)="onCustomizeTheme()" title="Customize theme">
+                                <fa-icon icon="paint-brush" [fixedWidth]="true"></fa-icon>
+                                Customize theme
+                            </button>
+                            <div class="dropdown-divider mb-0"></div>
+                            <button ngbDropdownItem class="pt-2 pb-2 bg-light" (click)="onDownloadTemplate()">
+                                <fa-icon icon="download" [fixedWidth]="true" class="text-info"></fa-icon>
+                                Download template
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </li>

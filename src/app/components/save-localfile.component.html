@@ -1,0 +1,54 @@
+<div class="input-group">
+    <div class="input-group-prepend" *ngIf="isDirty">
+        <span class="input-group-text bg-warning">
+            <fa-icon icon="info-circle" class="ml-2 mr-1" title="Unsaved changes found."></fa-icon>
+        </span>
+    </div>
+    <input type="text" (keydown.enter)="onSave()" [appAutofocus]="isDirty" class="form-control" [(ngModel)]="filename"
+        [disabled]="!isDirty">
+    <div class="input-group-append">
+        <button class="btn btn-sm btn-light border text-primary" [disabled]="!canSave()" (click)="onSave()"
+            title="Save updated data file">
+            <fa-icon icon="download" [fixedWidth]="true"></fa-icon>
+        </button>
+        <button class="btn btn-sm btn-light border" title="Close" *ngIf="!isDirty" (click)="onClose()">
+            <fa-icon icon="times" [fixedWidth]="true"></fa-icon>
+        </button>
+        <button class="btn btn-sm btn-light border text-danger" (click)="onReset()" title="Discard changes"
+            *ngIf="isDirty">
+            <fa-icon icon="redo" [fixedWidth]="true"></fa-icon>
+        </button>
+    </div>
+</div>
+
+<!-- <div class="p-1 bg-white mr-2 rounded" *ngIf="(filename && filename.length > 0) || isDirty">
+    {{filename}}
+
+    <ng-container *ngIf="isDirty">
+        <div *ngIf="!filenameEditorVisible">
+            <fa-icon icon="info-circle" class="ml-2 mr-1 text-warning" title="Unsaved changes found."></fa-icon>
+            <div class="btn-group">
+                <button class="btn btn-sm btn-link" (click)="toggleFilenameEditor()">
+                    <fa-icon icon="save"></fa-icon> Save
+                </button>
+                <button class="btn btn-sm btn-link text-danger" (click)="onReset()">
+                    <fa-icon icon="redo" class=" text-danger"></fa-icon> Discard
+                </button>
+            </div>
+        </div>
+
+        <div class="input-group ml-2 mr-2" *ngIf="filenameEditorVisible">
+            <input type="text" (keydown.enter)="onSave()" [appAutofocus]="filenameEditorVisible"
+                (keydown.escape)="toggleFilenameEditor()" class="form-control" [(ngModel)]="filename">
+            <div class="input-group-append">
+                <button class="btn btn-primary" [disabled]="!canSave()" (click)="onSave()">
+                    <fa-icon icon="save"></fa-icon> Save
+                </button>
+                <button class="btn btn-default" (click)="toggleFilenameEditor()">
+                    <fa-icon icon="times" class="text-danger"></fa-icon>
+                </button>
+            </div>
+        </div>
+    </ng-container>
+
+</div> -->
