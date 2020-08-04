@@ -38,7 +38,7 @@ export abstract class BaseTemplateViewer {
                 if (primaryUrlSegmentGroup && primaryUrlSegmentGroup.segments) {
                     switch (primaryUrlSegmentGroup.segments.length) {
                         case 2:
-                            this.router.navigate(['toolbox', primaryUrlSegmentGroup.segments[1].path]);
+                            this.router.navigate(['templates', primaryUrlSegmentGroup.segments[1].path]);
                             break;
                         case 3:
                             if (primaryUrlSegmentGroup.segments[1].path.toLowerCase() !== "custom") {
@@ -50,10 +50,10 @@ export abstract class BaseTemplateViewer {
                                     }))
                             }
                             break;
-                        default: this.router.navigate(['toolbox']);
+                        default: this.router.navigate(['templates']);
                     }
                 } else {
-                    this.router.navigate(['toolbox']);
+                    this.router.navigate(['templates']);
                 }
             })
 

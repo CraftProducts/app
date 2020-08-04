@@ -2,48 +2,50 @@
     <li>
         <div class="breadcrumb m-0 bg-white">
             <div class="breadcrumb-item">
-                <a routerLink="toolbox">
-                    <fa-icon icon="toolbox"></fa-icon>
-                    Toolbox
+                <a routerLink="templates">
+                    <fa-icon [icon]="['far','images']"></fa-icon>
+                    Templates
                 </a>
             </div>
-            <div *ngIf="selectedTemplateGroup" class="breadcrumb-item">
-                <a [routerLink]="['toolbox', selectedTemplateGroup.code]" class="text-truncate"
-                    [ngbPopover]="selectedTemplateGroup.summary" triggers="mouseenter:mouseleave">
-                    {{selectedTemplateGroup.title}}
-                </a>
-            </div>
-            <div *ngIf="!selectedTemplateGroup && loadedTemplate" class="breadcrumb-item">
-                <a [routerLink]="['toolbox', loadedTemplate.groupCode]" class="text-truncate text-capitalize">
-                    {{loadedTemplate.groupCode}}
-                </a>
-            </div>
-            <div *ngIf="loadedTemplate" class="breadcrumb-item">
-                <div class="text-truncate" [ngbPopover]="loadedTemplate.summary" triggers="mouseenter:mouseleave">
-                    {{loadedTemplate.title}}
+            <ng-container *ngIf="template">
+                <div *ngIf="selectedTemplateGroup" class="breadcrumb-item">
+                    <a [routerLink]="['templates', selectedTemplateGroup.code]" class="text-truncate"
+                        [ngbPopover]="selectedTemplateGroup.summary" triggers="mouseenter:mouseleave">
+                        {{selectedTemplateGroup.title}}
+                    </a>
                 </div>
+                <div *ngIf="!selectedTemplateGroup" class="breadcrumb-item">
+                    <a [routerLink]="['templates', template.groupCode]" class="text-truncate text-capitalize">
+                        {{template.groupCode}}
+                    </a>
+                </div>
+                <div class="breadcrumb-item">
+                    <div class="text-truncate" [ngbPopover]="template.summary" triggers="mouseenter:mouseleave">
+                        {{template.title}}
+                    </div>
 
-                <div class="btn-group btn-group-sm ml-2 ">
-                    <div ngbDropdown display="dynamic" placement="bottom-right">
-                        <a class="btn btn-link btn-sm hide-caret p-0 text-primary" id="dropdownBasic1" ngbDropdownToggle
-                            title="template tools">
-                            <fa-icon icon="ellipsis-h" [fixedWidth]="true"></fa-icon>
-                        </a>
-                        <div ngbDropdownMenu class="dropdown-menu-right pb-0">
-                            <button ngbDropdownItem (click)="onCustomizeTheme()" title="Customize theme">
-                                <fa-icon icon="paint-brush" [fixedWidth]="true"></fa-icon>
-                                Customize theme
-                            </button>
-                            <div class="dropdown-divider mb-0"></div>
-                            <button ngbDropdownItem class="pt-2 pb-2 bg-light" (click)="onDownloadTemplate()">
-                                <fa-icon icon="download" [fixedWidth]="true" class="text-info"></fa-icon>
-                                Download template
-                            </button>
+                    <div class="btn-group btn-group-sm ml-2 ">
+                        <div ngbDropdown display="dynamic" placement="bottom-right">
+                            <a class="btn btn-link btn-sm hide-caret p-0 text-primary" id="dropdownBasic1"
+                                ngbDropdownToggle title="template tools">
+                                <fa-icon icon="ellipsis-h" [fixedWidth]="true"></fa-icon>
+                            </a>
+                            <div ngbDropdownMenu class="dropdown-menu-right">
+                                <!-- <button ngbDropdownItem (click)="onCustomizeTheme()" title="Customize theme">
+                                    <fa-icon icon="paint-brush" [fixedWidth]="true"></fa-icon>
+                                    Customize theme
+                                </button>
+                                <div class="dropdown-divider mb-0"></div> -->
+                                <button ngbDropdownItem (click)="onDownloadTemplate()">
+                                    <fa-icon icon="download" [fixedWidth]="true" class="text-info"></fa-icon>
+                                    Download template
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-            </div>
+                </div>
+            </ng-container>
         </div>
     </li>
 </ul>

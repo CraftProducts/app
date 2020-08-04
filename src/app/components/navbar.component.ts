@@ -39,7 +39,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
                 if (!template) {
                     this.templateLoaded = false;
                     this.filename = "";
-                    this.onNavigateHome()
+                    //this.onNavigateHome();
                 } else {
                     this.templateLoaded = true;
                     this.loadedTemplate = template;
@@ -52,7 +52,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
 
     onNavigateHome() {
-        this.router.navigate(['toolbox']);
+        this.router.navigate(['templates']);
     }
     onExport() {
         this.store$.dispatch(new UserModelCommandAction({ command: UserModelCommandTypes.Export }));

@@ -23,7 +23,7 @@ export class AppComponent implements OnInit, OnDestroy {
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(() => {
         const segments = this.router.parseUrl(this.router.url).root.children[PRIMARY_OUTLET].segments;
-        if (segments.length > 0 && segments[0].path.toLowerCase() === "toolbox") {
+        if (segments.length > 0 && segments[0].path.toLowerCase() === "templates") {
           this.store$.dispatch(new CloseWorkspaceAction(null));
         }
       })

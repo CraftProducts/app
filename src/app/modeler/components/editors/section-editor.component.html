@@ -2,15 +2,23 @@
     <div class="row mb-5">
         <div class="col-sm-2 pl-0">
             <button class="btn btn-link text-muted font-weight-light mt-3" (click)="closeEditor()">
-                <fa-icon [icon]="['far', 'arrow-alt-circle-left']" size="3x"></fa-icon>
+                <fa-icon [icon]="['far', 'times-circle']" size="3x"></fa-icon>
             </button>
         </div>
-        <div class="col-sm-10">
+        <div class="col-sm-8">
             <sub class="text-uppercase text-muted">{{section.code}}</sub>
             <h3>{{section.title}} </h3>
             <div class="text-muted text-truncate" *ngIf="section.summary" [title]="section.summary">
                 {{section.summary}}
             </div>
+        </div>
+        <div class="col-sm-2 text-right pt-3">
+            <button class="btn btn-link text-muted font-weight-light" (click)="closeEditor()">
+                <fa-icon [icon]="['far', 'arrow-alt-circle-left']" size="2x"></fa-icon>
+            </button>
+            <button class="btn btn-link text-muted font-weight-light" (click)="closeEditor()">
+                <fa-icon [icon]="['far', 'arrow-alt-circle-right']" size="2x"></fa-icon>
+            </button>
         </div>
     </div>
 </div>

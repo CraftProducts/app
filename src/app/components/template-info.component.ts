@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../+state/app.state';
 import { Subscription } from 'rxjs';
@@ -12,23 +12,18 @@ import { UserModelCommandAction, UserModelCommandTypes } from '../appcommon/lib/
 })
 export class TemplateInfoComponent implements OnInit, OnDestroy {
 
-    loadedTemplate$: Subscription;
-    loadedTemplate: any;
+    @Input() template: any;
 
     selectedTemplateGroup$: Subscription;
     selectedTemplateGroup: any;
 
-    constructor(public store$: Store<AppState>, public router: Router) {
-    }
-    ngOnInit(): void {
-        this.loadedTemplate$ = this.store$.select(p => p.app.loadedTemplate)
-            .subscribe(template => this.loadedTemplate = template);
+    constructor(public store$: Store<AppState>, public router: Router) { }
 
+    ngOnInit(): void {
         this.selectedTemplateGroup$ = this.store$.select(p => p.app.selectedTemplateGroup)
             .subscribe(templateGroup => this.selectedTemplateGroup = templateGroup);
     }
     ngOnDestroy(): void {
-        this.loadedTemplate$ ? this.loadedTemplate$.unsubscribe() : null;
         this.selectedTemplateGroup$ ? this.selectedTemplateGroup$.unsubscribe() : null;
     }
 
