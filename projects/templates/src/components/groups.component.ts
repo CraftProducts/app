@@ -4,11 +4,10 @@ import { Store } from '@ngrx/store';
 import { TemplatesState } from '../+state/templates.state';
 import { Subscription } from 'rxjs';
 import { LoadGroupsAction, SetRedirectPathAction, LoadFileAction } from '../+state/templates.actions';
-import { filter, map, tap } from 'rxjs/operators';
-import { ActivatedRoute, Router, NavigationEnd, NavigationStart } from '@angular/router';
+import { filter, map } from 'rxjs/operators';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { load } from 'js-yaml';
-import { UserModelCommandAction, UserModelCommandTypes } from 'src/app/appcommon/lib/CommonActions';
 
 @Component({
     selector: 'templates-groups',
@@ -16,7 +15,7 @@ import { UserModelCommandAction, UserModelCommandTypes } from 'src/app/appcommon
 })
 export class GroupsComponent implements OnInit, OnDestroy {
     showBanner = true;
-    eventNavigationStart$: Subscription;
+    // eventNavigationStart$: Subscription;
     eventNavigationEnd$: Subscription;
 
     details$: Subscription;
@@ -31,16 +30,20 @@ export class GroupsComponent implements OnInit, OnDestroy {
 
         this.redirectTo$ = this.activatedRoute.data
             .pipe(filter(data => data["redirectTo"] && data["redirectTo"].length > 0), map(data => data["redirectTo"]))
-            .subscribe(redirectTo => this.store$.dispatch(new SetRedirectPathAction(redirectTo)));
+            .subscribe(redirectTo => {
+                // console.log('ondata', this.activatedRoute.children);
+                this.store$.dispatch(new SetRedirectPathAction(redirectTo));
+            });
 
-        this.eventNavigationStart$ = this.router.events
-            .pipe(tap(p => console.log(p)), filter(event => event instanceof NavigationStart))
-            .subscribe(() => {
-                console.log('this.activatedRoute.children', this.activatedRoute.children);
-                if (this.activatedRoute.children.length === 0) {
-                    this.store$.dispatch(new UserModelCommandAction({ command: UserModelCommandTypes.Close }))
-                }
-            })
+        // this.eventNavigationStart$ = this.router.events
+        //     .pipe(tap(p => console.log(p)), filter(event => event instanceof NavigationStart))
+        //     .subscribe(() => {
+        //         console.log('onnavstart', this.activatedRoute.children);
+        //         if (this.activatedRoute.children.length === 0) {
+        //             this.store$.dispatch(new UserModelCommandAction({ command: UserModelCommandTypes.Close }))
+        //         }
+        //     })
+
 
         this.eventNavigationEnd$ = this.router.events
             .pipe(filter(event => event instanceof NavigationEnd))
@@ -57,7 +60,7 @@ export class GroupsComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         this.redirectTo$ ? this.redirectTo$.unsubscribe() : null;
-        this.eventNavigationStart$ ? this.eventNavigationStart$.unsubscribe() : null;
+        // this.eventNavigationStart$ ? this.eventNavigationStart$.unsubscribe() : null;
         this.eventNavigationEnd$ ? this.eventNavigationEnd$.unsubscribe() : null;
 
         this.details$ ? this.details$.unsubscribe() : null;

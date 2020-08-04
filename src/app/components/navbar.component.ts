@@ -35,15 +35,13 @@ export class NavbarComponent implements OnInit, OnDestroy {
             });
 
         this.loadedTemplate$ = this.store$.select(p => p.app.loadedTemplate)
-            .pipe(
-                tap(() => this.templateLoaded = false),
-                tap(() => this.templateLoaded = true)
-            )
             .subscribe(template => {
                 if (!template) {
+                    this.templateLoaded = false;
                     this.filename = "";
                     this.onNavigateHome()
                 } else {
+                    this.templateLoaded = true;
                     this.loadedTemplate = template;
                 }
             });
@@ -65,6 +63,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
             this.filename = fileContent.filename;
             fileContent.type = 'data';
             fileContent.content = JSON.parse(fileContent.content);
+
             if (fileContent.content.groupCode === 'custom' &&
                 !(this.loadedTemplate &&
                     this.loadedTemplate.groupCode === 'custom' &&
@@ -75,7 +74,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
                     detail: `The loaded file was crafted using custom template (${fileContent.content.templateCode}). First load the custom template and they retry opening this file.`
                 });
             } else {
-                console.log('fileContent', fileContent)
                 this.store$.dispatch(new LoadFileAction(fileContent));
             }
         }

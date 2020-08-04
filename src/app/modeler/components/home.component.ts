@@ -102,6 +102,4 @@ export class ModelerHomeComponent extends BaseTemplateViewer implements Componen
             this.store$.dispatch(new SetModelDirtyAction(section.isDirty));
         }
     }
-
-
 }

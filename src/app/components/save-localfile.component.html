@@ -4,7 +4,7 @@
             <fa-icon icon="info-circle" class="ml-2 mr-1" title="Unsaved changes found."></fa-icon>
         </span>
     </div>
-    <input type="text" (keydown.enter)="onSave()" [appAutofocus]="isDirty" class="form-control" [(ngModel)]="filename"
+    <input type="text" (keydown.enter)="onSave()" class="form-control" [(ngModel)]="filename"
         [disabled]="!isDirty">
     <div class="input-group-append">
         <button class="btn btn-sm btn-light border text-primary" [disabled]="!canSave()" (click)="onSave()"
