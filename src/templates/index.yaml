@@ -13,3 +13,8 @@ list:
     summary: |
       Customer experience journey map templates to document the journey that a customer takes when interacting with the organisation.
 
+  - code: delivery
+    title: Software delivery
+    summary: |
+      Templates to help product teams to conceptualize better product design and structured delivery.
+

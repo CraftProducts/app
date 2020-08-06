@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "deploy": "npm version patch && ng deploy --cname=app.craftproducts.co --name='adhamankar' --repo=https://github.com/adhamankar/productpurpose.git"
+    "deploy": "npm version patch && ng deploy --cname=app.craftproducts.co --name='adhamankar' --repo=https://github.com/adhamankar/craftproducts.git"
   },
   "private": true,
   "dependencies": {

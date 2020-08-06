@@ -42,6 +42,7 @@ export abstract class BaseTemplateViewer {
                             break;
                         case 3:
                             if (primaryUrlSegmentGroup.segments[1].path.toLowerCase() !== "custom") {
+                                console.log('here');
                                 this.store$.dispatch(
                                     new LoadTemplateAction({
                                         groupCode: primaryUrlSegmentGroup.segments[1].path,
@@ -62,6 +63,7 @@ export abstract class BaseTemplateViewer {
 
         this.combined$ = combineLatest(loadedTemplateQ, loadedFileQ)
             .subscribe(([template, file]) => {
+                console.log('template, file', template, file);
                 this.loadedTemplate = template;
 
                 if (!file || !file.content || file.type === 'template') {

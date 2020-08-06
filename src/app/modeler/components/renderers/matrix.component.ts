@@ -20,7 +20,6 @@ export class MatrixRendererComponent {
     onShowEditor = (eventArgs) => this.showEditor.emit(eventArgs);
 
     onShowItemDetails(section) {
-        console.log('section', section);
         this.section.selectedItem = section;
         this.onShowEditor({ mode: 'VIEW', section: this.section });
     }

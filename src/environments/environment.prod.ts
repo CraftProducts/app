@@ -4,7 +4,7 @@ export const environment = {
   production: true,
   appTitle: 'CraftProduct',
   VERSION: version, 
-  templateFileLocation: 'https://raw.githubusercontent.com/adhamankar/productpurpose/master/templates',
+  templateFileLocation: 'https://raw.githubusercontent.com/adhamankar/craftproducts/master/templates',
   google: {
     API_KEY: 'AIzaSyAkoFuREKxogSQ-uOuu0Oy07rRP7CcEj8Y',
     CLIENT_ID: '304736345925-120qpq4eq3k67hptfmp76n12tnv8b7sl.apps.googleusercontent.com'

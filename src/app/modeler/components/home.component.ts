@@ -68,17 +68,20 @@ export class ModelerHomeComponent extends BaseTemplateViewer implements Componen
     }
 
     onShowEditor(eventArgs) {
+        console.log('onShowEditor', eventArgs);
+        this.router.navigate([], { queryParams: { section: eventArgs.section.code }, queryParamsHandling: 'merge' })
         this.store$.dispatch(new SelectSectionAction(eventArgs));
     }
-    onShowItemDetails(eventArgs) {
-        eventArgs.section.selectedItem = eventArgs.item;
-        this.store$.dispatch(new SelectSectionAction({ mode: 'VIEW', section: eventArgs.section.eventArgs }));
-    }
+    // onShowItemDetails(eventArgs) {
+    //     eventArgs.section.selectedItem = eventArgs.item;
+    //     this.store$.dispatch(new SelectSectionAction({ mode: 'VIEW', section: eventArgs.section.eventArgs }));
+    // }
 
     onHide() {
         this.store$.dispatch(new SelectSectionAction(null));
     }
     onSectionSelected(sectionCode) {
+        console.log('onSectionSelected', sectionCode);
         const selected = this.searchSectionInLayout(this.loadedTemplate, sectionCode);
         this.store$.dispatch(new SelectSectionAction({ mode: this.mode, section: selected }));
     }

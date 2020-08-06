@@ -28,7 +28,8 @@
                     [style.color]="col.cellTheme.color">
 
                     <div class="mb-1" style="width: 375px;">
-                        <app-panel [section]="row.columns[idx]" (showEditor)="onShowItemDetails(row.columns[idx])">
+                        <app-panel [parentCode]="section.code" [section]="row.columns[idx]"
+                            (showEditor)="onShowItemDetails(row.columns[idx])">
                         </app-panel>
                     </div>
                 </td>

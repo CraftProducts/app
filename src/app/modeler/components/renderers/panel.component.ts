@@ -6,6 +6,7 @@ import * as _ from 'lodash';
     templateUrl: './panel.component.html'
 })
 export class PanelRendererComponent {
+    @Input() parentCode: string;
     @Input() section: any;
     @Output() showEditor = new EventEmitter<any>();
 
@@ -20,4 +21,23 @@ export class PanelRendererComponent {
     getSelectedValue(selectedValue) {
         return selectedValue;
     }
+
+    draggedItem: any;
+    dragStart(event, item, dragContainer) {
+        this.draggedItem = item;
+        console.log('dragStart', event, this.draggedItem, dragContainer);
+    }
+
+    drop(event, dropContainer) {
+        console.log('drop', event, this.draggedItem, dropContainer);
+        if (this.draggedItem) {
+            this.draggedItem = null;
+        }
+    }
+
+    dragEnd(event) {
+        console.log('dragEnd', event, this.draggedItem);
+        //setTimeout(() => this.draggedItem = null, 10000);
+    }
+
 }

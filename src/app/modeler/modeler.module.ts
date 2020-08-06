@@ -39,6 +39,7 @@ import { ThemeListEditorComponent } from './components/themes/theme-list-editor.
 import { MatrixCustomizerComponent } from './components/renderers/matrix-customizer.component';
 import { MatrixListCustomizerComponent } from './components/renderers/matrix-list-customizer.component';
 import { MatrixRecordCustomizerComponent } from './components/renderers/matrix-record-customizer.component';
+import { DragDropModule } from 'primeng/dragdrop';
 
 const routes: Route[] = [
   { path: '', component: ModelerHomeComponent, canDeactivate: [PendingChangesGuard] }
@@ -47,7 +48,7 @@ const routes: Route[] = [
 @NgModule({
   declarations: [ModelerHomeComponent,
     SplitLayoutRendererComponent, FreeflowLayoutRendererComponent,
-    PanelRendererComponent, MetadataRendererComponent, 
+    PanelRendererComponent, MetadataRendererComponent,
     MatrixRendererComponent, MatrixCustomizerComponent, MatrixListCustomizerComponent, MatrixRecordCustomizerComponent,
 
     NotesComponent, LinksComponent, TasksComponent,
@@ -70,6 +71,8 @@ const routes: Route[] = [
     SliderModule,
     SidebarModule,
     FileUploadModule,
+    DragDropModule,
+    
     AngularSplitModule,
 
     NgbModule,
