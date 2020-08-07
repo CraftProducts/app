@@ -1,0 +1,20 @@
+title: What do you want to do?
+summary: |
+  CraftProducts provides tools for product owners to concentualize and craft innovative products
+
+list:
+  - code: valueprop
+    title: Value propositions models
+    summary: |
+      Templates for documenting value proposition of your product or service
+
+  - code: journeymaps
+    title: Journey maps
+    summary: |
+      Customer experience journey map templates to document the journey that a customer takes when interacting with the organisation.
+
+  - code: delivery
+    title: Software delivery
+    summary: |
+      Templates to help product teams to conceptualize better product design and structured delivery.
+

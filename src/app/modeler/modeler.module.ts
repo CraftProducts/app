@@ -42,7 +42,7 @@ import { MatrixRecordCustomizerComponent } from './components/renderers/matrix-r
 import { DragDropModule } from 'primeng/dragdrop';
 
 const routes: Route[] = [
-  { path: '', component: ModelerHomeComponent, canDeactivate: [PendingChangesGuard] }
+  { path: ':templateCode', component: ModelerHomeComponent, canDeactivate: [PendingChangesGuard] }
 ];
 
 @NgModule({

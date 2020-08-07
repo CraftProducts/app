@@ -8,17 +8,6 @@
                 </a>
             </div>
             <ng-container *ngIf="template">
-                <div *ngIf="selectedTemplateGroup" class="breadcrumb-item">
-                    <a [routerLink]="['templates', selectedTemplateGroup.code]" class="text-truncate"
-                        [ngbPopover]="selectedTemplateGroup.summary" triggers="mouseenter:mouseleave">
-                        {{selectedTemplateGroup.title}}
-                    </a>
-                </div>
-                <div *ngIf="!selectedTemplateGroup" class="breadcrumb-item">
-                    <a [routerLink]="['templates', template.groupCode]" class="text-truncate text-capitalize">
-                        {{template.groupCode}}
-                    </a>
-                </div>
                 <div class="breadcrumb-item">
                     <div class="text-truncate" [ngbPopover]="template.summary" triggers="mouseenter:mouseleave">
                         {{template.title}}

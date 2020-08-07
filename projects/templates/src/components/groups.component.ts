@@ -30,20 +30,7 @@ export class GroupsComponent implements OnInit, OnDestroy {
 
         this.redirectTo$ = this.activatedRoute.data
             .pipe(filter(data => data["redirectTo"] && data["redirectTo"].length > 0), map(data => data["redirectTo"]))
-            .subscribe(redirectTo => {
-                // console.log('ondata', this.activatedRoute.children);
-                this.store$.dispatch(new SetRedirectPathAction(redirectTo));
-            });
-
-        // this.eventNavigationStart$ = this.router.events
-        //     .pipe(tap(p => console.log(p)), filter(event => event instanceof NavigationStart))
-        //     .subscribe(() => {
-        //         console.log('onnavstart', this.activatedRoute.children);
-        //         if (this.activatedRoute.children.length === 0) {
-        //             this.store$.dispatch(new UserModelCommandAction({ command: UserModelCommandTypes.Close }))
-        //         }
-        //     })
-
+            .subscribe(redirectTo => this.store$.dispatch(new SetRedirectPathAction(redirectTo)));
 
         this.eventNavigationEnd$ = this.router.events
             .pipe(filter(event => event instanceof NavigationEnd))

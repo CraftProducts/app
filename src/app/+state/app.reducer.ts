@@ -9,12 +9,12 @@ export function appReducer(state: App, action: any): App {
 
         // ----------------------- TEMPLATE MODULE ACTIONS ----------------------------
 
-        case TemplateModuleActionTypes.LoadGroupTemplatesSuccess: {
-            return {
-                ...state,
-                selectedTemplateGroup: action.payload ? _.pick(action.payload, ['code', 'title', 'summary']) : null
-            }
-        }
+        // case TemplateModuleActionTypes.LoadGroupTemplatesSuccess: {
+        //     return {
+        //         ...state,
+        //         selectedTemplateGroup: action.payload ? _.pick(action.payload, ['code', 'title', 'summary']) : null
+        //     }
+        // }
         case TemplateModuleActionTypes.LoadFile: {
             return { ...state, loadedFile: action.payload, isModelDirty: false };
         }
@@ -57,15 +57,10 @@ export function appReducer(state: App, action: any): App {
         }
         case ActionTypes.LoadTemplateSuccess: {
             const loadedTemplate = action.payload;
-            if (state.templateToLoad) {
-                loadedTemplate.groupCode = state.templateToLoad.groupCode;
-            }
             return { ...state, loadedTemplate, isModelDirty: false };
         }
         case ActionTypes.LoadCustomTemplate: {
-            const loadedTemplate = action.payload;
-            loadedTemplate.groupCode = "custom";
-            return { ...state, loadedTemplate, isModelDirty: false };
+            return { ...state, loadedTemplate: action.payload, isModelDirty: false };
         }
 
         default: return state;

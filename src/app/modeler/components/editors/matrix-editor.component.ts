@@ -33,10 +33,8 @@ export class MatrixEditorComponent {
     onChange() {
         if (this.section.selectedItem) {
             const rowFound = _.find(this.section.rows, { code: this.rowCode });
-            console.log('rowFound', rowFound, this.colCode);
             if (rowFound && rowFound.columns && rowFound.columns.length > 0) {
                 this.section.selectedItem = _.find(rowFound.columns, { colCode: this.colCode });
-                console.log(this.section.selectedItem);
             }
         }
     }

@@ -33,9 +33,9 @@ export class AppComponent implements OnInit, OnDestroy {
       .subscribe(file => {
         if (file.type === 'template') {
           this.store$.dispatch(new LoadCustomTemplateAction(file.content));
-          this.router.navigate(['modeler/custom', file.content.code], { queryParams: { mode: 'custom' } })
+          this.router.navigate(['modeler', file.content.code], { queryParams: { mode: 'custom' } })
         } else {
-          this.router.navigate(['modeler', file.content.groupCode, file.content.templateCode], { queryParams: { mode: 'file' } })
+          this.router.navigate(['modeler', file.content.templateCode], { queryParams: { mode: 'file' } })
         }
       });
   }

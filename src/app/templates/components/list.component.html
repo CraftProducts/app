@@ -1,0 +1,109 @@
+<div class="main-container">
+    <div class="body-container">
+        <div class="container-fluid ">
+            <div *ngIf="!details">
+                <fa-icon icon="spinner" [spin]="true" aria-hidden="true"></fa-icon> loading...
+            </div>
+
+            <div class="row" *ngIf="details">
+                <div class="col-md-2 pt-5" *ngIf="details.groups && details.groups.length > 0">
+                    <div class=" alert">
+                        <div *ngFor="let group of details.groups" class="">
+                            <h6 class="text-muted">{{group.title}} </h6>
+                            <ul class="small list-unstyled" *ngIf="group.list && group.list.length > 0">
+                                <li class="p-1" [ngClass]="{'bg-white': selectedCode === item.code}"
+                                    *ngFor="let item of group.list">
+                                    <a class="text-dark" routerLink="/templates"
+                                        [queryParams]="{ group: group.code, code: item.code  }"
+                                        queryParamsHandling="merge">
+                                        {{item.title}}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="text-center">
+                        <h3 class="mb-4">
+                            {{details.title}}
+                            <button class="btn btn-link" type="button" placement="bottom" [ngbPopover]="popContent"
+                                popoverClass="pop-content">
+                                <fa-icon [icon]="['far', 'question-circle']" class="text-muted"></fa-icon>
+                            </button>
+                        </h3>
+                        <ng-template #popContent>
+                            <div class="p-2">
+                                <ngx-md [data]="details.summary"></ngx-md>
+                            </div>
+                        </ng-template>
+
+                        <div class="alert alert-secondary border-0 text-left m-3" *ngIf="selectedGroup">
+                            <a routerLink="/templates" class="text-muted float-right" *ngIf="selectedCode">
+                                <fa-icon icon="times"></fa-icon>
+                            </a>
+                            <h6 class="mb-0">{{selectedGroup.title}}</h6>
+                            <small class="text-muted">{{selectedGroup.summary}}</small>
+                        </div>
+
+                        <div class="clearfix d-flex justify-content-center flex-wrap">
+
+                            <div class="m-2 card select-card custom-shadow alert-primary">
+                                <div class="p-3">
+                                    <h5 class="card-title font-weight-normal mb-2">Use custom template</h5>
+                                    <div class="card-text small">
+                                        Can't find a preexisting template? Use your own template.
+                                        <div class="m-4">
+                                            <sharedlib-load-localfile (fileLoaded)="onTemplateFileLoaded($event)"
+                                                (error)="onFileLoadingError($event)"
+                                                errorMessage="Invalid file. System only supports CraftProduct compliant YAML files."
+                                                label="Open template file" accept="application/x-yaml" icon="upload"
+                                                cssClass="btn-sm btn-primary">
+                                            </sharedlib-load-localfile>
+                                        </div>
+
+                                        <div class="text-right">
+                                            <a target="blank"
+                                                href="https://github.com/adhamankar/craftproducts/wiki/Creating-custom-template">
+                                                learn here
+                                                <fa-icon icon="angle-right" class="ml-1"></fa-icon>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <ng-container *ngIf="filteredList && filteredList.length > 0">
+                                <a [routerLink]="[redirectTo, item.code]"
+                                    class="m-2 card select-card custom-shadow text-left"
+                                    *ngFor="let item of filteredList" [title]="item.title">
+                                    <div class="p-3" style="overflow: hidden;">
+                                        <h5 class="card-title mb-2 font-weight-normal">{{item.title}}</h5>
+                                        <div class="card-text small">
+                                            <ngx-md>{{item.summary | truncate:200:'...'}}</ngx-md>
+                                        </div>
+                                    </div>
+                                </a>
+                            </ng-container>
+
+                            <div class="m-2 select-card custom-shadow alert-warning pt-5"
+                                *ngIf="!filteredList || filteredList.length === 0">
+                                <fa-icon icon="exclamation-triangle"></fa-icon>
+                                No templates registered yet.
+                                <div class="text-right mt-2 small">
+                                    <a target="blank" class="btn btn-link btn-sm"
+                                        href="https://github.com/adhamankar/craftproducts/wiki/Creating-custom-template">
+                                        learn here
+                                        <fa-icon icon="angle-right" class="ml-1"></fa-icon>
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

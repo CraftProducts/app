@@ -12,7 +12,7 @@ export class AppEffects {
 
   @Effect() loadTemplate = this.actions$.pipe(ofType(appActions.ActionTypes.LoadTemplate),
     switchMap((action: any) =>
-      this.templateService.loadTemplate(action.payload.groupCode, action.payload.templateCode)
+      this.templateService.loadTemplate(action.payload.templateCode)
         .pipe(
           map(payload => ({ type: appActions.ActionTypes.LoadTemplateSuccess, payload })),
           catchError(() => of({ type: appActions.ActionTypes.LoadTemplateFailed }))

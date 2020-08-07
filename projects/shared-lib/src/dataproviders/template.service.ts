@@ -15,18 +15,13 @@ export class TemplateService {
         }
     }
 
-    public loadGroups() {
+    public loadTemplates() {
         return this.httpClient.get(`${this.templateFileLocation}/index.yaml`, { responseType: "text" })
             .pipe(map(yamlString => load(yamlString)));
     }
 
-    public loadGroupTemplates(groupCode) {
-        return this.httpClient.get(`${this.templateFileLocation}/${groupCode.toLowerCase()}/index.yaml`, { responseType: "text" })
-            .pipe(map(yamlString => load(yamlString)))
-    }
-
-    public loadTemplate(groupCode, templateCode) {
-        return this.httpClient.get(`${this.templateFileLocation}/${groupCode.toLowerCase()}/${templateCode.toLowerCase()}.yaml`, { responseType: "text" })
+    public loadTemplate(templateCode) {
+        return this.httpClient.get(`${this.templateFileLocation}/${templateCode.toLowerCase()}.yaml`, { responseType: "text" })
             .pipe(map(yamlString => load(yamlString)))
     }
 }

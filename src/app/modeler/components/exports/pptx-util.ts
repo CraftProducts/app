@@ -70,7 +70,6 @@ export function createPptx(model, options) {
                     }
                     break;
                 case DATATYPES.select:
-                    console.log('DATATYPES.select', section.data)
                     if (section.data.selectedValue && section.data.selectedValue.length > 0) {
                         dataSlide = prepareDataSlide(section);
                         dataSlide.addText(section.data.selectedValue, { placeholder: "body" });
