@@ -5,8 +5,8 @@ import { ModelerState } from '../+state/modeler.state';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ComponentCanDeactivate, UNLOAD_WARNING_MESSAGE } from 'shared-lib'
-import { SetModelAction, SetModelDirtyAction, SelectSectionAction } from 'src/app/appcommon/lib/CommonActions';
-import { extractSections, SECTIONTYPES } from '../modeler-utils';
+import { SetModelDirtyAction, SelectSectionAction } from 'src/app/appcommon/lib/CommonActions';
+import { SECTIONTYPES } from '../modeler-utils';
 import { BaseTemplateViewer } from './base-template-viewer';
 
 @Component({
@@ -55,10 +55,6 @@ export class ModelerHomeComponent extends BaseTemplateViewer implements Componen
                     this.editorVisible = false;
                 }
             });
-    }
-
-    onTemplatesLoaded(template, dataset): void {
-        this.store$.dispatch(new SetModelAction({ template, dataset }));
     }
 
     ngOnDestroy(): void {

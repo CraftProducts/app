@@ -24,7 +24,11 @@ export class SaveLocalFileComponent implements OnInit, OnDestroy {
         this.loadedFile$ = this.store$.select(p => p.app.loadedFile)
             .pipe(filter(file => file))
             .subscribe(file => {
-                this.filename = file.filename;
+                this.filename = (file.filename && file.filename.length > 0)
+                    ? file.filename.split(".")[0]
+                    : new Date().toISOString();
+
+                this.filename = this.filename + '.json';
                 this.content = (file.content) ? file.content : null;
             });
     }

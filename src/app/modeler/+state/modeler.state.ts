@@ -1,4 +1,5 @@
 export interface Modeler {
+  dataset: any; //loaded from file
   modelInstance: any;
   selectedSection: any;
 }

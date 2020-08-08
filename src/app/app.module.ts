@@ -51,8 +51,8 @@ export function initGapi(gapiSession: GapiSession) {
   imports: [
     CommonModule,
     BrowserModule,
-    FormsModule,
     BrowserAnimationsModule,
+    FormsModule,
 
     AppCommonModule,
     SharedLibModule,

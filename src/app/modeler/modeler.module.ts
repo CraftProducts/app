@@ -72,7 +72,7 @@ const routes: Route[] = [
     SidebarModule,
     FileUploadModule,
     DragDropModule,
-    
+
     AngularSplitModule,
 
     NgbModule,

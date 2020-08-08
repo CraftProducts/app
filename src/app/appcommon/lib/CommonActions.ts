@@ -3,6 +3,7 @@ import { type } from 'shared-lib';
 
 export const CommonActionTypes = {
     SetModel: type("[SetModel]"),
+    SetDataset: type("[SetDataset]"),
 
     SaveModel: type("[SaveModel]"),
     ResetModel: type("[ResetModel]"),
@@ -36,6 +37,11 @@ export class SetModelDirtyAction implements Action {
 
 export class SetModelAction implements Action {
     type = CommonActionTypes.SetModel;
+    constructor(public payload: any) { }
+}
+
+export class SetDatasetAction implements Action {
+    type = CommonActionTypes.SetDataset;
     constructor(public payload: any) { }
 }
 

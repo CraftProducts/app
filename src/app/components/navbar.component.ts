@@ -39,7 +39,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
                 if (!template) {
                     this.templateLoaded = false;
                     this.filename = "";
-                    //this.onNavigateHome();
                 } else {
                     this.templateLoaded = true;
                     this.loadedTemplate = template;
@@ -64,15 +63,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
             fileContent.type = 'data';
             fileContent.content = JSON.parse(fileContent.content);
 
-            if (fileContent.content.groupCode === 'custom' &&
-                !(this.loadedTemplate &&
-                    this.loadedTemplate.groupCode === 'custom' &&
-                    fileContent.content.templateCode === this.loadedTemplate.code)) {
+            if (fileContent.content.isCustom &&
+                !(this.loadedTemplate && this.loadedTemplate.isCustom && fileContent.content.templateCode === this.loadedTemplate.code)) {
                 this.messageService.add({
                     severity: "error", life: 10000, closable: true,
                     summary: "Incompatible file",
                     detail: `The loaded file was crafted using custom template (${fileContent.content.templateCode}). First load the custom template and they retry opening this file.`
                 });
+                this.router.navigate(['/templates']);
             } else {
                 this.store$.dispatch(new LoadFileAction(fileContent));
             }

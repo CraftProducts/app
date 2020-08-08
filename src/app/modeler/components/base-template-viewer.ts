@@ -1,21 +1,24 @@
 import { Store } from '@ngrx/store';
 import { Subscription, combineLatest } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { UserModelCommandTypes, ResetModelAction, SaveModelAction, UpdateThemeAction, CloseWorkspaceAction } from 'src/app/appcommon/lib/CommonActions';
+import { filter, map, tap } from 'rxjs/operators';
+import { UserModelCommandTypes, ResetModelAction, SaveModelAction, UpdateThemeAction, CloseWorkspaceAction, SetModelAction, SetDatasetAction } from 'src/app/appcommon/lib/CommonActions';
 import { AppState } from 'src/app/+state/app.state';
 import { ActivatedRoute, Router, PRIMARY_OUTLET } from '@angular/router';
 import { LoadTemplateAction } from 'src/app/+state/app.actions';
 import { extractSections, prepareTemplateForDownload } from '../modeler-utils';
 import { dump } from "js-yaml";
 import * as _ from "lodash";
+import { ModelerState } from '../+state/modeler.state';
 
 export abstract class BaseTemplateViewer {
     instance: any;
 
+    isCustomTemplate: boolean;
     loadedTemplate: any;
 
     params$: Subscription;
-    combined$: Subscription;
+    loadedTemplate$: Subscription;
+    loadedFile$: Subscription;
 
     filename = '';
     userModelCommand$: Subscription;
@@ -26,34 +29,29 @@ export abstract class BaseTemplateViewer {
 
     showExportSidebar = false;
     showThemeEditorSidebar = false;
-    constructor(public store$: Store<AppState>, public router: Router, public activatedRoute: ActivatedRoute) { }
-
-    abstract onTemplatesLoaded(template, dataset): void
+    constructor(public store$: Store<ModelerState>, public router: Router, public activatedRoute: ActivatedRoute) { }
 
     subscribeTemplates() {
 
-        const paramsQ = this.activatedRoute.params.pipe(filter(p => p.templateCode), map(p => p.templateCode));
-        const queryParamsQ = this.activatedRoute.queryParams.pipe(map(p => p.mode));
+        this.params$ = this.activatedRoute.params
+            .pipe(
+                filter(p => p.templateCode),
+                tap(p => this.isCustomTemplate = p.templateCode.toLowerCase() === 'custom'),
+                filter(() => !this.isCustomTemplate),
+                map(p => p.templateCode)
+            )
+            .subscribe((templateCode) => this.store$.dispatch(new LoadTemplateAction({ templateCode })));
 
-        this.params$ = combineLatest(paramsQ, queryParamsQ)
-            .subscribe(([templateCode, mode]) => this.store$.dispatch(new LoadTemplateAction({ templateCode, mode })))
+        // const queryParamsQ = this.activatedRoute.queryParams.pipe(map(p => p.mode));
 
-        const loadedTemplateQ = this.store$.select(p => p.app.loadedTemplate).pipe(filter(p => p));
-        const loadedFileQ = this.store$.select(p => p.app.loadedFile);
+        this.loadedTemplate$ = this.store$.select(p => p.app.loadedTemplate)
+            .pipe(filter(p => p))
+            .subscribe(loadedTemplate => this.store$.dispatch(new SetModelAction(loadedTemplate)));
 
-        this.combined$ = combineLatest(loadedTemplateQ, loadedFileQ)
-            .subscribe(([template, file]) => {
-                this.loadedTemplate = template;
-
-                if (!file || !file.content || file.type === 'template') {
-                    this.onTemplatesLoaded(template, null);
-                }
-
-                if (file && file.content && template &&
-                    template.code === file.content.templateCode) {
-                    this.onTemplatesLoaded(template, file.content);
-                }
-            });
+        this.loadedFile$ = this.store$.select(p => p.app.loadedFile)
+            .pipe(tap(p => console.log('loadedFile', p)))
+            .pipe(filter(loadedFile => loadedFile && loadedFile.content && loadedFile.type !== 'template'))
+            .subscribe(loadedFile => this.store$.dispatch(new SetDatasetAction(loadedFile.content)));
 
         this.isModelDirty$ = this.store$.select(p => p.app.isModelDirty)
             .subscribe(p => this.isModelDirty = p);
@@ -87,7 +85,8 @@ export abstract class BaseTemplateViewer {
 
     unsubscribeTemplates() {
         this.params$ ? this.params$.unsubscribe() : null;
-        this.combined$ ? this.combined$.unsubscribe() : null;
+        this.loadedTemplate$ ? this.loadedTemplate$.unsubscribe() : null;
+        this.loadedFile$ ? this.loadedFile$.unsubscribe() : null;
         this.isModelDirty$ ? this.isModelDirty$.unsubscribe() : null;
         this.userModelCommand$ ? this.userModelCommand$.unsubscribe() : null;
     }

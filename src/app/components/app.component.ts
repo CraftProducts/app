@@ -2,14 +2,16 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AppState } from '../+state/app.state';
 import { Store } from '@ngrx/store';
-import { Router, ActivatedRoute, NavigationEnd, PRIMARY_OUTLET } from '@angular/router';
+import { Router, ActivatedRoute, NavigationEnd, PRIMARY_OUTLET, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { LoadCustomTemplateAction } from '../+state/app.actions';
 import { CloseWorkspaceAction } from '../appcommon/lib/CommonActions';
+import { slideInAnimation } from './animations';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html'
+  templateUrl: './app.component.html',
+  animations: [slideInAnimation]
 })
 export class AppComponent implements OnInit, OnDestroy {
   eventNavigationEnd$: Subscription;
@@ -33,11 +35,16 @@ export class AppComponent implements OnInit, OnDestroy {
       .subscribe(file => {
         if (file.type === 'template') {
           this.store$.dispatch(new LoadCustomTemplateAction(file.content));
-          this.router.navigate(['modeler', file.content.code], { queryParams: { mode: 'custom' } })
+          this.router.navigate(['modeler/custom'])
         } else {
-          this.router.navigate(['modeler', file.content.templateCode], { queryParams: { mode: 'file' } })
+          const code = file.content.isCustom ? 'custom' : file.content.templateCode
+          this.router.navigate(['modeler', code], { queryParams: { mode: 'file' } })
         }
       });
+  }
+
+  prepareRoute(outlet: RouterOutlet) {
+    return outlet && outlet.activatedRouteData && outlet.activatedRouteData.animation;
   }
 
   ngOnDestroy(): void {
