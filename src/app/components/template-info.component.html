@@ -25,6 +25,11 @@
                                     Customize theme
                                 </button>
                                 <div class="dropdown-divider mb-0"></div> -->
+                                <a ngbDropdownItem [routerLink]="[]" [queryParams]="{view:'intro'}"
+                                    queryParamsHandling="merge">
+                                    <fa-icon icon="align-left" [fixedWidth]="true"></fa-icon>
+                                    View summary
+                                </a>
                                 <button ngbDropdownItem (click)="onDownloadTemplate()">
                                     <fa-icon icon="download" [fixedWidth]="true" class="text-info"></fa-icon>
                                     Download template

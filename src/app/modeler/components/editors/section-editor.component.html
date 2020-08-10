@@ -1,11 +1,11 @@
 <div class="pl-4 pr-4 pb-3" *ngIf="section">
     <div class="row mb-5">
-        <div class="col-sm-2 pl-0">
+        <div class="col-sm-3 pl-0">
             <button class="btn btn-link text-muted font-weight-light mt-3" (click)="closeEditor()">
                 <fa-icon [icon]="['far', 'times-circle']" size="3x"></fa-icon>
             </button>
         </div>
-        <div class="col-sm-8">
+        <div class="col-sm-6">
             <sub class="text-uppercase text-muted">{{section.code}}</sub>
             <h3>{{section.title}} </h3>
             <div class="text-muted text-truncate" *ngIf="section.summary" [title]="section.summary">
@@ -22,28 +22,35 @@
         </div> -->
     </div>
 </div>
-<div class="popup-container border-top">
+<div class="popup-container">
     <div class="body-container bg-white">
         <div class="w-100 p-4">
             <div class="row">
                 <div class="col-md-2">
                     <div class=" mb-5">
                         <div *ngFor="let s of sections">
-                            <button class="btn btn-white btn-sm rounded-0 border-0 text-left w-100 mb-1"
+                            <button
+                                class="btn btn-white btn-sm p-2 rounded-0 border-0 text-left w-100 text-truncate text-muted"
                                 (click)="selectSection(s.code)"
                                 [ngClass]="{'active': section && section.code === s.code}">
 
-                                <sub class="text-uppercase text-muted">
+                                <!-- <sub class="text-uppercase text-muted">
                                     {{s.code}}
                                     <span class="badge badge-info">{{s.datatype}}</span>
                                     <span class="badge badge-info" *ngIf="s.type === 'matrix'">{{s.type}}</span>
-                                </sub>
-                                <div class="text-dark">{{s.title}}</div>
+                                </sub> -->
+                                <fa-icon *ngIf="s.icon && s.icon.length > 0" [icon]="s.icon" [fixedWidth]="true"
+                                    class="float-left">
+                                </fa-icon>
+
+                                <div class="ml-4">
+                                    {{s.title}}
+                                </div>
                             </button>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-10" *ngIf="section">
+                <div class="offset-md-1 col-md-9" *ngIf="section">
                     <div class="mb-5">
 
                         <app-text-editor *ngIf="section.datatype === 'text'" [placeholder]="section.summary"

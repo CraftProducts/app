@@ -3,10 +3,10 @@ import * as _ from 'lodash';
 import { Store } from '@ngrx/store';
 import { ModelerState } from '../+state/modeler.state';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, combineLatest } from 'rxjs';
 import { ComponentCanDeactivate, UNLOAD_WARNING_MESSAGE } from 'shared-lib'
 import { SetModelDirtyAction, SelectSectionAction } from 'src/app/appcommon/lib/CommonActions';
-import { SECTIONTYPES } from '../modeler-utils';
+import { SECTIONTYPES, extractSections } from '../modeler-utils';
 import { BaseTemplateViewer } from './base-template-viewer';
 
 @Component({
@@ -17,15 +17,17 @@ export class ModelerHomeComponent extends BaseTemplateViewer implements Componen
 
     public zoom = 100;
     editorVisible = false;
-    mode = "VIEW";
+    editorMode = "VIEW";
 
     selectedSection$: Subscription;
     section: string;
 
-    params$: Subscription;
-
-    model$: Subscription;
+    combined$: Subscription;
     model: any;
+    sections = [];
+
+    view = "";
+    showIntro = false;
 
     constructor(public store$: Store<ModelerState>, public router: Router, public activatedRoute: ActivatedRoute) {
         super(store$, router, activatedRoute);
@@ -42,13 +44,31 @@ export class ModelerHomeComponent extends BaseTemplateViewer implements Componen
     ngOnInit() {
         this.subscribeTemplates();
 
-        this.model$ = this.store$.select(p => p.modeler.modelInstance)
-            .subscribe(model => this.model = model);
+        this.qp$ = this.activatedRoute.queryParams
+            .subscribe(qp => {
+                this.view = qp.view ? qp.view.toLowerCase() : ""
+                this.showIntro = this.view === "intro";
+                this.sections = [];
+            });
+
+        const modelInstanceQ = this.store$.select(p => p.modeler.modelInstance);
+        const queryparamsQ = this.activatedRoute.queryParams;
+
+        this.combined$ = combineLatest(modelInstanceQ, queryparamsQ)
+            .subscribe(([model, qp]) => {
+                this.model = model;
+                if (this.model) {
+                    if (this.sections.length === 0) {
+                        extractSections(this.model, ['code', 'title', 'summary', 'icon', 'type', 'datatype'], this.sections);
+                    }
+                    this.onSectionSelected(qp.sectionCode);
+                }
+            });
 
         this.selectedSection$ = this.store$.select(p => p.modeler.selectedSection)
             .subscribe(selectedSection => {
                 if (selectedSection) {
-                    this.mode = selectedSection.mode;
+                    this.editorMode = selectedSection.mode;
                     this.section = selectedSection.section;
                     this.editorVisible = true;
                 } else {
@@ -59,21 +79,23 @@ export class ModelerHomeComponent extends BaseTemplateViewer implements Componen
 
     ngOnDestroy(): void {
         this.unsubscribeTemplates();
-        this.params$ ? this.params$.unsubscribe() : null;
+        this.qp$ ? this.qp$.unsubscribe() : null;
+        this.combined$ ? this.combined$.unsubscribe() : null;
         this.selectedSection$ ? this.selectedSection$.unsubscribe() : null;
     }
 
-    onShowEditor(eventArgs) {
-        this.router.navigate([], { queryParams: { section: eventArgs.section.code }, queryParamsHandling: 'merge' })
-        this.store$.dispatch(new SelectSectionAction(eventArgs));
-    }
+    onManageSectionEditor = (sectionCode = '') =>
+        this.router.navigate([], { queryParams: { view: 'details', sectionCode }, queryParamsHandling: "merge" })
 
-    onHide() {
-        this.store$.dispatch(new SelectSectionAction(null));
-    }
     onSectionSelected(sectionCode) {
-        const selected = this.searchSectionInLayout(this.loadedTemplate, sectionCode);
-        this.store$.dispatch(new SelectSectionAction({ mode: this.mode, section: selected }));
+        let payload = null;
+        if (sectionCode && sectionCode.length > 0) {
+            payload = {
+                mode: this.editorMode,
+                section: this.searchSectionInLayout(this.loadedTemplate, sectionCode)
+            };
+        }
+        this.store$.dispatch(new SelectSectionAction(payload));
     }
     searchSectionInLayout(layout, sectionCode) {
         if (layout) {
@@ -94,5 +116,13 @@ export class ModelerHomeComponent extends BaseTemplateViewer implements Componen
         if (section.isDirty) {
             this.store$.dispatch(new SetModelDirtyAction(section.isDirty));
         }
+    }
+    onHideIntro() {
+        this.router.navigate([], { queryParams: { view: 'details' }, queryParamsHandling: "merge" })
+    }
+
+    onProceed() {
+        const sectionCode = (this.sections && this.sections.length > 0) ? this.sections[0].code : '';
+        this.onManageSectionEditor(sectionCode);
     }
 }

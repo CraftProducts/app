@@ -57,6 +57,9 @@ body .ui-sidebar {
   border-width: 0;
   z-index: 1032 !important; /*more than bootstrap fixed-top navbar (1030) */
 }
+body .ui-dialog .ui-dialog-content {
+  padding-top: 0 !important;
+}
 .pane {
   position: absolute;
   height: 100%;
@@ -421,4 +424,13 @@ body .ui-sidebar .ui-sidebar-close {
 } */
 .p-draggable-enter {
   border: solid 2px #ddd !important;
+}
+.sticky-title {
+  position: sticky;
+  z-index: 1;
+  top: 0;
+  background-color: #fff;
+
+  /* background-color: #f8f9fa; */
+  /* box-shadow: -1px 2px 4px #ccc; */
 }

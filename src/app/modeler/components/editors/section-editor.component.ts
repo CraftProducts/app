@@ -11,15 +11,19 @@ export class SectionEditorComponent {
     @Output() sectionSelected = new EventEmitter<any>();
 
     @Output() update = new EventEmitter<any>();
-    private _data: any;
-    @Input() set data(value: any) {
-        this._data = value;
-        this.sections = [];
-        extractSections(value, ['icon', 'code', 'title', 'type', 'datatype'], this.sections);
-    }
-    get data() {
-        return this._data;
-    }
+
+    @Input() sections: any;  // VIEW / EDIT
+    @Input() data: string;  // VIEW / EDIT
+    // private _data: any;
+    // @Input() set data(value: any) {
+    //     this._data = value;
+    //     this.sections = [];
+    //     console.log('SectionEditor extractSections');
+    //     extractSections(value, ['icon', 'code', 'title', 'type', 'datatype'], this.sections);
+    // }
+    // get data() {
+    //     return this._data;
+    // }
 
     @Input() mode: string;  // VIEW / EDIT
 
@@ -32,8 +36,6 @@ export class SectionEditorComponent {
     get section() {
         return this._section;
     }
-    sections: any = [];
-
     selectSection = (sectionCode) => this.sectionSelected.emit(sectionCode);
 
     onUpdated(updatedData, section) {

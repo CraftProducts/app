@@ -74,8 +74,8 @@
                             </div>
 
                             <ng-container *ngIf="filteredList && filteredList.length > 0">
-                                <a [routerLink]="[redirectTo, item.code]"
-                                    class="m-2 card select-card custom-shadow text-left"
+                                <a [routerLink]="[redirectTo, item.code]" [queryParams]="{view: 'intro'}"
+                                    queryParamsHandling="merge" class="m-2 card select-card custom-shadow text-left"
                                     *ngFor="let item of filteredList" [title]="item.title">
                                     <div class="p-3" style="overflow: hidden;">
                                         <h5 class="card-title mb-2 font-weight-normal">{{item.title}}</h5>

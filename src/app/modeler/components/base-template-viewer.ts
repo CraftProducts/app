@@ -1,9 +1,8 @@
 import { Store } from '@ngrx/store';
-import { Subscription, combineLatest } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { filter, map, tap } from 'rxjs/operators';
-import { UserModelCommandTypes, ResetModelAction, SaveModelAction, UpdateThemeAction, CloseWorkspaceAction, SetModelAction, SetDatasetAction } from 'src/app/appcommon/lib/CommonActions';
-import { AppState } from 'src/app/+state/app.state';
-import { ActivatedRoute, Router, PRIMARY_OUTLET } from '@angular/router';
+import { UserModelCommandTypes, ResetModelAction, SaveModelAction, CloseWorkspaceAction, SetModelAction, SetDatasetAction } from 'src/app/appcommon/lib/CommonActions';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LoadTemplateAction } from 'src/app/+state/app.actions';
 import { extractSections, prepareTemplateForDownload } from '../modeler-utils';
 import { dump } from "js-yaml";
@@ -16,7 +15,7 @@ export abstract class BaseTemplateViewer {
     isCustomTemplate: boolean;
     loadedTemplate: any;
 
-    params$: Subscription;
+    qp$: Subscription;
     loadedTemplate$: Subscription;
     loadedFile$: Subscription;
 
@@ -33,7 +32,7 @@ export abstract class BaseTemplateViewer {
 
     subscribeTemplates() {
 
-        this.params$ = this.activatedRoute.params
+        this.qp$ = this.activatedRoute.params
             .pipe(
                 filter(p => p.templateCode),
                 tap(p => this.isCustomTemplate = p.templateCode.toLowerCase() === 'custom'),
@@ -45,11 +44,10 @@ export abstract class BaseTemplateViewer {
         // const queryParamsQ = this.activatedRoute.queryParams.pipe(map(p => p.mode));
 
         this.loadedTemplate$ = this.store$.select(p => p.app.loadedTemplate)
-            .pipe(filter(p => p))
+            .pipe(filter(p => p), tap(p => this.loadedTemplate = p))
             .subscribe(loadedTemplate => this.store$.dispatch(new SetModelAction(loadedTemplate)));
 
         this.loadedFile$ = this.store$.select(p => p.app.loadedFile)
-            .pipe(tap(p => console.log('loadedFile', p)))
             .pipe(filter(loadedFile => loadedFile && loadedFile.content && loadedFile.type !== 'template'))
             .subscribe(loadedFile => this.store$.dispatch(new SetDatasetAction(loadedFile.content)));
 
@@ -84,7 +82,7 @@ export abstract class BaseTemplateViewer {
     }
 
     unsubscribeTemplates() {
-        this.params$ ? this.params$.unsubscribe() : null;
+        this.qp$ ? this.qp$.unsubscribe() : null;
         this.loadedTemplate$ ? this.loadedTemplate$.unsubscribe() : null;
         this.loadedFile$ ? this.loadedFile$.unsubscribe() : null;
         this.isModelDirty$ ? this.isModelDirty$.unsubscribe() : null;
@@ -109,6 +107,7 @@ export abstract class BaseTemplateViewer {
         this.instance.templateCode = this.loadedTemplate.code;
         this.instance.sections = [];
 
+        console.log('SaveModel extractSections');
         extractSections(this.loadedTemplate, ['code', 'data', 'rows', 'columns'], this.instance.sections);
 
         const content = JSON.stringify(this.instance);

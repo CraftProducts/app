@@ -62,6 +62,7 @@ export function modelerReducer(state: Modeler, action: any): Modeler {
         }
 
         case CommonActionTypes.SelectSection: {
+            console.log()
             return { ...state, selectedSection: action.payload };
         }
 

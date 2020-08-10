@@ -1,40 +1,40 @@
-<div *ngIf="model" class="main-container">
-    <div class="body-container">
-        <ng-container [ngSwitch]="model.layout" [style.zoom]="(zoom/100)">
-            <div class="container-fluid mb-5" *ngSwitchCase="'freeflow'">
-                <app-freeflow-layout class="w-100" [layout]="model" (showEditor)="onShowEditor($event)">
-                </app-freeflow-layout>
-            </div>
+<app-splash-screen [isCustomTemplate]="isCustomTemplate" *ngIf="!model"></app-splash-screen>
 
-            <app-split-layout *ngSwitchDefault class="w-100 ml-2 mr-2 mb-2" [layout]="model" (showEditor)="onShowEditor($event)">
-            </app-split-layout>
-        </ng-container>
+<ng-container *ngIf="model">
+    <div class="main-container">
+        <div class="body-container">
+            <ng-container [ngSwitch]="model.layout" [style.zoom]="(zoom/100)">
+                <div class="container-fluid mb-5" *ngSwitchCase="'freeflow'">
+                    <app-freeflow-layout class="w-100" [layout]="model" (showEditor)="onManageSectionEditor($event.section.code)">
+                    </app-freeflow-layout>
+                </div>
+
+                <app-split-layout *ngSwitchDefault class="w-100 ml-2 mr-2 mb-2" [layout]="model"
+                    (showEditor)="onManageSectionEditor($event.section.code)">
+                </app-split-layout>
+            </ng-container>
+        </div>
     </div>
-</div>
+</ng-container>
 
-<div class="container text-center" *ngIf="!model">
-    <h5 class="m-5">
-        <ng-container *ngIf="isCustomTemplate">
-            <fa-icon icon="info-circle" class="mr-1"></fa-icon>
-            To load a custom template visit
-        </ng-container>
+<p-dialog *ngIf="model" [showHeader]="false" [(visible)]="showIntro" [modal]="true" [baseZIndex]="10000"
+    [draggable]="false" [resizable]="false" (onHide)="onHideIntro()">
 
-        <ng-container *ngIf="!isCustomTemplate">
-            <fa-icon icon="spinner" [spin]="true" aria-hidden="true"></fa-icon> Loading model...
-            If the desired model has not yet loaded, you can browse
-        </ng-container>
+    <app-introduction [model]="model" [sections]="sections" (close)="onHideIntro()"></app-introduction>
 
-        <a routerLink="/templates" class="text-nowrap font-weight-normal">
-            template hub
-            <fa-icon icon="angle-right" class="ml-1"></fa-icon>
-        </a>
-    </h5>
-</div>
+    <p-footer>
+        <div class="text-right">
+            <button class="btn btn-primary" (click)="onProceed()">
+                Proceed <fa-icon icon="chevron-right" class="ml-1"></fa-icon>
+            </button>
+        </div>
+    </p-footer>
+</p-dialog>
 
-
-<p-sidebar [(visible)]="editorVisible" [fullScreen]="true" styleClass="bg-light">
-    <app-section-editor [mode]="mode" [section]="section" [(data)]="model" (onHide)="onHide()"
-        (sectionSelected)="onSectionSelected($event)" (close)="onHide()" (update)="onSectionUpdated($event)">
+<p-sidebar [(visible)]="editorVisible" [fullScreen]="true">
+    <app-section-editor [mode]="editorMode"  [sections]="sections" [section]="section" [(data)]="model" (onHide)="onManageSectionEditor()"
+        (sectionSelected)="onSectionSelected($event)" (close)="onManageSectionEditor()"
+        (update)="onSectionUpdated($event)">
     </app-section-editor>
 </p-sidebar>
 

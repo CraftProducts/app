@@ -40,13 +40,18 @@ import { MatrixCustomizerComponent } from './components/renderers/matrix-customi
 import { MatrixListCustomizerComponent } from './components/renderers/matrix-list-customizer.component';
 import { MatrixRecordCustomizerComponent } from './components/renderers/matrix-record-customizer.component';
 import { DragDropModule } from 'primeng/dragdrop';
+import { SplashScreenComponent } from './components/splash-screen.component';
+import { IntroductionComponent } from './components/introduction.component';
+import { DialogModule } from 'primeng/dialog';
 
 const routes: Route[] = [
   { path: ':templateCode', component: ModelerHomeComponent, canDeactivate: [PendingChangesGuard] }
 ];
 
 @NgModule({
-  declarations: [ModelerHomeComponent,
+  declarations: [
+    ModelerHomeComponent, SplashScreenComponent, IntroductionComponent,
+
     SplitLayoutRendererComponent, FreeflowLayoutRendererComponent,
     PanelRendererComponent, MetadataRendererComponent,
     MatrixRendererComponent, MatrixCustomizerComponent, MatrixListCustomizerComponent, MatrixRecordCustomizerComponent,
@@ -72,6 +77,7 @@ const routes: Route[] = [
     SidebarModule,
     FileUploadModule,
     DragDropModule,
+    DialogModule,
 
     AngularSplitModule,
 
