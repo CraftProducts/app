@@ -1,36 +1,36 @@
 <div class="list-group list-group-flush" *ngFor="let item of list;let idx = index">
     <div class="list-group-item p-1" *ngIf="!item.editing">
         <div class="btn-group btn-group-sm float-right">
-            <button class="btn btn-link text-muted" (click)="editItem(item)">
+            <button class="btn btn-link" (click)="editItem(item)">
                 <fa-icon icon="pencil-alt" size="sm"></fa-icon>
             </button>
-            <button class="btn btn-link text-muted" (click)="remove(idx)">
+            <button class="btn btn-link text-danger" (click)="remove(idx)">
                 <fa-icon icon="times"></fa-icon>
             </button>
         </div>
         <a target="_blank" href="{{item.url}}">{{item.title}}</a>
     </div>
 
-    <div *ngIf="item.editing" class="p-3 bg-light">
-        <div class="form-group">
-            <label>Link title</label>
-            <input type="text" class="form-control form-control-sm" [appAutofocus]="item.editing"
-                [(ngModel)]="item.title" placeholder="add title...">
-        </div>
-        <div class="form-group">
-            <label>Link Url</label>
-            <input type="text" class="form-control form-control-sm" [appAutofocus]="item.editing" [(ngModel)]="item.url"
-                placeholder="url...">
-        </div>
-        <div class="form-group text-right">
-            <div class="btn-group btn-group-sm">
-                <button class="btn btn-link" (click)="updateItem(item)">
-                    <fa-icon icon="save" size="sm" class="mr-1"></fa-icon> <b>UPDATE</b>
-                </button>
-                <button class="btn btn-link text-muted" (click)="cancelUpdatingItem(null, item)">
-                    <fa-icon icon="times" class="mr-1"></fa-icon> <b>CANCEL</b>
-                </button>
+    <div *ngIf="item.editing" class="mb-3">
+        <div class="alert bg-light">
+            <div class="form-group">
+                <label>Link title</label>
+                <input type="text" class="form-control form-control-sm" [appAutofocus]="item.editing"
+                    [(ngModel)]="item.title" placeholder="add title...">
             </div>
+            <div class="form-group">
+                <label>Link Url</label>
+                <input type="text" class="form-control form-control-sm" [appAutofocus]="item.editing"
+                    [(ngModel)]="item.url" placeholder="url...">
+            </div>
+        </div>
+        <div class="form-group text-right mt-2">
+            <button class="btn btn-sm btn-default text-primary mr-2" (click)="updateItem(item)">
+                <fa-icon icon="save" size="sm" class="mr-1"></fa-icon> Update
+            </button>
+            <button class="btn btn-sm btn-default text-muted" (click)="cancelUpdatingItem(null, item)">
+                <fa-icon icon="times" class="mr-1"></fa-icon> Cancel
+            </button>
         </div>
     </div>
 
@@ -43,20 +43,22 @@
         <i>click to add link</i>
     </div>
 
-    <div *ngIf="isEditorVisible" class="alert bg-light">
-        <div class="form-group">
-            <label>Link title</label>
-            <input type="text" class="form-control form-control-sm" [appAutofocus]="isEditorVisible"
-                [(ngModel)]="newRecord.title" (keydown.escape)="onCancel($event)" placeholder="add title...">
-        </div>
-        <div class="form-group">
-            <label>Link Url</label>
-            <input type="text" class="form-control form-control-sm" [(ngModel)]="newRecord.url"
-                (keydown.control.enter)="add()" (keydown.escape)="onCancel($event)" placeholder="url...">
+    <div *ngIf="isEditorVisible">
+        <div class="alert bg-light">
+            <div class="form-group">
+                <label>Link title</label>
+                <input type="text" class="form-control form-control-sm" [appAutofocus]="isEditorVisible"
+                    [(ngModel)]="newRecord.title" (keydown.escape)="onCancel($event)" placeholder="add title...">
+            </div>
+            <div class="form-group">
+                <label>Link Url</label>
+                <input type="text" class="form-control form-control-sm" [(ngModel)]="newRecord.url"
+                    (keydown.control.enter)="add()" (keydown.escape)="onCancel($event)" placeholder="url...">
+            </div>
         </div>
         <div class="form-group text-right">
-            <button class="btn btn-light bg-default btn-sm" type="button" [disabled]="!canAdd()" (click)="add()">
-                <fa-icon icon="check"></fa-icon> Add link
+            <button class="btn btn-sm btn-default text-dark" type="button" [disabled]="!canAdd()" (click)="add()">
+                <fa-icon icon="check" class="mr-1"></fa-icon> Add link
             </button>
         </div>
     </div>

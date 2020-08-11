@@ -1,4 +1,4 @@
-<div *ngIf="item" class="border-left alert pb-5">
+<div *ngIf="item">
     <button class="btn btn-sm btn-link text-danger float-right" (click)="onDelete()" *ngIf="showDelete">
         <fa-icon icon="times"></fa-icon> Delete
     </button>
@@ -10,8 +10,8 @@
         <li [ngbNavItem]="1">
             <a ngbNavLink>Description</a>
             <ng-template ngbNavContent>
-                <div class="alert bg-light">
-                    <div *ngIf="!editing">
+                <div>
+                    <div class="alert bg-light" *ngIf="!editing">
                         <button class="btn btn-link text-muted float-right" (click)="edit()">
                             <fa-icon icon="pencil-alt" size="sm"></fa-icon>
                         </button>
@@ -22,18 +22,16 @@
                         </button>
                     </div>
                     <div *ngIf="editing">
-                        <textarea class="form-control form-control-sm" [appAutofocus]="editing"
-                            [(ngModel)]="item.summary" (keydown.control.enter)="update()" rows="5"
+                        <textarea class="form-control bg-light form-control-sm" [appAutofocus]="editing"
+                            [(ngModel)]="item.summary" (keydown.control.enter)="update()" rows="3"
                             (keydown.escape)="cancelUpdating($event)" placeholder="add summary..."></textarea>
-                        <div class="text-right">
-                            <div class="btn-group btn-group-sm">
-                                <button class="btn btn-link" (click)="update()">
-                                    <fa-icon icon="save" size="sm" class="mr-1"></fa-icon> <b>UPDATE</b>
-                                </button>
-                                <button class="btn btn-link text-muted" (click)="cancelUpdating(null)">
-                                    <fa-icon icon="times" class="mr-1"></fa-icon> <b>CANCEL</b>
-                                </button>
-                            </div>
+                        <div class="text-right mt-2">
+                            <button class="btn btn-sm btn-default text-primary mr-2" (click)="update()">
+                                <fa-icon icon="save" size="sm" class="mr-1"></fa-icon> Update
+                            </button>
+                            <button class="btn btn-sm btn-default" (click)="cancelUpdating(null)">
+                                <fa-icon icon="times" class="mr-1"></fa-icon> Cancel
+                            </button>
                         </div>
                     </div>
                 </div>

@@ -12,4 +12,7 @@ export class IntroductionComponent {
 
     @Output() close = new EventEmitter<any>();
     onClose = () => this.close.emit();
+
+    @Output() proceed = new EventEmitter<any>();
+    onProceed = () => this.proceed.emit();
 }

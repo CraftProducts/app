@@ -1,82 +1,87 @@
-<div class="pl-4 pr-4 pb-3" *ngIf="section">
-    <div class="row mb-5">
-        <div class="col-sm-3 pl-0">
-            <button class="btn btn-link text-muted font-weight-light mt-3" (click)="closeEditor()">
-                <fa-icon [icon]="['far', 'times-circle']" size="3x"></fa-icon>
-            </button>
-        </div>
-        <div class="col-sm-6">
-            <sub class="text-uppercase text-muted">{{section.code}}</sub>
-            <h3>{{section.title}} </h3>
-            <div class="text-muted text-truncate" *ngIf="section.summary" [title]="section.summary">
-                {{section.summary}}
+<as-split [disabled]="true">
+    <!-- <as-split-area size="20" class="p-5">
+
+        <div class="mt-5">
+            <div *ngFor="let s of sections">
+                <button class="btn btn-white btn-sm p-2 rounded-0 border-0 text-left w-100 text-truncate text-muted"
+                    (click)="selectSection(s.code)" [ngClass]="{'active': section && section.code === s.code}">
+
+                    <fa-icon *ngIf="s.icon && s.icon.length > 0" [icon]="s.icon" [fixedWidth]="true" class="float-left">
+                    </fa-icon>
+
+                    <div class="ml-4">
+                        {{s.title}}
+                    </div>
+                </button>
             </div>
         </div>
-        <!-- <div class="col-sm-2 text-right pt-3">
-            <button class="btn btn-link text-muted font-weight-light" (click)="closeEditor()">
-                <fa-icon [icon]="['far', 'arrow-alt-circle-left']" size="2x"></fa-icon>
-            </button>
-            <button class="btn btn-link text-muted font-weight-light" (click)="closeEditor()">
-                <fa-icon [icon]="['far', 'arrow-alt-circle-right']" size="2x"></fa-icon>
-            </button>
-        </div> -->
-    </div>
-</div>
-<div class="popup-container">
-    <div class="body-container bg-white">
-        <div class="w-100 p-4">
+    </as-split-area> -->
+    <as-split-area size="50" class="bg-light">
+        <div class="p-1">
             <div class="row">
-                <div class="col-md-2">
-                    <div class=" mb-5">
-                        <div *ngFor="let s of sections">
-                            <button
-                                class="btn btn-white btn-sm p-2 rounded-0 border-0 text-left w-100 text-truncate text-muted"
-                                (click)="selectSection(s.code)"
-                                [ngClass]="{'active': section && section.code === s.code}">
-
-                                <!-- <sub class="text-uppercase text-muted">
-                                    {{s.code}}
-                                    <span class="badge badge-info">{{s.datatype}}</span>
-                                    <span class="badge badge-info" *ngIf="s.type === 'matrix'">{{s.type}}</span>
-                                </sub> -->
-                                <fa-icon *ngIf="s.icon && s.icon.length > 0" [icon]="s.icon" [fixedWidth]="true"
-                                    class="float-left">
-                                </fa-icon>
-
-                                <div class="ml-4">
-                                    {{s.title}}
-                                </div>
-                            </button>
+                <div class="col-md-6">
+                    <button class="btn btn-sm btn-link text-dark" *ngIf="prevSection"
+                        (click)="selectSection(prevSection.code)">
+                        <fa-icon icon="chevron-left" size="lg" class="float-left mt-3 text-muted"></fa-icon>
+                        <div class="ml-4 text-left">
+                            <sub class="text-primary">PREV</sub>
+                            <div>{{prevSection.title}}</div>
                         </div>
-                    </div>
+                    </button>
                 </div>
-                <div class="offset-md-1 col-md-9" *ngIf="section">
-                    <div class="mb-5">
-
-                        <app-text-editor *ngIf="section.datatype === 'text'" [placeholder]="section.summary"
-                            [mode]="mode" [(data)]="section.data" (save)="onUpdated($event, section)"
-                            (toggleMode)="onToggleMode($event, section)" (itemChange)="onItemChanged($event, section)">
-                        </app-text-editor>
-
-                        <app-image-editor *ngIf="section.datatype === 'image'" [placeholder]="section.summary"
-                            [mode]="mode" [(data)]="section.data" [properties]="section.properties"
-                            (save)="onUpdated($event, section)" (toggleMode)="onToggleMode($event, section)"
-                            (itemChange)="onItemChanged($event, section)">
-                        </app-image-editor>
-
-                        <app-list-editor *ngIf="section.datatype === 'list'" [mode]="mode" [(data)]="section.data"
-                            (save)="onUpdated($event, section)" (toggleMode)="onToggleMode($event, section)"
-                            (itemChange)="onItemChanged($event, section)" [selectedItem]="section.selectedItem">
-                        </app-list-editor>
-
-                        <div *ngIf="section.type === 'matrix'">
-                            <app-matrix-editor [mode]="mode" [(section)]="section"
-                                (itemChange)="onItemChanged($event, section)">
-                            </app-matrix-editor>
+                <div class="col-md-6 text-right">
+                    <button class="btn btn-sm btn-link text-dark text-right" *ngIf="nextSection"
+                        (click)="selectSection(nextSection.code)">
+                        <fa-icon icon="chevron-right" size="lg" class="float-right mt-3 text-muted"></fa-icon>
+                        <div class="mr-4">
+                            <sub class="text-primary">NEXT</sub>
+                            <div>{{nextSection.title}}</div>
                         </div>
-                    </div>
+                    </button>
                 </div>
             </div>
         </div>
-    </div>
-</div>
+        <div *ngIf="section" class="ml-5 mr-5 mt-3">
+            <h1>{{section.title}} </h1>
+            <ngx-md [data]="section.summary" class="text-muted"></ngx-md>
+
+            <div class="mt-3 mb-5">
+
+                <app-text-editor *ngIf="section.datatype === 'text'" [mode]="mode" [(data)]="section.data"
+                    (save)="onUpdated($event, section)" (toggleMode)="onToggleMode($event, section)"
+                    (itemChange)="onItemChanged($event, section)">
+                </app-text-editor>
+
+                <app-image-editor *ngIf="section.datatype === 'image'" [placeholder]="section.summary" [mode]="mode"
+                    [(data)]="section.data" [properties]="section.properties" (save)="onUpdated($event, section)"
+                    (toggleMode)="onToggleMode($event, section)" (itemChange)="onItemChanged($event, section)">
+                </app-image-editor>
+
+                <app-list-editor *ngIf="section.datatype === 'list'" [mode]="mode" [(data)]="section.data"
+                    (save)="onUpdated($event, section)" (toggleMode)="onToggleMode($event, section)"
+                    (itemChange)="onItemChanged($event, section)" [selectedItem]="section.selectedItem">
+                </app-list-editor>
+
+                <div *ngIf="section.type === 'matrix'">
+                    <app-matrix-editor [mode]="mode" [(section)]="section"
+                        (itemChange)="onItemChanged($event, section)">
+                    </app-matrix-editor>
+                </div>
+            </div>
+        </div>
+    </as-split-area>
+    <as-split-area size="50" class="p-3">
+        <div class="text-right">
+            <button class="btn btn-link text-muted font-weight-light" (click)="closeEditor()">
+                <fa-icon [icon]="['far', 'times-circle']" size="2x"></fa-icon>
+            </button>
+        </div>
+
+        <div class="p-5">
+            <app-record-editor [item]="section.data" (itemChange)="onItemChanged($event, section)" *ngIf="section"
+                [showDelete]="false">
+            </app-record-editor>
+        </div>
+
+    </as-split-area>
+</as-split>

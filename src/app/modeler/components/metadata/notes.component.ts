@@ -15,6 +15,7 @@ export class NotesComponent {
 
     constructor() {
         this.resetNewRecord();
+        this.showAddNoteEditor();
     }
 
     remove = (index) => {

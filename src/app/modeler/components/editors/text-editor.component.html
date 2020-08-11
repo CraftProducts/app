@@ -1,35 +1,39 @@
-<div class="row" *ngIf="data">
-    <div class="col-md-6">
-        <div *ngIf="mode !== 'EDIT'">
-            <div class="bg-light p-3">
-                <div *ngIf="!data.text" style="min-height: 100pt;cursor: pointer;" (click)="onToggleMode('EDIT')"
-                    title="F2 to edit">
-                    <i>click to edit</i>
-                </div>
-                <ngx-md [data]="data.text" *ngIf="data.text"></ngx-md>
+<!-- <div class="row" *ngIf="data">
+    <div class="col-md-6"> -->
+<div *ngIf="data">
+    <div *ngIf="mode !== 'EDIT'">
+        <div class="bg-white p-3 border rounded" title="F2 to edit" style="min-height: 100pt;cursor: pointer;"
+            (click)="onToggleMode('EDIT')">
+            <div *ngIf="!data.text">
+                <i class="text-primary">
+                    <fa-icon icon="pencil-alt"></fa-icon> click to edit
+                </i>
             </div>
-            <div class="mt-3 text-right">
-                <button class="btn btn-primary" (click)="onToggleMode('EDIT')">
-                    <fa-icon icon="pencil-alt"></fa-icon> Edit
-                </button>
-            </div>
+            <ngx-md [data]="data.text" *ngIf="data.text"></ngx-md>
         </div>
-        <div *ngIf="mode === 'EDIT'">
-            <textarea class="form-control bg-light" [appAutofocus]="mode === 'EDIT'" (keydown.control.enter)="onSave()"
-                [placeholder]="placeholder" (keydown.escape)="onEscape($event)" rows="10"
-                [(ngModel)]="dataToEdit.text"></textarea>
-            <div class="mt-3 text-right">
-                <button class="btn btn-primary mr-2" (click)="onSave()">
-                    <fa-icon icon="save"></fa-icon> Save
-                </button>
-                <button class="btn btn-light" (click)="onToggleMode('VIEW')">
-                    <fa-icon icon="times"></fa-icon> Cancel
-                </button>
-            </div>
+        <!-- <div class="mt-2 text-right">
+            <button class="btn btn-link btn-sm" (click)="onToggleMode('EDIT')">
+                <fa-icon icon="pencil-alt"></fa-icon> Edit
+            </button>
+        </div> -->
+    </div>
+    <div *ngIf="mode === 'EDIT'">
+        <textarea class="form-control" [appAutofocus]="true" (input)="isDirty = true" (keydown.control.enter)="onSave()"
+            (keydown.escape)="onEscape($event)" rows="10" [(ngModel)]="dataToEdit.text"></textarea>
+        <div class="mt-3 text-right" *ngIf="isDirty">
+            <button class="btn btn-primary mr-2" (click)="onSave()">
+                <fa-icon icon="save"></fa-icon> Save
+            </button>
+            <button class="btn btn-light" (click)="onToggleMode('VIEW')">
+                <fa-icon icon="redo"></fa-icon> Reset
+            </button>
         </div>
     </div>
+</div>
+<!-- 
+        </div>
     <div class="offset-md-1 col-md-5">
         <app-record-editor [item]="data" (itemChange)="onItemChanged($event)" [showDelete]="false">
         </app-record-editor>
     </div>
-</div>
+</div> -->

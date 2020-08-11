@@ -21,4 +21,6 @@ export class TextEditorComponent extends BaseEditor {
         event.stopPropagation();
         this.onToggleMode('VIEW');
     }
+
+    
 }

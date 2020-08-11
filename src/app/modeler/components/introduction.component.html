@@ -1,10 +1,40 @@
-<div class="container">
+<as-split [disabled]="true">
+    <as-split-area size="50" class="p-5">
+        <div class="m-5 p-5">
+            <h1>{{model.title}}</h1>
+
+            <h4>
+                <ngx-md [data]="model.summary"></ngx-md>
+            </h4>
+        </div>
+    </as-split-area>
+    <as-split-area size="50" class="p-5 bg-primary text-white">
+        <button class="btn btn-light float-right" (click)="onProceed()">
+            Proceed 
+            <fa-icon [icon]="['far', 'arrow-alt-circle-right']"></fa-icon>
+            <!-- <fa-icon icon="chevron-right" class="ml-1"></fa-icon> -->
+        </button>
+
+        <div class="mb-4" [id]="section.code" *ngFor="let section of sections">
+            <fa-icon *ngIf="section.icon && section.icon.length > 0" [icon]="section.icon" [fixedWidth]="true" size="2x"
+                class="float-left  mt-1">
+            </fa-icon>
+
+            <div class="ml-5">
+                <h5 class="mb-0 font-weight-normal">{{section.title}}</h5>
+                <ngx-md class="" [data]="section.summary"></ngx-md>
+            </div>
+        </div>
+    </as-split-area>
+</as-split>
+<!-- <div class="container">
     <div class="sticky-title pl-4 pt-4 pb-4">
         <button class="btn btn-link text-muted float-right" (click)="onClose()">
             <fa-icon icon="times" size="lg"></fa-icon>
         </button>
 
         <h1>{{model.title}}</h1>
+        
     </div>
 
     <div class="pl-4 pr-4" *ngIf="sections.length > 0">
@@ -28,4 +58,4 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->

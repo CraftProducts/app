@@ -15,6 +15,7 @@ export class TasksComponent {
 
     constructor() {
         this.resetNewRecord();
+        this.showAddEditor();
     }
 
     remove = (index) => {

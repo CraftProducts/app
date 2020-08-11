@@ -1,41 +1,44 @@
-<div class="list-group list-group-flush mb-2">
+<div class="list-group list-group-flush">
     <div class="list-group-item p-1" *ngFor="let item of list;let idx = index">
         <div *ngIf="!item.editing">
             <div class="btn-group btn-group-sm float-right" *ngIf="!item.completed">
-                <button class="btn btn-link text-muted" (click)="editItem(item)">
+                <button class="btn btn-link text-primary" (click)="editItem(item)">
                     <fa-icon icon="pencil-alt" size="sm"></fa-icon>
                 </button>
-                <button class="btn btn-link text-muted" (click)="remove(idx)">
+                <button class="btn btn-link text-danger" (click)="remove(idx)">
                     <fa-icon icon="times"></fa-icon>
                 </button>
             </div>
-            <input type="checkbox" [(ngModel)]="item.completed">
+            <input type="checkbox" class="mr-1 mt-2" [(ngModel)]="item.completed">
             <span [ngClass]="{'strikethrough': item.completed}">
                 {{item.title}}
             </span>
         </div>
 
-        <div *ngIf="item.editing" class="p-3 bg-light">
-            <div class="input-group input-group-sm">
-                <input type="text" class="form-control form-control-sm" [appAutofocus]="item.editing"
-                    [(ngModel)]="item.title" placeholder="update task..." (keydown.enter)="updateItem(item)"
+        <div *ngIf="item.editing">
+            <div class="input-group">
+                <input type="text" class="form-control bg-light" [appAutofocus]="item.editing" [(ngModel)]="item.title"
+                    placeholder="update task..." (keydown.enter)="updateItem(item)"
                     (keydown.escape)="cancelUpdatingItem($event, item)">
                 <div class="input-group-append">
-                    <button class="btn btn-link" (click)="updateItem(item)">
+                    <button class="btn btn-primary" (click)="updateItem(item)">
                         <fa-icon icon="check"></fa-icon>
+                    </button>
+                    <button class="btn btn-default" (click)="cancelUpdatingItem($event, item)">
+                        <fa-icon icon="times"></fa-icon>
                     </button>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<div (click)="showAddEditor()" *ngIf="!isEditorVisible" style="cursor:pointer"
-    class="bg-light rounded text-muted p-3" title="click to add task">
+<div (click)="showAddEditor()" *ngIf="!isEditorVisible" style="cursor:pointer" class="bg-light rounded text-muted p-3"
+    title="click to add task">
     <i>click to add task</i>
 </div>
 
-<div class="input-group input-group-sm" *ngIf="isEditorVisible">
-    <input type="text" class="form-control form-control-sm" [(ngModel)]="newRecord.title" (keydown.enter)="add()"
+<div class="input-group" *ngIf="isEditorVisible">
+    <input type="text" class="form-control bg-light" [(ngModel)]="newRecord.title" (keydown.enter)="add()"
         (keydown.escape)="onCancel($event)" placeholder="add new task..." [appAutofocus]="isEditorVisible === true">
     <div class="input-group-append">
         <button class="btn btn-primary" type="button" [disabled]="!canAdd()" (click)="add()">

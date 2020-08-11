@@ -14,24 +14,21 @@ export class SectionEditorComponent {
 
     @Input() sections: any;  // VIEW / EDIT
     @Input() data: string;  // VIEW / EDIT
-    // private _data: any;
-    // @Input() set data(value: any) {
-    //     this._data = value;
-    //     this.sections = [];
-    //     console.log('SectionEditor extractSections');
-    //     extractSections(value, ['icon', 'code', 'title', 'type', 'datatype'], this.sections);
-    // }
-    // get data() {
-    //     return this._data;
-    // }
 
     @Input() mode: string;  // VIEW / EDIT
 
+    prevSection: any;
+    nextSection: any;
     private _section: any;
     @Input() set section(value: any) {
         value = value || {};
         value.data = value.data || {};
         this._section = value;
+        if (this.sections) {
+            const index = _.findIndex(this.sections, { code: value.code });
+            this.prevSection = (index > 0) ? this.sections[index - 1] : null;
+            this.nextSection = (index < this.sections.length - 1) ? this.sections[index + 1] : null;
+        }
     }
     get section() {
         return this._section;
@@ -52,6 +49,7 @@ export class SectionEditorComponent {
     }
 
     onItemChanged(item, section) {
+        console.log(item, section);
         section.isDirty = true;
         this.update.emit(section);
     }

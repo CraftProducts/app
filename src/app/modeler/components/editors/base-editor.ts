@@ -5,6 +5,7 @@ export abstract class BaseEditor {
     @Output() itemChange = new EventEmitter<any>();
     @Output() save = new EventEmitter<any>();
     @Output() toggleMode = new EventEmitter<any>();
+    isDirty = false;
 
     @Input() mode: string;
     @Input() selectedItem: any;
@@ -12,9 +13,14 @@ export abstract class BaseEditor {
     private _data: any;
     @Input() set data(value: any) {
         this._data = value;
-        this.dataToEdit = _.cloneDeep(value);
+        this.initData();
+    }
+    private initData() {
+        this.isDirty = false;
+        this.dataToEdit = _.cloneDeep(this.data);
         this.selectedItem = null;
     }
+
     get data() {
         return this._data;
     }
@@ -41,13 +47,14 @@ export abstract class BaseEditor {
 
     onToggleMode = (mode) => {
         if (mode === 'VIEW') {
-            this.selectedItem = null;
+            this.initData();
         }
         this.toggleMode.emit({ mode, data: this.data });
     }
 
     onSave = () => {
         this.add();
+        this.isDirty = false;
         this.save.emit(this.dataToEdit);
     }
 
