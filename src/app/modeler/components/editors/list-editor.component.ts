@@ -37,8 +37,8 @@ export class ListEditorComponent extends BaseEditor {
         if (this.data && this.data.list) {
             const removed = _.remove(this.data.list, { code: item.code });
             if (removed && removed.length > 0) {
-                this.selectedItem = null;
                 this.save.emit(this.data);
+                this.itemSelected.emit(null);
             }
         }
     }

@@ -20,6 +20,24 @@
         <div class="p-1">
             <div class="row">
                 <div class="col-md-6">
+                    <div class="btn-group btn-group-sm mt-2">
+                        <div ngbDropdown display="dynamic">
+                            <a class="btn btn-sm btn-link text-muted hide-caret" id="dropdownBasic1" ngbDropdownToggle
+                                title="All sections">
+                                <fa-icon icon="bars" [fixedWidth]="true" size="lg"></fa-icon>
+                            </a>
+                            <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu-right">
+                                <button ngbDropdownItem *ngFor="let s of sections" (click)="selectSection(s.code)"
+                                    [ngClass]="{'active': section && section.code === s.code}">
+                                    <fa-icon *ngIf="s.icon && s.icon.length > 0" [icon]="s.icon" [fixedWidth]="true"
+                                        class="float-left text-muted" size="sm">
+                                    </fa-icon>
+                                    <div class="ml-4">{{s.title}}</div>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
                     <button class="btn btn-sm btn-link text-dark" *ngIf="prevSection"
                         (click)="selectSection(prevSection.code)">
                         <fa-icon icon="chevron-left" size="lg" class="float-left mt-3 text-muted"></fa-icon>
@@ -30,7 +48,7 @@
                     </button>
                 </div>
                 <div class="col-md-6 text-right">
-                    <button class="btn btn-sm btn-link text-dark text-right" *ngIf="nextSection"
+                    <button class="btn btn-sm btn-link text-dark text-right mr-5 pr-0" *ngIf="nextSection"
                         (click)="selectSection(nextSection.code)">
                         <fa-icon icon="chevron-right" size="lg" class="float-right mt-3 text-muted"></fa-icon>
                         <div class="mr-4">
@@ -57,9 +75,15 @@
                     (toggleMode)="onToggleMode($event, section)" (itemChange)="onItemChanged($event, section)">
                 </app-image-editor>
 
+                <app-select-editor *ngIf="section.datatype === 'select'" [mode]="mode" [options]="section.options"
+                    [(data)]="section.data" (toggleMode)="onToggleMode($event, section)"
+                    (save)="onUpdated($event, section)" (itemChange)="onItemChanged($event, section)">
+                </app-select-editor>
+
                 <app-list-editor *ngIf="section.datatype === 'list'" [mode]="mode" [(data)]="section.data"
                     (save)="onUpdated($event, section)" (toggleMode)="onToggleMode($event, section)"
-                    (itemChange)="onItemChanged($event, section)" [selectedItem]="section.selectedItem">
+                    (itemSelected)="onItemSelected($event)"
+                    (itemChange)="onItemChanged($event, section)">
                 </app-list-editor>
 
                 <div *ngIf="section.type === 'matrix'">
@@ -78,8 +102,8 @@
         </div>
 
         <div class="p-5">
-            <app-record-editor [item]="section.data" (itemChange)="onItemChanged($event, section)" *ngIf="section"
-                [showDelete]="false">
+            <app-record-editor [item]="recordDataToEdit.data" (itemChange)="onItemChanged($event, recordDataToEdit)"
+                *ngIf="recordDataToEdit" [showDelete]="false">
             </app-record-editor>
         </div>
 

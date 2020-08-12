@@ -127,3 +127,19 @@ children:
           Where are the biggest opportunities?
           How are we going to measure improvements we implement?
         datatype: list
+
+      - type: panel
+        size: 20
+        code: PRIORITY
+        title: Priority
+        summary: "How important is this user journey"
+        datatype: select
+        options:
+          - code: LOW
+            title: Low
+          - code: MEDIUM
+            title: Medium
+          - code: HIGH
+            title: High
+          - code: CRITICAL
+            title: Critical

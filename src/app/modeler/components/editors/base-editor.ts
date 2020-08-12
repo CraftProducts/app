@@ -5,11 +5,13 @@ export abstract class BaseEditor {
     @Output() itemChange = new EventEmitter<any>();
     @Output() save = new EventEmitter<any>();
     @Output() toggleMode = new EventEmitter<any>();
+    @Output() itemSelected = new EventEmitter<any>();
+
     isDirty = false;
 
     @Input() mode: string;
-    @Input() selectedItem: any;
 
+    selectedItem: any;
     private _data: any;
     @Input() set data(value: any) {
         this._data = value;
@@ -18,7 +20,7 @@ export abstract class BaseEditor {
     private initData() {
         this.isDirty = false;
         this.dataToEdit = _.cloneDeep(this.data);
-        this.selectedItem = null;
+        this.itemSelected.emit(null);
     }
 
     get data() {
@@ -63,6 +65,7 @@ export abstract class BaseEditor {
     }
 
     onSelectItem(item) {
-        this.selectedItem = item;
+        this.itemSelected.emit(item);
+        // this.selectedItem = item;
     }
 }

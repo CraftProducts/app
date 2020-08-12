@@ -1,6 +1,6 @@
-import { Component, Input, EventEmitter, Output, HostListener } from '@angular/core';
+import { Component, Input, EventEmitter, Output } from '@angular/core';
 import * as _ from 'lodash';
-import { extractSections } from 'src/app/modeler/modeler-utils';
+import { DATATYPES } from '../../modeler-utils';
 
 @Component({
     selector: 'app-section-editor',
@@ -17,6 +17,7 @@ export class SectionEditorComponent {
 
     @Input() mode: string;  // VIEW / EDIT
 
+    recordDataToEdit: any;
     prevSection: any;
     nextSection: any;
     private _section: any;
@@ -24,6 +25,8 @@ export class SectionEditorComponent {
         value = value || {};
         value.data = value.data || {};
         this._section = value;
+        this.recordDataToEdit = (value.datatype === DATATYPES.list) ? null : value;
+
         if (this.sections) {
             const index = _.findIndex(this.sections, { code: value.code });
             this.prevSection = (index > 0) ? this.sections[index - 1] : null;
@@ -55,5 +58,10 @@ export class SectionEditorComponent {
     }
     closeEditor() {
         this.close.emit(null);
+    }
+
+    onItemSelected(data) {
+        console.log('onItemSelected', data);
+        this.recordDataToEdit = { data };
     }
 }

@@ -11,11 +11,6 @@
             </div>
             <ngx-md [data]="data.text" *ngIf="data.text"></ngx-md>
         </div>
-        <!-- <div class="mt-2 text-right">
-            <button class="btn btn-link btn-sm" (click)="onToggleMode('EDIT')">
-                <fa-icon icon="pencil-alt"></fa-icon> Edit
-            </button>
-        </div> -->
     </div>
     <div *ngIf="mode === 'EDIT'">
         <textarea class="form-control" [appAutofocus]="true" (input)="isDirty = true" (keydown.control.enter)="onSave()"
@@ -30,10 +25,3 @@
         </div>
     </div>
 </div>
-<!-- 
-        </div>
-    <div class="offset-md-1 col-md-5">
-        <app-record-editor [item]="data" (itemChange)="onItemChanged($event)" [showDelete]="false">
-        </app-record-editor>
-    </div>
-</div> -->

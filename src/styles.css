@@ -34,6 +34,9 @@ h5 {
   background-color: #fafafa;
 }
 
+.text-light {
+  color: #dfdfdf !important;
+}
 .table-responsive {
   overflow: hidden;
   padding-bottom: 7pt;
