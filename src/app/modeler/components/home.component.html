@@ -18,22 +18,8 @@
     </div>
 </ng-container>
 
-<!-- <p-dialog *ngIf="model" [showHeader]="false" [(visible)]="showIntro" [modal]="true" [baseZIndex]="10000"
-    [draggable]="false" [resizable]="false" (onHide)="onHideIntro()">
-
-    <app-introduction [model]="model" [sections]="sections" (close)="onHideIntro()"></app-introduction>
-
-    <p-footer>
-        <div class="text-right">
-            <button class="btn btn-primary" (click)="onProceed()">
-                Proceed <fa-icon icon="chevron-right" class="ml-1"></fa-icon>
-            </button>
-        </div>
-    </p-footer>
-</p-dialog> -->
-
 <p-sidebar *ngIf="model" [(visible)]="showIntro" [fullScreen]="true" (onHide)="onHideIntro()" [showCloseIcon]="false">
-    <app-introduction [model]="model" [sections]="sections" (close)="onHideIntro()" (proceed)="onProceed()">
+    <app-introduction [model]="model" [sections]="sections" (close)="onHideIntro()" (proceed)="onProceed($event)">
     </app-introduction>
 </p-sidebar>
 

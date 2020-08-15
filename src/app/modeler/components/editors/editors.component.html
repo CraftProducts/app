@@ -1,0 +1,15 @@
+<app-text-editor *ngIf="section.datatype === 'text'" [mode]="mode" [(data)]="section.data" (save)="onUpdated($event)"
+    (toggleMode)="onToggleMode($event)">
+</app-text-editor>
+
+<app-list-editor *ngIf="section.datatype === 'list'" [mode]="mode" [(data)]="section.data" (save)="onUpdated($event)"
+    (toggleMode)="onToggleMode($event)" (itemSelected)="onItemSelected($event)">
+</app-list-editor>
+
+<app-select-editor *ngIf="section.datatype === 'select'" [mode]="mode" [options]="section.options"
+    [(data)]="section.data" (toggleMode)="onToggleMode($event)" (save)="onUpdated($event)">
+</app-select-editor>
+
+<app-image-editor *ngIf="section.datatype === 'image'" [mode]="mode" [(data)]="section.data"
+    [properties]="section.properties" (save)="onUpdated($event)" (toggleMode)="onToggleMode($event)">
+</app-image-editor>

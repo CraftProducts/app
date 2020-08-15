@@ -1,6 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import * as _ from 'lodash';
-import { extractSections } from '../modeler-utils';
 
 @Component({
     selector: 'app-introduction',
@@ -14,5 +13,5 @@ export class IntroductionComponent {
     onClose = () => this.close.emit();
 
     @Output() proceed = new EventEmitter<any>();
-    onProceed = () => this.proceed.emit();
+    onProceed = (sectionCode) => this.proceed.emit(sectionCode);
 }

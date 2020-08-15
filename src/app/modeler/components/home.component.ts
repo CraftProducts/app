@@ -78,7 +78,7 @@ export class ModelerHomeComponent implements ComponentCanDeactivate, OnInit, OnD
                 this.model = model;
                 if (this.model) {
                     if (this.sections.length === 0) {
-                        extractSections(this.model, ['code', 'title', 'summary', 'icon', 'type', 'datatype'], this.sections);
+                        extractSections(this.model, ['code', 'title', 'summary', 'icon', 'type', 'datatype', 'rows', 'columns', 'properties'], this.sections);
                     }
                     this.onSectionSelected(qp.section);
                 }
@@ -180,7 +180,6 @@ export class ModelerHomeComponent implements ComponentCanDeactivate, OnInit, OnD
         this.instance.templateCode = this.loadedTemplate.code;
         this.instance.sections = [];
 
-        console.log('SaveModel extractSections');
         extractSections(this.loadedTemplate, ['code', 'data', 'rows', 'columns'], this.instance.sections);
 
         const content = JSON.stringify(this.instance);
@@ -242,8 +241,10 @@ export class ModelerHomeComponent implements ComponentCanDeactivate, OnInit, OnD
         this.router.navigate([], { queryParams: { view: 'details' }, queryParamsHandling: "merge" })
     }
 
-    onProceed() {
-        const firstSectionCode = (this.sections && this.sections.length > 0) ? this.sections[0].code : '';
-        this.onManageSectionEditor(firstSectionCode);
+    onProceed(sectionCode) {
+        if (sectionCode === '') {
+            sectionCode = (this.sections && this.sections.length > 0) ? this.sections[0].code : '';
+        }
+        this.onManageSectionEditor(sectionCode);
     }
 }

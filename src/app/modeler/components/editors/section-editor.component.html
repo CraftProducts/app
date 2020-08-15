@@ -1,28 +1,11 @@
 <as-split [disabled]="true">
-    <!-- <as-split-area size="20" class="p-5">
-
-        <div class="mt-5">
-            <div *ngFor="let s of sections">
-                <button class="btn btn-white btn-sm p-2 rounded-0 border-0 text-left w-100 text-truncate text-muted"
-                    (click)="selectSection(s.code)" [ngClass]="{'active': section && section.code === s.code}">
-
-                    <fa-icon *ngIf="s.icon && s.icon.length > 0" [icon]="s.icon" [fixedWidth]="true" class="float-left">
-                    </fa-icon>
-
-                    <div class="ml-4">
-                        {{s.title}}
-                    </div>
-                </button>
-            </div>
-        </div>
-    </as-split-area> -->
     <as-split-area size="50" class="bg-light">
         <div class="p-1">
             <div class="row">
                 <div class="col-md-6">
                     <div class="btn-group btn-group-sm mt-2">
                         <div ngbDropdown display="dynamic">
-                            <a class="btn btn-sm btn-link text-muted hide-caret" id="dropdownBasic1" ngbDropdownToggle
+                            <a class="btn btn-sm btn-link text-primary hide-caret" id="dropdownBasic1" ngbDropdownToggle
                                 title="All sections">
                                 <fa-icon icon="bars" [fixedWidth]="true" size="lg"></fa-icon>
                             </a>
@@ -64,39 +47,19 @@
             <ngx-md [data]="section.summary" class="text-muted"></ngx-md>
 
             <div class="mt-3 mb-5">
+                <app-editors [section]="section" [mode]="mode" (save)="onUpdated($event, section)"
+                    (toggleMode)="onToggleMode($event, section)" (itemSelected)="onItemSelected($event)">
+                </app-editors>
 
-                <app-text-editor *ngIf="section.datatype === 'text'" [mode]="mode" [(data)]="section.data"
-                    (save)="onUpdated($event, section)" (toggleMode)="onToggleMode($event, section)"
+                <app-matrix-editor *ngIf="section.type === 'matrix'" [mode]="mode" [(section)]="section"
                     (itemChange)="onItemChanged($event, section)">
-                </app-text-editor>
-
-                <app-image-editor *ngIf="section.datatype === 'image'" [placeholder]="section.summary" [mode]="mode"
-                    [(data)]="section.data" [properties]="section.properties" (save)="onUpdated($event, section)"
-                    (toggleMode)="onToggleMode($event, section)" (itemChange)="onItemChanged($event, section)">
-                </app-image-editor>
-
-                <app-select-editor *ngIf="section.datatype === 'select'" [mode]="mode" [options]="section.options"
-                    [(data)]="section.data" (toggleMode)="onToggleMode($event, section)"
-                    (save)="onUpdated($event, section)" (itemChange)="onItemChanged($event, section)">
-                </app-select-editor>
-
-                <app-list-editor *ngIf="section.datatype === 'list'" [mode]="mode" [(data)]="section.data"
-                    (save)="onUpdated($event, section)" (toggleMode)="onToggleMode($event, section)"
-                    (itemSelected)="onItemSelected($event)"
-                    (itemChange)="onItemChanged($event, section)">
-                </app-list-editor>
-
-                <div *ngIf="section.type === 'matrix'">
-                    <app-matrix-editor [mode]="mode" [(section)]="section"
-                        (itemChange)="onItemChanged($event, section)">
-                    </app-matrix-editor>
-                </div>
+                </app-matrix-editor>
             </div>
         </div>
     </as-split-area>
     <as-split-area size="50" class="p-3">
         <div class="text-right">
-            <button class="btn btn-link text-muted font-weight-light" (click)="closeEditor()">
+            <button class="btn btn-link text-danger" (click)="closeEditor()">
                 <fa-icon [icon]="['far', 'times-circle']" size="2x"></fa-icon>
             </button>
         </div>

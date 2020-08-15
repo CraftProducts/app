@@ -1,6 +1,10 @@
 <as-split [disabled]="true">
-    <as-split-area size="50" class="p-5">
-        <div class="mt-5">
+    <as-split-area size="50" class="p-1">
+        <a class="btn btn-link" routerLink="/templates" title="Back to templates">
+            <fa-icon [icon]="['far', 'arrow-alt-circle-left']" size="2x"></fa-icon>
+        </a>
+
+        <div class="p-5">
             <div class="d-flex justify-content-center align-self-center">
                 <div class="w-75">
                     <h1>{{model.title}}</h1>
@@ -12,21 +16,26 @@
             </div>
         </div>
     </as-split-area>
-    <as-split-area size="50" class="p-5 bg-primary text-white">
-        <button class="btn btn-light float-right" (click)="onProceed()">
-            Proceed
-            <fa-icon [icon]="['far', 'arrow-alt-circle-right']"></fa-icon>
-            <!-- <fa-icon icon="chevron-right" class="ml-1"></fa-icon> -->
+    <as-split-area size="50" class="p-1 bg-primary text-white">
+        <button class="btn btn-link text-white float-right" (click)="onProceed('')">
+            <fa-icon [icon]="['far', 'arrow-alt-circle-right']" size="2x"></fa-icon>
         </button>
 
-        <div class="mb-4" [id]="section.code" *ngFor="let section of sections">
-            <fa-icon *ngIf="section.icon && section.icon.length > 0" [icon]="section.icon" [fixedWidth]="true" size="2x"
-                class="float-left  mt-1">
-            </fa-icon>
+        <div class="p-5">
+            <div class="mb-4" [id]="section.code" *ngFor="let section of sections">
+                <fa-icon *ngIf="section.icon && section.icon.length > 0" [icon]="section.icon" [fixedWidth]="true"
+                    size="2x" class="float-left  mt-1">
+                </fa-icon>
 
-            <div class="ml-5">
-                <h5 class="mb-0 font-weight-normal">{{section.title}}</h5>
-                <ngx-md class="text-light" [data]="section.summary"></ngx-md>
+                <div class="ml-5">
+                    <h5 class="mb-0 font-weight-normal">                        
+                        {{section.title}}
+                        <button class="btn btn-link btn-sm text-white" (click)="onProceed(section.code)" title="Jump to section">
+                            <fa-icon [icon]="['far', 'arrow-alt-circle-right']" size="lg"></fa-icon>
+                        </button>                
+                    </h5>
+                    <ngx-md class="text-light" [data]="section.summary"></ngx-md>
+                </div>
             </div>
         </div>
     </as-split-area>

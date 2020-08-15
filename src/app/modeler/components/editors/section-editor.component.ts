@@ -1,6 +1,6 @@
 import { Component, Input, EventEmitter, Output } from '@angular/core';
 import * as _ from 'lodash';
-import { DATATYPES } from '../../modeler-utils';
+import { DATATYPES, SECTIONTYPES } from '../../modeler-utils';
 
 @Component({
     selector: 'app-section-editor',
@@ -12,8 +12,8 @@ export class SectionEditorComponent {
 
     @Output() update = new EventEmitter<any>();
 
-    @Input() sections: any;  // VIEW / EDIT
-    @Input() data: string;  // VIEW / EDIT
+    @Input() sections: any;
+    @Input() data: string;
 
     @Input() mode: string;  // VIEW / EDIT
 
@@ -25,7 +25,7 @@ export class SectionEditorComponent {
         value = value || {};
         value.data = value.data || {};
         this._section = value;
-        this.recordDataToEdit = (value.datatype === DATATYPES.list) ? null : value;
+        this.recordDataToEdit = (value.datatype === DATATYPES.list || value.type === SECTIONTYPES.matrix) ? null : value;
 
         if (this.sections) {
             const index = _.findIndex(this.sections, { code: value.code });
@@ -52,7 +52,7 @@ export class SectionEditorComponent {
     }
 
     onItemChanged(item, section) {
-        console.log(item, section);
+        console.error('onItemChanged', item, section);
         section.isDirty = true;
         this.update.emit(section);
     }

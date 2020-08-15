@@ -43,6 +43,7 @@ import { DragDropModule } from 'primeng/dragdrop';
 import { SplashScreenComponent } from './components/splash-screen.component';
 import { IntroductionComponent } from './components/introduction.component';
 import { DialogModule } from 'primeng/dialog';
+import { EditorsComponent } from './components/editors/editors.component';
 
 const routes: Route[] = [
   { path: ':templateCode', component: ModelerHomeComponent, canDeactivate: [PendingChangesGuard] }
@@ -57,7 +58,8 @@ const routes: Route[] = [
     MatrixRendererComponent, MatrixCustomizerComponent, MatrixListCustomizerComponent, MatrixRecordCustomizerComponent,
 
     NotesComponent, LinksComponent, TasksComponent,
-    SectionEditorComponent, TextEditorComponent, ListEditorComponent, SelectEditorComponent, ImageEditorComponent,
+    SectionEditorComponent, EditorsComponent,
+    TextEditorComponent, ListEditorComponent, SelectEditorComponent, ImageEditorComponent,
     MatrixEditorComponent, RecordEditorComponent,
 
     ExportSidebarComponent, ThemeEditorComponent, ThemeListEditorComponent

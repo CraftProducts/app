@@ -13,8 +13,8 @@
                 </button>
             </div>
         </div>
-        <button class="btn btn-link border w-100 p-3" *ngIf="!data.list || data.list.length === 0" (click)="onToggleMode('EDIT')"
-            title="Click to edit">
+        <button class="btn btn-link border w-100 p-3" *ngIf="!data.list || data.list.length === 0"
+            (click)="onToggleMode('EDIT')" title="Click to edit">
             <div class="text-left">
                 <fa-icon icon="pencil-alt" size="sm" class="mr-1"></fa-icon>
                 <i>click to edit</i>
@@ -23,7 +23,7 @@
     </div>
 
     <div *ngIf="mode === 'EDIT'">
-        <div class="bg-light">
+        <div>
             <div class="p-2" *ngFor="let item of dataToEdit.list;let idx = index">
                 <button class="btn btn-link btn-sm float-right text-danger" (click)="remove(idx)">
                     <fa-icon icon="times"></fa-icon>
@@ -53,8 +53,4 @@
             </button>
         </div>
     </div>
-    <!-- <div *ngIf="mode !== 'EDIT'" class="offset-md-1 col-md-5">
-        <app-record-editor [item]="selectedItem" (itemChange)="onItemChanged($event)" [showDelete]="true" (delete)="onDelete($event)">
-        </app-record-editor>
-    </div> -->
 </div>

@@ -1,6 +1,5 @@
-import { Component, Input, EventEmitter, Output, HostListener } from '@angular/core';
+import { Component, Input, EventEmitter, Output } from '@angular/core';
 import * as _ from 'lodash';
-import { Key } from 'ts-key-enum';
 
 @Component({
     selector: 'app-record-editor',
@@ -43,7 +42,7 @@ export class RecordEditorComponent {
         this.item.summary = this.memento;
     }
 
-    onListChange(args) {
+    onListChange() {
         this.itemChange.emit(this.item);
     }
 
