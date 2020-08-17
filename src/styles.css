@@ -390,9 +390,12 @@ body .ui-sidebar .ui-sidebar-close {
   float: right;
   margin-right: 0.5rem;
 }
+.panel-listitem-tile .metadata {
+  margin: 0 !important;
+}
 .panel-listitem-tile .metadata div {
-  float: none;
-  margin: 0;
+  float: none !important;
+  margin: 0 !important;
 }
 .panel-listitem-tile {
   padding: 8pt;
@@ -413,9 +416,9 @@ body .ui-sidebar .ui-sidebar-close {
   margin: 0;
   position: absolute;
   top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 90%;
+  left: 30%;
+  transform: translate(-40%, -50%);
+  width: 75%;
 }
 .panel-is-dirty {
   border-left: solid 1px #f00;

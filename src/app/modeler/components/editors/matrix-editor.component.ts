@@ -8,47 +8,52 @@ import { DATATYPES } from '../../modeler-utils';
 })
 export class MatrixEditorComponent {
     @Output() close = new EventEmitter<any>();
+    @Output() changeSection = new EventEmitter<any>();
 
     recordDataToEdit: any;
     prevColumn: any;
     nextColumn: any;
 
     @Input() mode: string;
-    @Input() rowCode: string;
 
     @Input() section: any;
+
+    _rowCode: any;
+    @Input() set rowCode(value: any) {
+        this._rowCode = value;
+        this.prepareEditor();
+    }
+    get rowCode(): any { return this._rowCode; }
 
     _colCode: any;
     @Input() set colCode(value: any) {
         this._colCode = value;
-        this.prepareEditor(value);
+        this.prepareEditor();
     }
-    get colCode(): any {
-        return this._colCode;
-    }
+    get colCode(): any { return this._colCode; }
 
     @Output() itemChange = new EventEmitter<any>();
-
-    selectedTab = 0;
 
     onToggleMode = (eventArgs) => this.mode = eventArgs.mode;
 
     selectedColumn: any;
     selectedSection: any;
-    prepareEditor(colCode) {
+    prepareEditor() {
         this.selectedColumn = null;
         this.selectedSection = null;
-        if (this.rowCode && colCode && this.section) {
-            if (this.section.columns) {
-                const index = _.findIndex(this.section.columns, { code: colCode });
-                this.selectedColumn = this.section.columns[index];
-                this.recordDataToEdit = (this.selectedColumn.datatype === DATATYPES.list) ? null : this.selectedColumn;
-                this.prevColumn = (index > 0) ? this.section.columns[index - 1] : null;
-                this.nextColumn = (index < this.section.columns.length - 1) ? this.section.columns[index + 1] : null;
-            }
-            this.selectedTab = 0;
+        if (this.rowCode && this.colCode && this.section) {
             const found = _.find(this.section.rows, { code: this.rowCode })
-            this.selectedSection = _.find(found.columns, { colCode });
+            if (found) {
+                this.selectedSection = _.find(found.columns, { colCode: this.colCode });
+                this.recordDataToEdit = (this.selectedSection.datatype === DATATYPES.list) ? null : this.selectedSection;
+
+                if (this.section.columns) {
+                    const index = _.findIndex(this.section.columns, { code: this.colCode });
+                    this.selectedColumn = this.section.columns[index];
+                    this.prevColumn = (index > 0) ? this.section.columns[index - 1] : null;
+                    this.nextColumn = (index < this.section.columns.length - 1) ? this.section.columns[index + 1] : null;
+                }
+            }
         }
     }
 
@@ -81,4 +86,7 @@ export class MatrixEditorComponent {
     closeEditor = () => this.close.emit(null);
 
     onItemSelected = (data) => this.recordDataToEdit = { data };
+
+    onChangeColumn = (colCode) => this.changeSection.emit({ colCode, rowCode: this.rowCode, section: this.section });
+    onChangeRow = (rowCode) => this.changeSection.emit({ colCode: this.colCode, rowCode, section: this.section });
 }

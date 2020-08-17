@@ -47,11 +47,12 @@
             <ngx-md [data]="section.summary" class="text-muted"></ngx-md>
 
             <div class="mt-3 mb-5">
-                <app-editors [section]="section" [mode]="mode" (save)="onUpdated($event, section)"
+                <app-editors *ngIf="section" [section]="section" [mode]="mode" (save)="onUpdated($event, section)"
                     (toggleMode)="onToggleMode($event, section)" (itemSelected)="onItemSelected($event)">
                 </app-editors>
 
-                <app-matrix-customizer *ngIf="section.type === 'matrix'" [matrix]="section"  (save)="onCustomizeMatrix($event)">
+                <app-matrix-customizer *ngIf="section.type === 'matrix'" [matrix]="section"
+                    (save)="onCustomizeMatrix($event)">
                 </app-matrix-customizer>
             </div>
         </div>

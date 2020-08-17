@@ -103,7 +103,6 @@ export class ModelerHomeComponent implements ComponentCanDeactivate, OnInit, OnD
         this.selectedSection$ = this.store$.select(p => p.modeler.selectedSection)
             .subscribe(selectedSection => {
                 if (selectedSection) {
-                    console.log('selectedSection', selectedSection);
                     this.editorMode = selectedSection.mode;
                     this.section = selectedSection.section;
                     if (this.section && this.section.type === SECTIONTYPES.matrix &&

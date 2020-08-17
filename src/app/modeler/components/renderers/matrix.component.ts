@@ -18,8 +18,6 @@ export class MatrixRendererComponent {
     onShowEditor = (eventArgs) => this.showEditor.emit(eventArgs);
 
     onShowItemDetails(section) {
-        // this.section.selectedItem = section;
-        // console.log('onShowItemDetails', section);
         this.onShowEditor({ mode: 'VIEW', section: this.section, rowCode: section.rowCode, colCode: section.colCode });
     }
 }

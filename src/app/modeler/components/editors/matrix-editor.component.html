@@ -12,13 +12,13 @@
                                 </a>
                                 <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu-right">
                                     <button ngbDropdownItem *ngFor="let col of section.columns"
-                                        (click)="prepareEditor(col.code)">
+                                        (click)="onChangeColumn(col.code)">
                                         {{col.title}}
                                     </button>
                                 </div>
                             </div>
                             <button class="btn btn-link text-dark pl-0 text-nowrap" *ngIf="prevColumn"
-                                (click)="prepareEditor(prevColumn.code)">
+                                (click)="onChangeColumn(prevColumn.code)">
                                 <fa-icon icon="chevron-left" size="sm" class="text-muted"></fa-icon>
                                 {{prevColumn.title}}
                             </button>
@@ -27,7 +27,7 @@
                     </div>
                     <div class="col-md-6 text-right">
                         <button class="btn btn-link text-dark text-nowrap" *ngIf="nextColumn"
-                            (click)="prepareEditor(nextColumn.code)">
+                            (click)="onChangeColumn(nextColumn.code)">
                             {{nextColumn.title}}
                             <fa-icon icon="chevron-right" size="sm" class="text-muted"></fa-icon>
                         </button>
@@ -54,13 +54,14 @@
                         <div class="col-md-3">
                             <button class="btn btn-sm mb-2 w-100 text-left rounded-0"
                                 [ngClass]="{'btn-primary': row.code === rowCode, 'btn-link': row.code !== rowCode}"
-                                *ngFor="let row of section.rows">
+                                *ngFor="let row of section.rows" (click)="onChangeRow(row.code)">
                                 {{row.title}}
                             </button>
                         </div>
                         <div class="col-md-9">
-                            <app-editors [section]="selectedSection" [mode]="mode" (save)="onUpdated($event)"
-                                (toggleMode)="onToggleMode($event)" (itemSelected)="onItemSelected($event)">
+                            <app-editors *ngIf="selectedSection" [section]="selectedSection" [mode]="mode"
+                                (save)="onUpdated($event)" (toggleMode)="onToggleMode($event)"
+                                (itemSelected)="onItemSelected($event)">
                             </app-editors>
                         </div>
                     </div>

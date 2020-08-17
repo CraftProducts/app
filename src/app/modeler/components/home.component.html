@@ -3,7 +3,7 @@
 <ng-container *ngIf="model">
     <div class="main-container">
         <div class="body-container" [style.zoom]="(zoom/100)">
-            
+
             <ng-container [ngSwitch]="model.layout">
                 <div class="container-fluid mb-5" *ngSwitchCase="'freeflow'">
                     <app-freeflow-layout class="w-100" [layout]="model" (showEditor)="onShowEditor($event)">
@@ -32,8 +32,9 @@
 <p-sidebar [(visible)]="matrixEditorVisible" [fullScreen]="true" (onHide)="onManageSectionEditor()"
     [showCloseIcon]="false">
 
-    <app-matrix-editor mode="view" [(section)]="section" [rowCode]="rowCode" [colCode]="colCode" (close)="onManageSectionEditor()"
-        (itemChange)="onItemChanged($event, section)">
+    <app-matrix-editor mode="view" [(section)]="section" [rowCode]="rowCode" [colCode]="colCode"
+        (close)="onManageSectionEditor()" (itemChange)="onItemChanged($event, section)"
+        (changeSection)="onShowEditor($event)">
     </app-matrix-editor>
 </p-sidebar>
 
