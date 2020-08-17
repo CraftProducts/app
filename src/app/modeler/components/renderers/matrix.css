@@ -1,0 +1,36 @@
+.matrix table thead tr th {
+    background: #dddddd;
+    position: relative;
+}
+
+.matrix table thead tr th::after {
+    content: " ";
+    display: block;
+    width: 0;
+    height: 0;
+    border-top: 18pt solid transparent; /* Go big on the size, and let overflow hide */
+    border-bottom: 18pt solid transparent;
+    border-left: 18pt solid #dddddd;
+    margin-top: -18pt;
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    z-index: 2;
+}
+
+.matrix table thead tr th::before {
+    content: " ";
+    display: block;
+    width: 0;
+    height: 0;
+    border-top: 18pt solid transparent;
+    border-bottom: 18pt solid transparent;
+    border-left: 18pt solid #fff;
+    margin-top: -18pt;
+    position: absolute;
+    top: 50%;
+    margin-left: 2px;
+    left: 100%;
+    z-index: 1;
+}
+

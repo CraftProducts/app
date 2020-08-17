@@ -11,6 +11,7 @@ export class SectionEditorComponent {
     @Output() sectionSelected = new EventEmitter<any>();
 
     @Output() update = new EventEmitter<any>();
+    @Output() customizeMatrix = new EventEmitter<any>();
 
     @Input() sections: any;
     @Input() data: string;
@@ -52,16 +53,14 @@ export class SectionEditorComponent {
     }
 
     onItemChanged(item, section) {
-        console.error('onItemChanged', item, section);
         section.isDirty = true;
         this.update.emit(section);
     }
-    closeEditor() {
-        this.close.emit(null);
-    }
 
-    onItemSelected(data) {
-        console.log('onItemSelected', data);
-        this.recordDataToEdit = { data };
-    }
+    closeEditor = () => this.close.emit(null);
+
+    onItemSelected = (data) => this.recordDataToEdit = { data };
+
+    onCustomizeMatrix = (args) => this.customizeMatrix.emit(args);
+
 }

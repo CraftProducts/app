@@ -1,0 +1,48 @@
+<div class="alert border" [ngClass]="{'bg-white': isEditMode}" *ngIf="dataToEdit">
+
+    <ul ngbNav #nav="ngbNav" class="nav-tabs mt-2" [destroyOnHide]="false">
+        <li [ngbNavItem]="1">
+            <a ngbNavLink>
+                <h6 class="mb-0">{{dataToEdit.properties.row.title}}</h6>
+            </a>
+            <ng-template ngbNavContent>
+                <div class="text-muted font-italic mb-3" *ngIf="dataToEdit.properties.row.summary">
+                    {{dataToEdit.properties.row.summary}}</div>
+                <app-matrix-list-customizer [(list)]="dataToEdit.rows" [hasDatatype]="true"
+                    (editingRecord)="onEditingRecord($event)" [isEditMode]="isEditMode">
+                </app-matrix-list-customizer>
+            </ng-template>
+        </li>
+
+        <li [ngbNavItem]="2">
+            <a ngbNavLink>
+                <h6 class="mb-0">{{dataToEdit.properties.column.title}}</h6>
+            </a>
+            <ng-template ngbNavContent>
+                <div class="text-muted font-italic mb-3" *ngIf="dataToEdit.properties.column.summary">
+                    {{dataToEdit.properties.column.summary}}</div>
+                <app-matrix-list-customizer [(list)]="dataToEdit.columns" (editingRecord)="onEditingRecord($event)"
+                    [isEditMode]="isEditMode">
+                </app-matrix-list-customizer>
+            </ng-template>
+        </li>
+    </ul>
+    <div [ngbNavOutlet]="nav" class="pt-2"></div>
+</div>
+
+<div class="text-right">
+
+    <button class="btn btn-primary" *ngIf="!isEditMode" (click)="onEdit()">
+        <fa-icon icon="pencil-alt" class=" mr-1"></fa-icon> Edit
+    </button>
+
+    <div *ngIf="isEditMode && !editingRecord">
+        <button class="btn btn-primary mr-2" (click)="onSave()">
+            <fa-icon icon="save" class=" mr-1"></fa-icon> Save
+        </button>
+
+        <button class="btn btn-light" (click)="onReset()">
+            <fa-icon icon="redo" class=" mr-1"></fa-icon> Reset
+        </button>
+    </div>
+</div>

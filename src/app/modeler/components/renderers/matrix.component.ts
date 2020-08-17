@@ -6,27 +6,20 @@ import { Store } from '@ngrx/store';
 
 @Component({
     selector: 'app-matrix',
-    templateUrl: './matrix.component.html'
+    templateUrl: './matrix.component.html',
+    styleUrls: ['./matrix.css']
 })
 export class MatrixRendererComponent {
     @Input() section: any;
     @Output() showEditor = new EventEmitter<any>();
 
-    isCustomizerVisible = false;
-
-    constructor(public store$: Store<ModelerState>) {
-    }
+    constructor(public store$: Store<ModelerState>) { }
 
     onShowEditor = (eventArgs) => this.showEditor.emit(eventArgs);
 
     onShowItemDetails(section) {
-        this.section.selectedItem = section;
-        this.onShowEditor({ mode: 'VIEW', section: this.section });
-    }
-
-    onClose = () => this.isCustomizerVisible = false;
-    onCustomize(args) {
-        this.onClose();
-        this.store$.dispatch(new CustomizeSectionAction(args));
+        // this.section.selectedItem = section;
+        // console.log('onShowItemDetails', section);
+        this.onShowEditor({ mode: 'VIEW', section: this.section, rowCode: section.rowCode, colCode: section.colCode });
     }
 }

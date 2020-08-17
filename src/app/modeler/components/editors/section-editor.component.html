@@ -51,9 +51,8 @@
                     (toggleMode)="onToggleMode($event, section)" (itemSelected)="onItemSelected($event)">
                 </app-editors>
 
-                <app-matrix-editor *ngIf="section.type === 'matrix'" [mode]="mode" [(section)]="section"
-                    (itemChange)="onItemChanged($event, section)">
-                </app-matrix-editor>
+                <app-matrix-customizer *ngIf="section.type === 'matrix'" [matrix]="section"  (save)="onCustomizeMatrix($event)">
+                </app-matrix-customizer>
             </div>
         </div>
     </as-split-area>

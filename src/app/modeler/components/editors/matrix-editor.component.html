@@ -1,79 +1,85 @@
-<div *ngIf="section" class="card card-info">
-    <div class="card-header alert-warning p-1">
-        <div class="row">
-            <div class="col-md-3">
-                <div class="btn-group">
-                    <div ngbDropdown display="dynamic">
-                        <a class="btn btn-link text-dark hide-caret" id="dropdownBasic1" ngbDropdownToggle
-                            title="All sections">
-                            <fa-icon icon="bars" [fixedWidth]="true" size="lg"></fa-icon>
-                        </a>
-                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu-right">
-                            <button ngbDropdownItem *ngFor="let col of section.columns"
-                                (click)="prepareEditor(col.code)">
-                                {{col.title}}
+<as-split [disabled]="true">
+    <as-split-area size="50" class="bg-light">
+        <div class="p-1">
+            <div *ngIf="section">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="btn-group">
+                            <div ngbDropdown display="dynamic">
+                                <a class="btn btn-link text-dark hide-caret" id="dropdownBasic1" ngbDropdownToggle
+                                    title="All sections">
+                                    <fa-icon icon="bars" [fixedWidth]="true" size="lg"></fa-icon>
+                                </a>
+                                <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu-right">
+                                    <button ngbDropdownItem *ngFor="let col of section.columns"
+                                        (click)="prepareEditor(col.code)">
+                                        {{col.title}}
+                                    </button>
+                                </div>
+                            </div>
+                            <button class="btn btn-link text-dark pl-0 text-nowrap" *ngIf="prevColumn"
+                                (click)="prepareEditor(prevColumn.code)">
+                                <fa-icon icon="chevron-left" size="sm" class="text-muted"></fa-icon>
+                                {{prevColumn.title}}
                             </button>
                         </div>
+
                     </div>
-                    <button class="btn btn-link text-dark pl-0 text-nowrap" *ngIf="prevColumn"
-                        (click)="prepareEditor(prevColumn.code)">
-                        <fa-icon icon="chevron-left" size="sm" class="text-muted"></fa-icon>
-                        {{prevColumn.title}}
-                    </button>
+                    <div class="col-md-6 text-right">
+                        <button class="btn btn-link text-dark text-nowrap" *ngIf="nextColumn"
+                            (click)="prepareEditor(nextColumn.code)">
+                            {{nextColumn.title}}
+                            <fa-icon icon="chevron-right" size="sm" class="text-muted"></fa-icon>
+                        </button>
+                    </div>
                 </div>
 
-            </div>
-            <div class="col-md-6 text-center text-capitalize text-truncate pt-1">
-                <h4>{{selectedForm.title}}</h4>
-            </div>
-            <div class="col-md-3 text-right">
-                <button class="btn btn-link text-dark text-nowrap" *ngIf="nextColumn"
-                    (click)="prepareEditor(nextColumn.code)">
-                    {{nextColumn.title}}
-                    <fa-icon icon="chevron-right" size="sm" class="text-muted"></fa-icon>
-                </button>
-            </div>
-        </div>
-    </div>
-    <div class="card-body">
-        <div *ngIf="selectedForm">
-            <div *ngFor="let subSection of selectedForm.rows;let i = index">
-                <h5>{{subSection.title}}</h5>
-                <div class="ml-3">
-                    <app-editors [section]="subSection.column" [mode]="mode" (save)="onUpdated($event)"
-                        (toggleMode)="onToggleMode($event)">
-                    </app-editors>
+                <div class="ml-5 mr-5 mt-3">
+                    <div class="row" *ngIf="selectedColumn">
+                        <div class="offset-md-3 col-md-9">
+                            <sub class="text-uppercase text-muted"
+                                *ngIf="section.properties && section.properties.column">
+                                {{section.properties.column.title}}
+                            </sub>
+                            <h1>{{selectedColumn.title}}</h1>
+                            <ngx-md [data]="selectedColumn.summary" class="text-muted"></ngx-md>
+                        </div>
+                    </div>
+
+                    <sup class="text-uppercase text-muted" *ngIf="section.properties && section.properties.row">
+                        {{section.properties.row.title}}
+                    </sup>
+
+                    <div class="row" *ngIf="section.rows">
+                        <div class="col-md-3">
+                            <button class="btn btn-sm mb-2 w-100 text-left rounded-0"
+                                [ngClass]="{'btn-primary': row.code === rowCode, 'btn-link': row.code !== rowCode}"
+                                *ngFor="let row of section.rows">
+                                {{row.title}}
+                            </button>
+                        </div>
+                        <div class="col-md-9">
+                            <app-editors [section]="selectedSection" [mode]="mode" (save)="onUpdated($event)"
+                                (toggleMode)="onToggleMode($event)" (itemSelected)="onItemSelected($event)">
+                            </app-editors>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <!-- <div class="text-muted">{{selectedForm.summary}}</div>
-            <ul ngbNav #navMatrix="ngbNav" class="nav-tabs" [(activeId)]="selectedTab" [destroyOnHide]="false">
-                <li *ngFor="let subSection of selectedForm.rows;let i = index" [ngbNavItem]="i">
-                    <a ngbNavLink>{{subSection.title}}</a>
-                    <ng-template ngbNavContent>
-                        <app-editors [section]="subSection.column" [mode]="mode" (save)="onUpdated($event)"
-                            (toggleMode)="onToggleMode($event)">
-                        </app-editors>
-                    </ng-template>
-                </li>
-            </ul>
-            <div [ngbNavOutlet]="navMatrix" class="pt-3"></div> -->
+        </div>
+    </as-split-area>
+    <as-split-area size="50" class="p-3">
+        <div class="text-right">
+            <button class="btn btn-link text-danger" (click)="closeEditor()">
+                <fa-icon [icon]="['far', 'times-circle']" size="2x"></fa-icon>
+            </button>
         </div>
 
-        <!-- <app-editors *ngIf="section.selectedItem" [section]="section.selectedItem" [mode]="mode" (save)="onUpdated($event)"
-        (toggleMode)="onToggleMode($event)">
-    </app-editors> -->
+        <div class="p-5">
+            <app-record-editor [item]="recordDataToEdit.data" (itemChange)="onItemChanged($event, recordDataToEdit)"
+                *ngIf="recordDataToEdit" [showDelete]="false">
+            </app-record-editor>
+        </div>
 
-        <!-- <app-text-editor *ngIf="section.selectedItem.datatype === 'text'" [mode]="mode" [(data)]="section.selectedItem.data"
-        (toggleMode)="onToggleMode($event)" (save)="onUpdated($event)" (itemChange)="onItemChanged($event)">
-    </app-text-editor>
-
-    <app-list-editor *ngIf="section.selectedItem.datatype === 'list'" [mode]="mode" [(data)]="section.selectedItem.data"
-        (toggleMode)="onToggleMode($event)" (save)="onUpdated($event)" (itemChange)="onItemChanged($event)">
-    </app-list-editor>
-
-    <app-select-editor *ngIf="section.selectedItem.datatype === 'select'" [mode]="mode"
-        [options]="section.selectedItem.options" [(data)]="section.selectedItem.data"
-        (toggleMode)="onToggleMode($event)" (save)="onUpdated($event)" (itemChange)="onItemChanged($event)">
-    </app-select-editor> -->
-    </div>
-</div>
+    </as-split-area>
+</as-split>

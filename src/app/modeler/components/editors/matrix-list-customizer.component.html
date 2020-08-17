@@ -1,0 +1,53 @@
+<div *ngIf="!recordToEdit">
+    <div *ngFor="let record of getOrderedList(); let idx = index">
+        <div class="row">
+            <div class="col-md-8">
+                <fa-icon class="text-muted float-left" size="sm" [title]="record.datatype" [icon]="
+                        record.datatype === 'text' ? 'align-left' :
+                        record.datatype === 'list' ? 'list' :
+                        record.datatype === 'select' ? 'indent': '' 
+                    " *ngIf="hasDatatype"></fa-icon>
+                <div [ngClass]="{'ml-4': hasDatatype}">
+                    <b class="text-muted">{{record.title}} </b>
+                    <div class="text-muted">
+                        <div>{{record.summary}}</div>
+                        <ul *ngIf="hasDatatype && record.datatype === 'select' && record.options"
+                            class="mt-2 text-muted">
+                            <li *ngFor="let option of record.options">{{option.title}}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 text-right">
+                <div class="btn-group btn-group-sm" *ngIf="isEditMode">
+                    <button class="btn btn-sm btn-link text-muted" *ngIf="list && idx < (list.length - 1)"
+                        (click)="onMovedown(idx)">
+                        <fa-icon icon="long-arrow-alt-down" [fixedWidth]="true"></fa-icon>
+                    </button>
+                    <button class="btn btn-sm btn-link text-muted" (click)="onMoveup(idx)" *ngIf="idx > 0"
+                        [ngStyle]="{'margin-left.rem': list && idx === (list.length - 1) ? 2 : 0}">
+                        <fa-icon icon="long-arrow-alt-up" [fixedWidth]="true"></fa-icon>
+                    </button>
+
+                    <button class="btn btn-sm btn-link text-primary" (click)="onEdit(idx)">
+                        <fa-icon icon="pencil-alt" [fixedWidth]="true"></fa-icon>
+                    </button>
+                    <button class="btn btn-sm btn-link text-danger" (click)="onRemove(idx)">
+                        <fa-icon icon="times" [fixedWidth]="true"></fa-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <hr *ngIf="list && idx < (list.length - 1)">
+    </div>
+
+    <div class="mt-3" *ngIf="isEditMode">
+        <button class="btn btn-sm btn-link pl-0" (click)='onAdd()'>
+            <fa-icon icon="plus" class="mr-1"></fa-icon> add
+        </button>
+    </div>
+</div>
+
+<app-matrix-record-customizer *ngIf="recordToEdit" [hasDatatype]="hasDatatype" [record]="recordToEdit"
+    (cancel)="onCancelEdit()" (update)="onUpdateEdit($event)">
+</app-matrix-record-customizer>

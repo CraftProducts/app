@@ -7,6 +7,7 @@ import { DATATYPES } from '../../modeler-utils';
     templateUrl: './matrix-list-customizer.component.html'
 })
 export class MatrixListCustomizerComponent {
+    @Input() isEditMode: boolean;
     @Input() list: any;
     @Output() listChange = new EventEmitter<any>();
 

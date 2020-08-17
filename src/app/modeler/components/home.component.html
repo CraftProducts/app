@@ -2,16 +2,16 @@
 
 <ng-container *ngIf="model">
     <div class="main-container">
-        <div class="body-container">
-            <ng-container [ngSwitch]="model.layout" [style.zoom]="(zoom/100)">
+        <div class="body-container" [style.zoom]="(zoom/100)">
+            
+            <ng-container [ngSwitch]="model.layout">
                 <div class="container-fluid mb-5" *ngSwitchCase="'freeflow'">
-                    <app-freeflow-layout class="w-100" [layout]="model"
-                        (showEditor)="onManageSectionEditor($event.section.code)">
+                    <app-freeflow-layout class="w-100" [layout]="model" (showEditor)="onShowEditor($event)">
                     </app-freeflow-layout>
                 </div>
 
                 <app-split-layout *ngSwitchDefault class="w-100 ml-2 mr-2 mb-2" [layout]="model"
-                    (showEditor)="onManageSectionEditor($event.section.code)">
+                    (showEditor)="onShowEditor($event)">
                 </app-split-layout>
             </ng-container>
         </div>
@@ -26,8 +26,15 @@
 <p-sidebar [(visible)]="editorVisible" [fullScreen]="true" (onHide)="onManageSectionEditor()" [showCloseIcon]="false">
     <app-section-editor [mode]="editorMode" [sections]="sections" [section]="section" [(data)]="model"
         (sectionSelected)="onManageSectionEditor($event)" (close)="onManageSectionEditor()"
-        (update)="onSectionUpdated($event)">
+        (update)="onSectionUpdated($event)" (customizeMatrix)="onCustomizeMatrix($event)">
     </app-section-editor>
+</p-sidebar>
+<p-sidebar [(visible)]="matrixEditorVisible" [fullScreen]="true" (onHide)="onManageSectionEditor()"
+    [showCloseIcon]="false">
+
+    <app-matrix-editor mode="view" [(section)]="section" [rowCode]="rowCode" [colCode]="colCode" (close)="onManageSectionEditor()"
+        (itemChange)="onItemChanged($event, section)">
+    </app-matrix-editor>
 </p-sidebar>
 
 <div class="zoom-slider" *ngIf="model">

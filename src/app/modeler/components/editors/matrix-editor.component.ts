@@ -7,81 +7,64 @@ import { DATATYPES } from '../../modeler-utils';
     templateUrl: './matrix-editor.component.html'
 })
 export class MatrixEditorComponent {
+    @Output() close = new EventEmitter<any>();
+
+    recordDataToEdit: any;
     prevColumn: any;
     nextColumn: any;
 
     @Input() mode: string;
+    @Input() rowCode: string;
 
-    _section: any;
-    @Input() set section(value: any) {
-        console.log('section', value);
-        this._section = value;
-        if (value) {
-            if (value.selectedItem) {
-                this.rowCode = value.selectedItem.rowCode;
-                this.colCode = value.selectedItem.colCode;
-            }
-            else if (value.columns && value.columns.length > 0) {
-                this.prepareEditor(value.columns[0].code);
-            }
-        }
+    @Input() section: any;
+
+    _colCode: any;
+    @Input() set colCode(value: any) {
+        this._colCode = value;
+        this.prepareEditor(value);
     }
-    get section(): any {
-        return this._section;
+    get colCode(): any {
+        return this._colCode;
     }
 
     @Output() itemChange = new EventEmitter<any>();
 
     selectedTab = 0;
 
-    rowCode: string = "";
-    colCode: string = "";
+    onToggleMode = (eventArgs) => this.mode = eventArgs.mode;
 
-    onToggleMode = (eventArgs) => {
-        this.mode = eventArgs.mode;
-    }
-    selectedForm: any;
+    selectedColumn: any;
+    selectedSection: any;
     prepareEditor(colCode) {
-        this.selectedForm = { code: colCode };
-        if (colCode) {
-            if (this.section && this.section.columns) {
+        this.selectedColumn = null;
+        this.selectedSection = null;
+        if (this.rowCode && colCode && this.section) {
+            if (this.section.columns) {
                 const index = _.findIndex(this.section.columns, { code: colCode });
-                this.selectedForm = this.section.columns[index];
+                this.selectedColumn = this.section.columns[index];
+                this.recordDataToEdit = (this.selectedColumn.datatype === DATATYPES.list) ? null : this.selectedColumn;
                 this.prevColumn = (index > 0) ? this.section.columns[index - 1] : null;
                 this.nextColumn = (index < this.section.columns.length - 1) ? this.section.columns[index + 1] : null;
             }
             this.selectedTab = 0;
-            this.selectedForm.rows = _.map(this.section.rows, (row) => {
-                const record: any = _.pick(row, ['code', 'title', 'datatype', 'property']);
-                record.column = _.find(row.columns, { colCode })
-                return record;
-            });
-        }
-    }
-    onChange() {
-        console.log('before', this.section.selectedItem);
-        if (this.section.selectedItem) {
-            const rowFound = _.find(this.section.rows, { code: this.rowCode });
-            if (rowFound && rowFound.columns && rowFound.columns.length > 0) {
-                this.section.selectedItem = _.find(rowFound.columns, { colCode: this.colCode });
-                console.log('after', this.section.selectedItem);
-            }
+            const found = _.find(this.section.rows, { code: this.rowCode })
+            this.selectedSection = _.find(found.columns, { colCode });
         }
     }
 
     onUpdated(updatedData) {
-        if (this.section.selectedItem) {
-            this.section.selectedItem.data = updatedData;
-            this.section.selectedItem.isDirty = true;
+        if (this.selectedSection) {
+            this.selectedSection.data = updatedData;
+            this.selectedSection.isDirty = true;
             this.section.data = this.section.data || [];
 
-            const rowCode = this.section.selectedItem.rowCode;
-            const colCode = this.section.selectedItem.colCode;
+            const rowCode = this.selectedSection.rowCode;
+            const colCode = this.selectedSection.colCode;
             const found = _.find(this.section.data, { rowCode, colCode });
             if (found) {
                 found.data = updatedData;
             } else {
-                this.section.data.push(this.section.selectedItem);
+                this.section.data.push(this.selectedSection);
             }
         }
 
@@ -89,5 +72,13 @@ export class MatrixEditorComponent {
         this.mode = 'VIEW';
     }
 
-    onItemChanged = (args) => this.itemChange.emit(args);
+    //onItemChanged = (args) => this.itemChange.emit(args);
+    onItemChanged(item, section) {
+        section.isDirty = true;
+        this.itemChange.emit(section);
+    }
+
+    closeEditor = () => this.close.emit(null);
+
+    onItemSelected = (data) => this.recordDataToEdit = { data };
 }

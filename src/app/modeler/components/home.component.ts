@@ -10,6 +10,7 @@ import { SECTIONTYPES, extractSections, prepareTemplateForDownload } from '../mo
 import { filter, tap, map } from 'rxjs/operators';
 import { LoadTemplateAction } from 'src/app/+state/app.actions';
 import { dump } from 'js-yaml';
+import { CustomizeSectionAction } from '../+state/modeler.actions';
 
 @Component({
     selector: 'app-modeler-home',
@@ -39,8 +40,12 @@ export class ModelerHomeComponent implements ComponentCanDeactivate, OnInit, OnD
     editorVisible = false;
     editorMode = "VIEW";
 
+    matrixEditorVisible = false;
+    rowCode: string;
+    colCode: string;
+
     selectedSection$: Subscription;
-    section: string;
+    section: any;
 
     combined$: Subscription;
     model: any;
@@ -80,18 +85,36 @@ export class ModelerHomeComponent implements ComponentCanDeactivate, OnInit, OnD
                     if (this.sections.length === 0) {
                         extractSections(this.model, ['code', 'title', 'summary', 'icon', 'type', 'datatype', 'rows', 'columns', 'properties'], this.sections);
                     }
-                    this.onSectionSelected(qp.section);
+                    const sectionCode = qp.section;
+                    this.rowCode = qp.row && qp.row.length > 0 ? qp.row : "";
+                    this.colCode = qp.col && qp.col.length > 0 ? qp.col : "";
+                    let payload = (sectionCode && sectionCode.length > 0)
+                        ? {
+                            mode: this.editorMode,
+                            section: this.searchSectionInLayout(this.loadedTemplate, sectionCode),
+                            col: this.colCode,
+                            row: this.rowCode
+                        }
+                        : null;
+                    this.store$.dispatch(new SelectSectionAction(payload));
                 }
             });
 
         this.selectedSection$ = this.store$.select(p => p.modeler.selectedSection)
             .subscribe(selectedSection => {
                 if (selectedSection) {
+                    console.log('selectedSection', selectedSection);
                     this.editorMode = selectedSection.mode;
                     this.section = selectedSection.section;
-                    this.editorVisible = true;
+                    if (this.section && this.section.type === SECTIONTYPES.matrix &&
+                        selectedSection.col && selectedSection.col.length > 0) {
+                        this.matrixEditorVisible = true;
+                    } else {
+                        this.editorVisible = true;
+                    }
                 } else {
                     this.editorVisible = false;
+                    this.matrixEditorVisible = false;
                 }
             });
     }
@@ -113,8 +136,6 @@ export class ModelerHomeComponent implements ComponentCanDeactivate, OnInit, OnD
                 map(p => p.templateCode)
             )
             .subscribe((templateCode) => this.store$.dispatch(new LoadTemplateAction({ templateCode })));
-
-        // const queryParamsQ = this.activatedRoute.queryParams.pipe(map(p => p.mode));
 
         this.loadedTemplate$ = this.store$.select(p => p.app.loadedTemplate)
             .pipe(filter(p => p), tap(p => this.loadedTemplate = p))
@@ -199,24 +220,6 @@ export class ModelerHomeComponent implements ComponentCanDeactivate, OnInit, OnD
         document.body.removeChild(element);
     }
 
-    onManageSectionEditor(sectionCode = '') {
-        const queryParams: any = { view: 'details' };
-        if (sectionCode && sectionCode.length > 0) {
-            queryParams.section = sectionCode;
-        }
-        this.router.navigate([], { queryParams })
-    }
-
-    onSectionSelected(sectionCode) {
-        let payload = null;
-        if (sectionCode && sectionCode.length > 0) {
-            payload = {
-                mode: this.editorMode,
-                section: this.searchSectionInLayout(this.loadedTemplate, sectionCode)
-            };
-        }
-        this.store$.dispatch(new SelectSectionAction(payload));
-    }
     searchSectionInLayout(layout, sectionCode) {
         if (layout) {
             if ((layout.type === SECTIONTYPES.panel || layout.type === SECTIONTYPES.matrix) &&
@@ -246,5 +249,40 @@ export class ModelerHomeComponent implements ComponentCanDeactivate, OnInit, OnD
             sectionCode = (this.sections && this.sections.length > 0) ? this.sections[0].code : '';
         }
         this.onManageSectionEditor(sectionCode);
+    }
+
+    onCustomizeMatrix(args) {
+        this.store$.dispatch(new CustomizeSectionAction(args));
+    }
+
+    onManageSectionEditor(sectionCode = '') {
+        const queryParams: any = { view: 'details' };
+        if (sectionCode && sectionCode.length > 0) {
+            queryParams.section = sectionCode;
+        }
+        this.router.navigate([], { queryParams })
+    }
+
+    onShowEditor(args) {
+        const queryParams: any = { view: 'details' };
+        const section = args.section;
+        if (section) {
+            if (section.code && section.code.length > 0) {
+                queryParams.section = section.code;
+            }
+            if (args.colCode && args.colCode.length > 0) {
+                queryParams.row = args.rowCode;
+                queryParams.col = args.colCode;
+            }
+        }
+        if (args.command && args.command.length > 0) {
+            queryParams.command = args.command;
+        }
+        this.router.navigate([], { queryParams })
+    }
+
+    onItemChanged(item, section) {
+        section.isDirty = true;
+        this.onSectionUpdated(section)
     }
 }

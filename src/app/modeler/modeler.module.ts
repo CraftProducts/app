@@ -36,9 +36,9 @@ import { MetadataRendererComponent } from './components/renderers/metadata.compo
 import { ImageEditorComponent } from './components/editors/image-editor.component';
 import { ThemeEditorComponent } from './components/themes/theme-editor.component';
 import { ThemeListEditorComponent } from './components/themes/theme-list-editor.component';
-import { MatrixCustomizerComponent } from './components/renderers/matrix-customizer.component';
-import { MatrixListCustomizerComponent } from './components/renderers/matrix-list-customizer.component';
-import { MatrixRecordCustomizerComponent } from './components/renderers/matrix-record-customizer.component';
+import { MatrixCustomizerComponent } from './components/editors/matrix-customizer.component';
+import { MatrixListCustomizerComponent } from './components/editors/matrix-list-customizer.component';
+import { MatrixRecordCustomizerComponent } from './components/editors/matrix-record-customizer.component';
 import { DragDropModule } from 'primeng/dragdrop';
 import { SplashScreenComponent } from './components/splash-screen.component';
 import { IntroductionComponent } from './components/introduction.component';

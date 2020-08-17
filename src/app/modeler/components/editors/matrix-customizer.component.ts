@@ -6,6 +6,7 @@ import * as _ from 'lodash';
     templateUrl: './matrix-customizer.component.html'
 })
 export class MatrixCustomizerComponent {
+    isEditMode = false;
     dataToEdit: any;
     _matrix: any;
     @Input() set matrix(value: any) {
@@ -19,7 +20,11 @@ export class MatrixCustomizerComponent {
         return this._matrix;
     }
 
-    onReset = () => this.dataToEdit = _.cloneDeep(this.matrix);
+    onEdit = () => this.isEditMode = true;
+    onReset = () => {
+        this.isEditMode = false;
+        this.dataToEdit = _.cloneDeep(this.matrix);
+    }
 
     @Output() close = new EventEmitter<any>();
     onClose() {
