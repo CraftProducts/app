@@ -9,6 +9,7 @@ export class PanelRendererComponent {
     @Input() parentCode: string;
     @Input() section: any;
     @Output() showEditor = new EventEmitter<any>();
+    @Input() allowDragdrop = false;
 
     onShowEditor(eventArgs) {
         this.showEditor.emit(eventArgs);
@@ -23,20 +24,20 @@ export class PanelRendererComponent {
     }
 
     draggedItem: any;
-    dragStart(event, item, dragContainer) {
+    dragStart(item, dragContainer) {
         this.draggedItem = item;
-        console.log('dragStart', event, this.draggedItem, dragContainer);
+        console.log('dragStart', this.draggedItem, dragContainer);
     }
 
-    drop(event, dropContainer) {
-        console.log('drop', event, this.draggedItem, dropContainer);
-        if (this.draggedItem) {
-            this.draggedItem = null;
-        }
+    drop(dropContainer) {
+        console.log('drop', this.draggedItem, dropContainer);
+        // if (this.draggedItem) {
+        //     this.draggedItem = null;
+        // }
     }
 
-    dragEnd(event) {
-        console.log('dragEnd', event, this.draggedItem);
+    dragEnd() {
+        console.log('dragEnd', this.draggedItem);
         //setTimeout(() => this.draggedItem = null, 10000);
     }
 

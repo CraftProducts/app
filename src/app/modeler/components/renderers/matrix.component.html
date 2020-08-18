@@ -28,7 +28,7 @@
                     [style.color]="col.cellTheme.color">
 
                     <div class="mb-1" style="width: 375px;">
-                        <app-panel [parentCode]="section.code" [section]="row.columns[idx]"
+                        <app-panel [allowDragdrop]="true" [parentCode]="section.code" [section]="row.columns[idx]"
                             (showEditor)="onShowItemDetails(row.columns[idx])">
                         </app-panel>
                     </div>
