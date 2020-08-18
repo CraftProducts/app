@@ -40,23 +40,22 @@
                 </div>
             </ng-container>
 
-            <div *ngSwitchCase="'list'" style="min-height: 40pt;">
+            <div *ngSwitchCase="'list'" style="min-height: 40pt;" [id]="section.colCode + '_' + section.rowCode"
+                cdkDropList (cdkDropListDropped)="cdkDrop($event)" [cdkDropListData]="section"
+                [cdkDropListConnectedTo]="sectionCodes">
 
-                <div style="min-width:40pt;min-height: 40pt;" class="bg-light drop-container" pDroppable="LISTITEMS"
-                    (onDrop)="drop(section)" [pDroppableDisabled]="!allowDragdrop">
-                </div>
                 <div *ngIf="section.data.list && section.data.list.length > 0">
-                    <button class="btn panel-listitem-{{section.properties.view}}"
-                        (click)="onShowItemDetails(item, section)" [title]="item.title"
-                        *ngFor="let item of section.data.list" [style.background-color]="section.theme.tile.bgColor"
-                        [style.color]="section.theme.tile.color" pDraggable="LISTITEMS"
-                        [pDraggableDisabled]="!allowDragdrop" (onDragStart)="dragStart(item, section)"
-                        (onDragEnd)="dragEnd()">
-                        <app-metadata [data]="item"></app-metadata>
-                        <div class="item-text">
-                            {{item.title}}
-                        </div>
-                    </button>
+                    <ng-container *ngFor="let item of section.data.list">
+                        <button class="btn panel-listitem-{{section.properties.view}}"
+                            (click)="onShowItemDetails(item, section)" [title]="item.title"
+                            [style.background-color]="section.theme.tile.bgColor"
+                            [style.color]="section.theme.tile.color" cdkDrag [cdkDragData]="item">
+                            <app-metadata [data]="item"></app-metadata>
+                            <div class="item-text">
+                                {{item.title}}
+                            </div>
+                        </button>
+                    </ng-container>
                 </div>
 
             </div>

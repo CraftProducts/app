@@ -28,8 +28,9 @@
                     [style.color]="col.cellTheme.color">
 
                     <div class="mb-1" style="width: 375px;">
-                        <app-panel [allowDragdrop]="true" [parentCode]="section.code" [section]="row.columns[idx]"
-                            (showEditor)="onShowItemDetails(row.columns[idx])">
+                        <app-panel [sectionCodes]="sectionCodes" [parentCode]="section.code"
+                            [section]="row.columns[idx]" (showEditor)="onShowItemDetails(row.columns[idx])"
+                            (drop)="onDrop($event)">
                         </app-panel>
                     </div>
                 </td>

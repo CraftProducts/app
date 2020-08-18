@@ -39,7 +39,8 @@ import { ThemeListEditorComponent } from './components/themes/theme-list-editor.
 import { MatrixCustomizerComponent } from './components/editors/matrix-customizer.component';
 import { MatrixListCustomizerComponent } from './components/editors/matrix-list-customizer.component';
 import { MatrixRecordCustomizerComponent } from './components/editors/matrix-record-customizer.component';
-import { DragDropModule } from 'primeng/dragdrop';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+// import { DragDropModule } from 'primeng/dragdrop';
 import { SplashScreenComponent } from './components/splash-screen.component';
 import { IntroductionComponent } from './components/introduction.component';
 import { DialogModule } from 'primeng/dialog';
