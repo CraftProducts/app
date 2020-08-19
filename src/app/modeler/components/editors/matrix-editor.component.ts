@@ -7,6 +7,7 @@ import { DATATYPES } from '../../modeler-utils';
     templateUrl: './matrix-editor.component.html'
 })
 export class MatrixEditorComponent {
+    @Output() itemChange = new EventEmitter<any>();
     @Output() close = new EventEmitter<any>();
     @Output() changeSection = new EventEmitter<any>();
 
@@ -31,8 +32,6 @@ export class MatrixEditorComponent {
         this.prepareEditor();
     }
     get colCode(): any { return this._colCode; }
-
-    @Output() itemChange = new EventEmitter<any>();
 
     onToggleMode = (eventArgs) => this.mode = eventArgs.mode;
 

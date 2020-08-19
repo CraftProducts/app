@@ -424,13 +424,6 @@ body .ui-sidebar .ui-sidebar-close {
   border-left: solid 1px #f00;
 }
 
-/* .drop-container {
-  border: 2px dashed transparent;
-  background-color: #f0f0f0;
-} */
-.p-draggable-enter {
-  border: solid 2px #ddd !important;
-}
 .sticky-title {
   position: sticky;
   z-index: 1;

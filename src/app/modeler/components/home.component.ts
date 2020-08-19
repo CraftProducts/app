@@ -280,7 +280,8 @@ export class ModelerHomeComponent implements ComponentCanDeactivate, OnInit, OnD
         this.router.navigate([], { queryParams })
     }
 
-    onItemChanged(item, section) {
+    onItemChange(section) {
+        console.log('home onitemchange: ', section);
         section.isDirty = true;
         this.onSectionUpdated(section)
     }

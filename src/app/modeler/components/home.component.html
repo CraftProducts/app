@@ -6,12 +6,13 @@
 
             <ng-container [ngSwitch]="model.layout">
                 <div class="container-fluid mb-5" *ngSwitchCase="'freeflow'">
-                    <app-freeflow-layout class="w-100" [layout]="model" (showEditor)="onShowEditor($event)">
+                    <app-freeflow-layout class="w-100" [layout]="model" (showEditor)="onShowEditor($event)"
+                        (itemChange)="onItemChange($event)">
                     </app-freeflow-layout>
                 </div>
 
                 <app-split-layout *ngSwitchDefault class="w-100 ml-2 mr-2 mb-2" [layout]="model"
-                    (showEditor)="onShowEditor($event)">
+                    (showEditor)="onShowEditor($event)" (itemChange)="onItemChange($event)">
                 </app-split-layout>
             </ng-container>
         </div>
@@ -33,7 +34,7 @@
     [showCloseIcon]="false">
 
     <app-matrix-editor mode="view" [(section)]="section" [rowCode]="rowCode" [colCode]="colCode"
-        (close)="onManageSectionEditor()" (itemChange)="onItemChanged($event, section)"
+        (close)="onManageSectionEditor()" (itemChange)="onItemChange($event)"
         (changeSection)="onShowEditor($event)">
     </app-matrix-editor>
 </p-sidebar>

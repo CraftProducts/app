@@ -49,7 +49,7 @@
                         <button class="btn panel-listitem-{{section.properties.view}}"
                             (click)="onShowItemDetails(item, section)" [title]="item.title"
                             [style.background-color]="section.theme.tile.bgColor"
-                            [style.color]="section.theme.tile.color" cdkDrag [cdkDragData]="item">
+                            [style.color]="section.theme.tile.color" cdkDrag [cdkDragData]="{foo:'bar'}">
                             <app-metadata [data]="item"></app-metadata>
                             <div class="item-text">
                                 {{item.title}}

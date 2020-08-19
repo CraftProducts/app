@@ -1,9 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import * as _ from 'lodash';
-import { ModelerState } from '../../+state/modeler.state';
-import { CustomizeSectionAction } from '../../+state/modeler.actions';
-import { Store } from '@ngrx/store';
 import { DATATYPES } from '../../modeler-utils';
+import { transferArrayItem, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
     selector: 'app-matrix',
@@ -11,6 +9,7 @@ import { DATATYPES } from '../../modeler-utils';
     styleUrls: ['./matrix.css']
 })
 export class MatrixRendererComponent {
+    @Output() itemChange = new EventEmitter<any>();
     sectionCodes = [];
 
     _section: any;
@@ -33,10 +32,29 @@ export class MatrixRendererComponent {
     }
 
     onDrop(event) {
-        console.info('section', this.section);
-        console.info('previousContainer.data', event.previousContainer.data);
-        console.info('container.data', event.container.data);
-        console.info('previousIndex', event.previousIndex);
-        console.info('currentIndex', event.currentIndex);
+        this.section.data = this.section.data || [];
+
+        const src = _.find(this.section.data, { rowCode: event.previousContainer.data.rowCode, colCode: event.previousContainer.data.colCode })
+        let dest = _.find(this.section.data, { rowCode: event.container.data.rowCode, colCode: event.container.data.colCode });
+
+        if (!dest) {
+            dest = _.cloneDeep(event.container.data);
+            dest.data.list = [];
+            this.section.data.push(dest);
+        }
+        dest.data.list = dest.data.list || [];
+        transferArrayItem(src.data.list, dest.data.list, event.previousIndex, event.currentIndex);
+
+        if (event.previousContainer === event.container) {
+            moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+        } else {
+            event.container.data.data.list = event.container.data.data.list || [];
+            transferArrayItem(event.previousContainer.data.data.list,
+                event.container.data.data.list,
+                event.previousIndex,
+                event.currentIndex);
+        }
+        event.container.data.isDirty = true;
+        this.itemChange.emit(this.section);
     }
 }
