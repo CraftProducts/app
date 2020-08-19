@@ -7,6 +7,18 @@ import { DATATYPES } from '../../modeler-utils';
     templateUrl: './matrix-list-customizer.component.html'
 })
 export class MatrixListCustomizerComponent {
+    _recordCode: string;
+    @Input() set recordCode(value: string) {
+        this._recordCode = value;
+        if (this.list) {
+            const foundIndex = _.findIndex(this.list, { code: value });
+            if (foundIndex >= 0) {
+                this.onEdit(foundIndex);
+            }
+        }
+    }
+    get recordCode() { return this._recordCode; }
+
     @Input() isEditMode: boolean;
     @Input() list: any;
     @Output() listChange = new EventEmitter<any>();

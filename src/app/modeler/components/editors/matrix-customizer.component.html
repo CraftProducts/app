@@ -1,7 +1,7 @@
 <div class="alert border" [ngClass]="{'bg-white': isEditMode}" *ngIf="dataToEdit">
 
-    <ul ngbNav #nav="ngbNav" class="nav-tabs mt-2" [destroyOnHide]="false">
-        <li [ngbNavItem]="1">
+    <ul ngbNav #nav="ngbNav" class="nav-tabs mt-2" [(activeId)]="selectedTab" [destroyOnHide]="false">
+        <li ngbNavItem="row" *ngIf="dataToEdit.properties.row">
             <a ngbNavLink>
                 <h6 class="mb-0">{{dataToEdit.properties.row.title}}</h6>
             </a>
@@ -9,12 +9,12 @@
                 <div class="text-muted font-italic mb-3" *ngIf="dataToEdit.properties.row.summary">
                     {{dataToEdit.properties.row.summary}}</div>
                 <app-matrix-list-customizer [(list)]="dataToEdit.rows" [hasDatatype]="true"
-                    (editingRecord)="onEditingRecord($event)" [isEditMode]="isEditMode">
+                    (editingRecord)="onEditingRecord($event)" [isEditMode]="isEditMode" [recordCode]="recordCode">
                 </app-matrix-list-customizer>
             </ng-template>
         </li>
 
-        <li [ngbNavItem]="2">
+        <li ngbNavItem="column" *ngIf="dataToEdit.properties.column">
             <a ngbNavLink>
                 <h6 class="mb-0">{{dataToEdit.properties.column.title}}</h6>
             </a>
@@ -22,7 +22,7 @@
                 <div class="text-muted font-italic mb-3" *ngIf="dataToEdit.properties.column.summary">
                     {{dataToEdit.properties.column.summary}}</div>
                 <app-matrix-list-customizer [(list)]="dataToEdit.columns" (editingRecord)="onEditingRecord($event)"
-                    [isEditMode]="isEditMode">
+                    [isEditMode]="isEditMode" [recordCode]="recordCode">
                 </app-matrix-list-customizer>
             </ng-template>
         </li>

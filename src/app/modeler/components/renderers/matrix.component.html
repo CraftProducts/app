@@ -2,27 +2,29 @@
     <table class="table table-borderless table-sm mb-0">
         <thead>
             <tr class="text-center">
-                <th class="border-left-0 border-bottom-0 text-center">
-                    <button class="btn btn-link btn-sm text-muted btn-edit-hover rounded-0"
+                <th class="border-left-0 border-bottom-0 text-left">
+                    <button class="btn btn-link text-muted btn-edit-hover"
                         (click)="onShowEditor({mode: 'VIEW', section: section})">
-                        customize <fa-icon icon="wrench" class="ml-1"></fa-icon>
+                        <fa-icon [icon]="['far', 'sun']" class="ml-1"></fa-icon>
                     </button>
                 </th>
-                <th class=" border-bottom-0" *ngFor="let col of section.columns">
-                    <div class="text-capitalize h6 p-1" [ngbPopover]="col.summary" triggers="mouseenter:mouseleave"
-                        placement="bottom">
+                <th class="border-bottom-0" *ngFor="let col of section.columns">
+                    <button class="btn btn-link text-dark text-capitalize font-weight-bold" [ngbPopover]="col.summary"
+                        triggers="mouseenter:mouseleave" placement="bottom"
+                        (click)="onShowEditor({mode: 'EDIT', section: section, selectedTab: 'column', recordCode: col.code})">
                         {{col.title}}
-                    </div>
+                    </button>
                 </th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let row of section.rows">
                 <td class="matrix-label-cell border-left-0">
-                    <div class="pl-2 mt-2 h6" [ngbPopover]="row.summary" triggers="mouseenter:mouseleave"
-                        placement="right">
+                    <button class="btn btn-link text-dark text-capitalize font-weight-bold" [ngbPopover]="row.summary"
+                        triggers="mouseenter:mouseleave" placement="right"
+                        (click)="onShowEditor({mode: 'EDIT', section: section, selectedTab: 'row', recordCode: row.code})">
                         {{row.title}}
-                    </div>
+                    </button>
                 </td>
                 <td *ngFor="let col of row.columns;let idx = index" [style.background-color]="col.cellTheme.bgColor"
                     [style.color]="col.cellTheme.color">

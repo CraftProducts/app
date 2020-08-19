@@ -17,9 +17,11 @@ children:
     summary: Stories across modules and releases
     properties:
       row:
+        code: ACTIVITY_REAKUP
         title: Activity breakup
         summary: Detailed about further task breakup per activity
       column:
+        code: USER_ACTIVITIES
         title: User activities
         summary: Capture user activities involved in meeting their objectives
     columns:

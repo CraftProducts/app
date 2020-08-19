@@ -27,7 +27,8 @@
 <p-sidebar [(visible)]="editorVisible" [fullScreen]="true" (onHide)="onManageSectionEditor()" [showCloseIcon]="false">
     <app-section-editor [mode]="editorMode" [sections]="sections" [section]="section" [(data)]="model"
         (sectionSelected)="onManageSectionEditor($event)" (close)="onManageSectionEditor()"
-        (update)="onSectionUpdated($event)" (customizeMatrix)="onCustomizeMatrix($event)">
+        (update)="onSectionUpdated($event)" (customizeMatrix)="onCustomizeMatrix($event)"
+        [recordCode]="recordCode" [selectedTab]="selectedTab">
     </app-section-editor>
 </p-sidebar>
 <p-sidebar [(visible)]="matrixEditorVisible" [fullScreen]="true" (onHide)="onManageSectionEditor()"

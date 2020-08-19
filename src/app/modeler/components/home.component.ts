@@ -17,6 +17,9 @@ import { CustomizeSectionAction } from '../+state/modeler.actions';
     templateUrl: './home.component.html'
 })
 export class ModelerHomeComponent implements ComponentCanDeactivate, OnInit, OnDestroy {
+    //matrix customizer fields
+    selectedTab: string;
+    recordCode: string;
     instance: any;
 
     isCustomTemplate: boolean;
@@ -273,6 +276,12 @@ export class ModelerHomeComponent implements ComponentCanDeactivate, OnInit, OnD
                 queryParams.row = args.rowCode;
                 queryParams.col = args.colCode;
             }
+
+            if (section.type === SECTIONTYPES.matrix) {
+                this.selectedTab = args.selectedTab;
+                this.recordCode = args.recordCode;
+                this.editorMode = args.mode;
+            }
         }
         if (args.command && args.command.length > 0) {
             queryParams.command = args.command;
@@ -281,7 +290,6 @@ export class ModelerHomeComponent implements ComponentCanDeactivate, OnInit, OnD
     }
 
     onItemChange(section) {
-        console.log('home onitemchange: ', section);
         section.isDirty = true;
         this.onSectionUpdated(section)
     }

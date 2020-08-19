@@ -51,8 +51,8 @@
                     (toggleMode)="onToggleMode($event, section)" (itemSelected)="onItemSelected($event)">
                 </app-editors>
 
-                <app-matrix-customizer *ngIf="section.type === 'matrix'" [matrix]="section"
-                    (save)="onCustomizeMatrix($event)">
+                <app-matrix-customizer *ngIf="section.type === 'matrix'" [matrix]="section" [selectedTab]="selectedTab"
+                    [recordCode]="recordCode" (save)="onCustomizeMatrix($event)" [mode]="mode">
                 </app-matrix-customizer>
             </div>
         </div>

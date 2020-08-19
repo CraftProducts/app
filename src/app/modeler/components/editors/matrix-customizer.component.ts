@@ -6,7 +6,17 @@ import * as _ from 'lodash';
     templateUrl: './matrix-customizer.component.html'
 })
 export class MatrixCustomizerComponent {
+    @Input() selectedTab: any;
+    @Input() recordCode: any;
+
     isEditMode = false;
+    _mode: string;
+    @Input() set mode(value: string) {
+        this._mode = value;
+        this.isEditMode = value === 'EDIT';
+    }
+    get mode() { return this._mode }
+
     dataToEdit: any;
     _matrix: any;
     @Input() set matrix(value: any) {

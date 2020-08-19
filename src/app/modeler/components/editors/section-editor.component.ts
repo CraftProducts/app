@@ -7,6 +7,9 @@ import { DATATYPES, SECTIONTYPES } from '../../modeler-utils';
     templateUrl: './section-editor.component.html'
 })
 export class SectionEditorComponent {
+    @Input() selectedTab: string;   //used only for matrix editor
+    @Input() recordCode: string;   //used only for matrix editor
+    
     @Output() close = new EventEmitter<any>();
     @Output() sectionSelected = new EventEmitter<any>();
 
