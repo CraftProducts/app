@@ -12,14 +12,12 @@ export class MatrixListCustomizerComponent {
         this._recordCode = value;
         if (this.list) {
             const foundIndex = _.findIndex(this.list, { code: value });
-            if (foundIndex >= 0) {
-                this.onEdit(foundIndex);
-            }
+            this.onEdit(foundIndex);
         }
     }
     get recordCode() { return this._recordCode; }
 
-    @Input() isEditMode: boolean;
+    @Input() mode: string;
     @Input() list: any;
     @Output() listChange = new EventEmitter<any>();
 
@@ -44,7 +42,7 @@ export class MatrixListCustomizerComponent {
     recordToEdit: any;
     @Output() editingRecord = new EventEmitter<any>();
     onEdit(index) {
-        this.recordToEdit = _.cloneDeep(this.list[index]);
+        this.recordToEdit = index >= 0 ? _.cloneDeep(this.list[index]) : null;
         this.editingRecord.emit(this.recordToEdit);
     }
 

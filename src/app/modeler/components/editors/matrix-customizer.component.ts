@@ -7,15 +7,22 @@ import * as _ from 'lodash';
 })
 export class MatrixCustomizerComponent {
     @Input() selectedTab: any;
-    @Input() recordCode: any;
 
-    isEditMode = false;
+    _recordCode: any;
+    @Input() set recordCode(value: any) {
+        this._recordCode = value;
+        this.recordCodeChange.emit(value);
+    }
+    get recordCode() { return this._recordCode; }
+    @Output() recordCodeChange = new EventEmitter<any>();
+
     _mode: string;
     @Input() set mode(value: string) {
         this._mode = value;
-        this.isEditMode = value === 'EDIT';
+        this.modeChange.emit(value);
     }
     get mode() { return this._mode }
+    @Output() modeChange = new EventEmitter<any>();
 
     dataToEdit: any;
     _matrix: any;
@@ -30,9 +37,10 @@ export class MatrixCustomizerComponent {
         return this._matrix;
     }
 
-    onEdit = () => this.isEditMode = true;
+    onEdit = () => this.mode = "EDIT";
     onReset = () => {
-        this.isEditMode = false;
+        this.mode = "VIEW";
+        this.recordCode = null;
         this.dataToEdit = _.cloneDeep(this.matrix);
     }
 
@@ -43,6 +51,7 @@ export class MatrixCustomizerComponent {
     }
 
     editingRecord = null;
+    isEditingRecord = false;
     onEditingRecord = (args) => this.editingRecord = args;
 
     @Output() save = new EventEmitter<any>();

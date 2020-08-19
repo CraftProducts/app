@@ -43,6 +43,7 @@
             </div>
         </div>
         <div *ngIf="section" class="ml-5 mr-5 mt-3">
+
             <h1>{{section.title}} </h1>
             <ngx-md [data]="section.summary" class="text-muted"></ngx-md>
 
@@ -52,7 +53,7 @@
                 </app-editors>
 
                 <app-matrix-customizer *ngIf="section.type === 'matrix'" [matrix]="section" [selectedTab]="selectedTab"
-                    [recordCode]="recordCode" (save)="onCustomizeMatrix($event)" [mode]="mode">
+                    [(recordCode)]="recordCode" (save)="onCustomizeMatrix($event)" [(mode)]="mode">
                 </app-matrix-customizer>
             </div>
         </div>

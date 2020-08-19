@@ -1,4 +1,6 @@
-<div class="alert border" [ngClass]="{'bg-white': isEditMode}" *ngIf="dataToEdit">
+<div class="alert border" [ngClass]="{'bg-white': mode === 'EDIT'}" *ngIf="dataToEdit">
+
+{{recordCode}}
 
     <ul ngbNav #nav="ngbNav" class="nav-tabs mt-2" [(activeId)]="selectedTab" [destroyOnHide]="false">
         <li ngbNavItem="row" *ngIf="dataToEdit.properties.row">
@@ -9,7 +11,7 @@
                 <div class="text-muted font-italic mb-3" *ngIf="dataToEdit.properties.row.summary">
                     {{dataToEdit.properties.row.summary}}</div>
                 <app-matrix-list-customizer [(list)]="dataToEdit.rows" [hasDatatype]="true"
-                    (editingRecord)="onEditingRecord($event)" [isEditMode]="isEditMode" [recordCode]="recordCode">
+                    (editingRecord)="onEditingRecord($event)" [mode]="mode" [recordCode]="recordCode">
                 </app-matrix-list-customizer>
             </ng-template>
         </li>
@@ -22,7 +24,7 @@
                 <div class="text-muted font-italic mb-3" *ngIf="dataToEdit.properties.column.summary">
                     {{dataToEdit.properties.column.summary}}</div>
                 <app-matrix-list-customizer [(list)]="dataToEdit.columns" (editingRecord)="onEditingRecord($event)"
-                    [isEditMode]="isEditMode" [recordCode]="recordCode">
+                    [mode]="mode" [recordCode]="recordCode">
                 </app-matrix-list-customizer>
             </ng-template>
         </li>
@@ -31,12 +33,11 @@
 </div>
 
 <div class="text-right">
-
-    <button class="btn btn-primary" *ngIf="!isEditMode" (click)="onEdit()">
+    <button class="btn btn-primary" *ngIf="mode !== 'EDIT'" (click)="onEdit()">
         <fa-icon icon="pencil-alt" class=" mr-1"></fa-icon> Edit
     </button>
 
-    <div *ngIf="isEditMode && !editingRecord">
+    <div *ngIf="mode === 'EDIT'">
         <button class="btn btn-primary mr-2" (click)="onSave()">
             <fa-icon icon="save" class=" mr-1"></fa-icon> Save
         </button>

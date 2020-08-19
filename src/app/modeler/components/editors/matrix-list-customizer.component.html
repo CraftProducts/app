@@ -19,7 +19,7 @@
                 </div>
             </div>
             <div class="col-md-4 text-right">
-                <div class="btn-group btn-group-sm" *ngIf="isEditMode">
+                <div class="btn-group btn-group-sm" *ngIf="mode === 'EDIT'">
                     <button class="btn btn-sm btn-link text-muted" *ngIf="list && idx < (list.length - 1)"
                         (click)="onMovedown(idx)">
                         <fa-icon icon="long-arrow-alt-down" [fixedWidth]="true"></fa-icon>
@@ -41,7 +41,7 @@
         <hr *ngIf="list && idx < (list.length - 1)">
     </div>
 
-    <div class="mt-3" *ngIf="isEditMode">
+    <div class="mt-3" *ngIf="mode === 'EDIT'">
         <button class="btn btn-sm btn-link pl-0" (click)='onAdd()'>
             <fa-icon icon="plus" class="mr-1"></fa-icon> add
         </button>

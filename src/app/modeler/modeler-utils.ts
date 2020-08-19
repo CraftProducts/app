@@ -94,15 +94,29 @@ export function updateSection(children, record) {
 }
 
 export function updateMatrixSection(child: any, record: any, resetData: boolean) {
-    record.rows = record.rows || child.rows;
-    record.columns = record.columns || child.columns;
+    record.rows = record.rows || child.rows || [];
+    record.columns = record.columns || child.columns || [];
 
     child.rows = _.orderBy(record.rows, 'sequence');
     child.columns = _.orderBy(record.columns, 'sequence');
+
     child.rows.forEach(row => {
         if (!row.columns || row.columns.length === 0 || resetData) {
             initMatrixRowColumn(row, child);
-        } else if (resetData === false && row.columns) {
+        }
+        if (resetData === false && row.columns) {
+            if (child.columns.length !== row.columns.length) {
+                // child.columns.forEach((column) => {
+                //     row.columns.push(createRowColumn(row, column));
+                // });
+
+                child.columns.forEach(column => {
+                    const found = _.find(row.columns, { colCode: column.code });
+                    if (!found) {
+                        row.columns.push(createRowColumn(row, column));
+                    }
+                });
+            }
             row.columns.forEach(column => column.isDirty = false);
         }
     });
@@ -196,26 +210,30 @@ export function initPanelProperties(child: any) {
     child.theme = theme;
 }
 
-export function initMatrixRowColumn(row: any, child: any) {
+function initMatrixRowColumn(row: any, child: any) {
     row.columns = [];
     child.columns.forEach((column) => {
-        const rowColumn: any = {
-            rowCode: row.code,
-            colCode: column.code,
-            rowTitle: row.title,
-            colTitle: column.title,
-            datatype: row.datatype,
-            properties: row.properties,
-            data: { text: '', notes: [], tasks: [], links: [] },
-            cellTheme: DEFAULT_THEME,
-            theme: DEFAULT_THEME
-        };
-
-        if (row.datatype === DATATYPES.select) {
-            rowColumn.options = row.options;
-        }
-
-        initPanelProperties(rowColumn);
-        row.columns.push(rowColumn);
+        row.columns.push(createRowColumn(row, column));
     });
 }
+function createRowColumn(row: any, column: any) {
+    const rowColumn: any = {
+        rowCode: row.code,
+        colCode: column.code,
+        rowTitle: row.title,
+        colTitle: column.title,
+        datatype: row.datatype,
+        properties: row.properties,
+        data: { text: '', notes: [], tasks: [], links: [] },
+        cellTheme: DEFAULT_THEME,
+        theme: DEFAULT_THEME
+    };
+
+    if (row.datatype === DATATYPES.select) {
+        rowColumn.options = row.options;
+    }
+
+    initPanelProperties(rowColumn);
+    return rowColumn;
+}
+

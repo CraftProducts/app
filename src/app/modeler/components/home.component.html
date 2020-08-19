@@ -25,18 +25,17 @@
 </p-sidebar>
 
 <p-sidebar [(visible)]="editorVisible" [fullScreen]="true" (onHide)="onManageSectionEditor()" [showCloseIcon]="false">
-    <app-section-editor [mode]="editorMode" [sections]="sections" [section]="section" [(data)]="model"
+    <app-section-editor [(mode)]="editorMode" [sections]="sections" [section]="section" [(data)]="model"
         (sectionSelected)="onManageSectionEditor($event)" (close)="onManageSectionEditor()"
-        (update)="onSectionUpdated($event)" (customizeMatrix)="onCustomizeMatrix($event)"
-        [recordCode]="recordCode" [selectedTab]="selectedTab">
+        (update)="onSectionUpdated($event)" (customizeMatrix)="onCustomizeMatrix($event)" [(recordCode)]="recordCode"
+        [selectedTab]="selectedTab">
     </app-section-editor>
 </p-sidebar>
 <p-sidebar [(visible)]="matrixEditorVisible" [fullScreen]="true" (onHide)="onManageSectionEditor()"
     [showCloseIcon]="false">
 
     <app-matrix-editor mode="view" [(section)]="section" [rowCode]="rowCode" [colCode]="colCode"
-        (close)="onManageSectionEditor()" (itemChange)="onItemChange($event)"
-        (changeSection)="onShowEditor($event)">
+        (close)="onManageSectionEditor()" (itemChange)="onItemChange($event)" (changeSection)="onShowEditor($event)">
     </app-matrix-editor>
 </p-sidebar>
 

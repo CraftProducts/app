@@ -253,8 +253,10 @@ export class ModelerHomeComponent implements ComponentCanDeactivate, OnInit, OnD
         this.onManageSectionEditor(sectionCode);
     }
 
-    onCustomizeMatrix(args) {
-        this.store$.dispatch(new CustomizeSectionAction(args));
+    onCustomizeMatrix(section) {
+        this.editorMode = "VIEW";        
+        this.store$.dispatch(new SetModelDirtyAction(section.isDirty));
+        this.store$.dispatch(new CustomizeSectionAction(section));
     }
 
     onManageSectionEditor(sectionCode = '') {
@@ -268,6 +270,7 @@ export class ModelerHomeComponent implements ComponentCanDeactivate, OnInit, OnD
     onShowEditor(args) {
         const queryParams: any = { view: 'details' };
         const section = args.section;
+        this.selectedTab = 'row';
         if (section) {
             if (section.code && section.code.length > 0) {
                 queryParams.section = section.code;
@@ -278,9 +281,9 @@ export class ModelerHomeComponent implements ComponentCanDeactivate, OnInit, OnD
             }
 
             if (section.type === SECTIONTYPES.matrix) {
-                this.selectedTab = args.selectedTab;
+                this.selectedTab = args.selectedTab || 'row';
                 this.recordCode = args.recordCode;
-                this.editorMode = args.mode;
+                this.editorMode = 'EDIT';
             }
         }
         if (args.command && args.command.length > 0) {

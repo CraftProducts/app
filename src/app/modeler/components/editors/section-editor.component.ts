@@ -8,8 +8,14 @@ import { DATATYPES, SECTIONTYPES } from '../../modeler-utils';
 })
 export class SectionEditorComponent {
     @Input() selectedTab: string;   //used only for matrix editor
-    @Input() recordCode: string;   //used only for matrix editor
-    
+    _recordCode: any;
+    @Input() set recordCode(value: any) {
+        this._recordCode = value;
+        this.recordCodeChange.emit(value);
+    }
+    get recordCode() { return this._recordCode; }
+    @Output() recordCodeChange = new EventEmitter<any>();
+
     @Output() close = new EventEmitter<any>();
     @Output() sectionSelected = new EventEmitter<any>();
 
@@ -19,7 +25,14 @@ export class SectionEditorComponent {
     @Input() sections: any;
     @Input() data: string;
 
-    @Input() mode: string;  // VIEW / EDIT
+    // @Input() mode: string;   //VIEW / EDIT
+    _mode: string;
+    @Input() set mode(value: string) {
+        this._mode = value;
+        this.modeChange.emit(value);
+    }
+    get mode() { return this._mode }
+    @Output() modeChange = new EventEmitter<any>();
 
     recordDataToEdit: any;
     prevSection: any;
