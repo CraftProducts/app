@@ -5,6 +5,7 @@ import { resetModelChildren, makeBackwardCompatible, populateModelDataset, updat
 import { ActionTypes } from './modeler.actions';
 
 export function modelerReducer(state: Modeler, action: any): Modeler {
+
     switch (action.type) {
         case CommonActionTypes.SetModel: {
             const modelInstance = action.payload;
@@ -18,15 +19,18 @@ export function modelerReducer(state: Modeler, action: any): Modeler {
             return { ...state, selectedSection: null, modelInstance }
         }
         case CommonActionTypes.SetDataset: {
+            const modelInstance = state.modelInstance;
             const dataset = action.payload;
-            //resetModelChildren(modelInstance.children, false);
 
-            // const dataset = action.payload.dataset;
-            // if (dataset) {
-            //     dataset.sections = makeBackwardCompatible(dataset.sections);
-            //     populateModelDataset(modelInstance, dataset.sections);
-            // }
-            return { ...state, dataset }
+            if (modelInstance) {
+                resetModelChildren(modelInstance.children, false);
+
+                if (dataset) {
+                    dataset.sections = makeBackwardCompatible(dataset.sections);
+                    populateModelDataset(modelInstance, dataset.sections);
+                }
+            }
+            return { ...state, dataset, modelInstance }
         }
 
         case CommonActionTypes.SaveModel: {

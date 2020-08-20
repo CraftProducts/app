@@ -106,10 +106,6 @@ export function updateMatrixSection(child: any, record: any, resetData: boolean)
         }
         if (resetData === false && row.columns) {
             if (child.columns.length !== row.columns.length) {
-                // child.columns.forEach((column) => {
-                //     row.columns.push(createRowColumn(row, column));
-                // });
-
                 child.columns.forEach(column => {
                     const found = _.find(row.columns, { colCode: column.code });
                     if (!found) {
@@ -165,17 +161,19 @@ export function populateModelDataset(node, lookupSections) {
     } else if (node.type === SECTIONTYPES.matrix) {
 
         const found = _.find(lookupSections, { code: node.code });
-        updateMatrixSection(node, found, false);
-        if (found && found.data && found.data.length > 0) {
-            found.data.forEach(dt => {
-                const rowFound = _.find(node.rows, { code: dt.rowCode });
-                if (rowFound && rowFound.columns && rowFound.columns.length > 0) {
-                    const colFound = _.find(rowFound.columns, { colCode: dt.colCode });
-                    if (colFound) {
-                        colFound.data = dt.data;
+        if (found) {
+            updateMatrixSection(node, found, false);
+            if (found.data && found.data.length > 0) {
+                found.data.forEach(dt => {
+                    const rowFound = _.find(node.rows, { code: dt.rowCode });
+                    if (rowFound && rowFound.columns && rowFound.columns.length > 0) {
+                        const colFound = _.find(rowFound.columns, { colCode: dt.colCode });
+                        if (colFound) {
+                            colFound.data = dt.data;
+                        }
                     }
-                }
-            });
+                });
+            }
         }
         node.data = found && found.data ? _.cloneDeep(found.data) : {};
         node.isDirty = false;

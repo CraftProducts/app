@@ -11,6 +11,7 @@ import { filter, tap, map } from 'rxjs/operators';
 import { LoadTemplateAction } from 'src/app/+state/app.actions';
 import { dump } from 'js-yaml';
 import { CustomizeSectionAction } from '../+state/modeler.actions';
+import { MessageService } from 'primeng/api';
 
 @Component({
     selector: 'app-modeler-home',
@@ -57,7 +58,11 @@ export class ModelerHomeComponent implements ComponentCanDeactivate, OnInit, OnD
     view = "";
     showIntro = false;
 
-    constructor(public store$: Store<ModelerState>, public router: Router, public activatedRoute: ActivatedRoute) {
+    constructor(public store$: Store<ModelerState>,
+        public router: Router,
+        public activatedRoute: ActivatedRoute,
+        public messageService: MessageService
+    ) {
     }
 
     @HostListener('window:beforeunload', ['$event'])
@@ -69,17 +74,16 @@ export class ModelerHomeComponent implements ComponentCanDeactivate, OnInit, OnD
     canDeactivate = () => !this.isModelDirty;
 
     ngOnInit() {
-        this.subscribeTemplates();
-
-        this.qp$ = this.activatedRoute.queryParams
-            .subscribe(qp => {
-                this.view = qp.view ? qp.view.toLowerCase() : ""
-                this.showIntro = this.view === "intro";
-                this.sections = [];
-            });
-
         const modelInstanceQ = this.store$.select(p => p.modeler.modelInstance);
         const queryparamsQ = this.activatedRoute.queryParams;
+
+        this.subscribeTemplates();
+
+        this.qp$ = queryparamsQ.subscribe(qp => {
+            this.view = qp.view ? qp.view.toLowerCase() : ""
+            this.showIntro = this.view === "intro";
+            this.sections = [];
+        });
 
         this.combined$ = combineLatest(modelInstanceQ, queryparamsQ)
             .subscribe(([model, qp]) => {
@@ -142,6 +146,7 @@ export class ModelerHomeComponent implements ComponentCanDeactivate, OnInit, OnD
         this.loadedTemplate$ = this.store$.select(p => p.app.loadedTemplate)
             .pipe(filter(p => p), tap(p => this.loadedTemplate = p))
             .subscribe(loadedTemplate => this.store$.dispatch(new SetModelAction(loadedTemplate)));
+
 
         this.loadedFile$ = this.store$.select(p => p.app.loadedFile)
             .pipe(filter(loadedFile => loadedFile && loadedFile.content && loadedFile.type !== 'template'))
@@ -254,7 +259,7 @@ export class ModelerHomeComponent implements ComponentCanDeactivate, OnInit, OnD
     }
 
     onCustomizeMatrix(section) {
-        this.editorMode = "VIEW";        
+        this.editorMode = "VIEW";
         this.store$.dispatch(new SetModelDirtyAction(section.isDirty));
         this.store$.dispatch(new CustomizeSectionAction(section));
     }

@@ -143,6 +143,9 @@ body .ui-dialog .ui-dialog-content {
   position: relative;
   box-shadow: 3px 6px 6px -6px rgba(136, 136, 136, 1);
   border-radius: 2pt;
+  display: flex;
+  flex-direction: column;
+  -webkit-flex-direction: column;
 }
 .layout-panel:hover {
   box-shadow: 0 0 6px 0 rgba(136, 136, 136, 1);
