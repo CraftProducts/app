@@ -6,7 +6,6 @@ import { version } from '../../package.json';
 
 export const environment = {
   appTitle: 'CraftProduct',
-  templateFileLocation: 'https://raw.githubusercontent.com/adhamankar/craftproducts/master/templates',
   VERSION: version,
   production: false,
   google: {
