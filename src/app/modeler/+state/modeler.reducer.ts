@@ -1,11 +1,11 @@
 import { Modeler } from './modeler.state';
 import * as _ from 'lodash';
 import { CommonActionTypes } from 'src/app/appcommon/lib/CommonActions';
-import { resetModelChildren, makeBackwardCompatible, populateModelDataset, updateSection, DEFAULT_THEME, applyThemeChildren } from '../modeler-utils';
+import { resetModelChildren, makeBackwardCompatible, populateModelDataset, customizeSection, DEFAULT_THEME, applyThemeChildren } from '../modeler-utils';
 import { ActionTypes } from './modeler.actions';
 
 export function modelerReducer(state: Modeler, action: any): Modeler {
-
+    console.log(action.type, action.payload);
     switch (action.type) {
         case CommonActionTypes.SetModel: {
             const modelInstance = action.payload;
@@ -19,18 +19,18 @@ export function modelerReducer(state: Modeler, action: any): Modeler {
             return { ...state, selectedSection: null, modelInstance }
         }
         case CommonActionTypes.SetDataset: {
-            const modelInstance = state.modelInstance;
+            const instance = _.cloneDeep(state.modelInstance);
             const dataset = action.payload;
 
-            if (modelInstance) {
-                resetModelChildren(modelInstance.children, false);
+            if (instance) {
+                resetModelChildren(instance.children, false);
 
                 if (dataset) {
                     dataset.sections = makeBackwardCompatible(dataset.sections);
-                    populateModelDataset(modelInstance, dataset.sections);
+                    populateModelDataset(instance, dataset.sections);
                 }
             }
-            return { ...state, dataset, modelInstance }
+            return { ...state, dataset, modelInstance: { ...state.modelInstance, children: instance ? instance.children : null } }
         }
 
         case CommonActionTypes.SaveModel: {
@@ -50,7 +50,7 @@ export function modelerReducer(state: Modeler, action: any): Modeler {
 
         case ActionTypes.CustomizeSection: {
             const children = state.modelInstance.children;
-            updateSection(children, action.payload)
+            customizeSection(children, action.payload)
             return { ...state, modelInstance: { ...state.modelInstance, children } };
         }
 

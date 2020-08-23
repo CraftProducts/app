@@ -1,42 +1,68 @@
-<div class="table-responsive matrix">
-    <table class="table table-borderless table-sm mb-0">
-        <thead>
-            <tr class="text-center">
-                <th class="border-left-0 border-bottom-0 text-left">
-                    <button class="btn btn-link text-muted btn-edit-hover"
-                        (click)="onShowEditor({mode: 'VIEW', section: section})">
-                        <fa-icon [icon]="['far', 'sun']" class="ml-1"></fa-icon>
-                    </button>
-                </th>
-                <th class="border-bottom-0" *ngFor="let col of section.columns">
-                    <button class="btn btn-link text-dark text-capitalize font-weight-bold" [ngbPopover]="col.summary"
-                        triggers="mouseenter:mouseleave" placement="bottom"
-                        (click)="onShowEditor({mode: 'EDIT', section: section, selectedTab: 'column', recordCode: col.code})">
-                        {{col.title}}
-                    </button>
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let row of section.rows">
-                <td class="matrix-label-cell border-left-0">
-                    <button class="btn btn-link text-dark text-capitalize font-weight-bold" [ngbPopover]="row.summary"
-                        triggers="mouseenter:mouseleave" placement="right"
-                        (click)="onShowEditor({mode: 'EDIT', section: section, selectedTab: 'row', recordCode: row.code})">
-                        {{row.title}}
-                    </button>
-                </td>
-                <td *ngFor="let col of row.columns;let idx = index" [style.background-color]="col.cellTheme.bgColor"
-                    [style.color]="col.cellTheme.color">
+<div *ngIf="section">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="m-5 alert bg-white p-5 custom-shadow" *ngIf="!(section.rows && section.columns)">
+                <button class="btn btn-outline-primary float-right"
+                    (click)="onShowEditor({mode: 'VIEW', section: section})">
+                    <fa-icon [icon]="['far', 'sun']" class="mr-1"></fa-icon>
+                    Customize
+                </button>
 
-                    <div class="mb-1" style="width: 375px;">
-                        <app-panel [sectionCodes]="sectionCodes" [parentCode]="section.code"
-                            [section]="row.columns[idx]" (showEditor)="onShowItemDetails(row.columns[idx])"
-                            (drop)="onDrop($event)">
-                        </app-panel>
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+                <h3>Customize your {{section.title}}</h3>
+                <div class="text-muted mb-4">{{section.summary}}</div>
+                <ul *ngIf="section.properties">
+                    <li *ngIf="section.properties.row" class="mb-4">
+                        <h6>{{section.properties.row.title}}</h6>
+                        {{section.properties.row.summary}}
+                    </li>
+                    <li *ngIf="section.properties.column">
+                        <h6>{{section.properties.column.title}}</h6>
+                        {{section.properties.column.summary}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive matrix" *ngIf="section.rows && section.columns">
+        <table class="table table-borderless table-sm mb-0">
+            <thead>
+                <tr class="text-center">
+                    <th class="border-left-0 border-bottom-0 text-left">
+                        <button class="btn btn-link text-muted btn-edit-hover"
+                            (click)="onShowEditor({mode: 'VIEW', section: section})">
+                            <fa-icon [icon]="['far', 'sun']" class="ml-1"></fa-icon>
+                        </button>
+                    </th>
+                    <th class="border-bottom-0" *ngFor="let col of section.columns">
+                        <button class="btn btn-link text-dark text-capitalize font-weight-bold"
+                            [ngbPopover]="col.summary" triggers="mouseenter:mouseleave" placement="bottom"
+                            (click)="onShowEditor({mode: 'EDIT', section: section, selectedTab: 'column', recordCode: col.code})">
+                            {{col.title}}
+                        </button>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let row of section.rows">
+                    <td class="matrix-label-cell border-left-0">
+                        <button class="btn btn-link text-dark text-capitalize font-weight-bold"
+                            [ngbPopover]="row.summary" triggers="mouseenter:mouseleave" placement="right"
+                            (click)="onShowEditor({mode: 'EDIT', section: section, selectedTab: 'row', recordCode: row.code})">
+                            {{row.title}}
+                        </button>
+                    </td>
+                    <td *ngFor="let col of row.columns;let idx = index" [style.background-color]="col.cellTheme.bgColor"
+                        [style.color]="col.cellTheme.color"
+                        [ngClass]="{'panel-is-dirty': row.columns[idx] && row.columns[idx].isDirty}">
+                        <div class="mb-1" style="max-width: 410px;min-width: 250px;">
+                            <app-panel [sectionCodes]="sectionCodes" [parentCode]="section.code"
+                                [section]="row.columns[idx]" (showEditor)="onShowItemDetails(row.columns[idx])"
+                                (drop)="onDrop($event)">
+                            </app-panel>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>

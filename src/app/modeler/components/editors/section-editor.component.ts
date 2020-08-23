@@ -50,9 +50,8 @@ export class SectionEditorComponent {
             this.nextSection = (index < this.sections.length - 1) ? this.sections[index + 1] : null;
         }
     }
-    get section() {
-        return this._section;
-    }
+    get section() { return this._section; }
+
     selectSection = (sectionCode) => this.sectionSelected.emit(sectionCode);
 
     onUpdated(updatedData, section) {

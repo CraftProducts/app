@@ -1,7 +1,5 @@
 <div class="alert border" [ngClass]="{'bg-white': mode === 'EDIT'}" *ngIf="dataToEdit">
 
-{{recordCode}}
-
     <ul ngbNav #nav="ngbNav" class="nav-tabs mt-2" [(activeId)]="selectedTab" [destroyOnHide]="false">
         <li ngbNavItem="row" *ngIf="dataToEdit.properties.row">
             <a ngbNavLink>

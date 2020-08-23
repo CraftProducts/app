@@ -89,16 +89,15 @@ export class ModelerHomeComponent implements ComponentCanDeactivate, OnInit, OnD
             .subscribe(([model, qp]) => {
                 this.model = model;
                 if (this.model) {
-                    if (this.sections.length === 0) {
-                        extractSections(this.model, ['code', 'title', 'summary', 'icon', 'type', 'datatype', 'rows', 'columns', 'properties'], this.sections);
-                    }
+                    this.sections = [];
+                    extractSections(this.model, ['code', 'title', 'summary', 'icon', 'type', 'datatype', 'rows', 'columns', 'properties'], this.sections);
                     const sectionCode = qp.section;
                     this.rowCode = qp.row && qp.row.length > 0 ? qp.row : "";
                     this.colCode = qp.col && qp.col.length > 0 ? qp.col : "";
                     let payload = (sectionCode && sectionCode.length > 0)
                         ? {
                             mode: this.editorMode,
-                            section: this.searchSectionInLayout(this.loadedTemplate, sectionCode),
+                            section: this.searchSectionInLayout(this.model, sectionCode),
                             col: this.colCode,
                             row: this.rowCode
                         }

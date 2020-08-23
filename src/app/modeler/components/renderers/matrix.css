@@ -3,7 +3,7 @@
     position: relative;
 }
 
-.matrix table thead tr th::after {
+.matrix table thead tr th:not(:last-child)::after {
     content: " ";
     display: block;
     width: 0;
@@ -18,7 +18,7 @@
     z-index: 2;
 }
 
-.matrix table thead tr th::before {
+.matrix table thead tr th:not(:last-child)::before {
     content: " ";
     display: block;
     width: 0;
@@ -33,4 +33,3 @@
     left: 100%;
     z-index: 1;
 }
-

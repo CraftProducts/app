@@ -82,14 +82,14 @@ export function resetModelChildren(children, resetData) {
     });
 }
 
-export function updateSection(children, record) {
+export function customizeSection(children, record) {
     if (!children) return null;
 
     children.forEach((child) => {
         if (child.code === record.code && record.type === SECTIONTYPES.matrix) {
             updateMatrixSection(child, record, false);
         }
-        updateSection(child.children, record);
+        customizeSection(child.children, record);
     });
 }
 
@@ -113,7 +113,15 @@ export function updateMatrixSection(child: any, record: any, resetData: boolean)
                     }
                 });
             }
-            row.columns.forEach(column => column.isDirty = false);
+            row.columns.forEach(column => {
+                if (resetData) {
+                    column.isDirty = false;
+                }
+                column.properties = row.properties || column.properties;
+                column.datatype = row.datatype || column.datatype;
+                initPanelProperties(column);
+                // column.theme = DEFAULT_THEME;
+            });
         }
     });
 }
@@ -192,7 +200,7 @@ export function makeBackwardCompatible(sections) {
     return sections;
 }
 
-export function initPanelProperties(child: any) {
+function initPanelProperties(child: any) {
     const theme: any = _.cloneDeep(DEFAULT_THEME);
     if (child.datatype === DATATYPES.list) {
         child.properties = child.properties || DEFAULT_LIST_PROPERTIES;
@@ -210,10 +218,9 @@ export function initPanelProperties(child: any) {
 
 function initMatrixRowColumn(row: any, child: any) {
     row.columns = [];
-    child.columns.forEach((column) => {
-        row.columns.push(createRowColumn(row, column));
-    });
+    child.columns.forEach((column) => row.columns.push(createRowColumn(row, column)));
 }
+
 function createRowColumn(row: any, column: any) {
     const rowColumn: any = {
         rowCode: row.code,

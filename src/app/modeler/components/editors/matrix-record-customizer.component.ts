@@ -7,7 +7,14 @@ import { DATATYPES } from '../../modeler-utils';
     templateUrl: './matrix-record-customizer.component.html'
 })
 export class MatrixRecordCustomizerComponent {
-    @Input() record: any;
+    _record: any;
+    @Input() set record(value: any) {
+        this._record = value;
+        if (this._record) {
+            this._record.properties = this._record.properties || {};
+        }
+    }
+    get record() { return this._record; }
     @Input() hasDatatype = false;
 
     onTitleKeyup(value, record) {

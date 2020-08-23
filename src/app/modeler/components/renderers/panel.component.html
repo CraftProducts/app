@@ -43,13 +43,12 @@
             <div *ngSwitchCase="'list'" style="min-height: 40pt;" [id]="section.colCode + '_' + section.rowCode"
                 cdkDropList (cdkDropListDropped)="cdkDrop($event)" [cdkDropListData]="section"
                 [cdkDropListConnectedTo]="sectionCodes">
-
                 <div *ngIf="section.data.list && section.data.list.length > 0">
                     <ng-container *ngFor="let item of section.data.list">
                         <button class="btn panel-listitem-{{section.properties.view}}"
                             (click)="onShowItemDetails(item, section)" [title]="item.title"
                             [style.background-color]="section.theme.tile.bgColor"
-                            [style.color]="section.theme.tile.color" cdkDrag [cdkDragData]="{foo:'bar'}">
+                            [style.color]="section.theme.tile.color" cdkDrag>
                             <app-metadata [data]="item"></app-metadata>
                             <div class="item-text">
                                 {{item.title}}

@@ -34,25 +34,35 @@
                 <option value="select">Select</option>
             </select>
         </div>
-        <div class="col-md-6" *ngIf="record.datatype === 'select'">
+        <div class="col-md-6">
             <div class="ml-4">
-                <label class="small">OPTIONS</label>
-                <ng-container *ngFor="let option of record.options; let idx = index">
-                    <div class="input-group input-group-sm mb-1">
-                        <input type="text" class="form-control" [appAutofocus]="option.isNew"
-                            [(ngModel)]="option.title" (keydown.enter)="onAddOptionIfLast(idx)"
-                            (keydown.control.enter)="onUpdate()" (keyup)="onTitleKeyup($event.target.value, option)">
-                        <div class="input-group-append">
-                            <button class="btn btn-light text-danger border" (click)="onRemove(idx)">
-                                <fa-icon icon="times" [fixedWidth]="true"></fa-icon>
-                            </button>
+                <div *ngIf="record.datatype === 'list'">
+                    <label class="small">VIEW</label>
+                    <select class="form-control" [(ngModel)]="record.properties.view">
+                        <option value="tile">Tile view</option>
+                        <option value="list">List view</option>
+                    </select>
+        
+                <div *ngIf="record.datatype === 'select'">
+                    <label class="small">OPTIONS</label>
+                    <ng-container *ngFor="let option of record.options; let idx = index">
+                        <div class="input-group input-group-sm mb-1">
+                            <input type="text" class="form-control" [appAutofocus]="option.isNew"
+                                [(ngModel)]="option.title" (keydown.enter)="onAddOptionIfLast(idx)"
+                                (keydown.control.enter)="onUpdate()"
+                                (keyup)="onTitleKeyup($event.target.value, option)">
+                            <div class="input-group-append">
+                                <button class="btn btn-light text-danger border" (click)="onRemove(idx)">
+                                    <fa-icon icon="times" [fixedWidth]="true"></fa-icon>
+                                </button>
+                            </div>
                         </div>
+                    </ng-container>
+                    <div>
+                        <button class="btn btn-sm btn-outline-primary" (click)="onAdd()">
+                            <fa-icon icon="plus" class="mr-1"></fa-icon> add option
+                        </button>
                     </div>
-                </ng-container>
-                <div>
-                    <button class="btn btn-sm btn-outline-primary" (click)="onAdd()">
-                        <fa-icon icon="plus" class="mr-1"></fa-icon> add option
-                    </button>
                 </div>
             </div>
         </div>
