@@ -30,12 +30,15 @@ export class TemplateListComponent implements OnInit, OnDestroy {
     redirectTo = '/';
 
     templateFileLocation = "";
+    documentationUrl = "";
 
     constructor(public store$: Store<TemplatesState>, public router: Router, public activatedRoute: ActivatedRoute,
         public messageService: MessageService, @Inject(IBACKEND_URLS) backendUrls: BackendUrl[]) {
 
-        const found = _.find(backendUrls, { key: 'templates' })
-        this.templateFileLocation = (found) ? `${found.value}` : "";
+        const templateUrlFound = _.find(backendUrls, { key: 'templates' })
+        this.templateFileLocation = (templateUrlFound) ? `${templateUrlFound.value}` : "";
+        const documentationUrlFound = _.find(backendUrls, { key: 'documentation' })
+        this.documentationUrl = (documentationUrlFound) ? `${documentationUrlFound.value}` : "";
     }
 
     ngOnInit(): void {

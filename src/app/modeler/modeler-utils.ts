@@ -1,6 +1,11 @@
 import * as _ from 'lodash';
 import { generateCode } from 'shared-lib';
 
+export const LAYOUTTYPES = {
+    freeflow: 'freeflow',
+    split: 'split'
+}
+
 export const SECTIONTYPES = {
     panel: 'panel',
     matrix: 'matrix',
