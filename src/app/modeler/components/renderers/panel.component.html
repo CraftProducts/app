@@ -1,21 +1,21 @@
 <div class="layout-panel layout-panel-{{section.datatype}}" [ngClass]="{'panel-is-dirty': section && section.isDirty}"
     [style.background-color]="section.theme.bgColor" [style.color]="section.theme.color">
     <div class="btn-group btn-group-sm btn-hover" style="z-index: 1;margin-top: -0.75rem;">
-        <button class="btn btn-light" (click)="onShowEditor({mode: 'VIEW', section: section})">
-            <fa-icon icon="expand-alt"></fa-icon>
+        <button class="btn btn-light" (click)="onShowEditor({mode: 'EDIT', section: section})">
+            <fa-icon icon="pencil-alt"></fa-icon>
         </button>
     </div>
     <div>
         <app-metadata *ngIf="section.data" [data]="section.data"></app-metadata>
         <div class="h6"
-            *ngIf="(section.title && section.title.length > 0 && !(section.data && section.data.image && section.datatype === 'image'))">
+            *ngIf="(section.title && section.title.length > 0 && !(section.data && (section.data.image || section.data.imageUrl) && section.datatype === 'image'))">
             <fa-icon *ngIf="section.icon && section.icon.length > 0" size="sm" [icon]="section.icon">
             </fa-icon>
             {{section.title}}
         </div>
         <div *ngIf="!(section.data && (section.data.text || 
                                         section.data.selectedValue || 
-                                        section.data.image || 
+                                        section.data.image || section.data.imageUrl ||
                                         (section.data.list && section.data.list.length > 0)))">
             <ngx-md class="small font-italic" [data]="section.summary"></ngx-md>
         </div>
@@ -34,7 +34,7 @@
 
             <ng-container *ngSwitchCase="'image'">
                 <div class="text-center align-middle">
-                    <img *ngIf="section.data.image" [src]="section.data.image"
+                    <img *ngIf="section.data.image || section.data.imageUrl" [src]="section.data.image || section.data.imageUrl"
                         [style.max-height.px]="section.properties.height"
                         [style.max-width.px]="section.properties.width" />
                 </div>

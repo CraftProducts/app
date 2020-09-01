@@ -68,4 +68,10 @@ export abstract class BaseEditor {
         this.itemSelected.emit(item);
         // this.selectedItem = item;
     }
+
+    onEscape(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        this.onToggleMode('VIEW');
+    }
 }

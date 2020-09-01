@@ -1,19 +1,21 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import * as _ from 'lodash';
 import { Store } from '@ngrx/store';
 import { TemplatesState } from '../+state/templates.state';
 import { Subscription } from 'rxjs';
 import { LoadTemplatesAction, LoadFileAction } from '../+state/templates.actions';
-import { filter, map, tap } from 'rxjs/operators';
-import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
+import { filter, map } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { load } from 'js-yaml';
+import { IBACKEND_URLS, BackendUrl } from 'shared-lib';
 
 @Component({
     selector: 'app-templates-list',
     templateUrl: './list.component.html'
 })
 export class TemplateListComponent implements OnInit, OnDestroy {
+    isCollapsed = true;
     details$: Subscription;
     details: any;
 
@@ -27,8 +29,14 @@ export class TemplateListComponent implements OnInit, OnDestroy {
     redirectTo$: Subscription;
     redirectTo = '/';
 
+    templateFileLocation = "";
+
     constructor(public store$: Store<TemplatesState>, public router: Router, public activatedRoute: ActivatedRoute,
-        public messageService: MessageService) { }
+        public messageService: MessageService, @Inject(IBACKEND_URLS) backendUrls: BackendUrl[]) {
+
+        const found = _.find(backendUrls, { key: 'templates' })
+        this.templateFileLocation = (found) ? `${found.value}` : "";
+    }
 
     ngOnInit(): void {
         this.queryParams$ = this.activatedRoute.queryParams

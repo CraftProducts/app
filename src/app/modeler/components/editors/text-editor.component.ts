@@ -15,12 +15,4 @@ export class TextEditorComponent extends BaseEditor {
         this.dataToEdit.links = this.data.links;
         this.dataToEdit.tasks = this.data.tasks;
     }
-
-    onEscape(event) {
-        event.preventDefault();
-        event.stopPropagation();
-        this.onToggleMode('VIEW');
-    }
-
-    
 }

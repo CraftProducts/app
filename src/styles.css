@@ -293,22 +293,29 @@ body .ui-sidebar .ui-sidebar-close {
 }
 
 .select-card {
-  width: 230pt;
+  width: 150pt;
   height: 12rem;
   color: #555;
 }
-
+.select-card img {
+  width: 100pt;
+  margin-top: 16pt;
+}
 .select-card .card-title {
   color: #000;
 }
-
+.select-card .card-text {
+  display: none;
+}
 .select-card:hover,
-.select-card:hover .card-text,
-.select-card:hover .card-title {
+.select-card:hover .card-text {
   background-color: #2e2f4b;
   color: #fff;
+  display: block;
 }
-
+.select-card:hover img {
+  display: none;
+}
 .select-card .card-text {
   overflow: none;
 }

@@ -9,18 +9,22 @@
                 <div class="w-75">
                     <h1>{{model.title}}</h1>
 
-                    <div class="h4 text-muted font-weight-light">
+                    <div class="h4 text-muted font-weight-light mb-5">
                         <ngx-md [data]="model.summary"></ngx-md>
                     </div>
+
+                    <img [src]="templateFileLocation + '/' + model.thumbnail" *ngIf="model.thumbnail">
+
                 </div>
             </div>
         </div>
     </as-split-area>
     <as-split-area size="50" class="p-1 bg-primary text-white">
-        <button class="btn btn-link text-white float-right" (click)="onProceed('')">
-            <fa-icon [icon]="['far', 'arrow-alt-circle-right']" size="2x"></fa-icon>
-        </button>
-
+        <div class="btn-group float-right">
+            <button class="btn btn-link text-white" (click)="onClose()">
+                <fa-icon [icon]="['far', 'times-circle']" size="2x"></fa-icon>
+            </button>
+        </div>
         <div class="p-5">
             <div class="mb-4" [id]="section.code" *ngFor="let section of sections">
                 <fa-icon *ngIf="section.icon && section.icon.length > 0" [icon]="section.icon" [fixedWidth]="true"
@@ -28,15 +32,24 @@
                 </fa-icon>
 
                 <div class="ml-5">
-                    <h5 class="mb-0 font-weight-normal">                        
-                        {{section.title}}
-                        <button class="btn btn-link btn-sm text-white" (click)="onProceed(section.code)" title="Jump to section">
-                            <fa-icon [icon]="['far', 'arrow-alt-circle-right']" size="lg"></fa-icon>
-                        </button>                
-                    </h5>
+                    <button class="pl-0 btn btn-link btn-sm text-white" (click)="onProceed(section.code)"
+                        title="Jump to section">
+                        <h5 class="mb-0 font-weight-normal">
+                            {{section.title}}
+                            <!-- <fa-icon icon="angle-right" class="ml-1"></fa-icon> -->
+                        </h5>
+                    </button>
                     <ngx-md class="text-light" [data]="section.summary"></ngx-md>
                 </div>
             </div>
+
+            <div class="ml-5 mt-4">
+                <button class="btn btn-light" (click)="onProceed('')">
+                    Start
+                    <fa-icon [icon]="['far', 'arrow-alt-circle-right']" class="ml-1"></fa-icon>
+                </button>
+            </div>
+
         </div>
     </as-split-area>
 </as-split>

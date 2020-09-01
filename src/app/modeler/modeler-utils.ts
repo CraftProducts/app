@@ -18,8 +18,13 @@ export const LISTVIEWTYPES = {
     tile: 'tile'
 }
 
-export const DEFAULT_LIST_PROPERTIES = { view: 'list' };
-export const DEFAULT_IMAGE_PROPERTIES = { height: 100, width: 100 };
+export const IMAGETYPES = {
+    link: 'link',
+    embed: 'embed'
+}
+
+export const DEFAULT_LIST_PROPERTIES = { view: LISTVIEWTYPES.list };
+export const DEFAULT_IMAGE_PROPERTIES = { height: 100, width: 100, mode: IMAGETYPES.link };
 export const DEFAULT_THEME = { bgColor: '#ffffff', tile: { bgColor: '#fff9b8' } }
 
 export function prepareTemplateForDownload(node) {
@@ -212,6 +217,8 @@ function initPanelProperties(child: any) {
         child.properties = child.properties || DEFAULT_IMAGE_PROPERTIES;
         child.properties.height = child.properties.height || DEFAULT_IMAGE_PROPERTIES.height;
         child.properties.width = child.properties.width || DEFAULT_IMAGE_PROPERTIES.width;
+        child.properties.mode = child.properties.mode || DEFAULT_IMAGE_PROPERTIES.mode;
+        //child.properties.limit = child.properties.limit || DEFAULT_IMAGE_PROPERTIES.limit;
     }
     child.theme = theme;
 }

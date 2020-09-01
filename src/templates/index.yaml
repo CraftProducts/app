@@ -57,20 +57,6 @@ templates:
     type: 
       - journeymaps
 
-  - code: jmcxideation
-    title: Ideation
-    summary: |
-      Contains the basic elements of a Customer Journey Map made to generate new ideas and solutions without digging to deep into e.g. touch points.
-    type: 
-      - journeymaps
-
-  - code: uxjourneymaps
-    title: User experience
-    summary: |
-      A journey map is a visualization of the process that a person goes through in order to accomplish a specific goal using your product.
-    type: 
-      - journeymaps
-
   - code: storyboard
     title: Storyboard
     summary: |

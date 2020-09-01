@@ -9,6 +9,6 @@ export const environment = {
     CLIENT_ID: '304736345925-120qpq4eq3k67hptfmp76n12tnv8b7sl.apps.googleusercontent.com'
   },
   backendUrls: [
-    { key: 'templates', value: 'https://raw.githubusercontent.com/adhamankar/craftproducts/master/templates' },
+    { key: 'templates', value: 'https://raw.githubusercontent.com/CraftProducts/templates/master/templates' },
   ]
 };

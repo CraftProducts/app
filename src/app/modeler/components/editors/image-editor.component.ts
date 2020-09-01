@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import * as _ from 'lodash';
 import { BaseEditor } from './base-editor';
 import { MessageService } from 'primeng/api';
+import { generateCode } from 'shared-lib';
 
 @Component({
     selector: 'app-image-editor',
@@ -10,22 +11,19 @@ import { MessageService } from 'primeng/api';
 export class ImageEditorComponent extends BaseEditor {
     @Input() placeholder: string;
     @Input() properties: any;
+    newRecord: any;
     resetNewRecord(): void { }
 
     constructor(public messageService: MessageService) {
         super();
     }
 
+    canAdd = () => this.dataToEdit && this.dataToEdit.imageUrl && this.dataToEdit.imageUrl.length > 0;
+
     add(): void {
         this.dataToEdit.notes = this.data.notes;
         this.dataToEdit.links = this.data.links;
         this.dataToEdit.tasks = this.data.tasks;
-    }
-
-    onEscape(event) {
-        event.preventDefault();
-        event.stopPropagation();
-        this.onToggleMode('VIEW');
     }
 
     onFileLoaded(fileContent) {

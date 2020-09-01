@@ -5,40 +5,42 @@
                 <fa-icon icon="spinner" [spin]="true" aria-hidden="true"></fa-icon> loading...
             </div>
 
-            <div class="row" *ngIf="details">
-                <div class="col-md-2 pt-5" *ngIf="details.groups && details.groups.length > 0">
-                    <div class=" alert">
-                        <div *ngFor="let group of details.groups" class="">
-                            <h6 class="text-muted">{{group.title}} </h6>
-                            <ul class="small list-unstyled" *ngIf="group.list && group.list.length > 0">
-                                <li class="p-1" [ngClass]="{'bg-white': selectedCode === item.code}"
-                                    *ngFor="let item of group.list">
-                                    <a class="text-dark" routerLink="/templates"
-                                        [queryParams]="{ group: group.code, code: item.code  }"
-                                        queryParamsHandling="merge">
-                                        {{item.title}}
-                                    </a>
-                                </li>
-                            </ul>
+            <div class="row  mt-4" *ngIf="details">
+                <div class="col-md-2" *ngIf="details.groups && details.groups.length > 0">
+                    <div class="mt-5 pt-5">
+                        <div class=" alert">
+                            <div *ngFor="let group of details.groups" class="">
+                                <h6 class="text-muted">{{group.title}} </h6>
+                                <ul class="small list-unstyled" *ngIf="group.list && group.list.length > 0">
+                                    <li class="p-1" [ngClass]="{'bg-white': selectedCode === item.code}"
+                                        *ngFor="let item of group.list">
+                                        <a class="text-dark" routerLink="/templates"
+                                            [queryParams]="{ group: group.code, code: item.code  }"
+                                            queryParamsHandling="merge">
+                                            {{item.title}}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-8">
                     <div class="text-center">
-                        <h3 class="mb-4">
+                        <h3 class="font-weight-normal text-brand">
                             {{details.title}}
-                            <button class="btn btn-link" type="button" placement="bottom" [ngbPopover]="popContent"
-                                popoverClass="pop-content">
+                            <!-- <button class="btn btn-link" type="button" (click)="isCollapsed = !isCollapsed">
                                 <fa-icon [icon]="['far', 'question-circle']" class="text-muted"></fa-icon>
-                            </button>
+                            </button> -->
                         </h3>
-                        <ng-template #popContent>
-                            <div class="p-2">
-                                <ngx-md [data]="details.summary"></ngx-md>
-                            </div>
-                        </ng-template>
+                        <!-- <ng-template #popContent> -->
+                        <div class="pb-4">
+                            <ngx-md [data]="details.summary"></ngx-md>
+                        </div>
+                        <!-- </ng-template> -->
 
-                        <div class="alert alert-secondary rounded-0 text-left m-3 border-0" style="border-left: solid 3px #aaa!important;" *ngIf="selectedGroup">
+                        <div class="alert alert-secondary rounded-0 text-left m-3 border-0"
+                            style="border-left: solid 3px #aaa!important;" *ngIf="selectedGroup">
                             <a routerLink="/templates" class="text-muted float-right" *ngIf="selectedCode">
                                 <fa-icon icon="times"></fa-icon>
                             </a>
@@ -49,11 +51,11 @@
                         <div class="clearfix d-flex justify-content-center flex-wrap">
 
                             <div class="m-2 card select-card custom-shadow alert-primary">
-                                <div class="p-3">
-                                    <h5 class="card-title font-weight-normal mb-2">Use custom template</h5>
-                                    <div class="card-text small">
-                                        Can't find a preexisting template? Use your own template.
-                                        <div class="m-4">
+                                <h6 class="bg-light border-bottom p-3 card-title">Use custom template</h6>
+                                <div class="p-2">
+                                    <div class="small">
+                                        Can't find a template? Use your own template.
+                                        <div class="m-2">
                                             <sharedlib-load-localfile (fileLoaded)="onTemplateFileLoaded($event)"
                                                 (error)="onFileLoadingError($event)"
                                                 errorMessage="Invalid file. System only supports CraftProduct compliant YAML files."
@@ -75,12 +77,15 @@
 
                             <ng-container *ngIf="filteredList && filteredList.length > 0">
                                 <a [routerLink]="[redirectTo, item.code]" [queryParams]="{view: 'intro'}"
-                                    queryParamsHandling="merge" class="m-2 card select-card custom-shadow text-left"
-                                    *ngFor="let item of filteredList" [title]="item.title">
-                                    <div class="p-3" style="overflow: hidden;">
-                                        <h5 class="card-title mb-2 font-weight-normal">{{item.title}}</h5>
-                                        <div class="card-text small">
-                                            <ngx-md>{{item.summary | truncate:200:'...'}}</ngx-md>
+                                    queryParamsHandling="merge" class="m-2 card select-card custom-shadow text-center"
+                                    *ngFor="let item of filteredList" [title]="item.title" style="overflow: hidden;">
+                                    <h6 class="bg-light border-bottom p-3 card-title text-truncate mb-0">{{item.title}}
+                                    </h6>
+                                    <div class="p-3">
+                                        <img [src]="templateFileLocation + '/' + item.thumbnail" *ngIf="item.thumbnail">
+
+                                        <div class="card-text small text-left">
+                                            <ngx-md>{{item.summary | truncate:125:'...'}}</ngx-md>
                                         </div>
                                     </div>
                                 </a>
