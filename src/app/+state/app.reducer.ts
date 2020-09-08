@@ -1,4 +1,3 @@
-import * as _ from 'lodash';
 import { App } from './app.state';
 import { ActionTypes, TemplateModuleActionTypes } from './app.actions';
 import { CommonActionTypes } from '../appcommon/lib/CommonActions';

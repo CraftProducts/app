@@ -2,31 +2,15 @@ import { Action } from '@ngrx/store';
 import { type } from 'shared-lib';
 
 export const ActionTypes = {
-    SetRedirectPath: type('[SetRedirectPath]'),
-
-    LoadGroups: type('[LoadGroups]'),
-    LoadGroupsFailed: type('[LoadGroups] Failed'),
-    LoadGroupsSuccess: type('[LoadGroups] Success'),
-
-    LoadGroupTemplates: type('[LoadGroupTemplates]'),
-    LoadGroupTemplatesFailed: type('[LoadGroupTemplates] Failed'),
-    LoadGroupTemplatesSuccess: type('[LoadGroupTemplates] Success'),
+    LoadTemplates: type('[LoadTemplates]'),
+    LoadTemplatesFailed: type('[LoadTemplates] Failed'),
+    LoadTemplatesSuccess: type('[LoadTemplates] Success'),
 
     LoadFile: type("[LoadFile]")
 }
 
-export class SetRedirectPathAction implements Action {
-    type = ActionTypes.SetRedirectPath;
-    constructor(public payload: any) { }
-}
-
-export class LoadGroupsAction implements Action {
-    type = ActionTypes.LoadGroups;
-    constructor(public payload: any) { }
-}
-
-export class LoadGroupTemplatesAction implements Action {
-    type = ActionTypes.LoadGroupTemplates;
+export class LoadTemplatesAction implements Action {
+    type = ActionTypes.LoadTemplates;
     constructor(public payload: any) { }
 }
 
@@ -36,8 +20,6 @@ export class LoadFileAction implements Action {
 }
 
 export type Actions =
-    SetRedirectPathAction
-    | LoadGroupsAction
-    | LoadGroupTemplatesAction
+    LoadTemplatesAction
     | LoadFileAction
     ;

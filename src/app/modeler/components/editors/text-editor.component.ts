@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import * as _ from 'lodash';
 import { BaseEditor } from './base-editor';
 
 @Component({

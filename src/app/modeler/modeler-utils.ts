@@ -1,4 +1,4 @@
-import * as _ from 'lodash';
+import * as _ from 'lodash-es';
 import { generateCode } from 'shared-lib';
 
 export const LAYOUTTYPES = {

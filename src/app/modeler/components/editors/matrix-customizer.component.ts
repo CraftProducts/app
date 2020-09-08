@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import * as _ from 'lodash';
+import * as _ from 'lodash-es';
 
 @Component({
     selector: 'app-matrix-customizer',

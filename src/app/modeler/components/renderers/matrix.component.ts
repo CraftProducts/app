@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import * as _ from 'lodash';
+import * as _ from 'lodash-es';
 import { DATATYPES } from '../../modeler-utils';
 import { transferArrayItem, moveItemInArray } from '@angular/cdk/drag-drop';
 

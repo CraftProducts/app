@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, Inject } from '@angular/core';
-import * as _ from 'lodash';
+import * as _ from 'lodash-es';
 import { IBACKEND_URLS, BackendUrl } from 'shared-lib';
 
 @Component({

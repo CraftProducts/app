@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import * as _ from 'lodash';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/+state/app.state';
 import { environment } from "../../environments/environment"

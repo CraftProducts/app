@@ -4,11 +4,10 @@ import { PageNotFoundComponent } from './components/page-not-found.component';
 
 
 const routes: Routes = [
-  //{ path: 'templates', data: { redirectTo: 'modeler' }, loadChildren: () => import('templates').then(m => m.TemplatesModule) },
   {
     path: 'templates',
     data: { redirectTo: 'modeler', animation: 'TemplatePage' },
-    loadChildren: () => import('./templates/templates.module').then(m => m.TemplatesModule)
+    loadChildren: () => import('templates').then(m => m.TemplatesModule)
   },
   {
     path: 'modeler',

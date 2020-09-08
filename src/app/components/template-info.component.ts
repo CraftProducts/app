@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../+state/app.state';
 import { Subscription } from 'rxjs';
-import * as _ from 'lodash';
 import { Router } from '@angular/router';
 import { UserModelCommandAction, UserModelCommandTypes } from '../appcommon/lib/CommonActions';
 

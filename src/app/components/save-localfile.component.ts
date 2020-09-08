@@ -6,7 +6,7 @@ import { UserModelCommandTypes, UserModelCommandAction } from '../appcommon/lib/
 import { MessageService } from 'primeng/api';
 import { filter } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import * as _ from 'lodash';
+import * as _ from 'lodash-es';
 
 @Component({
     selector: 'app-save-localfile',

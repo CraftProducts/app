@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import * as _ from 'lodash';
 import { TemplateService } from 'shared-lib';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import * as appActions from './app.actions';

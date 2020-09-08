@@ -1,8 +1,5 @@
 export interface Templates {
-  redirectTo: string;
-//  breadcrumb: boolean;
-  groups: any;
-  groupTemplates: any;
+  list: any;
 }
 
 export interface TemplatesState {

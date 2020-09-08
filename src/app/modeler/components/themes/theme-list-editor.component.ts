@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import * as _ from 'lodash';
 
 const DEFAULT_RECORD = { bgColor: '#ffffff', color: '#555555', tile: { bgColor: '#fff9b8', color: '#555555' } };
 

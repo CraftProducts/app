@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
-import * as _ from 'lodash';
 import { SharedLibModule } from 'shared-lib';
 import { NgxMdModule } from 'ngx-md';
 import { RouterModule } from '@angular/router';

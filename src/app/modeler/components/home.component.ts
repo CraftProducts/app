@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
-import * as _ from 'lodash';
+import * as _ from 'lodash-es';
 import { Store } from '@ngrx/store';
 import { ModelerState } from '../+state/modeler.state';
 import { ActivatedRoute, Router } from '@angular/router';

@@ -10,6 +10,7 @@
       "shared-lib" : "sharedLib",
       "ngx-md" : "ngxMd",
       "js-yaml": "jsYaml",
+      "lodash-es": "lodashES",
       "@ngrx/store" : "ngrxStore",
       "primeng/api" : "primeApi",
       "@ngrx/effects": "ngrxEffects"

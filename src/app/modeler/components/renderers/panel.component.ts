@@ -1,6 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import * as _ from 'lodash';
-import { DATATYPES } from '../../modeler-utils';
+import * as _ from 'lodash-es';
 
 @Component({
     selector: 'app-panel',

@@ -1,8 +1,6 @@
 import { Component, Input } from '@angular/core';
-import * as _ from 'lodash';
 import { BaseEditor } from './base-editor';
 import { MessageService } from 'primeng/api';
-import { generateCode } from 'shared-lib';
 
 @Component({
     selector: 'app-image-editor',

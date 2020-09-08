@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { IBACKEND_URLS, BackendUrl } from '../lib/backend-urls';
-import * as _ from 'lodash';
+import * as _ from 'lodash-es';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { load } from 'js-yaml';

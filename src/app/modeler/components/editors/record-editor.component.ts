@@ -1,5 +1,4 @@
 import { Component, Input, EventEmitter, Output } from '@angular/core';
-import * as _ from 'lodash';
 
 @Component({
     selector: 'app-record-editor',

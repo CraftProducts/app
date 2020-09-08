@@ -5,7 +5,7 @@
     "entryFile": "src/public-api.ts",
     "umdModuleIds": {
       "js-yaml": "jsYaml",
-      "lodash": "lodash",
+      "lodash-es": "lodashEs",
       "@fortawesome/angular-fontawesome": "angularFontawesome"
     }
   }

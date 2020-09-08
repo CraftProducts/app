@@ -1,5 +1,5 @@
 import { Component, Input, EventEmitter, Output, HostListener } from '@angular/core';
-import * as _ from 'lodash';
+import * as _ from 'lodash-es';
 import { generateCode } from 'shared-lib';
 import { BaseEditor } from './base-editor';
 

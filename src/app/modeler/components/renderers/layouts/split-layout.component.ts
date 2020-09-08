@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import * as _ from 'lodash';
 import { BaseLayoutRenderer } from './base-layout-renderer';
 
 @Component({

@@ -1,5 +1,5 @@
 import { HostListener, Output, EventEmitter, Input } from '@angular/core';
-import * as _ from 'lodash';
+import * as _ from 'lodash-es';
 
 export abstract class BaseEditor {
     @Output() itemChange = new EventEmitter<any>();

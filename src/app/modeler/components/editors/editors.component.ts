@@ -1,6 +1,4 @@
 import { Component, Input, EventEmitter, Output } from '@angular/core';
-import * as _ from 'lodash';
-import { DATATYPES } from '../../modeler-utils';
 
 @Component({
     selector: 'app-editors',

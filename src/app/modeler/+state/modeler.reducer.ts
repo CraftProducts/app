@@ -1,5 +1,5 @@
 import { Modeler } from './modeler.state';
-import * as _ from 'lodash';
+import * as _ from 'lodash-es';
 import { CommonActionTypes } from 'src/app/appcommon/lib/CommonActions';
 import { resetModelChildren, makeBackwardCompatible, populateModelDataset, customizeSection, DEFAULT_THEME, applyThemeChildren } from '../modeler-utils';
 import { ActionTypes } from './modeler.actions';

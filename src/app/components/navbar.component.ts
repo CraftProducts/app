@@ -4,9 +4,7 @@ import { AppState } from '../+state/app.state';
 import { Subscription } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
-import * as _ from 'lodash';
 import { UserModelCommandAction, UserModelCommandTypes } from '../appcommon/lib/CommonActions';
-import { tap, filter } from 'rxjs/operators';
 import { LoadFileAction } from '../+state/app.actions';
 
 @Component({

@@ -12,7 +12,11 @@
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
-          "options": {
+          "options": {            
+            "allowedCommonJsDependencies": [
+              "pptxgenjs",
+              "js-yaml"
+            ],
             "outputPath": "dist/craftproducts",
             "index": "src/index.html",
             "main": "src/main.ts",

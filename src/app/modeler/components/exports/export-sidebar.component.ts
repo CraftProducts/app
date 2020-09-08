@@ -1,5 +1,4 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import * as _ from 'lodash';
 import { createPptx } from './pptx-util';
 import { environment } from 'src/environments/environment';
 

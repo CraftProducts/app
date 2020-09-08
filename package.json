@@ -41,7 +41,7 @@
     "angular-split": "^3.0.3",
     "bootstrap": "^4.5.2",
     "js-yaml": "^3.14.0",
-    "lodash": "^4.17.20",
+    "lodash-es": "^4.17.15",
     "ngx-md": "^8.1.6",
     "pptxgenjs": "^3.3.0",
     "primeicons": "^4.0.0",
@@ -52,7 +52,7 @@
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.900.4",
+    "@angular-devkit/build-angular": "^0.1000.8",
     "@angular-devkit/build-ng-packagr": "~0.900.7",
     "@angular/cli": "~9.0.4",
     "@angular/compiler-cli": "~9.0.3",
