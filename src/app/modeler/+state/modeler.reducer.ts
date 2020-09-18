@@ -5,7 +5,6 @@ import { resetModelChildren, makeBackwardCompatible, populateModelDataset, custo
 import { ActionTypes } from './modeler.actions';
 
 export function modelerReducer(state: Modeler, action: any): Modeler {
-    console.log(action.type, action.payload);
     switch (action.type) {
         case CommonActionTypes.SetModel: {
             const modelInstance = action.payload;

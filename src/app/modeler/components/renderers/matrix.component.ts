@@ -32,7 +32,6 @@ export class MatrixRendererComponent {
     }
 
     onDrop(event) {
-        console.log(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
         this.section.data = this.section.data || [];
 
         const src = _.find(this.section.data, { rowCode: event.previousContainer.data.rowCode, colCode: event.previousContainer.data.colCode })

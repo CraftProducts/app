@@ -2,11 +2,11 @@
     <div *ngFor="let record of getOrderedList(); let idx = index">
         <div class="row">
             <div class="col-md-8">
-                <fa-icon class="text-muted float-left" size="sm" [title]="record.datatype" [icon]="
+                <fa-icon *ngIf="hasDatatype" class="text-muted float-left" size="sm" [title]="record.datatype" [icon]="
                         record.datatype === 'text' ? 'align-left' :
                         record.datatype === 'list' ? 'list' :
                         record.datatype === 'select' ? 'indent': '' 
-                    " *ngIf="hasDatatype"></fa-icon>
+                    "></fa-icon>
                 <div [ngClass]="{'ml-4': hasDatatype}">
                     <b class="text-muted">{{record.title}} </b>
                     <div class="text-muted">

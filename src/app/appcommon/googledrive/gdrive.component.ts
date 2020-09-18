@@ -56,7 +56,7 @@ export class GDriveSelectorComponent {
                         if (e[google.picker.Response.ACTION] == google.picker.Action.PICKED) {
                             let doc = e[google.picker.Response.DOCUMENTS][0];
                             src = doc[google.picker.Document.URL];
-                            console.log("Document selected is", doc, "and URL is ", src)
+                            //c1onsole.log("Document selected is", doc, "and URL is ", src)
                         }
                     })
                     .build();

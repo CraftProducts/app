@@ -20,11 +20,6 @@
         </div>
     </as-split-area>
     <as-split-area size="50" class="p-1 bg-primary text-white">
-        <div class="btn-group float-right">
-            <button class="btn btn-link text-white" (click)="onClose()">
-                <fa-icon [icon]="['far', 'times-circle']" size="2x"></fa-icon>
-            </button>
-        </div>
         <div class="p-5">
             <div class="mb-4" [id]="section.code" *ngFor="let section of sections">
                 <fa-icon *ngIf="section.icon && section.icon.length > 0" [icon]="section.icon" [fixedWidth]="true"
@@ -44,9 +39,13 @@
             </div>
 
             <div class="ml-5 mt-4">
-                <button class="btn btn-light" (click)="onProceed('')">
-                    Start
-                    <fa-icon [icon]="['far', 'arrow-alt-circle-right']" class="ml-1"></fa-icon>
+                <button class="btn btn-light mr-3" (click)="onClose()">
+                    Get started <fa-icon icon="chevron-right"></fa-icon>
+                </button>
+
+                <button class="btn btn-link text-white btn-sm" (click)="onProceed('')">
+                    I prefer a step by step guide
+                    <fa-icon icon="angle-right" class="ml-1"></fa-icon>
                 </button>
             </div>
 

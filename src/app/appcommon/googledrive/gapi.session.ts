@@ -30,12 +30,14 @@ export class GapiSession {
     }
 
     signIn() {
-        console.log('signin', this.googleAuth);
+        //c1onsole.log('signin', this.googleAuth);
         return this.googleAuth.signIn({ prompt: 'consent' })
             .then((googleUser: gapi.auth2.GoogleUser) => {
                 this.appRepository.User.add(googleUser.getBasicProfile());
             })
-            .catch(ex => console.log('ex', ex));
+            .catch(ex => {
+                //c1onsole.log('ex', ex)
+            });
     }
 
     signOut(): void {
