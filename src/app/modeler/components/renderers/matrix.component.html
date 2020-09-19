@@ -55,7 +55,7 @@
                         [style.color]="col.cellTheme.color"
                         [ngClass]="{'panel-is-dirty': row.columns[idx] && row.columns[idx].isDirty}">
                         <div class="mb-1" style="max-width: 410px;min-width: 250px;">
-                            <app-panel [sectionCodes]="sectionCodes" [parentCode]="section.code"
+                            <app-panel [sectionCodes]="section.sectionCodes" [parentCode]="section.code"
                                 [section]="row.columns[idx]" (showEditor)="onShowItemDetails(row.columns[idx])"
                                 (drop)="onDrop($event)">
                             </app-panel>

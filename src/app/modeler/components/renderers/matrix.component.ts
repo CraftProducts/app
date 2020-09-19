@@ -10,19 +10,7 @@ import { transferArrayItem, moveItemInArray } from '@angular/cdk/drag-drop';
 })
 export class MatrixRendererComponent {
     @Output() itemChange = new EventEmitter<any>();
-    sectionCodes = [];
-
-    _section: any;
-    @Input() set section(value: any) {
-        this._section = value;
-        this.sectionCodes = [];
-
-        const colcodes = (value && value.columns) ? _.map(value.columns, 'code') : [];
-        const rowcodes = (value && value.rows) ? _.map(_.filter(value.rows, { datatype: DATATYPES.list }), 'code') : [];
-
-        colcodes.forEach(col => rowcodes.forEach(row => this.sectionCodes.push(`${col}_${row}`)))
-    }
-    get section() { return this._section; }
+    @Input() section: any;
 
     @Output() showEditor = new EventEmitter<any>();
     onShowEditor = (eventArgs) => this.showEditor.emit(eventArgs);
@@ -43,10 +31,9 @@ export class MatrixRendererComponent {
             this.section.data.push(dest);
         }
         dest.data.list = dest.data.list || [];
-        transferArrayItem(src.data.list, dest.data.list, event.previousIndex, event.currentIndex);
 
         if (event.previousContainer === event.container) {
-            moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+            moveItemInArray(event.container.data.data.list, event.previousIndex, event.currentIndex);
         } else {
             event.container.data.data.list = event.container.data.data.list || [];
             transferArrayItem(event.previousContainer.data.data.list,

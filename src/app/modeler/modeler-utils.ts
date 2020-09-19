@@ -118,7 +118,7 @@ function attachRowColumnData(node: any, found: any) {
     }
 }
 
-export function updateMatrixSection(child: any, record: any, resetData: boolean) {
+function updateMatrixSection(child: any, record: any, resetData: boolean) {
     record.rows = record.rows || child.rows || [];
     record.columns = record.columns || child.columns || [];
 
@@ -149,6 +149,19 @@ export function updateMatrixSection(child: any, record: any, resetData: boolean)
             });
         }
     });
+
+    updateSectionCodes(child);
+}
+
+function updateSectionCodes(node) {
+    if (node) {
+        node.sectionCodes = [];
+
+        const colcodes = (node && node.columns) ? _.map(node.columns, 'code') : [];
+        const rowcodes = (node && node.rows) ? _.map(_.filter(node.rows, { datatype: DATATYPES.list }), 'code') : [];
+
+        colcodes.forEach(col => rowcodes.forEach(row => node.sectionCodes.push(`${col}_${row}`)));
+    }
 }
 
 export function applyThemeChildren(children, theme) {
@@ -196,7 +209,7 @@ export function populateModelDataset(node, lookupSections) {
         const found = _.find(lookupSections, { code: node.code });
         if (found) {
             updateMatrixSection(node, found, false);
-            attachRowColumnData(node, found)
+            attachRowColumnData(node, found);
         }
         node.data = found && found.data ? _.cloneDeep(found.data) : {};
         node.isDirty = false;
