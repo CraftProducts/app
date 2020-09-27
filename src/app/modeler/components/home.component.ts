@@ -85,7 +85,7 @@ export class ModelerHomeComponent implements ComponentCanDeactivate, OnInit, OnD
             this.sections = [];
         });
 
-        this.combined$ = combineLatest(modelInstanceQ, queryparamsQ)
+        this.combined$ = combineLatest([modelInstanceQ, queryparamsQ])
             .subscribe(([model, qp]) => {
                 this.model = model;
                 if (this.model) {
@@ -140,7 +140,7 @@ export class ModelerHomeComponent implements ComponentCanDeactivate, OnInit, OnD
                 filter(() => !this.isCustomTemplate),
                 map(p => p.templateCode)
             )
-            .subscribe((templateCode) => this.store$.dispatch(new LoadTemplateAction({ templateCode })));
+            .subscribe((templateCode) => this.store$.dispatch(new LoadTemplateAction({ owner: 'CraftProducts', repo: 'templates', templateCode })));
 
         this.loadedTemplate$ = this.store$.select(p => p.app.loadedTemplate)
             .pipe(filter(p => p), tap(p => this.loadedTemplate = p))

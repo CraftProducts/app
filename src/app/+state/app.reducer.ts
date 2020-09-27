@@ -42,6 +42,7 @@ export function appReducer(state: App, action: any): App {
             return { ...state, templateToLoad: action.payload, userModelCommand: null };
         }
         case ActionTypes.LoadTemplateSuccess: {
+            console.log('loadedTemplate', action.payload);
             const loadedTemplate = action.payload;
             return { ...state, loadedTemplate, isModelDirty: false };
         }

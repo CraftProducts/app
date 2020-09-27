@@ -32,6 +32,8 @@ export class TemplateListComponent implements OnInit, OnDestroy {
     templateFileLocation = "";
     documentationUrl = "";
 
+    params$: Subscription;
+
     constructor(public store$: Store<TemplatesState>, public router: Router, public activatedRoute: ActivatedRoute,
         public messageService: MessageService, @Inject(IBACKEND_URLS) backendUrls: BackendUrl[]) {
 
@@ -42,6 +44,10 @@ export class TemplateListComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+        this.params$ = this.activatedRoute.params
+            .pipe(filter(p => p.owner && p.repo))
+            .subscribe(params => this.store$.dispatch(new LoadTemplatesAction(params)));
+
         this.queryParams$ = this.activatedRoute.queryParams
             .subscribe(qp => {
                 this.selectedType = qp.group;
@@ -53,8 +59,6 @@ export class TemplateListComponent implements OnInit, OnDestroy {
             .pipe(filter(data => data["redirectTo"] && data["redirectTo"].length > 0), map(data => data["redirectTo"]))
             .subscribe(redirectTo => this.redirectTo = `/${redirectTo}`);
 
-        this.store$.dispatch(new LoadTemplatesAction(null));
-
         this.details$ = this.store$.select(p => p.templates.list)
             .pipe(filter(details => details))
             .subscribe(details => {
@@ -64,6 +68,7 @@ export class TemplateListComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
+        this.params$ ? this.params$.unsubscribe() : null;
         this.queryParams$ ? this.queryParams$.unsubscribe() : null;
         this.redirectTo$ ? this.redirectTo$.unsubscribe() : null;
         this.details$ ? this.details$.unsubscribe() : null;
