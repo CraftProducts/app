@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { TemplatesState } from '../+state/templates.state';
 import { Subscription } from 'rxjs';
 import { LoadTemplatesAction, LoadFileAction } from '../+state/templates.actions';
-import { filter, map } from 'rxjs/operators';
+import { filter, map, tap } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { load } from 'js-yaml';
@@ -46,7 +46,10 @@ export class TemplateListComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.params$ = this.activatedRoute.params
             .pipe(filter(p => p.owner && p.repo))
-            .subscribe(params => this.store$.dispatch(new LoadTemplatesAction(params)));
+            .subscribe(params => {
+                this.templateFileLocation = `${this.templateFileLocation}/assets/${params.owner}/${params.repo}`;
+                this.store$.dispatch(new LoadTemplatesAction(params));
+            }); 
 
         this.queryParams$ = this.activatedRoute.queryParams
             .subscribe(qp => {

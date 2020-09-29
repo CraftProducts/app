@@ -4,8 +4,9 @@ import { PageNotFoundComponent } from './components/page-not-found.component';
 
 import { environment } from '../environments/environment'
 
+const redirectTo = `templates/${environment.defaultRepo.owner}/${environment.defaultRepo.repo}`;
 const routes: Routes = [
-  { path: 'templates', pathMatch: 'full', redirectTo: `templates/${environment.defaultRepo.owner}/${environment.defaultRepo.repo}` },
+  { path: 'templates', pathMatch: 'full', redirectTo },
   {
     path: 'templates/:owner/:repo',
     data: { redirectTo: 'modeler', animation: 'TemplatePage' },
@@ -16,7 +17,7 @@ const routes: Routes = [
     data: { animation: 'ModelerPage' },
     loadChildren: () => import('./modeler/modeler.module').then(m => m.ModelerModule)
   },
-  { path: '', pathMatch: 'full', redirectTo: 'templates' },
+  { path: '', pathMatch: 'full', redirectTo },
   { path: '**', component: PageNotFoundComponent }
 ];
 

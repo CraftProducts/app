@@ -17,26 +17,15 @@ export class TemplateService {
 
     public loadTemplates(owner, repo) {
         return this.httpClient.get(`${this.templateFileLocation}/${owner}/${repo}/index.yaml`, { responseType: "text" })
-            .pipe(
-                map(yamlString => {
-
-                    try {
-                        const doc = safeLoad(yamlString);
-                        console.log(doc);
-                        return doc;
-                    } catch (e) {
-                        console.log(e);
-                        return '';
-                    }
-                })
-            )
+            .pipe(map(yamlString => {
+                try { return safeLoad(yamlString); } catch (e) { return ''; }
+            }))
     }
 
     public loadTemplate(owner, repo, templateCode) {
         return this.httpClient.get(`${this.templateFileLocation}/${owner}/${repo}/${templateCode.toLowerCase()}.yaml`, { responseType: "text" })
-            .pipe(
-                tap(p => console.log(load(p))),
-                map(yamlString => load(yamlString))
-            )
+            .pipe(map(yamlString => {
+                try { return safeLoad(yamlString); } catch (e) { return ''; }
+            }))
     }
 }
