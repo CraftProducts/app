@@ -9,6 +9,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
+import { fab } from '@fortawesome/free-brands-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 
 import { HttpClientModule } from '@angular/common/http';
@@ -37,6 +38,7 @@ import { UserRepository } from './appcommon/googledrive/user.repository';
 import { IBACKEND_URLS, SharedLibModule } from 'shared-lib';
 import { SaveLocalFileComponent } from './components/save-localfile.component';
 import { TemplateInfoComponent } from './components/template-info.component';
+import { AuthComponent } from './components/auth.component';
 
 export function initGapi(gapiSession: GapiSession) {
   return () => gapiSession.initClient();
@@ -44,6 +46,7 @@ export function initGapi(gapiSession: GapiSession) {
 
 @NgModule({
   declarations: [
+    AuthComponent,
     AppComponent, PageNotFoundComponent, 
     NavbarComponent, ToolsComponent, TemplateInfoComponent, 
     SaveLocalFileComponent
@@ -96,6 +99,6 @@ export function initGapi(gapiSession: GapiSession) {
 export class AppModule {
   constructor(library: FaIconLibrary) {
     // Add an icon to the library for convenient access in other components
-    library.addIconPacks(fas, far);
+    library.addIconPacks(fas, far, fab);
   }
 }

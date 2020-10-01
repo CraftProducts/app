@@ -49,7 +49,7 @@ export class TemplateListComponent implements OnInit, OnDestroy {
             .subscribe(params => {
                 this.templateFileLocation = `${this.templateFileLocation}/assets/${params.owner}/${params.repo}`;
                 this.store$.dispatch(new LoadTemplatesAction(params));
-            }); 
+            });
 
         this.queryParams$ = this.activatedRoute.queryParams
             .subscribe(qp => {

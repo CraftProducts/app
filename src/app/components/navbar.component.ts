@@ -1,11 +1,12 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../+state/app.state';
 import { Subscription } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { UserModelCommandAction, UserModelCommandTypes } from '../appcommon/lib/CommonActions';
-import { LoadFileAction } from '../+state/app.actions';
+import { LoadFileAction, SetGithubAccessTokenAction } from '../+state/app.actions';
+import { environment } from '../../environments/environment';
 
 @Component({
     selector: 'app-navbar',
@@ -23,7 +24,16 @@ export class NavbarComponent implements OnInit, OnDestroy {
     filename = "";
     constructor(public store$: Store<AppState>, public router: Router, public messageService: MessageService) {
     }
+
     ngOnInit(): void {
+        window.addEventListener('message', event => {
+            if (event.origin.startsWith(environment.githubApp.url)) {
+                console.log('event.data', event.data);
+                localStorage.setItem("github_accesstoken", event.data.token);
+                this.router.navigate(["/templates", event.data.owner, event.data.repo]);
+                this.store$.dispatch(new SetGithubAccessTokenAction(event.data.token));
+            }
+        });
         this.isModelDirty$ = this.store$.select(p => p.app.isModelDirty)
             .subscribe(p => {
                 this.isModelDirty = p;
@@ -76,4 +86,13 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
 
     onFileLoadingError = (err) => this.messageService.add({ severity: 'error', detail: 'Error:' + err, life: 5000, closable: true })
+
+    openAuthWindow() {
+        const h = 768;
+        const w = 1024;
+        const y = window.top.outerHeight / 2 + window.top.screenY - (h / 2);
+        const x = window.top.outerWidth / 2 + window.top.screenX - (w / 2);
+        window.open(`${environment.githubApp.url}/login`, 'name',
+            `toolbar=no, location=no, directories=no, status=no, menubar=no,  copyhistory=no, width=${w}, height=${h}, top=${y}, left=${x}`);
+    }
 }

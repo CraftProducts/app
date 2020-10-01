@@ -6,6 +6,9 @@ export const CommonActionTypes = {
     SetDataset: type("[SetDataset]"),
 
     SaveModel: type("[SaveModel]"),
+    SaveModelSuccess: type("[SaveModel] Success"),
+    SaveModelFailed: type("[SaveModel] Failed"),
+
     ResetModel: type("[ResetModel]"),
     CloseWorkspace: type("[CloseWorkspace]"),
     UpdateTheme: type("[UpdateTheme]"),

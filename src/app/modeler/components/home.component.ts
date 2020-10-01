@@ -198,10 +198,11 @@ export class ModelerHomeComponent implements ComponentCanDeactivate, OnInit, OnD
         const content = dump(memento);
         const mimetype = "text/x-yaml";
         this.downloadDataFile(this.filename, mimetype, content);
-        this.store$.dispatch(new SaveModelAction(this.instance));
+        this.store$.dispatch(new SaveModelAction({ instance: this.instance, saveLocally: true }));
     }
 
-    onSaveModel(filename): void {
+    onSaveModel(data): void {
+        const filename = data.filename;
         this.filename = filename;
         this.instance = this.instance || {};
         this.instance.templateCode = this.loadedTemplate.code;
@@ -211,9 +212,11 @@ export class ModelerHomeComponent implements ComponentCanDeactivate, OnInit, OnD
 
         const content = JSON.stringify(this.instance);
         this.filename = this.filename || `${this.instance.templateCode}.json`;
-        const mimetype = "text/json";
-        this.downloadDataFile(this.filename, mimetype, content);
-        this.store$.dispatch(new SaveModelAction(this.instance));
+        if (data.saveLocally) {
+            const mimetype = "text/json";
+            this.downloadDataFile(this.filename, mimetype, content);
+        }
+        this.store$.dispatch(new SaveModelAction({ instance: this.instance, saveLocally: data.saveLocally }));
     }
 
     private downloadDataFile(filename, mimetype, content) {

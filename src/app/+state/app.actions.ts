@@ -19,6 +19,8 @@ export const ActionTypes = {
     LoadTemplateSuccess: type('[LoadTemplate] Success'),
 
     LoadCustomTemplate: type('[LoadCustomTemplate]'),
+
+    SetGithubAccessToken: "[SetGithubAccessToken]"
 }
 
 export const ModeTypes = {
@@ -51,10 +53,16 @@ export class LoadFileAction implements Action {
     constructor(public payload: any) { }
 }
 
+export class SetGithubAccessTokenAction implements Action {
+    type = ActionTypes.SetGithubAccessToken;
+    constructor(public payload: any) { }
+}
+
 export type Actions =
     BootstrapAppAction
     | SetReturnUrlAction
     | LoadTemplateAction
     | LoadCustomTemplateAction
     | LoadFileAction
+    | SetGithubAccessTokenAction
     ;

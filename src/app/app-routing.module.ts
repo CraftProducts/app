@@ -3,9 +3,11 @@ import { Routes, RouterModule } from '@angular/router';
 import { PageNotFoundComponent } from './components/page-not-found.component';
 
 import { environment } from '../environments/environment'
+import { AuthComponent } from './components/auth.component';
 
 const redirectTo = `templates/${environment.defaultRepo.owner}/${environment.defaultRepo.repo}`;
 const routes: Routes = [
+  { path: 'auth', component: AuthComponent },
   { path: 'templates', pathMatch: 'full', redirectTo },
   {
     path: 'templates/:owner/:repo',

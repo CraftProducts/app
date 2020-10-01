@@ -41,9 +41,9 @@ export class SaveLocalFileComponent implements OnInit, OnDestroy {
 
     canSave = () => this.filename && this.filename.trim().length > 0 && _.endsWith(this.filename.trim().toLowerCase(), '.json');
 
-    onSave() {
+    onSave(saveLocally) {
         if (this.canSave()) {
-            this.store$.dispatch(new UserModelCommandAction({ command: UserModelCommandTypes.Save, data: this.filename }));
+            this.store$.dispatch(new UserModelCommandAction({ command: UserModelCommandTypes.Save, data: { filename: this.filename, saveLocally } }));
         }
     }
     onReset() {

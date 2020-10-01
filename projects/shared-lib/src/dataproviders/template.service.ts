@@ -16,14 +16,16 @@ export class TemplateService {
     }
 
     public loadTemplates(owner, repo) {
-        return this.httpClient.get(`${this.templateFileLocation}/${owner}/${repo}/index.yaml`, { responseType: "text" })
+        const token = localStorage.getItem("github_accesstoken");
+        return this.httpClient.get(`${this.templateFileLocation}/${owner}/${repo}/index.yaml?token=${token}`, { responseType: "text" })
             .pipe(map(yamlString => {
                 try { return safeLoad(yamlString); } catch (e) { return ''; }
             }))
     }
 
     public loadTemplate(owner, repo, templateCode) {
-        return this.httpClient.get(`${this.templateFileLocation}/${owner}/${repo}/${templateCode.toLowerCase()}.yaml`, { responseType: "text" })
+        const token = localStorage.getItem("github_accesstoken");
+        return this.httpClient.get(`${this.templateFileLocation}/${owner}/${repo}/${templateCode.toLowerCase()}.yaml?token=${token}`, { responseType: "text" })
             .pipe(map(yamlString => {
                 try { return safeLoad(yamlString); } catch (e) { return ''; }
             }))
