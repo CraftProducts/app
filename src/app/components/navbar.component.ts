@@ -29,7 +29,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         window.addEventListener('message', event => {
             if (event.origin.startsWith(environment.githubApp.url)) {
                 console.log('event.data', event.data);
-                localStorage.setItem("github_accesstoken", event.data.token);
+                sessionStorage.setItem("github_accesstoken", event.data.token);
                 this.router.navigate(["/templates", event.data.owner, event.data.repo]);
                 this.store$.dispatch(new SetGithubAccessTokenAction(event.data.token));
             }

@@ -15,17 +15,29 @@ export class TemplateService {
         }
     }
 
-    public loadTemplates(owner, repo) {
-        const token = localStorage.getItem("github_accesstoken");
-        return this.httpClient.get(`${this.templateFileLocation}/${owner}/${repo}/index.yaml?token=${token}`, { responseType: "text" })
+    // public loadTemplates(owner, repo) {
+    //     const token = sessionStorage.getItem("github_accesstoken");
+    //     return this.httpClient.get(`${this.templateFileLocation}/${owner}/${repo}/index.yaml?token=${token}`, { responseType: "text" })
+    //         .pipe(map(yamlString => {
+    //             try { return safeLoad(yamlString); } catch (e) { return ''; }
+    //         }))
+    // }
+
+    // public loadTemplate(owner, repo, templateCode) {
+    //     const token = sessionStorage.getItem("github_accesstoken");
+    //     return this.httpClient.get(`${this.templateFileLocation}/${owner}/${repo}/${templateCode.toLowerCase()}.yaml?token=${token}`, { responseType: "text" })
+    //         .pipe(map(yamlString => {
+    //             try { return safeLoad(yamlString); } catch (e) { return ''; }
+    //         }))
+    // }
+    public loadTemplates() {
+        return this.httpClient.get(`${this.templateFileLocation}/index.yaml`, { responseType: "text" })
             .pipe(map(yamlString => {
                 try { return safeLoad(yamlString); } catch (e) { return ''; }
             }))
     }
-
-    public loadTemplate(owner, repo, templateCode) {
-        const token = localStorage.getItem("github_accesstoken");
-        return this.httpClient.get(`${this.templateFileLocation}/${owner}/${repo}/${templateCode.toLowerCase()}.yaml?token=${token}`, { responseType: "text" })
+    public loadTemplate(templateCode) {
+        return this.httpClient.get(`${this.templateFileLocation}/${templateCode.toLowerCase()}.yaml`, { responseType: "text" })
             .pipe(map(yamlString => {
                 try { return safeLoad(yamlString); } catch (e) { return ''; }
             }))

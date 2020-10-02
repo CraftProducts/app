@@ -11,7 +11,7 @@ export class ModelerEffects {
 
     @Effect() loadTemplate = this.actions$.pipe(ofType(commonActions.CommonActionTypes.SaveModel),
         switchMap((action: any) =>
-            this.templateService.loadTemplate(action.payload.owner, action.payload.repo, action.payload.templateCode)
+            this.templateService.loadTemplate(action.payload.templateCode)
                 .pipe(
                     map(payload => ({ type: commonActions.CommonActionTypes.SaveModelSuccess, payload })),
                     catchError(() => of({ type: commonActions.CommonActionTypes.SaveModelFailed }))

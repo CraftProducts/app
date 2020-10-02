@@ -9,7 +9,7 @@ export const environment = {
   VERSION: version,
   production: false,
   githubApp: {
-    url: 'http://localhost:3000',
+    url: 'http://localhost:6200',
     clientId: '39fd415410f7d92a1b33'
   },
   google: {
@@ -21,7 +21,7 @@ export const environment = {
     repo: 'templates'
   },
   backendUrls: [
-    { key: 'templates', value: 'http://localhost:3000/templates' },
+    { key: 'templates', value: 'http://localhost:5200/templates' },
     { key: 'documentation', value: 'https://github.com/CraftProducts/templates#create-your-own-template' }
   ]
 };
