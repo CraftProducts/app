@@ -20,7 +20,7 @@ export const ActionTypes = {
 
     LoadCustomTemplate: type('[LoadCustomTemplate]'),
 
-    SetGithubAccessToken: "[SetGithubAccessToken]"
+    SetGitspace: "[SetGitspace]"
 }
 
 export const ModeTypes = {
@@ -53,8 +53,8 @@ export class LoadFileAction implements Action {
     constructor(public payload: any) { }
 }
 
-export class SetGithubAccessTokenAction implements Action {
-    type = ActionTypes.SetGithubAccessToken;
+export class SetGitspaceAction implements Action {
+    type = ActionTypes.SetGitspace;
     constructor(public payload: any) { }
 }
 
@@ -64,5 +64,5 @@ export type Actions =
     | LoadTemplateAction
     | LoadCustomTemplateAction
     | LoadFileAction
-    | SetGithubAccessTokenAction
+    | SetGitspaceAction
     ;

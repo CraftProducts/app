@@ -7,9 +7,6 @@
     <input type="text" class="form-control" [(ngModel)]="filename" [disabled]="!isDirty">
     <div class="input-group-append">
         <ng-container *ngIf="canSave()">
-            <button class="btn btn-sm btn-light border text-primary" (click)="onSave(false)" title="Save to Github">
-                <fa-icon icon="github" [fixedWidth]="true"></fa-icon>
-            </button>
             <button class="btn btn-sm btn-light border text-primary" (click)="onSave(true)"
                 title="Save updated data file locally">
                 <fa-icon icon="download" [fixedWidth]="true"></fa-icon>

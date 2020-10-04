@@ -9,8 +9,8 @@ import { Router } from '@angular/router';
 import * as _ from 'lodash-es';
 
 @Component({
-    selector: 'app-save-localfile',
-    templateUrl: './save-localfile.component.html'
+    selector: 'app-savefile',
+    templateUrl: './savefile.component.html'
 })
 export class SaveLocalFileComponent implements OnInit, OnDestroy {
     loadedFile$: Subscription;

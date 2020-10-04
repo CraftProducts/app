@@ -36,7 +36,7 @@ import { AppRepository } from './appcommon/googledrive/app.repository';
 import { FileRepository } from './appcommon/googledrive/file.repository';
 import { UserRepository } from './appcommon/googledrive/user.repository';
 import { IBACKEND_URLS, SharedLibModule } from 'shared-lib';
-import { SaveLocalFileComponent } from './components/save-localfile.component';
+import { SaveLocalFileComponent } from './components/savefile.component';
 import { TemplateInfoComponent } from './components/template-info.component';
 import { AuthComponent } from './components/auth.component';
 

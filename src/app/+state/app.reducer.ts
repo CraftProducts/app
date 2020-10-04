@@ -30,9 +30,9 @@ export function appReducer(state: App, action: any): App {
             return { ...state, isModelDirty: true, userModelCommand: null };
         }
 
-        case ActionTypes.SetGithubAccessToken: {
-            console.log('SetGithubAccessToken', action.payload);
-            return { ...state, githubAccessToken: action.payload };
+        case ActionTypes.SetGitspace: {
+            console.log('SetGitspace', action.payload);
+            return { ...state, gitspace: action.payload };
         }
 
         case ActionTypes.BootstrapAppSuccess: {

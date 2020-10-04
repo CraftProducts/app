@@ -1,6 +1,6 @@
 export interface App {
   returnUrl: string;
-  githubAccessToken: string;
+  gitspace: any;
 
   selectedTemplateGroup: any;
   templateToLoad: any;

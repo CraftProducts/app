@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { UserModelCommandAction, UserModelCommandTypes } from '../appcommon/lib/CommonActions';
-import { LoadFileAction, SetGithubAccessTokenAction } from '../+state/app.actions';
+import { LoadFileAction, SetGitspaceAction } from '../+state/app.actions';
 import { environment } from '../../environments/environment';
 
 @Component({
@@ -22,6 +22,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     isCollapsed = true;
     filename = "";
+    isSpaceLocal = true;
+    gitspace$: Subscription;
+    gitspace: any;
+
     constructor(public store$: Store<AppState>, public router: Router, public messageService: MessageService) {
     }
 
@@ -29,11 +33,15 @@ export class NavbarComponent implements OnInit, OnDestroy {
         window.addEventListener('message', event => {
             if (event.origin.startsWith(environment.githubApp.url)) {
                 console.log('event.data', event.data);
-                sessionStorage.setItem("github_accesstoken", event.data.token);
+                sessionStorage.setItem("gitspace", event.data);
                 this.router.navigate(["/templates", event.data.owner, event.data.repo]);
-                this.store$.dispatch(new SetGithubAccessTokenAction(event.data.token));
+                this.store$.dispatch(new SetGitspaceAction(event.data));
             }
         });
+
+        this.gitspace$ = this.store$.select(p => p.app.gitspace)
+            .subscribe(p => this.gitspace = p);
+
         this.isModelDirty$ = this.store$.select(p => p.app.isModelDirty)
             .subscribe(p => {
                 this.isModelDirty = p;
@@ -87,12 +95,21 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     onFileLoadingError = (err) => this.messageService.add({ severity: 'error', detail: 'Error:' + err, life: 5000, closable: true })
 
-    openAuthWindow() {
+    authWithGithub() {
         const h = 768;
         const w = 1024;
         const y = window.top.outerHeight / 2 + window.top.screenY - (h / 2);
         const x = window.top.outerWidth / 2 + window.top.screenX - (w / 2);
         window.open(`${environment.githubApp.url}/login`, 'name',
             `toolbar=no, location=no, directories=no, status=no, menubar=no,  copyhistory=no, width=${w}, height=${h}, top=${y}, left=${x}`);
+    }
+
+    onSwitchToGitspace() {
+        this.isSpaceLocal = false;
+        this.authWithGithub();
+    }
+    onSwitchToLocalSpace() {
+        this.isSpaceLocal = true;
+        this.store$.dispatch(new SetGitspaceAction(null));
     }
 }
