@@ -14,7 +14,7 @@
             <app-template-info [template]="loadedTemplate"></app-template-info>
 
             <ul class="navbar-nav ml-sm-auto">
-                <ng-container *ngIf="isSpaceLocal">
+                <ng-container *ngIf="!isGitSpace">
                     <li class="nav-item">
                         <div class="mr-2" *ngIf="(filename && filename.length > 0) || isModelDirty">
                             <app-savefile [isDirty]="isModelDirty" [filename]="filename"></app-savefile>
@@ -34,7 +34,7 @@
                         <div ngbDropdown display="dynamic" placement="bottom-right">
                             <a class="btn  btn-default" id="dropdownBasic1" ngbDropdownToggle>
                                 <fa-icon icon="folder-open" class="mr-1 text-brand"></fa-icon>
-                                <b>Local</b> 
+                                <b>Local</b>
                                 <span class="pr-1">Space</span>
                             </a>
                             <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu-right">
@@ -46,7 +46,7 @@
                                 </sharedlib-load-localfile>
 
                                 <div class="dropdown-divider"></div>
-                                <a ngbDropdownItem title="Switch to GitSpace" (click)="onSwitchToGitspace()">
+                                <a ngbDropdownItem title="Switch to GitSpace" (click)="isGitSpace = true">
                                     <fa-icon [icon]="['fab', 'github']" [fixedWidth]="true" class="mr-1 text-brand">
                                     </fa-icon>
                                     Switch to <b>Git</b>Space
@@ -56,28 +56,9 @@
                     </li>
                 </ng-container>
 
-                <ng-container *ngIf="!isSpaceLocal">
-                    <li class="nav-item">
-                        <div ngbDropdown display="dynamic" placement="bottom-right">
-                            <a class="btn  btn-default" id="dropdownBasic1" ngbDropdownToggle>
-                                <fa-icon [icon]="['fab', 'github']" class="mr-1 text-brand"></fa-icon>
-                                <b>Git</b>
-                                <span class="pr-1">Space</span>
-                            </a>
-                            <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu-right">
-                                <a ngbDropdownItem>
-                                    <fa-icon icon="plus" [fixedWidth]="true" class="mr-1"></fa-icon>
-                                    New file
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a ngbDropdownItem title="Switch to LocalSpace" (click)="onSwitchToLocalSpace()">
-                                    <fa-icon icon="folder-open" [fixedWidth]="true" class="mr-1 text-brand"></fa-icon>
-                                    Switch to <b>Local</b>Space
-                                </a>
-                            </div>
-                        </div>
-                    </li>
-                </ng-container>
+                <li class="nav-item" *ngIf="isGitSpace">
+                    <app-gitspace [(show)]="isGitSpace"></app-gitspace>
+                </li>
 
                 <!-- <li class="nav-item">
                     <app-tools></app-tools>

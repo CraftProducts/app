@@ -39,6 +39,7 @@ import { IBACKEND_URLS, SharedLibModule } from 'shared-lib';
 import { SaveLocalFileComponent } from './components/savefile.component';
 import { TemplateInfoComponent } from './components/template-info.component';
 import { AuthComponent } from './components/auth.component';
+import { GitspaceComponent } from './components/gitspace.component';
 
 export function initGapi(gapiSession: GapiSession) {
   return () => gapiSession.initClient();
@@ -49,7 +50,8 @@ export function initGapi(gapiSession: GapiSession) {
     AuthComponent,
     AppComponent, PageNotFoundComponent, 
     NavbarComponent, ToolsComponent, TemplateInfoComponent, 
-    SaveLocalFileComponent
+    SaveLocalFileComponent,
+    GitspaceComponent
   ],
   imports: [
     CommonModule,
