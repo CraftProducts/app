@@ -1,0 +1,28 @@
+<div class="pane">
+    <div class="pane-header">
+        <button class="btn btn-sm btn-link text-white float-right" (click)="onClose()">
+            <fa-icon icon="times" size="lg"></fa-icon>
+        </button>
+
+        <h4>
+            <fa-icon icon="file" class="mr-1" size="sm"></fa-icon>
+            Select artifact
+        </h4>
+    </div>
+    <div class="pane-body">
+        <div class="container pt-3">
+            <div class="alert alert-warning" *ngIf="!files || files.length === 0">
+                No artifacts found. Try selecting a Gitspace with CraftProduct artifacts.
+            </div>
+            <div *ngFor="let file of files">
+                <a class="btn btn-link" (click)="onSelect(file)">{{file.name}}</a>
+            </div>
+            </div>
+        </div>
+        <div class="pane-footer">
+            <!-- <button class="btn btn-sm btn-primary mr-1">
+                <fa-icon icon="file" class=" mr-1"></fa-icon>
+                Select
+            </button> -->
+        </div>
+    </div>

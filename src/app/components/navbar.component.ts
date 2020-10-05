@@ -5,14 +5,14 @@ import { Subscription } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { UserModelCommandAction, UserModelCommandTypes } from '../appcommon/lib/CommonActions';
-import { LoadFileAction, SetGitspaceAction } from '../+state/app.actions';
-import { environment } from '../../environments/environment';
+import { LoadFileAction } from '../+state/app.actions';
 
 @Component({
     selector: 'app-navbar',
     templateUrl: './navbar.component.html'
 })
 export class NavbarComponent implements OnInit, OnDestroy {
+    showGitspaceFilesSidebar = false;
     loadedTemplate$: Subscription;
     loadedTemplate: any;
     templateLoaded = false;

@@ -1,22 +1,23 @@
 <div ngbDropdown display="dynamic" placement="bottom-right">
     <a class="btn  btn-default" ngbDropdownToggle>
         <fa-icon [icon]="['fab', 'github']" class="mr-1 text-brand"></fa-icon>
-        <span *ngIf="gitspace">
-            {{gitspace.owner}}/{{gitspace.repo}}
+        <span *ngIf="config">
+            {{config.owner}}/{{config.repo}}
         </span>
-        <a (click)="connectToGithub($event)" *ngIf="!gitspace">
+        <a (click)="connectToGithub($event)" *ngIf="!config">
             <b>Git</b>
             <span class="pr-1">Space</span>
         </a>
     </a>
     <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu-right">
-        <a ngbDropdownItem>
+        <a ngbDropdownItem (click)="onShowFilesSidebar()">
             <fa-icon [icon]="['far', 'file-alt']" [fixedWidth]="true" class="mr-1"></fa-icon>
-            Open file
+            Open
         </a>
+        <div class="dropdown-divider"></div>
         <a ngbDropdownItem (click)="connectToGithub()">
-            <fa-icon icon="exchange-alt" [fixedWidth]="true" class="mr-1"></fa-icon>
-            Select another repo
+            <fa-icon [icon]="['fab', 'github']" [fixedWidth]="true" class="mr-1"></fa-icon>
+            Change Gitspace
         </a>
         <div class="dropdown-divider"></div>
         <a ngbDropdownItem title="Switch to LocalSpace" (click)="onSwitchToLocalSpace()">

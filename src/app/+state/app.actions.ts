@@ -19,8 +19,6 @@ export const ActionTypes = {
     LoadTemplateSuccess: type('[LoadTemplate] Success'),
 
     LoadCustomTemplate: type('[LoadCustomTemplate]'),
-
-    SetGitspace: "[SetGitspace]"
 }
 
 export const ModeTypes = {
@@ -53,10 +51,6 @@ export class LoadFileAction implements Action {
     constructor(public payload: any) { }
 }
 
-export class SetGitspaceAction implements Action {
-    type = ActionTypes.SetGitspace;
-    constructor(public payload: any) { }
-}
 
 export type Actions =
     BootstrapAppAction
@@ -64,5 +58,4 @@ export type Actions =
     | LoadTemplateAction
     | LoadCustomTemplateAction
     | LoadFileAction
-    | SetGitspaceAction
     ;

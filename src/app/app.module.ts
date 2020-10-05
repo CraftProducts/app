@@ -39,7 +39,8 @@ import { IBACKEND_URLS, SharedLibModule } from 'shared-lib';
 import { SaveLocalFileComponent } from './components/savefile.component';
 import { TemplateInfoComponent } from './components/template-info.component';
 import { AuthComponent } from './components/auth.component';
-import { GitspaceComponent } from './components/gitspace.component';
+import { SidebarModule } from 'primeng/sidebar';
+import { GitspaceModule } from './gitspace/gitspace.module';
 
 export function initGapi(gapiSession: GapiSession) {
   return () => gapiSession.initClient();
@@ -48,10 +49,9 @@ export function initGapi(gapiSession: GapiSession) {
 @NgModule({
   declarations: [
     AuthComponent,
-    AppComponent, PageNotFoundComponent, 
-    NavbarComponent, ToolsComponent, TemplateInfoComponent, 
-    SaveLocalFileComponent,
-    GitspaceComponent
+    AppComponent, PageNotFoundComponent,
+    NavbarComponent, ToolsComponent, TemplateInfoComponent,
+    SaveLocalFileComponent
   ],
   imports: [
     CommonModule,
@@ -59,6 +59,8 @@ export function initGapi(gapiSession: GapiSession) {
     BrowserAnimationsModule,
     FormsModule,
 
+    SidebarModule,
+    
     AppCommonModule,
     SharedLibModule,
 
@@ -70,6 +72,8 @@ export function initGapi(gapiSession: GapiSession) {
     AngularSplitModule.forRoot(),
     NgxMdModule.forRoot(),
 
+    GitspaceModule,
+    
     StoreModule.forRoot(
       { app: appReducer },
       {

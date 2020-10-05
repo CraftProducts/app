@@ -1,6 +1,5 @@
 export interface App {
   returnUrl: string;
-  gitspace: any;
 
   selectedTemplateGroup: any;
   templateToLoad: any;

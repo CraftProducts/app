@@ -57,7 +57,8 @@
                 </ng-container>
 
                 <li class="nav-item" *ngIf="isGitSpace">
-                    <app-gitspace [(show)]="isGitSpace"></app-gitspace>
+                    <gitspace-menu [(show)]="isGitSpace" (showFiles)="showGitspaceFilesSidebar = true">
+                    </gitspace-menu>
                 </li>
 
                 <!-- <li class="nav-item">
@@ -67,3 +68,9 @@
         </div>
     </div>
 </nav>
+
+<p-sidebar [(visible)]="showGitspaceFilesSidebar" styleClass="bg-light" styleClass="ui-sidebar-md" position="right"
+    (onHide)="showGitspaceFilesSidebar = false">
+    <gitspace-files-sidebar (close)="showGitspaceFilesSidebar = false">
+    </gitspace-files-sidebar>
+</p-sidebar>

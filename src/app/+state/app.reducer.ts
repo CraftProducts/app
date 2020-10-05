@@ -30,11 +30,6 @@ export function appReducer(state: App, action: any): App {
             return { ...state, isModelDirty: true, userModelCommand: null };
         }
 
-        case ActionTypes.SetGitspace: {
-            console.log('SetGitspace', action.payload);
-            return { ...state, gitspace: action.payload };
-        }
-
         case ActionTypes.BootstrapAppSuccess: {
             return { ...state, returnUrl: '' };
         }
@@ -47,9 +42,7 @@ export function appReducer(state: App, action: any): App {
             return { ...state, templateToLoad: action.payload, userModelCommand: null };
         }
         case ActionTypes.LoadTemplateSuccess: {
-            console.log('loadedTemplate', action.payload);
-            const loadedTemplate = action.payload;
-            return { ...state, loadedTemplate, isModelDirty: false };
+            return { ...state, loadedTemplate: action.payload, isModelDirty: false };
         }
         case ActionTypes.LoadCustomTemplate: {
             action.payload.isCustom = true;
