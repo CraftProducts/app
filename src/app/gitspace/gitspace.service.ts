@@ -1,8 +1,6 @@
-import { Injectable, Inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import * as _ from 'lodash-es';
 import { HttpClient } from '@angular/common/http';
-import { map, tap } from 'rxjs/operators';
-import { load, safeLoad } from 'js-yaml';
 import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
@@ -14,10 +12,13 @@ export class GitspaceService {
     }
 
     public loadFiles(payload) {
-        const extension = 'yaml';
-        const path = 'templates';
+        const extension = 'json';
+        const path = encodeURIComponent('./.craftproducts');
         const url = `${this.baseUrl}/api/${payload.installation_id}/${payload.owner}/${payload.repo}/${path}/files?token=${payload.token}&extension=${extension}`;
         return this.httpClient.get(url);
     }
+
+    public initialize = (config, content) =>
+        this.httpClient.post(`${this.baseUrl}/api/${config.installation_id}/${config.owner}/${config.repo}/init`, { content });
 
 }

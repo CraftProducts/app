@@ -10,6 +10,7 @@ import { GitspaceFilesComponent } from './components/files-sidebar.component';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [GitspaceMenuComponent, GitspaceFilesComponent],
@@ -17,7 +18,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   imports: [
     CommonModule,
     FontAwesomeModule,
-
+    FormsModule,
     NgbModule,
 
     StoreModule.forFeature("gitspace", gitspaceReducer, { initialState: gitspaceInitialState }),

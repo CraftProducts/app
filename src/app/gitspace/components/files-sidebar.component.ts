@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { combineLatest } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { LoadGitspaceFilesAction } from '../+state/gitspace.actions';
+import { LoadGitspaceFilesAction, InitializeGitspaceAction } from '../+state/gitspace.actions';
 import { GitspaceState } from '../+state/gitspace.state';
 
 @Component({
@@ -17,6 +17,7 @@ export class GitspaceFilesComponent implements OnInit, OnDestroy {
     config: any;
     files: any;
 
+    isInitCollapsed = false;
     constructor(public store$: Store<GitspaceState>) {
     }
 
@@ -35,6 +36,7 @@ export class GitspaceFilesComponent implements OnInit, OnDestroy {
                     this.store$.dispatch(new LoadGitspaceFilesAction(config))
                 }
                 this.config = config;
+                this.config.location = this.config.location || "CraftProducts";
                 this.files = files || [];
             })
     }
@@ -47,5 +49,9 @@ export class GitspaceFilesComponent implements OnInit, OnDestroy {
 
     onSelect(file) {
         console.log('load', file);
+    }
+
+    onInitializeGitspace() {
+        this.store$.dispatch(new InitializeGitspaceAction({ config: this.config, content: this.config.location }));
     }
 }

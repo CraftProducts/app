@@ -22,7 +22,8 @@ export class GitspaceMenuComponent implements OnInit, OnDestroy {
     config: any;
 
     showFilesSidebar = false;
-
+    showGitspaceSelector = false;
+    
     constructor(public store$: Store<GitspaceState>) {
     }
 
@@ -34,6 +35,7 @@ export class GitspaceMenuComponent implements OnInit, OnDestroy {
             if (event.origin.startsWith(environment.githubApp.url)) {
                 sessionStorage.setItem("gitspace", JSON.stringify(event.data));
                 this.store$.dispatch(new SetGitspaceConfigAction(event.data));
+                this.onShowFilesSidebar();
             }
         });
     }

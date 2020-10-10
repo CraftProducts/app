@@ -19,4 +19,15 @@ export class GitspaceEffects {
         )
     )
   );
+
+  @Effect() initializeGitspace = this.actions$.pipe(ofType(appActions.ActionTypes.InitializeGitspace),
+  switchMap((action: any) =>
+    this.gitspaceService.initialize(action.payload.config, action.payload.content)
+      .pipe(
+        map(payload => ({ type: appActions.ActionTypes.InitializeGitspaceSuccess, payload })),
+        catchError(() => of({ type: appActions.ActionTypes.InitializeGitspaceFailed }))
+      )
+  )
+);
+
 }
