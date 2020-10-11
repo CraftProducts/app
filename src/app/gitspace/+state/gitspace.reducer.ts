@@ -9,13 +9,18 @@ export function gitspaceReducer(state: Gitspace, action: any): Gitspace {
             return { ...state, config: action.payload, files: null };
         }
 
-        case ActionTypes.LoadGitspaceFilesSuccess: {
+        case ActionTypes.LoadGitspaceAllArtifactsSuccess: {
             return { ...state, files: action.payload };
         }
 
-        case ActionTypes.InitializeGitspaceSuccess: {
-            return { ...state, config: { ...state.config, location: action.payload } };
+        case ActionTypes.LoadGitspaceArtifactSuccess: {
+            console.log("LoadGitspaceArtifactSuccess", action.payload);
+            return { ...state, loadedFile: action.payload };
         }
+        case ActionTypes.ResetGitspaceArtifact: {
+            return { ...state, loadedFile: null };
+        }
+
         default: return state;
     }
 }

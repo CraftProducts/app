@@ -4,13 +4,14 @@ import { type } from 'shared-lib';
 export const ActionTypes = {
     SetGitspaceConfig: type('[SetGitspaceConfig]'),
 
-    InitializeGitspace: type('[InitializeGitspace]'),
-    InitializeGitspaceFailed: type('[InitializeGitspace] Failed'),
-    InitializeGitspaceSuccess: type('[InitializeGitspace] Success'),
+    LoadGitspaceAllArtifacts: type('[LoadGitspaceAllArtifacts]'),
+    LoadGitspaceAllArtifactsFailed: type('[LoadGitspaceAllArtifacts] Failed'),
+    LoadGitspaceAllArtifactsSuccess: type('[LoadGitspaceAllArtifacts] Success'),
 
-    LoadGitspaceFiles: type('[LoadGitspaceFiles]'),
-    LoadGitspaceFilesFailed: type('[LoadGitspaceFiles] Failed'),
-    LoadGitspaceFilesSuccess: type('[LoadGitspaceFiles] Success'),
+    LoadGitspaceArtifact: type('[LoadGitspaceArtifact]'),
+    LoadGitspaceArtifactFailed: type('[LoadGitspaceArtifact] Failed'),
+    LoadGitspaceArtifactSuccess: type('[LoadGitspaceArtifact] Success'),
+    ResetGitspaceArtifact: type('[ResetGitspaceArtifact]')
 }
 
 export class SetGitspaceConfigAction implements Action {
@@ -18,18 +19,24 @@ export class SetGitspaceConfigAction implements Action {
     constructor(public payload: any) { }
 }
 
-export class InitializeGitspaceAction implements Action {
-    type = ActionTypes.InitializeGitspace;
+export class LoadGitspaceAllArtifactsAction implements Action {
+    type = ActionTypes.LoadGitspaceAllArtifacts;
     constructor(public payload: any) { }
 }
 
-export class LoadGitspaceFilesAction implements Action {
-    type = ActionTypes.LoadGitspaceFiles;
+export class LoadGitspaceArtifactAction implements Action {
+    type = ActionTypes.LoadGitspaceArtifact;
+    constructor(public payload: any) { }
+}
+
+export class ResetGitspaceArtifactAction implements Action {
+    type = ActionTypes.ResetGitspaceArtifact;
     constructor(public payload: any) { }
 }
 
 export type Actions =
-    LoadGitspaceFilesAction
-    | InitializeGitspaceAction
+    ResetGitspaceArtifactAction
+    | LoadGitspaceArtifactAction
+    | LoadGitspaceAllArtifactsAction
     | SetGitspaceConfigAction
     ;

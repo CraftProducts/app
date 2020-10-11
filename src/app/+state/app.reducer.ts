@@ -7,6 +7,7 @@ export function appReducer(state: App, action: any): App {
     switch (action.type) {
 
         case TemplateModuleActionTypes.LoadFile: {
+            console.log("LoadFile", action.payload);
             return { ...state, loadedFile: action.payload, isModelDirty: false };
         }
 

@@ -61,6 +61,7 @@
 
 <p-sidebar [(visible)]="showGitspaceFiles" styleClass="bg-light" styleClass="ui-sidebar-md" position="right"
     (onHide)="showGitspaceFiles = false">
-    <gitspace-files-sidebar (close)="showGitspaceFiles = false" (createArtifact)="onCreateArtifact()">
+    <gitspace-files-sidebar (close)="showGitspaceFiles = false" (createArtifact)="onCreateArtifact()"
+        [config]="gitConfig">
     </gitspace-files-sidebar>
 </p-sidebar>

@@ -1,9 +1,7 @@
-import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
+import { Component, Output, EventEmitter, OnInit, OnDestroy, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { combineLatest } from 'rxjs';
-import { filter } from 'rxjs/operators';
-import { LoadGitspaceFilesAction, InitializeGitspaceAction } from '../+state/gitspace.actions';
+import { LoadGitspaceAllArtifactsAction, LoadGitspaceArtifactAction } from '../+state/gitspace.actions';
 import { GitspaceState } from '../+state/gitspace.state';
 
 @Component({
@@ -14,8 +12,16 @@ export class GitspaceFilesComponent implements OnInit, OnDestroy {
     @Output() close = new EventEmitter<any>();
     @Output() createArtifact = new EventEmitter<any>();
 
-    combined$: Subscription;
-    config: any;
+    _config: any;
+    @Input() set config(value: any) {
+        this._config = value;
+        if (value) {
+            this.store$.dispatch(new LoadGitspaceAllArtifactsAction(value));
+        }
+    }
+    get config() { return this._config; }
+
+    files$: Subscription;
     files: any;
 
     isInitCollapsed = false;
@@ -23,38 +29,19 @@ export class GitspaceFilesComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        const configQ = this.store$.select(p => p.gitspace.config).pipe(filter(p => p));
-        const filesQ = this.store$.select(p => p.gitspace.files);
-
-        this.combined$ = combineLatest([configQ, filesQ])
-            .subscribe(([config, files]) => {
-                if (!this.config || config.owner !== this.config.owner || config.repo !== this.config.repo) {
-                    this.files = null;
-                }
-
-                if (!files && !this.files) {
-                    this.store$.dispatch(new LoadGitspaceFilesAction(config))
-                }
-                this.config = config;
-                if (this.config) {
-                    this.config.location = this.config.location || "CraftProducts";
-                }
-                this.files = files || [];
-            })
+        this.files$ = this.store$.select(p => p.gitspace.files)
+            .subscribe(files => this.files = files || [])
     }
 
     ngOnDestroy(): void {
-        this.combined$ ? this.combined$.unsubscribe() : null;
+        this.files$ ? this.files$.unsubscribe() : null;
     }
 
     onClose = () => this.close.emit();
     onCreateArtifact = () => this.createArtifact.emit();
 
     onSelect(file) {
-        console.log('load', file);
-    }
-
-    onInitializeGitspace() {
-        this.store$.dispatch(new InitializeGitspaceAction({ config: this.config, content: this.config.location }));
+        this.store$.dispatch(new LoadGitspaceArtifactAction({ config: this.config, filename: file.name }));
+        this.onClose();
     }
 }

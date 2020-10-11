@@ -11,22 +11,25 @@ import * as commonActions from '../../appcommon/lib/CommonActions'
 export class GitspaceEffects {
   constructor(private gitspaceService: GitspaceService, private actions$: Actions) { }
 
-  @Effect() loadFiles = this.actions$.pipe(ofType(appActions.ActionTypes.LoadGitspaceFiles),
+  @Effect() loadAllArtifacts = this.actions$.pipe(ofType(appActions.ActionTypes.LoadGitspaceAllArtifacts),
     switchMap((action: any) =>
       this.gitspaceService.loadFiles(action.payload)
         .pipe(
-          map(payload => ({ type: appActions.ActionTypes.LoadGitspaceFilesSuccess, payload })),
-          catchError(() => of({ type: appActions.ActionTypes.LoadGitspaceFilesFailed }))
+          map(payload => ({ type: appActions.ActionTypes.LoadGitspaceAllArtifactsSuccess, payload })),
+          catchError(() => of({ type: appActions.ActionTypes.LoadGitspaceAllArtifactsFailed }))
         )
     )
   );
 
-  @Effect() initializeGitspace = this.actions$.pipe(ofType(appActions.ActionTypes.InitializeGitspace),
+  @Effect() loadArtifact = this.actions$.pipe(ofType(appActions.ActionTypes.LoadGitspaceArtifact),
     switchMap((action: any) =>
-      this.gitspaceService.initialize(action.payload.config, action.payload.content)
+      this.gitspaceService.loadArtifact(action.payload)
         .pipe(
-          map(payload => ({ type: appActions.ActionTypes.InitializeGitspaceSuccess, payload })),
-          catchError(() => of({ type: appActions.ActionTypes.InitializeGitspaceFailed }))
+          map(content => ({
+            type: appActions.ActionTypes.LoadGitspaceArtifactSuccess,
+            payload: { type: 'data', content, filename: action.payload.filename }
+          })),
+          catchError(() => of({ type: appActions.ActionTypes.LoadGitspaceArtifactFailed }))
         )
     )
   );

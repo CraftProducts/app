@@ -6,6 +6,8 @@ import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { SaveLocationTypes, UserModelCommandAction, UserModelCommandTypes } from '../appcommon/lib/CommonActions';
 import { LoadFileAction } from '../+state/app.actions';
+import { filter } from 'rxjs/operators';
+import { ResetGitspaceArtifactAction } from '../gitspace/+state/gitspace.actions';
 
 @Component({
     selector: 'app-navbar',
@@ -24,6 +26,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
     filename = "";
     isGitSpace = false;
 
+    gitFile$: Subscription;
+
     gitConfig$: Subscription;
     gitConfig: any;
 
@@ -31,10 +35,18 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+
+        this.gitFile$ = this.store$.select(p => p.gitspace.loadedFile)
+            .pipe(filter(p => p))
+            .subscribe(fileContent => {
+                this.store$.dispatch(new LoadFileAction(fileContent));
+                this.store$.dispatch(new ResetGitspaceArtifactAction(null));
+            });
+
         this.gitConfig$ = this.store$.select(p => p.gitspace.config)
             .subscribe(p => this.gitConfig = p);
 
-            this.isModelDirty$ = this.store$.select(p => p.app.isModelDirty)
+        this.isModelDirty$ = this.store$.select(p => p.app.isModelDirty)
             .subscribe(p => {
                 this.isModelDirty = p;
                 if (this.isModelDirty && this.loadedTemplate && (!this.filename || this.filename.trim().length === 0)) {
@@ -54,6 +66,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
             });
     }
     ngOnDestroy(): void {
+        this.gitFile$ ? this.gitFile$.unsubscribe() : null;
         this.gitConfig$ ? this.gitConfig$.unsubscribe() : null;
         this.isModelDirty$ ? this.isModelDirty$.unsubscribe() : null;
         this.loadedTemplate$ ? this.loadedTemplate$.unsubscribe() : null;
