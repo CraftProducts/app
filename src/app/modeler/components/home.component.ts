@@ -5,7 +5,7 @@ import { ModelerState } from '../+state/modeler.state';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, combineLatest } from 'rxjs';
 import { ComponentCanDeactivate, UNLOAD_WARNING_MESSAGE } from 'shared-lib'
-import { SetModelDirtyAction, SelectSectionAction, SetModelAction, SetDatasetAction, UserModelCommandTypes, ResetModelAction, CloseWorkspaceAction, SaveModelAction } from 'src/app/appcommon/lib/CommonActions';
+import { SetModelDirtyAction, SelectSectionAction, SetModelAction, SetDatasetAction, UserModelCommandTypes, ResetModelAction, CloseWorkspaceAction, SaveModelAction, SaveLocationTypes } from 'src/app/appcommon/lib/CommonActions';
 import { SECTIONTYPES, extractSections, prepareTemplateForDownload } from '../modeler-utils';
 import { filter, tap, map } from 'rxjs/operators';
 import { LoadTemplateAction } from 'src/app/+state/app.actions';
@@ -167,6 +167,7 @@ export class ModelerHomeComponent implements ComponentCanDeactivate, OnInit, OnD
                         break;
                     case UserModelCommandTypes.Close:
                         this.store$.dispatch(new CloseWorkspaceAction(null));
+                        this.router.navigate(["templates"]);
                         break;
                     case UserModelCommandTypes.Export:
                         this.showExportSidebar = true;
@@ -198,7 +199,7 @@ export class ModelerHomeComponent implements ComponentCanDeactivate, OnInit, OnD
         const content = dump(memento);
         const mimetype = "text/x-yaml";
         this.downloadDataFile(this.filename, mimetype, content);
-        this.store$.dispatch(new SaveModelAction({ instance: this.instance, saveLocally: true }));
+        this.store$.dispatch(new SaveModelAction({ instance: this.instance, saveLocation: SaveLocationTypes.LocalSpace }));
     }
 
     onSaveModel(data): void {
@@ -210,13 +211,12 @@ export class ModelerHomeComponent implements ComponentCanDeactivate, OnInit, OnD
 
         extractSections(this.loadedTemplate, ['code', 'data', 'rows', 'columns'], this.instance.sections);
 
-        const content = JSON.stringify(this.instance);
         this.filename = this.filename || `${this.instance.templateCode}.json`;
-        if (data.saveLocally) {
+        if (data.saveLocation === SaveLocationTypes.LocalSpace) {
             const mimetype = "text/json";
-            this.downloadDataFile(this.filename, mimetype, content);
+            this.downloadDataFile(this.filename, mimetype, JSON.stringify(this.instance));
         }
-        this.store$.dispatch(new SaveModelAction({ instance: this.instance, saveLocally: data.saveLocally }));
+        this.store$.dispatch(new SaveModelAction({ instance: this.instance, data }));
     }
 
     private downloadDataFile(filename, mimetype, content) {

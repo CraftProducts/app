@@ -4,7 +4,8 @@ import { IBACKEND_URLS, BackendUrl } from 'shared-lib';
 
 @Component({
     selector: 'app-introduction',
-    templateUrl: './introduction.component.html'
+    templateUrl: './introduction.component.html',
+    styleUrls: ['./introduction.component.css']
 })
 export class IntroductionComponent {
 

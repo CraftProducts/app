@@ -8,6 +8,7 @@ export const CommonActionTypes = {
     SaveModel: type("[SaveModel]"),
     SaveModelSuccess: type("[SaveModel] Success"),
     SaveModelFailed: type("[SaveModel] Failed"),
+    SaveModelSkipped: type("[SaveModel] Skipped"),
 
     ResetModel: type("[ResetModel]"),
     CloseWorkspace: type("[CloseWorkspace]"),
@@ -19,6 +20,10 @@ export const CommonActionTypes = {
     SelectSection: type('[SelectSection]')
 }
 
+export const SaveLocationTypes = {
+    LocalSpace: "LocalSpace",
+    GitSpace: "GitSpace"
+}
 export const UserModelCommandTypes = {
     Save: "Save",
     Reset: "Reset",

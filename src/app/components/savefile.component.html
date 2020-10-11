@@ -7,9 +7,9 @@
     <input type="text" class="form-control" [(ngModel)]="filename" [disabled]="!isDirty">
     <div class="input-group-append">
         <ng-container *ngIf="canSave()">
-            <button class="btn btn-sm btn-light border text-primary" (click)="onSave(true)"
-                title="Save updated data file locally">
-                <fa-icon icon="download" [fixedWidth]="true"></fa-icon>
+            <button class="btn btn-sm btn-light border text-primary" (click)="onSave()"
+                title="Save updated data file">
+                <fa-icon icon="save" [fixedWidth]="true"></fa-icon>
             </button>
         </ng-container>
 
@@ -23,35 +23,3 @@
         </button>
     </div>
 </div>
-
-<!-- <div class="p-1 bg-white mr-2 rounded" *ngIf="(filename && filename.length > 0) || isDirty">
-    {{filename}}
-
-    <ng-container *ngIf="isDirty">
-        <div *ngIf="!filenameEditorVisible">
-            <fa-icon icon="info-circle" class="ml-2 mr-1 text-warning" title="Unsaved changes found."></fa-icon>
-            <div class="btn-group">
-                <button class="btn btn-sm btn-link" (click)="toggleFilenameEditor()">
-                    <fa-icon icon="save"></fa-icon> Save
-                </button>
-                <button class="btn btn-sm btn-link text-danger" (click)="onReset()">
-                    <fa-icon icon="redo" class=" text-danger"></fa-icon> Discard
-                </button>
-            </div>
-        </div>
-
-        <div class="input-group ml-2 mr-2" *ngIf="filenameEditorVisible">
-            <input type="text" (keydown.enter)="onSave()" [appAutofocus]="filenameEditorVisible"
-                (keydown.escape)="toggleFilenameEditor()" class="form-control" [(ngModel)]="filename">
-            <div class="input-group-append">
-                <button class="btn btn-primary" [disabled]="!canSave()" (click)="onSave()">
-                    <fa-icon icon="save"></fa-icon> Save
-                </button>
-                <button class="btn btn-default" (click)="toggleFilenameEditor()">
-                    <fa-icon icon="times" class="text-danger"></fa-icon>
-                </button>
-            </div>
-        </div>
-    </ng-container>
-
-</div> -->

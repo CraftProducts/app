@@ -21,4 +21,11 @@ export class GitspaceService {
     public initialize = (config, content) =>
         this.httpClient.post(`${this.baseUrl}/api/${config.installation_id}/${config.owner}/${config.repo}/init`, { content });
 
+    public saveArtifact = (config, filename, content) => {
+        console.log("saveArtifact", config, filename, content);
+        const path = encodeURIComponent(`${config.location}/${filename}`);
+        return this.httpClient.post(`${this.baseUrl}/api/${config.installation_id}/${config.owner}/${config.repo}/${path}/files`, { content });
+    }
+
+
 }

@@ -14,50 +14,40 @@
             <app-template-info [template]="loadedTemplate"></app-template-info>
 
             <ul class="navbar-nav ml-sm-auto">
-                <ng-container *ngIf="!isGitSpace">
-                    <li class="nav-item">
-                        <div class="mr-2" *ngIf="(filename && filename.length > 0) || isModelDirty">
-                            <app-savefile [isDirty]="isModelDirty" [filename]="filename"></app-savefile>
-                        </div>
-                    </li>
+                <li class="nav-item">
+                    <div class="mr-2" *ngIf="filename && filename.length > 0">
+                        <app-savefile [isDirty]="isModelDirty" [filename]="filename" (reset)="onResetFile($event)"
+                            (close)="onCloseFile()" (save)="onSaveFile($event)">
+                        </app-savefile>
+                    </div>
+                </li>
+                <li class="nav-item" *ngIf="!isGitSpace">
+                    <div ngbDropdown display="dynamic" placement="bottom-right">
+                        <a class="btn  btn-default" id="dropdownBasic1" ngbDropdownToggle>
+                            <fa-icon icon="folder-open" class="mr-1 text-brand"></fa-icon>
+                            <b>Local</b>
+                            <span class="pr-1">Space</span>
+                        </a>
+                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu-right">
+                            <sharedlib-load-localfile (fileLoaded)="onFileLoaded($event)"
+                                (error)="onFileLoadingError($event)"
+                                errorMessage="Invalid file. System only supports CraftProduct compliant JSON files."
+                                label="Open local file" accept="application/json" icon="folder-open"
+                                cssClass="btn-link text-dark" ngbDropdownItem class="pl-3 pb-0 pt-0">
+                            </sharedlib-load-localfile>
 
-                    <!-- <li>
-                        <div class="btn-group mr-2" *ngIf="templateLoaded && !isModelDirty">
-                            <button class="btn btn-link text-dark bg-white" (click)="onExport()" title="Export">
-                                <fa-icon icon="file-export"></fa-icon>
-                                <span class="d-inline d-md-none ml-2"> Export</span>
-                            </button>
-                        </div>
-                    </li> -->
-
-                    <li class="nav-item">
-                        <div ngbDropdown display="dynamic" placement="bottom-right">
-                            <a class="btn  btn-default" id="dropdownBasic1" ngbDropdownToggle>
-                                <fa-icon icon="folder-open" class="mr-1 text-brand"></fa-icon>
-                                <b>Local</b>
-                                <span class="pr-1">Space</span>
+                            <div class="dropdown-divider"></div>
+                            <a ngbDropdownItem title="Switch to GitSpace" (click)="isGitSpace = true">
+                                <fa-icon [icon]="['fab', 'github']" [fixedWidth]="true" class="mr-1 text-brand">
+                                </fa-icon>
+                                Switch to <b>Git</b>Space
                             </a>
-                            <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu-right">
-                                <sharedlib-load-localfile (fileLoaded)="onFileLoaded($event)"
-                                    (error)="onFileLoadingError($event)"
-                                    errorMessage="Invalid file. System only supports CraftProduct compliant JSON files."
-                                    label="Open local file" accept="application/json" icon="folder-open"
-                                    cssClass="btn-link text-dark" ngbDropdownItem class="pl-3 pb-0 pt-0">
-                                </sharedlib-load-localfile>
-
-                                <div class="dropdown-divider"></div>
-                                <a ngbDropdownItem title="Switch to GitSpace" (click)="isGitSpace = true">
-                                    <fa-icon [icon]="['fab', 'github']" [fixedWidth]="true" class="mr-1 text-brand">
-                                    </fa-icon>
-                                    Switch to <b>Git</b>Space
-                                </a>
-                            </div>
                         </div>
-                    </li>
-                </ng-container>
+                    </div>
+                </li>
 
                 <li class="nav-item" *ngIf="isGitSpace">
-                    <gitspace-menu [(show)]="isGitSpace" (showFiles)="showGitspaceFilesSidebar = true">
+                    <gitspace-menu [config]="gitConfig" [(show)]="isGitSpace" (showFiles)="showGitspaceFiles = true">
                     </gitspace-menu>
                 </li>
 
@@ -69,8 +59,8 @@
     </div>
 </nav>
 
-<p-sidebar [(visible)]="showGitspaceFilesSidebar" styleClass="bg-light" styleClass="ui-sidebar-md" position="right"
-    (onHide)="showGitspaceFilesSidebar = false">
-    <gitspace-files-sidebar (close)="showGitspaceFilesSidebar = false">
+<p-sidebar [(visible)]="showGitspaceFiles" styleClass="bg-light" styleClass="ui-sidebar-md" position="right"
+    (onHide)="showGitspaceFiles = false">
+    <gitspace-files-sidebar (close)="showGitspaceFiles = false" (createArtifact)="onCreateArtifact()">
     </gitspace-files-sidebar>
 </p-sidebar>

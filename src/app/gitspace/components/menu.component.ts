@@ -11,6 +11,7 @@ import { environment } from '../../../environments/environment';
 })
 export class GitspaceMenuComponent implements OnInit, OnDestroy {
     @Output() showFiles = new EventEmitter<any>();
+    @Output() configChanged = new EventEmitter<any>();
 
     @Output() showChange = new EventEmitter<any>();
     @Input() set show(value: boolean) {
@@ -18,30 +19,25 @@ export class GitspaceMenuComponent implements OnInit, OnDestroy {
             this.connectToGithub();
         }
     }
-    config$: Subscription;
-    config: any;
+
+    @Input() config: any;
 
     showFilesSidebar = false;
-    showGitspaceSelector = false;
-    
+
     constructor(public store$: Store<GitspaceState>) {
     }
 
     ngOnInit(): void {
-        this.config$ = this.store$.select(p => p.gitspace.config)
-            .subscribe(p => this.config = p);
-
         window.addEventListener('message', event => {
             if (event.origin.startsWith(environment.githubApp.url)) {
                 sessionStorage.setItem("gitspace", JSON.stringify(event.data));
                 this.store$.dispatch(new SetGitspaceConfigAction(event.data));
-                this.onShowFilesSidebar();
+                this.onShowFiles();
             }
         });
     }
 
     ngOnDestroy(): void {
-        this.config$ ? this.config$.unsubscribe() : null;
     }
     onSwitchToLocalSpace() {
         this.showChange.emit(false);
@@ -59,7 +55,7 @@ export class GitspaceMenuComponent implements OnInit, OnDestroy {
             `toolbar=no, location=no, directories=no, status=no, menubar=no,  copyhistory=no, width=${w}, height=${h}, top=${y}, left=${x}`);
     }
 
-    onShowFilesSidebar() {
+    onShowFiles() {
         this.showFiles.emit(true);
     }
 }

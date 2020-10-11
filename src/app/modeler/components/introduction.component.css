@@ -1,0 +1,123 @@
+.wrapper {
+    overflow: auto;
+    height: 100%;
+    position: absolute;
+    width: 100%;
+}
+.introduction {
+    width: 100%;
+    -moz-align-items: stretch;
+    -webkit-align-items: stretch;
+    -ms-align-items: stretch;
+    align-items: stretch;
+    display: -moz-flex;
+    display: -webkit-flex;
+    display: -ms-flex;
+    display: flex;
+    -moz-flex-direction: row;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -moz-justify-content: -moz-flex-end;
+    -webkit-justify-content: -webkit-flex-end;
+    -ms-justify-content: -ms-flex-end;
+    justify-content: flex-end;
+    position: relative;
+    text-align: left;
+    overflow-x: hidden;
+}
+
+.introduction .sections {
+    -moz-align-self: center;
+    -webkit-align-self: center;
+    -ms-align-self: center;
+    align-self: center;
+    -moz-flex-grow: 1;
+    -webkit-flex-grow: 1;
+    -ms-flex-grow: 1;
+    flex-grow: 1;
+    -moz-flex-shrink: 1;
+    -webkit-flex-shrink: 1;
+    -ms-flex-shrink: 1;
+    flex-shrink: 1;
+    width: 50%;
+}
+
+.introduction .content {
+    margin: 0 auto;
+    padding: 7rem 7rem 5rem 7rem;
+    max-width: 48rem;
+    -moz-flex-grow: 0;
+    -webkit-flex-grow: 0;
+    -ms-flex-grow: 0;
+    flex-grow: 0;
+    -moz-flex-shrink: 0;
+    -webkit-flex-shrink: 0;
+    -ms-flex-shrink: 0;
+    flex-shrink: 0;
+    border-radius: 0;
+    width: 50%;
+}
+
+.introduction.fullscreen {
+    min-height: 100vh;
+}
+
+@media screen and (max-width: 1680px) {
+    .introduction .content {
+        padding: 5rem 5rem 3rem 5rem;
+    }
+}
+
+@media screen and (max-width: 1280px) {
+    .introduction .content {
+        padding: 4rem 4rem 2rem 4rem;
+    }
+}
+
+@media screen and (max-width: 980px) {
+    .introduction .content {
+        padding: 3.75rem 3rem 1.75rem 3rem;
+    }
+}
+
+@media screen and (max-width: 736px) {
+    .introduction .content {
+        padding: 2.5rem 2rem 0.5rem 2rem;
+    }
+}
+
+@media screen and (orientation: portrait) {
+    .introduction {
+        -moz-flex-direction: column;
+        -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+        flex-direction: column;
+    }
+
+    .introduction .content {
+        display: -moz-flex;
+        display: -webkit-flex;
+        display: -ms-flex;
+        display: flex;
+        -moz-flex-direction: column;
+        -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .introduction .sections {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    /* .introduction.fullscreen .content {
+        min-height: 50vh;
+    }
+
+    .introduction.fullscreen .sections {
+        height: 50vh;
+    } */
+}

@@ -4,7 +4,7 @@ import { AppState } from '../+state/app.state';
 import { Subscription } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
-import { UserModelCommandAction, UserModelCommandTypes } from '../appcommon/lib/CommonActions';
+import { SaveLocationTypes, UserModelCommandAction, UserModelCommandTypes } from '../appcommon/lib/CommonActions';
 import { LoadFileAction } from '../+state/app.actions';
 
 @Component({
@@ -12,7 +12,7 @@ import { LoadFileAction } from '../+state/app.actions';
     templateUrl: './navbar.component.html'
 })
 export class NavbarComponent implements OnInit, OnDestroy {
-    showGitspaceFilesSidebar = false;
+    showGitspaceFiles = false;
     loadedTemplate$: Subscription;
     loadedTemplate: any;
     templateLoaded = false;
@@ -24,11 +24,17 @@ export class NavbarComponent implements OnInit, OnDestroy {
     filename = "";
     isGitSpace = false;
 
+    gitConfig$: Subscription;
+    gitConfig: any;
+
     constructor(public store$: Store<AppState>, public router: Router, public messageService: MessageService) {
     }
 
     ngOnInit(): void {
-        this.isModelDirty$ = this.store$.select(p => p.app.isModelDirty)
+        this.gitConfig$ = this.store$.select(p => p.gitspace.config)
+            .subscribe(p => this.gitConfig = p);
+
+            this.isModelDirty$ = this.store$.select(p => p.app.isModelDirty)
             .subscribe(p => {
                 this.isModelDirty = p;
                 if (this.isModelDirty && this.loadedTemplate && (!this.filename || this.filename.trim().length === 0)) {
@@ -48,6 +54,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
             });
     }
     ngOnDestroy(): void {
+        this.gitConfig$ ? this.gitConfig$.unsubscribe() : null;
         this.isModelDirty$ ? this.isModelDirty$.unsubscribe() : null;
         this.loadedTemplate$ ? this.loadedTemplate$.unsubscribe() : null;
     }
@@ -80,4 +87,22 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
 
     onFileLoadingError = (err) => this.messageService.add({ severity: 'error', detail: 'Error:' + err, life: 5000, closable: true })
+
+    onCreateArtifact() {
+        this.showGitspaceFiles = false;
+        this.router.navigate(['/templates']);
+    }
+
+    onResetFile = (data) => this.store$.dispatch(new UserModelCommandAction({ command: UserModelCommandTypes.Reset, data }));
+    onCloseFile = () => this.store$.dispatch(new UserModelCommandAction({ command: UserModelCommandTypes.Close }));
+    onSaveFile = (data) => {
+        this.store$.dispatch(new UserModelCommandAction({
+            command: UserModelCommandTypes.Save,
+            data: {
+                filename: this.filename,
+                saveLocation: this.isGitSpace ? SaveLocationTypes.GitSpace : SaveLocationTypes.LocalSpace,
+                gitConfig: this.gitConfig
+            }
+        }));
+    }
 }

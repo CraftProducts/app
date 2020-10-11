@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, Input } from '@angular/core';
+import { Component, OnDestroy, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../+state/app.state';
 import { Subscription } from 'rxjs';
@@ -17,6 +17,10 @@ export class SaveLocalFileComponent implements OnInit, OnDestroy {
     content: any;
     @Input() filename = '';
     @Input() isDirty = false;
+
+    @Output() reset = new EventEmitter<any>();
+    @Output() close = new EventEmitter<any>();
+    @Output() save = new EventEmitter<any>();
 
     constructor(public store$: Store<AppState>, public router: Router, public messageService: MessageService) {
     }
@@ -39,17 +43,10 @@ export class SaveLocalFileComponent implements OnInit, OnDestroy {
     filenameEditorVisible = false;
     toggleFilenameEditor = () => this.filenameEditorVisible = !this.filenameEditorVisible;
 
-    canSave = () => this.filename && this.filename.trim().length > 0 && _.endsWith(this.filename.trim().toLowerCase(), '.json');
+    canSave = () => this.isDirty &&
+        this.filename && this.filename.trim().length > 0 && _.endsWith(this.filename.trim().toLowerCase(), '.json');
 
-    onSave(saveLocally) {
-        if (this.canSave()) {
-            this.store$.dispatch(new UserModelCommandAction({ command: UserModelCommandTypes.Save, data: { filename: this.filename, saveLocally } }));
-        }
-    }
-    onReset() {
-        this.store$.dispatch(new UserModelCommandAction({ command: UserModelCommandTypes.Reset, data: this.content }));
-    }
-    onClose() {
-        this.store$.dispatch(new UserModelCommandAction({ command: UserModelCommandTypes.Close }));
-    }
+    onSave = () => this.canSave() ? this.save.emit(this.content) : null;
+    onReset = () => this.reset.emit(this.content);
+    onClose = () => this.close.emit(null);
 }

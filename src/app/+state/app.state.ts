@@ -1,3 +1,5 @@
+import { Gitspace } from '../gitspace/+state/gitspace.state';
+
 export interface App {
   returnUrl: string;
 
@@ -12,4 +14,5 @@ export interface App {
 
 export interface AppState {
   readonly app: App;
+  readonly gitspace: Gitspace;
 }

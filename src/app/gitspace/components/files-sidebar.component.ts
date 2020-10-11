@@ -12,6 +12,7 @@ import { GitspaceState } from '../+state/gitspace.state';
 })
 export class GitspaceFilesComponent implements OnInit, OnDestroy {
     @Output() close = new EventEmitter<any>();
+    @Output() createArtifact = new EventEmitter<any>();
 
     combined$: Subscription;
     config: any;
@@ -27,7 +28,6 @@ export class GitspaceFilesComponent implements OnInit, OnDestroy {
 
         this.combined$ = combineLatest([configQ, filesQ])
             .subscribe(([config, files]) => {
-                console.log('config, files', config, files);
                 if (!this.config || config.owner !== this.config.owner || config.repo !== this.config.repo) {
                     this.files = null;
                 }
@@ -36,7 +36,9 @@ export class GitspaceFilesComponent implements OnInit, OnDestroy {
                     this.store$.dispatch(new LoadGitspaceFilesAction(config))
                 }
                 this.config = config;
-                this.config.location = this.config.location || "CraftProducts";
+                if (this.config) {
+                    this.config.location = this.config.location || "CraftProducts";
+                }
                 this.files = files || [];
             })
     }
@@ -46,6 +48,7 @@ export class GitspaceFilesComponent implements OnInit, OnDestroy {
     }
 
     onClose = () => this.close.emit();
+    onCreateArtifact = () => this.createArtifact.emit();
 
     onSelect(file) {
         console.log('load', file);
