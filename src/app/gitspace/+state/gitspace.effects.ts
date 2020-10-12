@@ -23,12 +23,9 @@ export class GitspaceEffects {
 
   @Effect() loadArtifact = this.actions$.pipe(ofType(appActions.ActionTypes.LoadGitspaceArtifact),
     switchMap((action: any) =>
-      this.gitspaceService.loadArtifact(action.payload)
+      this.gitspaceService.loadArtifact(action.payload.config, action.payload.filename)
         .pipe(
-          map(content => ({
-            type: appActions.ActionTypes.LoadGitspaceArtifactSuccess,
-            payload: { type: 'data', content, filename: action.payload.filename }
-          })),
+          map(payload => ({ type: appActions.ActionTypes.LoadGitspaceArtifactSuccess, payload })),
           catchError(() => of({ type: appActions.ActionTypes.LoadGitspaceArtifactFailed }))
         )
     )
@@ -37,7 +34,6 @@ export class GitspaceEffects {
   @Effect() saveArtifact = this.actions$.pipe(ofType(commonActions.CommonActionTypes.SaveModel),
     switchMap((action: any) => {
       const { instance, data } = action.payload;
-      console.log(instance, data);
       if (data.saveLocation === commonActions.SaveLocationTypes.GitSpace) {
         return this.gitspaceService.saveArtifact(data.gitConfig, data.filename, JSON.stringify(instance))
           .pipe(

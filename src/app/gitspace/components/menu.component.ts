@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { GitspaceState } from '../+state/gitspace.state';
-import { Subscription } from 'rxjs';
 import { SetGitspaceConfigAction } from '../+state/gitspace.actions';
 import { environment } from '../../../environments/environment';
 

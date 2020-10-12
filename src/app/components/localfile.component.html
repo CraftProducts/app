@@ -1,4 +1,4 @@
-<div class="input-group">
+<div class="input-group" *ngIf="filename && filename.length > 0">
     <!-- <div class="input-group-prepend" *ngIf="isDirty">
         <span class="input-group-text bg-warning">
             <fa-icon icon="info-circle" class="ml-2 mr-1" title="Unsaved changes found."></fa-icon>
@@ -6,12 +6,10 @@
     </div> -->
     <input type="text" class="form-control" [(ngModel)]="filename" [disabled]="!isDirty">
     <div class="input-group-append">
-        <ng-container *ngIf="canSave()">
-            <button class="btn btn-sm btn-light border text-primary" (click)="onSave()"
-                title="Save updated data file">
-                <fa-icon icon="save" [fixedWidth]="true"></fa-icon>
-            </button>
-        </ng-container>
+        <button class="btn btn-sm btn-light border text-primary" (click)="onSave()" *ngIf="canSave()"
+            title="Save updated data file">
+            <fa-icon icon="save" [fixedWidth]="true"></fa-icon>
+        </button>
 
         <button class="btn btn-sm btn-light border" title="Close" *ngIf="!isDirty" (click)="onClose()">
             <fa-icon icon="times" [fixedWidth]="true"></fa-icon>

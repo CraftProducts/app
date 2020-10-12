@@ -14,8 +14,9 @@ export function gitspaceReducer(state: Gitspace, action: any): Gitspace {
         }
 
         case ActionTypes.LoadGitspaceArtifactSuccess: {
-            console.log("LoadGitspaceArtifactSuccess", action.payload);
-            return { ...state, loadedFile: action.payload };
+            const loadedFile = action.payload || {};
+            loadedFile.content = loadedFile.content ? JSON.parse(loadedFile.content) : null;
+            return { ...state, loadedFile };
         }
         case ActionTypes.ResetGitspaceArtifact: {
             return { ...state, loadedFile: null };

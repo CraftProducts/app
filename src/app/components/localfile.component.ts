@@ -2,17 +2,16 @@ import { Component, OnDestroy, OnInit, Input, EventEmitter, Output } from '@angu
 import { Store } from '@ngrx/store';
 import { AppState } from '../+state/app.state';
 import { Subscription } from 'rxjs';
-import { UserModelCommandTypes, UserModelCommandAction } from '../appcommon/lib/CommonActions';
 import { MessageService } from 'primeng/api';
 import { filter } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import * as _ from 'lodash-es';
 
 @Component({
-    selector: 'app-savefile',
-    templateUrl: './savefile.component.html'
+    selector: 'app-localfile',
+    templateUrl: './localfile.component.html'
 })
-export class SaveLocalFileComponent implements OnInit, OnDestroy {
+export class LocalFileComponent implements OnInit, OnDestroy {
     loadedFile$: Subscription;
     content: any;
     @Input() filename = '';

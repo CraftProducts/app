@@ -1,0 +1,30 @@
+<ul class="navbar-nav ml-sm-auto">
+    <li class="nav-item mr-2">
+        <app-localfile [isDirty]="isModelDirty" [filename]="filename" (reset)="onResetFile($event)"
+            (close)="onCloseFile()" (save)="onSaveFile()">
+        </app-localfile>
+    </li>
+    <li class="nav-item">
+        <div ngbDropdown display="dynamic" placement="bottom-right">
+            <a class="btn  btn-default" id="dropdownBasic1" ngbDropdownToggle>
+                <fa-icon icon="folder-open" class="mr-1 text-brand"></fa-icon>
+                <b>Local</b>
+                <span class="pr-1">Space</span>
+            </a>
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu-right">
+                <sharedlib-load-localfile (fileLoaded)="onFileLoaded($event)" (error)="onFileLoadingError($event)"
+                    errorMessage="Invalid file. System only supports CraftProduct compliant JSON files." label="Open"
+                    accept="application/json" icon="file-alt" cssClass="btn-link text-dark" ngbDropdownItem
+                    class="pl-3 pb-0 pt-0">
+                </sharedlib-load-localfile>
+
+                <div class="dropdown-divider"></div>
+                <a ngbDropdownItem title="Switch to GitSpace" (click)="onSwitchToGitspace()">
+                    <fa-icon [icon]="['fab', 'github']" [fixedWidth]="true" class="mr-1 text-brand">
+                    </fa-icon>
+                    Switch to <b>Git</b>Space
+                </a>
+            </div>
+        </div>
+    </li>
+</ul>

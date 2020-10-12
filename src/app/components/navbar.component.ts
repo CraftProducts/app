@@ -1,4 +1,4 @@
-import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../+state/app.state';
 import { Subscription } from 'rxjs';
@@ -7,7 +7,6 @@ import { Router } from '@angular/router';
 import { SaveLocationTypes, UserModelCommandAction, UserModelCommandTypes } from '../appcommon/lib/CommonActions';
 import { LoadFileAction } from '../+state/app.actions';
 import { filter } from 'rxjs/operators';
-import { ResetGitspaceArtifactAction } from '../gitspace/+state/gitspace.actions';
 
 @Component({
     selector: 'app-navbar',
@@ -27,7 +26,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     isGitSpace = false;
 
     gitFile$: Subscription;
-
+    gitFile: any;
     gitConfig$: Subscription;
     gitConfig: any;
 
@@ -38,9 +37,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
         this.gitFile$ = this.store$.select(p => p.gitspace.loadedFile)
             .pipe(filter(p => p))
-            .subscribe(fileContent => {
-                this.store$.dispatch(new LoadFileAction(fileContent));
-                this.store$.dispatch(new ResetGitspaceArtifactAction(null));
+            .subscribe(gitFile => {
+                gitFile.type = 'data';
+                this.gitFile = gitFile;
+                this.filename = gitFile.filename;
+                this.store$.dispatch(new LoadFileAction(gitFile));  //copy over to make it compatible with existing infrastructure
             });
 
         this.gitConfig$ = this.store$.select(p => p.gitspace.config)
@@ -79,27 +80,27 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.store$.dispatch(new UserModelCommandAction({ command: UserModelCommandTypes.Export }));
     }
 
-    onFileLoaded(fileContent) {
-        if (fileContent && fileContent.content) {
-            this.filename = fileContent.filename;
-            fileContent.type = 'data';
-            fileContent.content = JSON.parse(fileContent.content);
+    // onFileLoaded(fileContent) {
+    //     if (fileContent && fileContent.content) {
+    //         this.filename = fileContent.filename;
+    //         fileContent.type = 'data';
+    //         fileContent.content = JSON.parse(fileContent.content);
 
-            if (fileContent.content.isCustom &&
-                !(this.loadedTemplate && this.loadedTemplate.isCustom && fileContent.content.templateCode === this.loadedTemplate.code)) {
-                this.messageService.add({
-                    severity: "error", life: 10000, closable: true,
-                    summary: "Incompatible file",
-                    detail: `The loaded file was crafted using custom template (${fileContent.content.templateCode}). First load the custom template and they retry opening this file.`
-                });
-                this.router.navigate(['/templates']);
-            } else {
-                this.store$.dispatch(new LoadFileAction(fileContent));
-            }
-        }
-    }
+    //         if (fileContent.content.isCustom &&
+    //             !(this.loadedTemplate && this.loadedTemplate.isCustom && fileContent.content.templateCode === this.loadedTemplate.code)) {
+    //             this.messageService.add({
+    //                 severity: "error", life: 10000, closable: true,
+    //                 summary: "Incompatible file",
+    //                 detail: `The loaded file was crafted using custom template (${fileContent.content.templateCode}). First load the custom template and they retry opening this file.`
+    //             });
+    //             this.router.navigate(['/templates']);
+    //         } else {
+    //             this.store$.dispatch(new LoadFileAction(fileContent));
+    //         }
+    //     }
+    // }
 
-    onFileLoadingError = (err) => this.messageService.add({ severity: 'error', detail: 'Error:' + err, life: 5000, closable: true })
+    // onFileLoadingError = (err) => this.messageService.add({ severity: 'error', detail: 'Error:' + err, life: 5000, closable: true })
 
     onCreateArtifact() {
         this.showGitspaceFiles = false;
@@ -108,7 +109,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     onResetFile = (data) => this.store$.dispatch(new UserModelCommandAction({ command: UserModelCommandTypes.Reset, data }));
     onCloseFile = () => this.store$.dispatch(new UserModelCommandAction({ command: UserModelCommandTypes.Close }));
-    onSaveFile = (data) => {
+    onSaveFile = () => {
         this.store$.dispatch(new UserModelCommandAction({
             command: UserModelCommandTypes.Save,
             data: {

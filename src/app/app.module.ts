@@ -36,11 +36,12 @@ import { AppRepository } from './appcommon/googledrive/app.repository';
 import { FileRepository } from './appcommon/googledrive/file.repository';
 import { UserRepository } from './appcommon/googledrive/user.repository';
 import { IBACKEND_URLS, SharedLibModule } from 'shared-lib';
-import { SaveLocalFileComponent } from './components/savefile.component';
+import { LocalFileComponent } from './components/localfile.component';
 import { TemplateInfoComponent } from './components/template-info.component';
 import { AuthComponent } from './components/auth.component';
 import { SidebarModule } from 'primeng/sidebar';
 import { GitspaceModule } from './gitspace/gitspace.module';
+import { LocalSpaceComponent } from './components/localspace.component';
 
 export function initGapi(gapiSession: GapiSession) {
   return () => gapiSession.initClient();
@@ -51,7 +52,7 @@ export function initGapi(gapiSession: GapiSession) {
     AuthComponent,
     AppComponent, PageNotFoundComponent,
     NavbarComponent, ToolsComponent, TemplateInfoComponent,
-    SaveLocalFileComponent
+    LocalSpaceComponent, LocalFileComponent
   ],
   imports: [
     CommonModule,

@@ -10,50 +10,20 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent" [ngbCollapse]="isCollapsed">
-
             <app-template-info [template]="loadedTemplate"></app-template-info>
-
-            <ul class="navbar-nav ml-sm-auto">
+            <div class="navbar-nav ml-sm-auto">
+                <app-localspace *ngIf="!isGitSpace" (switchToGitspace)="isGitSpace = true"></app-localspace>
+            </div>
+            <ul class="navbar-nav ml-sm-auto" *ngIf="isGitSpace">
+                <li class="nav-item mr-2">
+                    <app-gitfile [isDirty]="isModelDirty" (reset)="onResetFile($event)" (close)="onCloseFile()"
+                        (save)="onSaveFile()">
+                    </app-gitfile>
+                </li>
                 <li class="nav-item">
-                    <div class="mr-2" *ngIf="filename && filename.length > 0">
-                        <app-savefile [isDirty]="isModelDirty" [filename]="filename" (reset)="onResetFile($event)"
-                            (close)="onCloseFile()" (save)="onSaveFile($event)">
-                        </app-savefile>
-                    </div>
-                </li>
-                <li class="nav-item" *ngIf="!isGitSpace">
-                    <div ngbDropdown display="dynamic" placement="bottom-right">
-                        <a class="btn  btn-default" id="dropdownBasic1" ngbDropdownToggle>
-                            <fa-icon icon="folder-open" class="mr-1 text-brand"></fa-icon>
-                            <b>Local</b>
-                            <span class="pr-1">Space</span>
-                        </a>
-                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu-right">
-                            <sharedlib-load-localfile (fileLoaded)="onFileLoaded($event)"
-                                (error)="onFileLoadingError($event)"
-                                errorMessage="Invalid file. System only supports CraftProduct compliant JSON files."
-                                label="Open local file" accept="application/json" icon="folder-open"
-                                cssClass="btn-link text-dark" ngbDropdownItem class="pl-3 pb-0 pt-0">
-                            </sharedlib-load-localfile>
-
-                            <div class="dropdown-divider"></div>
-                            <a ngbDropdownItem title="Switch to GitSpace" (click)="isGitSpace = true">
-                                <fa-icon [icon]="['fab', 'github']" [fixedWidth]="true" class="mr-1 text-brand">
-                                </fa-icon>
-                                Switch to <b>Git</b>Space
-                            </a>
-                        </div>
-                    </div>
-                </li>
-
-                <li class="nav-item" *ngIf="isGitSpace">
                     <gitspace-menu [config]="gitConfig" [(show)]="isGitSpace" (showFiles)="showGitspaceFiles = true">
                     </gitspace-menu>
                 </li>
-
-                <!-- <li class="nav-item">
-                    <app-tools></app-tools>
-                </li> -->
             </ul>
         </div>
     </div>

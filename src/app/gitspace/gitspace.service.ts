@@ -11,24 +11,21 @@ export class GitspaceService {
         this.baseUrl = environment.githubApp.url;
     }
 
-    public loadFiles(payload) {
-        const extension = 'json';
-        const path = encodeURIComponent(payload.location);
-        const url = `${this.baseUrl}/api/files/${payload.installation_id}/${payload.owner}/${payload.repo}/${path}?extension=${extension}`;
-        return this.httpClient.get(url);
+    getArtifactUrl(config, filename = '') {
+        const path = filename && filename.length > 0 ? `${config.location}/${filename}` : config.location;
+        return `${this.baseUrl}/api/artifacts/${config.installation_id}/${config.owner}/${config.repo}/${encodeURIComponent(path)}`;
     }
 
-    public loadArtifact(payload) {
-        const { config, filename } = payload;
-        const path = encodeURIComponent(`${config.location}/${filename}`);
-        const url = `${this.baseUrl}/api/files/${config.installation_id}/${config.owner}/${config.repo}/${path}`;
-        return this.httpClient.get(url);
+    public loadFiles(payload) {
+        return this.httpClient.get(`${this.getArtifactUrl(payload)}?extension=json`);
+    }
+
+    public loadArtifact(config, filename) {        
+        return this.httpClient.get(this.getArtifactUrl(config, filename));
     }
 
     public saveArtifact = (config, filename, content) => {
-        console.log("saveArtifact", config, filename, content);
-        const path = encodeURIComponent(`${config.location}/${filename}`);
-        return this.httpClient.post(`${this.baseUrl}/api/files/${config.installation_id}/${config.owner}/${config.repo}/${path}`, { filename, content });
+        return this.httpClient.post(this.getArtifactUrl(config, filename), { filename, content });
     }
 
 

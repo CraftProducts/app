@@ -11,10 +11,11 @@ import { GitspaceFilesComponent } from './components/files-sidebar.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
+import { GitFileComponent } from './components/gitfile.component';
 
 @NgModule({
-  declarations: [GitspaceMenuComponent, GitspaceFilesComponent],
-  exports: [GitspaceMenuComponent, GitspaceFilesComponent],
+  declarations: [GitspaceMenuComponent, GitspaceFilesComponent, GitFileComponent],
+  exports: [GitspaceMenuComponent, GitspaceFilesComponent, GitFileComponent],
   imports: [
     CommonModule,
     FontAwesomeModule,
@@ -25,4 +26,4 @@ import { FormsModule } from '@angular/forms';
     EffectsModule.forFeature([GitspaceEffects])
   ]
 })
-export class GitspaceModule {}
+export class GitspaceModule { }
