@@ -36,7 +36,6 @@ import { AppRepository } from './appcommon/googledrive/app.repository';
 import { FileRepository } from './appcommon/googledrive/file.repository';
 import { UserRepository } from './appcommon/googledrive/user.repository';
 import { IBACKEND_URLS, SharedLibModule } from 'shared-lib';
-import { LocalFileComponent } from './components/localfile.component';
 import { TemplateInfoComponent } from './components/template-info.component';
 import { AuthComponent } from './components/auth.component';
 import { SidebarModule } from 'primeng/sidebar';
@@ -52,7 +51,7 @@ export function initGapi(gapiSession: GapiSession) {
     AuthComponent,
     AppComponent, PageNotFoundComponent,
     NavbarComponent, ToolsComponent, TemplateInfoComponent,
-    LocalSpaceComponent, LocalFileComponent
+    LocalSpaceComponent
   ],
   imports: [
     CommonModule,
@@ -61,7 +60,7 @@ export function initGapi(gapiSession: GapiSession) {
     FormsModule,
 
     SidebarModule,
-    
+
     AppCommonModule,
     SharedLibModule,
 
@@ -74,7 +73,7 @@ export function initGapi(gapiSession: GapiSession) {
     NgxMdModule.forRoot(),
 
     GitspaceModule,
-    
+
     StoreModule.forRoot(
       { app: appReducer },
       {

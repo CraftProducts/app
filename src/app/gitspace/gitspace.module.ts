@@ -5,23 +5,24 @@ import { EffectsModule } from '@ngrx/effects';
 import { gitspaceReducer } from './+state/gitspace.reducer';
 import { gitspaceInitialState } from './+state/gitspace.init';
 import { GitspaceEffects } from './+state/gitspace.effects';
-import { GitspaceMenuComponent } from './components/menu.component';
+import { GitspaceComponent } from './components/gitspace.component';
 import { GitspaceFilesComponent } from './components/files-sidebar.component';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
-import { GitFileComponent } from './components/gitfile.component';
+import {NgxFilesizeModule} from 'ngx-filesize'
 
 @NgModule({
-  declarations: [GitspaceMenuComponent, GitspaceFilesComponent, GitFileComponent],
-  exports: [GitspaceMenuComponent, GitspaceFilesComponent, GitFileComponent],
+  declarations: [GitspaceComponent, GitspaceFilesComponent],
+  exports: [GitspaceComponent, GitspaceFilesComponent],
   imports: [
     CommonModule,
     FontAwesomeModule,
     FormsModule,
     NgbModule,
-
+    NgxFilesizeModule,
+    
     StoreModule.forFeature("gitspace", gitspaceReducer, { initialState: gitspaceInitialState }),
     EffectsModule.forFeature([GitspaceEffects])
   ]

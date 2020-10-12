@@ -35,7 +35,7 @@ export class GitspaceEffects {
     switchMap((action: any) => {
       const { instance, data } = action.payload;
       if (data.saveLocation === commonActions.SaveLocationTypes.GitSpace) {
-        return this.gitspaceService.saveArtifact(data.gitConfig, data.filename, JSON.stringify(instance))
+        return this.gitspaceService.saveArtifact(data.gitConfig, data.filename, JSON.stringify(instance), data.sha)
           .pipe(
             map(payload => ({ type: commonActions.CommonActionTypes.SaveModelSuccess, payload })),
             catchError(() => of({ type: commonActions.CommonActionTypes.SaveModelFailed }))

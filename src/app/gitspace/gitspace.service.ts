@@ -20,12 +20,12 @@ export class GitspaceService {
         return this.httpClient.get(`${this.getArtifactUrl(payload)}?extension=json`);
     }
 
-    public loadArtifact(config, filename) {        
+    public loadArtifact(config, filename) {
         return this.httpClient.get(this.getArtifactUrl(config, filename));
     }
 
-    public saveArtifact = (config, filename, content) => {
-        return this.httpClient.post(this.getArtifactUrl(config, filename), { filename, content });
+    public saveArtifact = (config, filename, content, sha = null) => {
+        return this.httpClient.post(this.getArtifactUrl(config, filename), { filename, content, sha });
     }
 
 

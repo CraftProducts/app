@@ -146,7 +146,6 @@ export class ModelerHomeComponent implements ComponentCanDeactivate, OnInit, OnD
             .pipe(filter(p => p), tap(p => this.loadedTemplate = p))
             .subscribe(loadedTemplate => this.store$.dispatch(new SetModelAction(loadedTemplate)));
 
-
         this.loadedFile$ = this.store$.select(p => p.app.loadedFile)
             .pipe(filter(loadedFile => loadedFile && loadedFile.content && loadedFile.type !== 'template'))
             .subscribe(loadedFile => this.store$.dispatch(new SetDatasetAction(loadedFile.content)));
@@ -210,12 +209,14 @@ export class ModelerHomeComponent implements ComponentCanDeactivate, OnInit, OnD
         this.instance.sections = [];
 
         extractSections(this.loadedTemplate, ['code', 'data', 'rows', 'columns'], this.instance.sections);
+        console.log('after-extract-instance', this.instance);
 
         this.filename = this.filename || `${this.instance.templateCode}.json`;
         if (data.saveLocation === SaveLocationTypes.LocalSpace) {
             const mimetype = "text/json";
             this.downloadDataFile(this.filename, mimetype, JSON.stringify(this.instance));
         }
+        console.log('this.instance', this.instance);
         this.store$.dispatch(new SaveModelAction({ instance: this.instance, data }));
     }
 

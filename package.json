@@ -43,6 +43,7 @@
     "bootstrap": "^4.5.2",
     "js-yaml": "^3.14.0",
     "lodash-es": "^4.17.15",
+    "ngx-filesize": "^2.0.16",
     "ngx-md": "^8.1.6",
     "pptxgenjs": "^3.3.0",
     "primeicons": "^4.0.0",

@@ -1,0 +1,51 @@
+<ul class="navbar-nav ml-sm-auto">
+    <li class="nav-item mr-2" *ngIf="filename">
+        <div class="input-group">
+            <input type="text" class="form-control" [(ngModel)]="filename" disabled="disabled">
+            <div class="input-group-append">
+                <ng-container *ngIf="isDirty">
+                    <button class="btn btn-sm btn-light border text-primary" (click)="onSave()"
+                        title="Save updated data file">
+                        <fa-icon icon="save" [fixedWidth]="true"></fa-icon>
+                    </button>
+                    <button class="btn btn-sm btn-light border text-danger" (click)="onReset()" title="Discard changes">
+                        <fa-icon icon="redo" [fixedWidth]="true"></fa-icon>
+                    </button>
+                </ng-container>
+                <button class="btn btn-sm btn-light border" title="Close" *ngIf="!isDirty" (click)="onClose()">
+                    <fa-icon icon="times" [fixedWidth]="true"></fa-icon>
+                </button>
+            </div>
+        </div>
+    </li>
+    <li class="nav-item">
+        <div ngbDropdown display="dynamic" placement="bottom-right">
+            <a class="btn  btn-default" ngbDropdownToggle>
+                <fa-icon [icon]="['fab', 'github']" class="mr-1 text-brand"></fa-icon>
+                <span *ngIf="config">
+                    {{config.owner}}/{{config.repo}}
+                </span>
+                <a (click)="connectToGithub($event)" *ngIf="!config">
+                    <b>Git</b>
+                    <span class="pr-1">Space</span>
+                </a>
+            </a>
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu-right">
+                <a ngbDropdownItem (click)="onShowFiles()">
+                    <fa-icon icon="file-alt" [fixedWidth]="true" class="mr-1"></fa-icon>
+                    Open
+                </a>
+                <div class="dropdown-divider"></div>
+                <a ngbDropdownItem (click)="connectToGithub()">
+                    <fa-icon [icon]="['fab', 'github']" [fixedWidth]="true" class="mr-1"></fa-icon>
+                    Change Gitspace
+                </a>
+                <div class="dropdown-divider"></div>
+                <a ngbDropdownItem title="Switch to LocalSpace" (click)="onSwitchToLocalSpace()">
+                    <fa-icon icon="folder-open" [fixedWidth]="true" class="mr-1 text-brand"></fa-icon>
+                    Switch to <b>Local</b>Space
+                </a>
+            </div>
+        </div>
+    </li>
+</ul>

@@ -1,8 +1,29 @@
 <ul class="navbar-nav ml-sm-auto">
     <li class="nav-item mr-2">
-        <app-localfile [isDirty]="isModelDirty" [filename]="filename" (reset)="onResetFile($event)"
-            (close)="onCloseFile()" (save)="onSaveFile()">
-        </app-localfile>
+        <div class="input-group" *ngIf="templateLoaded">
+            <!-- <div class="input-group-prepend" *ngIf="isModelDirty">
+                <span class="input-group-text bg-warning">
+                    <fa-icon icon="info-circle" class="ml-2 mr-1" title="Unsaved changes found."></fa-icon>
+                </span>
+            </div> -->
+            <input type="text" class="form-control" [(ngModel)]="filename" (keydown.enter)="onSave()"
+                [disabled]="!isModelDirty || !filename || filename.length === 0">
+            <div class="input-group-append">
+                <button class="btn btn-sm btn-light border text-primary" (click)="onSave()" *ngIf="canSave()"
+                    title="Save updated data file">
+                    <fa-icon icon="save" [fixedWidth]="true"></fa-icon>
+                </button>
+
+                <button class="btn btn-sm btn-light border" title="Close" *ngIf="!isModelDirty" (click)="onClose()">
+                    <fa-icon icon="times" [fixedWidth]="true"></fa-icon>
+                </button>
+
+                <button class="btn btn-sm btn-light border text-danger" (click)="onReset()" title="Discard changes"
+                    *ngIf="isModelDirty">
+                    <fa-icon icon="redo" [fixedWidth]="true"></fa-icon>
+                </button>
+            </div>
+        </div>
     </li>
     <li class="nav-item">
         <div ngbDropdown display="dynamic" placement="bottom-right">

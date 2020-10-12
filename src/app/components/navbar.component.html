@@ -12,19 +12,17 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent" [ngbCollapse]="isCollapsed">
             <app-template-info [template]="loadedTemplate"></app-template-info>
             <div class="navbar-nav ml-sm-auto">
-                <app-localspace *ngIf="!isGitSpace" (switchToGitspace)="isGitSpace = true"></app-localspace>
+
+                <app-localspace *ngIf="!isGitSpace" [loadedTemplate]="loadedTemplate" [templateLoaded]="templateLoaded"
+                    [(filename)]="filename" (switchToGitspace)="isGitSpace = true" (reset)="onResetFile($event)"
+                    (close)="onCloseFile()" (save)="onSaveFile($event)"></app-localspace>
+
+                <app-gitspace *ngIf="isGitSpace" [config]="gitConfig" [(show)]="isGitSpace" [(filename)]="filename" 
+                    (showFiles)="showGitspaceFiles = true" [isDirty]="isModelDirty" (reset)="onResetFile($event)"
+                    (close)="onCloseFile()" (save)="onSaveFile($event)">
+
+                </app-gitspace>
             </div>
-            <ul class="navbar-nav ml-sm-auto" *ngIf="isGitSpace">
-                <li class="nav-item mr-2">
-                    <app-gitfile [isDirty]="isModelDirty" (reset)="onResetFile($event)" (close)="onCloseFile()"
-                        (save)="onSaveFile()">
-                    </app-gitfile>
-                </li>
-                <li class="nav-item">
-                    <gitspace-menu [config]="gitConfig" [(show)]="isGitSpace" (showFiles)="showGitspaceFiles = true">
-                    </gitspace-menu>
-                </li>
-            </ul>
         </div>
     </div>
 </nav>

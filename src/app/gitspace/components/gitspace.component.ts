@@ -1,22 +1,32 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { GitspaceState } from '../+state/gitspace.state';
-import { SetGitspaceConfigAction } from '../+state/gitspace.actions';
+import { ResetGitspaceArtifactAction, SetGitspaceConfigAction } from '../+state/gitspace.actions';
 import { environment } from '../../../environments/environment';
+import { Subscription } from 'rxjs';
 
 @Component({
-    selector: 'gitspace-menu',
-    templateUrl: './menu.component.html'
+    selector: 'app-gitspace',
+    templateUrl: './gitspace.component.html'
 })
-export class GitspaceMenuComponent implements OnInit, OnDestroy {
+export class GitspaceComponent implements OnInit, OnDestroy {
+    gitFile$: Subscription;
+    sha = '';
+    content: any;
+    @Input() filename = '';
+    @Output() filenameChange = new EventEmitter<any>();
+    @Input() isDirty: boolean;
+
+    @Output() reset = new EventEmitter<any>();
+    @Output() close = new EventEmitter<any>();
+    @Output() save = new EventEmitter<any>();
+
     @Output() showFiles = new EventEmitter<any>();
     @Output() configChanged = new EventEmitter<any>();
 
     @Output() showChange = new EventEmitter<any>();
     @Input() set show(value: boolean) {
-        if (value) {
-            this.connectToGithub();
-        }
+        (value) ? this.connectToGithub() : null;
     }
 
     @Input() config: any;
@@ -27,6 +37,17 @@ export class GitspaceMenuComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+        this.gitFile$ = this.store$.select(p => p.gitspace.loadedFile)
+            .subscribe(file => {
+                this.sha = file ? file.sha : null;
+                if (file) {
+                    this.filename = file.filename;
+                    this.filenameChange.emit(this.filename);
+                }
+
+                this.content = file && file.content ? file.content : null;
+            });
+
         window.addEventListener('message', event => {
             if (event.origin.startsWith(environment.githubApp.url)) {
                 sessionStorage.setItem("gitspace", JSON.stringify(event.data));
@@ -37,6 +58,7 @@ export class GitspaceMenuComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
+        this.gitFile$ ? this.gitFile$.unsubscribe() : null;
     }
     onSwitchToLocalSpace() {
         this.showChange.emit(false);
@@ -54,7 +76,15 @@ export class GitspaceMenuComponent implements OnInit, OnDestroy {
             `toolbar=no, location=no, directories=no, status=no, menubar=no,  copyhistory=no, width=${w}, height=${h}, top=${y}, left=${x}`);
     }
 
-    onShowFiles() {
-        this.showFiles.emit(true);
+    onShowFiles = () => this.showFiles.emit(true);
+
+    onSave = () => this.save.emit({ sha: this.sha });
+    onReset = () => {
+        this.store$.dispatch(new ResetGitspaceArtifactAction(null));
+        this.reset.emit(this.content);
+    }
+    onClose = () => {
+        this.store$.dispatch(new ResetGitspaceArtifactAction(null));
+        this.close.emit(null);
     }
 }
