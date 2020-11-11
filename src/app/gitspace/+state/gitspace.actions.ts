@@ -11,7 +11,9 @@ export const ActionTypes = {
     LoadGitspaceArtifact: type('[LoadGitspaceArtifact]'),
     LoadGitspaceArtifactFailed: type('[LoadGitspaceArtifact] Failed'),
     LoadGitspaceArtifactSuccess: type('[LoadGitspaceArtifact] Success'),
-    ResetGitspaceArtifact: type('[ResetGitspaceArtifact]')
+    ResetGitspaceArtifact: type('[ResetGitspaceArtifact]'),
+
+    // CreateNewArtifact: type('[CreateNewArtifact]')
 }
 
 export class SetGitspaceConfigAction implements Action {
@@ -34,9 +36,15 @@ export class ResetGitspaceArtifactAction implements Action {
     constructor(public payload: any) { }
 }
 
+// export class CreateNewArtifactAction implements Action {
+//     type = ActionTypes.CreateNewArtifact;
+//     constructor(public payload: any) { }
+// }
+
 export type Actions =
     ResetGitspaceArtifactAction
     | LoadGitspaceArtifactAction
     | LoadGitspaceAllArtifactsAction
     | SetGitspaceConfigAction
+    // | CreateNewArtifactAction
     ;

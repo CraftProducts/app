@@ -7,7 +7,13 @@
         <h4>
             <fa-icon [icon]="['fab', 'github']" class="mr-1" size="sm"></fa-icon>
             <span *ngIf="!config.isGitspace"> Initialize this Gitspace</span>
-            <span *ngIf="config.isGitspace"> Select artifact</span>
+            <span *ngIf="config.isGitspace"> Select artifact
+
+                <button class="btn btn-sm btn-link text-white ml-2" (click)="reloadGitspace()">
+                    <fa-icon icon="sync"></fa-icon>
+                </button>
+
+            </span>
         </h4>
     </div>
     <div class="pane-body">
@@ -24,11 +30,12 @@
 
                     <div>
 
-                        Switch to another <b>Git</b>space by closing this window or create your first artifact in this
+                        Switch to another <b>Git</b>space or proceed by creating your first artifact in this
                         <b>Git</b>space
 
                     </div>
                 </div>
+
                 <div *ngFor="let file of files">
                     <a class="btn btn-link" (click)="onSelect(file)">{{file.name}}
                         <span class="badge badge-info">{{file.size | filesize}}</span>

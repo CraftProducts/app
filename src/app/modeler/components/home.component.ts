@@ -157,16 +157,14 @@ export class ModelerHomeComponent implements ComponentCanDeactivate, OnInit, OnD
             .pipe(filter(p => p))
             .subscribe(userCommand => {
                 this.userModelCommand = userCommand;
+                console.log("this.userModelCommand.command", this.userModelCommand.command);
+
                 switch (this.userModelCommand.command) {
                     case UserModelCommandTypes.Save:
                         this.onSaveModel(this.userModelCommand.data);
                         break;
                     case UserModelCommandTypes.Reset:
                         this.store$.dispatch(new ResetModelAction(this.userModelCommand.data));
-                        break;
-                    case UserModelCommandTypes.Close:
-                        this.store$.dispatch(new CloseWorkspaceAction(null));
-                        this.router.navigate(["templates"]);
                         break;
                     case UserModelCommandTypes.Export:
                         this.showExportSidebar = true;
@@ -216,7 +214,6 @@ export class ModelerHomeComponent implements ComponentCanDeactivate, OnInit, OnD
             const mimetype = "text/json";
             this.downloadDataFile(this.filename, mimetype, JSON.stringify(this.instance));
         }
-        console.log('this.instance', this.instance);
         this.store$.dispatch(new SaveModelAction({ instance: this.instance, data }));
     }
 
@@ -297,7 +294,7 @@ export class ModelerHomeComponent implements ComponentCanDeactivate, OnInit, OnD
         if (args.command && args.command.length > 0) {
             queryParams.command = args.command;
         }
-        this.router.navigate([], { queryParams })
+        this.router.navigate([], { queryParams, queryParamsHandling: "merge" })
     }
 
     onItemChange(section) {

@@ -17,8 +17,8 @@
                     [(filename)]="filename" (switchToGitspace)="isGitSpace = true" (reset)="onResetFile($event)"
                     (close)="onCloseFile()" (save)="onSaveFile($event)"></app-localspace>
 
-                <app-gitspace *ngIf="isGitSpace" [config]="gitConfig" [(show)]="isGitSpace" [(filename)]="filename" 
-                    (showFiles)="showGitspaceFiles = true" [isDirty]="isModelDirty" (reset)="onResetFile($event)"
+                <app-gitspace *ngIf="isGitSpace" [config]="gitConfig" [(show)]="isGitSpace" [(filename)]="filename"
+                    (showFiles)="showGitspaceFiles = true" [isModelDirty]="isModelDirty" (reset)="onResetFile($event)"
                     (close)="onCloseFile()" (save)="onSaveFile($event)">
 
                 </app-gitspace>
@@ -29,7 +29,7 @@
 
 <p-sidebar [(visible)]="showGitspaceFiles" styleClass="bg-light" styleClass="ui-sidebar-md" position="right"
     (onHide)="showGitspaceFiles = false">
-    <gitspace-files-sidebar (close)="showGitspaceFiles = false" (createArtifact)="onCreateArtifact()"
-        [config]="gitConfig">
+    <gitspace-files-sidebar *ngIf="showGitspaceFiles" (close)="showGitspaceFiles = false"
+        (createArtifact)="onCreateArtifact()" (artifactSelected)="onArtifactSelected($event)" [config]="gitConfig">
     </gitspace-files-sidebar>
 </p-sidebar>

@@ -41,7 +41,7 @@ export class AppComponent implements OnInit, OnDestroy {
           this.router.navigate(['modeler/custom']);
         }
         else {
-          this.router.navigate(['modeler', file.content.templateCode])
+          this.router.navigate(['modeler', file.content.templateCode], { queryParams: { filename: file.filename } })
         }
       });
   }

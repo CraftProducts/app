@@ -16,11 +16,17 @@ export function gitspaceReducer(state: Gitspace, action: any): Gitspace {
         case ActionTypes.LoadGitspaceArtifactSuccess: {
             const loadedFile = action.payload || {};
             loadedFile.content = loadedFile.content ? JSON.parse(loadedFile.content) : null;
-            return { ...state, loadedFile };
+            return {
+                ...state, loadedFile
+                //,isNew: false
+            };
         }
         case ActionTypes.ResetGitspaceArtifact: {
             return { ...state, loadedFile: null };
         }
+        // case ActionTypes.CreateNewArtifact: {
+        //     return { ...state, loadedFile: null, isNew: true };
+        // }
 
         default: return state;
     }

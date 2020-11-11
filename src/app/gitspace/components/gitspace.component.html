@@ -1,9 +1,11 @@
 <ul class="navbar-nav ml-sm-auto">
     <li class="nav-item mr-2" *ngIf="filename">
         <div class="input-group">
-            <input type="text" class="form-control" [(ngModel)]="filename" disabled="disabled">
+            <input type="text" class="form-control" [(ngModel)]="filename" (keydown.enter)="onSave()"
+                [disabled]="!isModelDirty || !filename || filename.length === 0">
+            <!-- <input type="text" class="form-control" [(ngModel)]="filename" disabled="disabled"> -->
             <div class="input-group-append">
-                <ng-container *ngIf="isDirty">
+                <ng-container *ngIf="isModelDirty">
                     <button class="btn btn-sm btn-light border text-primary" (click)="onSave()"
                         title="Save updated data file">
                         <fa-icon icon="save" [fixedWidth]="true"></fa-icon>
@@ -12,7 +14,7 @@
                         <fa-icon icon="redo" [fixedWidth]="true"></fa-icon>
                     </button>
                 </ng-container>
-                <button class="btn btn-sm btn-light border" title="Close" *ngIf="!isDirty" (click)="onClose()">
+                <button class="btn btn-sm btn-light border" title="Close" *ngIf="!isModelDirty" (click)="onClose()">
                     <fa-icon icon="times" [fixedWidth]="true"></fa-icon>
                 </button>
             </div>
@@ -36,7 +38,7 @@
                     Open
                 </a>
                 <div class="dropdown-divider"></div>
-                <a ngbDropdownItem (click)="connectToGithub()">
+                <a ngbDropdownItem (click)="connectToGithub($event, true)">
                     <fa-icon [icon]="['fab', 'github']" [fixedWidth]="true" class="mr-1"></fa-icon>
                     Change Gitspace
                 </a>

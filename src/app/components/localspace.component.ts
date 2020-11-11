@@ -85,8 +85,8 @@ export class LocalSpaceComponent implements OnInit, OnDestroy {
 
     onFileLoadingError = (err) => this.messageService.add({ severity: 'error', detail: 'Error:' + err, life: 5000, closable: true })
 
-    filenameEditorVisible = false;
-    toggleFilenameEditor = () => this.filenameEditorVisible = !this.filenameEditorVisible;
+    // filenameEditorVisible = false;
+    // toggleFilenameEditor = () => this.filenameEditorVisible = !this.filenameEditorVisible;
 
     canSave = () => this.isModelDirty &&
         this.filename && this.filename.trim().length > 0 && _.endsWith(this.filename.trim().toLowerCase(), '.json');

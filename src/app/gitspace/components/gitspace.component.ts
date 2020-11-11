@@ -4,6 +4,7 @@ import { GitspaceState } from '../+state/gitspace.state';
 import { ResetGitspaceArtifactAction, SetGitspaceConfigAction } from '../+state/gitspace.actions';
 import { environment } from '../../../environments/environment';
 import { Subscription } from 'rxjs';
+import * as _ from "lodash-es";
 
 @Component({
     selector: 'app-gitspace',
@@ -15,7 +16,7 @@ export class GitspaceComponent implements OnInit, OnDestroy {
     content: any;
     @Input() filename = '';
     @Output() filenameChange = new EventEmitter<any>();
-    @Input() isDirty: boolean;
+    @Input() isModelDirty: boolean;
 
     @Output() reset = new EventEmitter<any>();
     @Output() close = new EventEmitter<any>();
@@ -64,21 +65,38 @@ export class GitspaceComponent implements OnInit, OnDestroy {
         this.showChange.emit(false);
         this.store$.dispatch(new SetGitspaceConfigAction(null));
     }
-    connectToGithub(event = null) {
+
+    connectToGithub(event = null, force = false) {
         if (event) {
             event.stopPropagation();
         }
-        const h = 768;
-        const w = 1024;
-        const y = window.top.outerHeight / 2 + window.top.screenY - (h / 2);
-        const x = window.top.outerWidth / 2 + window.top.screenX - (w / 2);
-        window.open(`${environment.githubApp.url}/login`, 'name',
-            `toolbar=no, location=no, directories=no, status=no, menubar=no,  copyhistory=no, width=${w}, height=${h}, top=${y}, left=${x}`);
+
+        const sessionConfig = JSON.parse(sessionStorage.getItem("gitspace"));
+        if (!force && sessionConfig && sessionConfig.owner && sessionConfig.repo && sessionConfig.repo.length > 0) {
+            this.store$.dispatch(new SetGitspaceConfigAction(sessionConfig));
+        } else {
+            const h = 768;
+            const w = 1024;
+            const y = window.top.outerHeight / 2 + window.top.screenY - (h / 2);
+            const x = window.top.outerWidth / 2 + window.top.screenX - (w / 2);
+            window.open(`${environment.githubApp.url}/login`, 'name',
+                `toolbar=no, location=no, directories=no, status=no, menubar=no,  copyhistory=no, width=${w}, height=${h}, top=${y}, left=${x}`);
+        }
     }
 
     onShowFiles = () => this.showFiles.emit(true);
 
-    onSave = () => this.save.emit({ sha: this.sha });
+    canSave = () => this.isModelDirty &&
+        this.filename && this.filename.trim().length > 0 && _.endsWith(this.filename.trim().toLowerCase(), '.json');
+
+    onSave = () => {
+        if (this.canSave()) {
+            this.filenameChange.emit(this.filename);
+            this.save.emit({ sha: this.sha });
+        }
+    }
+
+    // onSave = () => this.save.emit({ sha: this.sha });
     onReset = () => {
         this.store$.dispatch(new ResetGitspaceArtifactAction(null));
         this.reset.emit(this.content);

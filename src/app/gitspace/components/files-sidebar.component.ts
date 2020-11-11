@@ -11,13 +11,12 @@ import { GitspaceState } from '../+state/gitspace.state';
 export class GitspaceFilesComponent implements OnInit, OnDestroy {
     @Output() close = new EventEmitter<any>();
     @Output() createArtifact = new EventEmitter<any>();
+    @Output() artifactSelected = new EventEmitter<any>();
 
     _config: any;
     @Input() set config(value: any) {
         this._config = value;
-        if (value) {
-            this.store$.dispatch(new LoadGitspaceAllArtifactsAction(value));
-        }
+        this.reloadGitspace();
     }
     get config() { return this._config; }
 
@@ -38,10 +37,17 @@ export class GitspaceFilesComponent implements OnInit, OnDestroy {
     }
 
     onClose = () => this.close.emit();
-    onCreateArtifact = () => this.createArtifact.emit();
+    onCreateArtifact = () => {
+        this.createArtifact.emit();
+    }
 
     onSelect(file) {
-        this.store$.dispatch(new LoadGitspaceArtifactAction({ config: this.config, filename: file.name }));
-        this.onClose();
+        this.artifactSelected.emit(file.name);
+        //this.store$.dispatch(new LoadGitspaceArtifactAction({ config: this.config, filename: file.name }));
+        // this.onClose();
+    }
+
+    reloadGitspace() {
+        this.store$.dispatch(new LoadGitspaceAllArtifactsAction(this.config));
     }
 }

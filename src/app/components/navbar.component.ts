@@ -3,10 +3,11 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../+state/app.state';
 import { Subscription } from 'rxjs';
 import { MessageService } from 'primeng/api';
-import { Router } from '@angular/router';
-import { SaveLocationTypes, UserModelCommandAction, UserModelCommandTypes } from '../appcommon/lib/CommonActions';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CloseWorkspaceAction, SaveLocationTypes, UserModelCommandAction, UserModelCommandTypes } from '../appcommon/lib/CommonActions';
 import { LoadFileAction } from '../+state/app.actions';
-import { filter } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
+import { LoadGitspaceArtifactAction, SetGitspaceConfigAction } from '../gitspace/+state/gitspace.actions';
 
 @Component({
     selector: 'app-navbar',
@@ -30,10 +31,27 @@ export class NavbarComponent implements OnInit, OnDestroy {
     gitConfig$: Subscription;
     gitConfig: any;
 
-    constructor(public store$: Store<AppState>, public router: Router, public messageService: MessageService) {
+    qp$: Subscription;
+
+    constructor(public store$: Store<AppState>, public router: Router, public activatedRoute: ActivatedRoute) {
     }
 
     ngOnInit(): void {
+        this.qp$ = this.activatedRoute.queryParams
+            .pipe(
+                filter(p => p && p.filename && p.filename.length > 0 && this.filename != p.filename),
+                map(p => p.filename)
+            )
+            .subscribe(filename => {
+                this.filename = filename;
+                this.loadArtifacts();
+            })
+
+        const sessionConfig = JSON.parse(sessionStorage.getItem("gitspace"));
+        if (sessionConfig && sessionConfig.owner && sessionConfig.repo && sessionConfig.repo.length > 0) {
+            this.store$.dispatch(new SetGitspaceConfigAction(sessionConfig));
+            this.isGitSpace = true;
+        }
 
         this.gitFile$ = this.store$.select(p => p.gitspace.loadedFile)
             .pipe(filter(p => p))
@@ -45,12 +63,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
             });
 
         this.gitConfig$ = this.store$.select(p => p.gitspace.config)
-            .subscribe(p => this.gitConfig = p);
+            .subscribe(config => {
+                this.gitConfig = config;
+                this.loadArtifacts();
+            });
 
         this.isModelDirty$ = this.store$.select(p => p.app.isModelDirty)
             .subscribe(p => {
                 this.isModelDirty = p;
-                console.log('this.isModelDirty', this.isModelDirty);
                 if (this.isModelDirty && this.loadedTemplate && (!this.filename || this.filename.trim().length === 0)) {
                     this.filename = `${this.loadedTemplate.code}.json`;
                 }
@@ -68,6 +88,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
                 }
             });
     }
+    private loadArtifacts() {
+        if (this.gitConfig && this.filename && this.filename.length > 0) {
+            this.store$.dispatch(new LoadGitspaceArtifactAction({ config: this.gitConfig, filename: this.filename }));
+        }
+    }
+
     ngOnDestroy(): void {
         this.gitFile$ ? this.gitFile$.unsubscribe() : null;
         this.gitConfig$ ? this.gitConfig$.unsubscribe() : null;
@@ -75,20 +101,28 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.loadedTemplate$ ? this.loadedTemplate$.unsubscribe() : null;
     }
 
-    onNavigateHome() {
-        this.router.navigate(['templates']);
-    }
-    onExport() {
-        this.store$.dispatch(new UserModelCommandAction({ command: UserModelCommandTypes.Export }));
-    }
+    onNavigateHome = () => this.router.navigate(['templates']);
+
+    onExport = () => this.store$.dispatch(new UserModelCommandAction({ command: UserModelCommandTypes.Export }));
+
 
     onCreateArtifact() {
-        this.showGitspaceFiles = false;
         this.router.navigate(['/templates']);
+        this.showGitspaceFiles = false;
+    }
+    onArtifactSelected(filename) {
+        this.router.navigate([], { queryParams: { filename } });
+        this.showGitspaceFiles = false;
     }
 
     onResetFile = (data) => this.store$.dispatch(new UserModelCommandAction({ command: UserModelCommandTypes.Reset, data }));
-    onCloseFile = () => this.store$.dispatch(new UserModelCommandAction({ command: UserModelCommandTypes.Close }));
+
+    onCloseFile = () => {
+        this.filename = null;
+        this.store$.dispatch(new CloseWorkspaceAction(null));
+        this.router.navigate(["templates"], { queryParams: { filename: null }, queryParamsHandling: "merge" });
+    }
+
     onSaveFile = (args) => {
         const data = {
             filename: this.filename,
