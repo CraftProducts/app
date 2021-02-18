@@ -6,9 +6,9 @@
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
-    "lint": "ng lint",
+    "lint": "ng lint", 
     "e2e": "ng e2e",
-    "deploy": "npm version patch && ng deploy --cname=app.craftproducts.co --name='adhamankar' --repo=https://github.com/CraftProducts/app.git"
+    "deploy": "ng deploy --base-href=/app/"
   },
   "private": true,
   "dependencies": {
